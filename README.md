@@ -1,1 +1,1 @@
-# Competetive Argument Mining
+# Competitive Argument Mining
