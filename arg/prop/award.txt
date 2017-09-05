@@ -1,0 +1,20 @@
+Alt
+Caption
+country
+current awards
+date
+Description
+holder
+host
+imagesize
+location
+main
+most awards
+most nominations
+network
+next
+presenter
+previous
+sponsor
+venue
+year

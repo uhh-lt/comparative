@@ -1,0 +1,19 @@
+campus
+Colors
+conference
+country
+enrollment as of
+free label
+free text
+gender
+grade
+grades
+head
+head name
+houses
+Latitude
+Longitude
+Principal
+street
+superintendent
+type

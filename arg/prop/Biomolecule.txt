@@ -1,0 +1,20 @@
+Caption
+CAS number
+CAZy
+CDD
+GO code
+InterPro
+IUBMB EC number
+name
+OPM family
+OPM protein
+PDB
+Pfam
+Pfam clan
+PROSITE
+SCOP
+SMART
+TCDB
+update citations
+update protein box
+width

@@ -1,0 +1,100 @@
+Aka-Kora language
+Akatek language
+Akkadian language
+Akwa language
+Al-Sayyid Bedouin Sign Language
+ALGOL 58
+ALGOL 60
+ALGOL 68S
+ALGOL W
+ALGOL X
+ALGOL Y
+Ama language (New Guinea)
+Amara language
+AMBIT
+Asas language
+Australian Kriol language
+Banat Bulgarian dialect
+BASIC09
+BBC BASIC
+Befunge
+Belait language
+Benga language
+Betta Kurumba language
+Bora language
+British Sign Language
+Chuj language
+Cree language
+Curl (programming language)
+Dari language
+Dida language
+Dima language
+Duala language
+Eastern Punjabi
+Forro Creole
+Hakka Chinese
+Harari language
+Hemba language
+Igbo language
+Indonesian language
+International Sign
+Irula language
+Judeo-Berber language
+Kalinga language
+Kannada
+Krim language
+Krio Dayak language
+Krio language
+Kristang language
+Kriva Palanka dialect
+Kurdish languages
+Kurumba language
+Ladin language
+Liberty BASIC
+Lisp Machine Lisp
+Lua (programming language)
+Luba-Katanga language
+Macanese Patois
+Maria language (Papua New Guinea)
+Michif language
+Middle English
+Māori language
+Nyabwa language
+Old Church Slavonic
+Pali
+Planner (programming language)
+Polari
+Quebec French
+Saka language
+Sather
+SCUMM
+Sidamo language
+Simula
+SISAL
+SNOBOL
+SQL
+Squeak
+Steelman language requirements
+Sua language
+Sudovian language
+Tagalog language
+Taiwanese Hokkien
+Telugu language
+Tera language
+Tetum language
+Tocharian languages
+Toto language
+True BASIC
+Tswana language
+Turing (programming language)
+Turkish language
+Tutong language
+Urdu
+VBScript
+VHDL
+Volapük
+Vulgar Latin
+Western Desert language
+Western Punjabi
+XSLT
+Yiddish

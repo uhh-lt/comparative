@@ -1,0 +1,19 @@
+ballpark
+city
+current league
+date
+General Managers
+league
+level
+logo
+manager
+managers
+MVP
+name
+next season
+owners
+prev season
+radio
+season
+Team
+television

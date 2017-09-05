@@ -1,0 +1,19 @@
+after
+ambassador from
+before
+birth name
+Caption
+children
+country
+honorific prefix
+imagesize
+occupation
+predecessor
+profession
+ribbon
+spouse
+successor
+term end
+term start
+title
+years

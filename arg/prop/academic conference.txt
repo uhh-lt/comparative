@@ -1,0 +1,14 @@
+Caption
+country
+course
+date
+discipline
+history
+logo
+name
+publisher
+reason
+term
+title
+webcite
+Website

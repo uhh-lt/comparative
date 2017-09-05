@@ -1,0 +1,19 @@
+ages
+bggid
+Caption
+complexity
+date
+designer
+image caption
+image link
+italic title
+players
+playing time
+random chance
+setup time
+skills
+space
+strategy
+subject name
+system
+years

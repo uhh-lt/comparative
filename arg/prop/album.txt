@@ -1,0 +1,20 @@
+Cover
+extra
+headline
+label
+Length
+lyrics
+misc
+music
+note
+producer
+Recorded
+region
+released
+rev
+This album
+title
+total length
+type
+writer
+writing credits

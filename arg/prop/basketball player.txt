@@ -1,0 +1,20 @@
+bbr
+Caption
+career position
+cteam
+cyears
+draft pick
+draft round
+height ft
+height in
+high school
+highlights
+letter
+nationality
+stat1label
+stat1value
+stat2label
+stat2value
+stat3label
+Team
+years

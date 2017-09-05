@@ -1,0 +1,20 @@
+alias
+Aux
+aux1 name
+aux2 name
+aux3 name
+Caption
+color
+color text
+divider
+first
+Nickname
+oaux
+oaux1 name
+paux
+paux1 name
+relatives
+series
+species
+title
+width

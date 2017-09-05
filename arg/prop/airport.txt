@@ -1,0 +1,20 @@
+coordinates region
+footnotes
+latd
+latm
+latNS
+lats
+longd
+longEW
+longm
+longs
+metric-rwy
+operator
+pushpin label
+pushpin map
+pushpin map caption
+stat year
+stat1-data
+stat1-header
+stat2-header
+type

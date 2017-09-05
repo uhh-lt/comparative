@@ -9,11 +9,12 @@ import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DBPQueries {
-
+    public static String NO_LABEL = UUID.randomUUID().toString();
 
     // TODO: use a local dbpedia copy
     private static QueryEngineHTTP buildQueryEngine(Query query) {
@@ -40,14 +41,14 @@ public class DBPQueries {
         return list(query).stream();
     }
 
-    public static List<Entity> entities(Query query, String varName){
+    public static Collection<Entity> entities(Query query, String varName) {
         return DBPQueries.stream(query).map(s -> s.getResource(varName))
-                .map(r -> new Entity(r.getURI(), DBPQueries.getLabel(r))).collect(Collectors.toList());
+                .map(r -> new Entity(r.getURI(), DBPQueries.getLabel(r))).collect(Collectors.toSet());
     }
 
 
     public static String getLabel(Resource resource) {
-        String label = resource.getURI();
+        String label = "";
         ResultSet result = resultSet(QueryString.builder().prefix(QueryString.RDFS).query("?val where { <" + resource.getURI() + "> rdfs:label ?val \n" +
                 "FILTER(langMatches(lang(?val),\"EN\")) }").build().toQuery());
         if (result.hasNext()) {

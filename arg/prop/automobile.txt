@@ -1,0 +1,18 @@
+align
+body style
+Caption
+chassis
+class
+designer
+direction
+doors
+engine
+floortype
+image
+Length
+manufacturer
+operator
+predecessor
+successor
+weight
+width

@@ -1,0 +1,20 @@
+Caption
+coordinates display
+coordinates region
+latd
+Latitude
+latm
+latNS
+lats
+longd
+longEW
+Longitude
+longm
+longs
+population as of
+population density km
+postal code type
+pushpin map
+pushpin map caption
+settlement type
+subdivision type

@@ -1,0 +1,20 @@
+binomial
+binomial authority
+classis
+familia
+genus
+genus authority
+image caption
+image width
+LSPN letter
+LSPN taxoname
+microbe
+NCBI taxID
+ordo
+species
+species authority
+subdivision
+subdivision ranks
+taxoname
+type species
+type strain

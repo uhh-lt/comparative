@@ -1,0 +1,17 @@
+altname
+date
+dia
+ethnicity
+extinct
+fam
+familycolor
+glotto
+glottoname
+glottorefname
+isoexception
+mapcaption
+notice
+paradigm
+ref
+script
+speakers

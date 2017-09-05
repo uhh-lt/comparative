@@ -1,0 +1,20 @@
+architect
+Caption
+coord display
+country
+governing body
+lat degrees
+lat direction
+lat minutes
+lat seconds
+location
+locmapin
+long degrees
+long direction
+long minutes
+long seconds
+mile
+notes
+Road
+route
+type

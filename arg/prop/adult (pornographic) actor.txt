@@ -1,0 +1,19 @@
+after
+alias
+before
+birth place
+Caption
+children
+ethnicity
+eye color
+gender
+hair color
+name
+nationality
+note
+occupation
+spelling
+spouse
+title
+years
+years active

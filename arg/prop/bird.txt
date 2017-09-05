@@ -1,0 +1,19 @@
+binomial
+binomial authority
+familia
+familia authority
+fossil range
+genus
+genus authority
+image
+image caption
+image width
+image2 caption
+range map
+range map caption
+range map width
+species
+subdivision
+subdivision ranks
+subspecies
+trinomial

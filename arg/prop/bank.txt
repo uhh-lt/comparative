@@ -1,0 +1,19 @@
+area served
+Caption
+founded
+founder
+hq location
+hq location city
+hq location country
+industry
+key people
+location country
+logo
+native name
+native name lang
+products
+services
+Slogan
+subsid
+traded as
+type

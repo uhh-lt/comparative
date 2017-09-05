@@ -1,0 +1,20 @@
+after
+alias
+before
+birth date
+Caption
+children
+colwidth
+competitions
+ethnicity
+measurements
+name
+nationalcompetition
+nationality
+occupation
+skin color
+spouse
+title
+year
+years
+years active

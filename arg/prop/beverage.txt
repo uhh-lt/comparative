@@ -1,0 +1,20 @@
+abv
+brewery
+Caption
+color
+colour
+discontinued
+distributor
+flavor
+flavour
+image size
+ingredients
+introduced
+manufacturer
+origin
+proof
+related
+style
+type
+variants
+year

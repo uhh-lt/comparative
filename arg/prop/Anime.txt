@@ -1,0 +1,19 @@
+Caption
+EnglishTitle
+EpisodeNumber
+episodes
+first
+genre
+ja kanji
+ja romaji
+KanjiTitle
+last
+Length
+name
+OriginalAirDate
+released
+RomajiTitle
+ShortSummary
+studio
+title
+type

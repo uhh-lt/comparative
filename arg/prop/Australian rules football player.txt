@@ -1,0 +1,17 @@
+birth date
+birth place
+careerhighlights
+clubs
+CoachYears
+death date
+death place
+debutdate
+debutstadium
+debutteam
+draftpick
+guernsey
+heightweight
+originalteam
+position
+statsend
+years

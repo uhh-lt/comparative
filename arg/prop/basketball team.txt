@@ -1,0 +1,19 @@
+a body
+a pattern b
+a shorts
+championships
+color
+Colors
+date
+first
+h body
+h pattern b
+h shorts
+history
+last
+logo
+month
+nat
+num
+pos
+year

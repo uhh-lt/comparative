@@ -1,0 +1,19 @@
+after
+before
+birth place
+bot
+Caption
+club
+coach
+date
+fix-attempted
+Fullname
+headercolor
+image size
+name
+nationality
+nicknames
+show-medals
+title
+weight class
+years

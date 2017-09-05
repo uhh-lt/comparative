@@ -1,0 +1,20 @@
+aflstatlabel
+aflstatvalue
+birth place
+Caption
+college
+finalteam
+height ft
+height in
+highlights
+highschool
+name
+nfl
+nflnew
+pastcoaching
+pastteamsnote
+pfr
+statlabel
+statseason
+statvalue
+weight lbs

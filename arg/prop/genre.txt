@@ -1,0 +1,20 @@
+Artist
+bgcolor
+Caption
+color
+cultural origins
+date
+format
+instruments
+local scenes
+other topics
+popularity
+pos
+quote
+reference
+regional scenes
+source 
+subgenrelist
+subgenres
+title
+width

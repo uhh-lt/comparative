@@ -1,0 +1,20 @@
+capacity
+Caption
+custom label
+custom value 
+designer
+duration
+height ft
+inversions
+length ft
+lift
+location
+manufacturer
+model
+opened
+rcdb number
+restriction in
+section
+speed mph
+status
+type

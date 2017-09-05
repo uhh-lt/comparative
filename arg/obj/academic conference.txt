@@ -1,0 +1,77 @@
+ACM Multimedia
+ACM/IEEE Virtual Reality International Conference
+Alan Turing Year
+BIS Conference
+BritGrav
+British-Ukrainian Symposium
+Conference on Computer Vision and Pattern Recognition
+Conference on Human Factors in Computing Systems
+Conference on Implementation and Application of Automata
+Conference on Innovative Data Systems Research
+Conference on Neural Information Processing Systems
+Descriptional Complexity of Formal Systems
+Digital Humanities conference
+Distributed Event-Based Systems
+European Conference on Object-Oriented Programming
+European Symposium on Algorithms
+European Symposium on Programming
+Extended Semantic Web Conference
+Grace Hopper Celebration of Women in Computing
+Hawaii International Conference on Education
+Hawaii International Conference on System Sciences
+IEEE Southwest Symposium on Image Analysis and Interpretation
+Information Systems International Conference
+International Agriculture Students Symposium
+International Colloquium on Automata, Languages and Programming
+International Colloquium on Structural Information and Communication Complexity
+International Conference on Advances in ICT for Emerging Regions
+International Conference on Applications and Theory of Petri Nets and Concurrency
+International Conference on Applied Human Factors and Ergonomics
+International Conference on Automated Software Engineering
+International Conference on Business Process Management
+International Conference on Cold Fusion
+International Conference on Computer Vision
+International Conference on Developments in Language Theory
+International Conference on Distributed Computing Systems
+International Conference on Information Systems
+International Conference On Intelligent Robots and Systems
+International Conference on Intelligent Text Processing and Computational Linguistics
+International Conference on Interactive Computer Aided Learning
+International Conference on Nitride Semiconductors
+International Conference on Parallel and Distributed Systems
+International conference on Physics of Light–Matter Coupling in Nanostructures
+International Conference on Remote Engineering and Virtual Instrumentation
+International Conference on Robotics and Automation
+International Conference on Simulation and Modeling Methodologies, Technologies and Applications
+International Conference on Software Engineering
+International Conference on the Malaysia Agreement
+International Requirements Engineering Conference
+International Semantic Web Conference
+International Symposium on Distributed Computing
+International Symposium on Mixed and Augmented Reality
+International Symposium on Symbolic and Algebraic Computation
+International Systems and Storage Conference
+International Workshop on Nitride Semiconductors
+International World Wide Web Conference
+Mexican International Conference on Artificial Intelligence
+MobileHCI
+New Pacific Academy
+OOPSLA
+OpenSym
+Pacific Rim Symposium on Image and Video Technology
+Pattern Languages of Programs
+RAMiCS
+Richard Tapia Celebration of Diversity in Computing
+RuleML Symposium
+Stereoscopic Displays and Applications
+SWAT and WADS conferences
+Symposium on Parallelism in Algorithms and Architectures
+Symposium on Principles and Practice of Parallel Programming
+Symposium on Principles of Distributed Computing
+Symposium on Theoretical Aspects of Computer Science
+Text, Speech and Dialogue
+THATCamp
+The Future of Freedom Conference
+VLDB
+Wellbeing at Work conference
+Workshop on Reachability Problems

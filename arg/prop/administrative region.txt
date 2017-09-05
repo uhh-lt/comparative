@@ -1,0 +1,18 @@
+Caption
+demo-csd
+dir
+dist
+district
+fedgov
+FromYr
+latd
+latm
+location
+longd
+longm
+longs
+population as of
+state
+stategov
+ToYr
+type

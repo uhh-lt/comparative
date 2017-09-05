@@ -1,0 +1,99 @@
+(+)-borneol dehydrogenase
+(+)-neomenthol dehydrogenase
+(+)-sabinol dehydrogenase
+(+)-trans-carveol dehydrogenase
+(-)-borneol dehydrogenase
+(-)-menthol dehydrogenase
+(R)-2-hydroxy-fatty-acid dehydrogenase
+(R)-2-hydroxyacid dehydrogenase
+2-dehydro-3-deoxy-6-phosphogalactonate aldolase
+2-dehydro-3-deoxy-D-pentonate aldolase
+2-dehydro-3-deoxy-L-pentonate aldolase
+2-dehydro-3-deoxy-phosphogluconate aldolase
+2-dehydro-3-deoxyglucarate aldolase
+2-dehydropantoate aldolase
+3-deoxy-D-manno-octulosonate aldolase
+4-(2-carboxyphenyl)-2-oxobut-3-enoate aldolase
+5-dehydro-2-deoxyphosphogluconate aldolase
+Adrenocorticotropic hormone
+Aldolase A
+Aminoacyl tRNA synthetase
+Arginase
+ATP synthase gamma subunit
+Autolysin
+Barrier-to-autointegration factor
+Benzoin aldolase
+Biotinidase
+Cannabinoid receptor
+Catalase
+Catechol-O-methyl transferase
+CD68
+Chitinase
+Chlorophyllase
+Choline acetyltransferase
+Cyclin
+Cyclin-dependent kinase
+D-malate dehydrogenase (decarboxylating)
+D-threonine aldolase
+Deoxyribose-phosphate aldolase
+Dihydroneopterin aldolase
+Dimethylaniline-N-oxide aldolase
+Dolichyl-diphosphate—polyphosphate phosphotransferase
+Dolichyl-diphosphooligosaccharide—protein glycotransferase
+Dolichyl-phosphatase
+Dolichyl-phosphate alpha-N-acetylglucosaminyltransferase
+Dolichyl-phosphate beta-D-mannosyltransferase
+Dolichyl-phosphate beta-glucosyltransferase
+Dolichyl-phosphate D-xylosyltransferase
+Dolichyl-phosphate-mannose-protein mannosyltransferase
+Dolichyl-phosphate-mannose—glycolipid alpha-mannosyltransferase
+Dolichyl-xylosyl-phosphate—protein xylosyltransferase
+Dynein
+Dynorphin
+Enterotoxin type B
+EVC (gene)
+Fibroblast growth factor
+Formate-nitrite transporter
+Formimidoyltransferase cyclodeaminase
+Formins
+Fructose-bisphosphate aldolase
+Gastrin
+Hok/sok system
+Integrase
+ITCH (gene)
+Kelch motif
+Kelch protein
+Ketotetrose-phosphate aldolase
+Kinesin
+L-fuculose-phosphate aldolase
+L-type calcium channel
+Lactate aldolase
+Malate dehydrogenase
+Malate dehydrogenase (decarboxylating)
+Malate dehydrogenase (NADP+)
+Malate dehydrogenase (oxaloacetate-decarboxylating)
+Malate dehydrogenase (oxaloacetate-decarboxylating) (NADP+)
+Malate dehydrogenase (quinone)
+Nuclear cap-binding protein complex
+Origin recognition complex
+Peroxisome proliferator-activated receptor
+Phenylserine aldolase
+Pheophorbide a oxygenase
+Pho4
+Rhamnulose-1-phosphate aldolase
+RNA recognition motif
+SH3 domain
+Sphinganine-1-phosphate aldolase
+Sterol regulatory element-binding protein
+Tagatose-bisphosphate aldolase
+Threonine aldolase
+TIRAP
+Trimethylamine-oxide aldolase
+Trypsin
+Tyrosine kinase
+Ubiquitin
+Ubiquitin ligase
+UDP-N-acetylglucosamine—dolichyl-phosphate N-acetylglucosaminephosphotransferase
+VHS protein domain
+XK (protein)
+Zein

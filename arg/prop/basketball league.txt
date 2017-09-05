@@ -1,0 +1,17 @@
+Caption
+continent
+folded
+formerly
+levels
+logo
+pixels
+RD1-score
+RD1-seed
+RD1-team
+RD2-score
+RD2-team
+RD3-score
+RD3-team
+related comps
+relegation
+sport

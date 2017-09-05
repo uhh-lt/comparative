@@ -1,0 +1,20 @@
+caption bay
+caption lake
+coordinates display
+image bay
+image width
+islands
+latd
+latm
+latNS
+lats
+longd
+longEW
+longm
+longs
+max-depth
+pushpin map
+revision
+salinity
+sourcearticle
+type

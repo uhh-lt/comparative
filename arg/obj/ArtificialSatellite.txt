@@ -1,0 +1,100 @@
+Advanced Telescope for High Energy Astrophysics
+Akari (satellite)
+AMC-8
+Astra 1E
+Astra 1KR
+Astra 1M
+Astra 2A
+Astra 2B
+Astra 2C
+Astra 3A
+Astrid (satellite)
+Azur (satellite)
+Badr (satellite)
+Badr-4
+Biosatellite program
+CBERS-2B
+Compass-1
+COSMO-1
+Courier 1B
+CUTE-1.7 + APD
+Discoverer 1
+Drag and Atmospheric Neutral Density Explorer
+Earth Observing-1
+Earth Observing-3
+EgyptSat 2
+Europa Jupiter System Mission – Laplace
+Eutelsat 16B
+Eutelsat 16C
+Eutelsat 36B
+ExoMars Trace Gas Orbiter
+Expedition 44
+Expedition 45
+FASTSAT
+GeoEye-1
+Georges Lemaître ATV
+Global Precipitation Measurement
+GOES 1
+GOES 13
+GOES-G
+Hinode
+Hitomi (satellite)
+Hot Bird 13C
+HTV-1
+Hubble Space Telescope
+Intelsat 14
+Intelsat 20
+Intermediate eXperimental Vehicle
+LCROSS
+LOFT
+LOFTI-1
+Lunokhod 2
+Mariner 1
+Mariner 10
+Mariner 2
+Mariner 3
+Mariner 5
+Mariner 6 and 7
+Mariner 8
+Mariner 9
+Mars MetNet
+MaSat-1
+Mir EO-21
+Mir EO-24
+N-SAT-110
+NEAR Shoemaker
+Northern Light (spacecraft)
+NSS-7
+Omid
+Paksat-1R
+Pioneer 10
+Programme for Reusable In-orbit Demonstrator in Europe
+Progress M-07M
+Progress M1-5
+Ranger 7
+S-45 (satellite)
+S-45A
+SES-8
+Soyuz TMA-03M
+Space Capsule Recovery Experiment
+SPICA (spacecraft)
+STEX
+STS-123
+STS-124
+STS-125
+STS-128
+STS-31
+STS-6
+STS-7
+Swarm (spacecraft)
+TDRS-3
+Thaicom 5
+Titan Saturn System Mission
+Uhuru (satellite)
+USA-195
+USA-214
+Venera 10
+Venera 11
+Venera 12
+Venera 9
+Wide Field Infrared Survey Telescope

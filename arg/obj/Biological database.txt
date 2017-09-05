@@ -1,0 +1,100 @@
+AnimalTFDB
+ASD (database)
+Atlas of UTR Regulatory Activity
+Bangladesh Fisheries Information Share Home
+BioGRID
+BioSD
+BISC (database)
+BitterDB
+BrainMaps
+BRENDA tissue ontology
+BYKdb
+Cambridge Structural Database
+CATH database
+CAZy
+ConoServer
+ConsensusPathDB
+COSMIC cancer database
+Crystallography Open Database
+Database for bacterial group II introns
+Database of Interacting Proteins
+DbSNP
+DBTSS
+Death Domain database
+DictyBase
+DIMA (database)
+DisGeNET
+DisProt
+Domine Database
+DoRiNA
+EM Data Bank
+Ensembl Genomes
+European Nucleotide Archive
+ExoCarta
+Experimental factor ontology
+GenBank
+GENCODE
+GeneDB
+GlycomeDB
+Guide to Pharmacology
+GWASdb
+Gypsy (database)
+Hazardous Substances Data Bank
+HIstome
+HUGO Gene Nomenclature Committee
+Human Metabolome Database
+Human Olfactory Data Explorer
+Human Protein Atlas
+Integrated Microbial Genomes System
+InterMine
+International Knockout Mouse Consortium
+International Mouse Phenotyping Consortium
+Islander (database)
+List of MeSH codes
+List of MeSH codes (B06)
+Mapper(2)
+Metabolite Set Enrichment Analysis
+MimoDB
+MINAS
+Minimotif Miner
+MiRBase
+MiRNEST
+Mouse Genome Informatics
+NAPP (Database)
+Netpath
+NeuroLex
+NONCODE
+Online Mendelian Inheritance in Man
+Orientations of Proteins in Membranes database
+PharmGKB
+Phenol-Explorer
+PhytoPath
+Plasmapper
+Popgenie
+ProGlycProt
+ProRepeat
+PROSITE
+Protein Data Bank
+Protein Structure Evaluation Suite & Server
+ScerTF
+SCRIPDB
+Sequence Ontology
+SHIFTCOR
+SitEx
+Small Molecule Pathway Database
+Structural Classification of Proteins database
+Synthetic gene database
+Systematic Protein Investigative Research Environment
+TargetScan
+TopFIND
+Toxin and Toxin-Target Database
+TRANSFAC
+Uberon
+UniProt
+VetBact
+VIRsiRNAdb
+VISTA (comparative genomics)
+WikiPathways
+Xenbase
+Yeast Metabolome Database
+YeTFaSCo

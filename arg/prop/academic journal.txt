@@ -1,0 +1,19 @@
+Caption
+country
+Cover
+discipline
+editor
+editors
+former name
+formernames
+ISSN
+ISSN2label
+italic title
+language
+link
+link1-name
+link2-name
+link3-name
+publisher
+rss
+Website

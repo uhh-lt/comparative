@@ -1,0 +1,99 @@
+386BSD
+51-FORTH
+ACIS
+Advanced Maryland Automatic Network Disk Archiver
+Beonex Communicator
+Borland Turbo C
+Carbon (API)
+Cocoa (API)
+DNIX
+Dr. Mario
+Fetchmail
+Final Fantasy Adventure
+Final Fantasy Chronicles
+Final Fantasy II
+Final Fantasy IV
+Final Fantasy IX
+Final Fantasy Mystic Quest
+Final Fantasy Tactics
+Final Fantasy V
+Final Fantasy VI
+Final Fantasy VII
+Final Fantasy VIII
+Final Fantasy X
+Gecko (software)
+GEGL
+GNU bison
+GNU Octave
+Gnuplot
+GNUstep
+Grep
+Half-Life (video game)
+Hercules (emulator)
+HP-UX
+IBM Informix
+InterMezzo (file system)
+Jess (programming language)
+KStars
+Kuru Kuru Kururin
+MacOS Server
+Makefile
+Mario Kart: Super Circuit
+Metafont
+Microsoft Bob
+Microsoft SharePoint Workspace
+MidasWWW
+MIDI Maze
+Mixmaster anonymous remailer
+Mosaic (web browser)
+NeWS
+OpenStep
+OpenVMS
+OS-9
+Pine (email client)
+Radiant Silvergun
+Samba (software)
+Security-Enhanced Linux
+Sendmail
+SimCity (1989 video game)
+SimpleText
+SoftICE
+Soldier of Fortune (video game)
+Source Mage
+SourceForge Enterprise Edition
+Spellevator
+Star Wars Jedi Knight II: Jedi Outcast
+SunOS
+Suspended
+System Shock
+TeachText
+TECO (text editor)
+Tetris
+TeX
+TextEdit
+The Final Fantasy Legend
+The Sims (video game)
+Time Crisis (video game)
+Tom Clancy's Rainbow Six (video game)
+Transaction Processing Facility
+Tru64 UNIX
+Turbo Pascal
+UCSD Pascal
+Unreal
+UseModWiki
+Vim (text editor)
+Virtua Fighter (video game)
+VisiCalc
+Vorbis
+VSE (operating system)
+W3m
+Windows 2000
+Windows 95
+Wine (software)
+Wolfenstein 3D
+Wolfram Mathematica
+WordPerfect
+WordStar
+WorldForge
+XEmacs
+XFree86

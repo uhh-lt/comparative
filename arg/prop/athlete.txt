@@ -1,0 +1,19 @@
+after
+before
+birth date
+birth place
+Caption
+club
+clubs
+debutdate
+height ft
+height in
+image size
+name
+pcupdate
+proyears
+statlabel
+statvalue
+title
+year
+years
