@@ -1,22 +1,25 @@
 import json
 import multiprocessing
-import requests
 import logging
 import numpy
 from string import Template
 from itertools import combinations
+from random import shuffle
+import requests
 
 logging.basicConfig(level=logging.INFO)
 
 QUALIFIERS = [
-    'better than', 'worse than', 'inferior to', 'superior to', 'prefer'
+    '\\"better than\\"', '\\"worse than\\"', '\\"inferior to\\"',
+    '\\"superior to\\"', 'prefer'
 ]
 
 MARKERS = [
-    'because', 'since', 'as long as', 'as things go', 'cause of',
-    'by reaso of', 'virtue of', 'considering', 'due to', 'for the reason that',
-    'sake of', 'as much as', 'view of', 'thanks to', 'since', 'therefor',
-    'thus'
+    'because', 'since', '\\"as long as\\"', '\\"as things go\\"',
+    '\\"cause of\\"', '\\"by reaso of\\"', '\\"virtue of\\"', 'considering',
+    '\\"due to\\"', '\\"for the reason that\\"', '\\"sake of\\"',
+    '\\"as much as\\"', '\\"view of\\"', '\\"thanks to\\"', 'since',
+    'therefor', 'thus'
 ]
 
 BASE_URL = 'https://9d0fec4462c1b8723270b0099e94777e.europe-west1.gcp.cloud.es.io:9243/commoncrawl/sentence'
@@ -25,6 +28,8 @@ COUNT_URL = BASE_URL + '/_count'
 
 USER = 'elastic'
 PWD = 'yvmONIpMhHdp96ZpsxDKbPy4'
+
+COUNT_CACHE = {}
 
 
 def worker_logger(name):
@@ -55,38 +60,47 @@ def fileToList(file):
 
 def count(object_a, object_b):
     """check if the combination a+b exists in the index"""
-    es_query = Template(
-        '{ "query": { "match": { "text": {"query": "$object_a $object_b", "operator": "and" } } } }'
-    )
-    resp = requests.get(
-        COUNT_URL,
-        params={
-            'source': es_query.substitute(
-                object_a=object_a, object_b=object_b)
-        },
-        auth=(USER, PWD))
-    if resp.status_code == 200:
-        return int(resp.json()['count'])
+    if hash(object_a + object_b) in COUNT_CACHE:
+        return COUNT_CACHE[hash(object_a + object_b)]
     else:
-        resp.raise_for_status()
+        es_query = Template(
+            '{ "query": { "match": { "text": {"query": "$object_a $object_b", "operator": "and" } } } }'
+        )
+        resp = requests.get(
+            COUNT_URL,
+            params={
+                'source': es_query.substitute(
+                    object_a=object_a, object_b=object_b)
+            },
+            auth=(USER, PWD))
+        if resp.status_code == 200:
+            cnt = int(resp.json()['count'])
+            COUNT_CACHE[hash(object_a + object_b)] = cnt
+            return cnt
+        else:
+            resp.raise_for_status()
 
 
 def query(object_a, object_b, prop):
     """check if a, b property, qualifier and marker combination exists"""
-    es_query = Template(
-        """{ "query" : { "match": { "text": {"query": "'$object_a' AND '$object_b' 
-        AND $MARKERS AND $qualifier", "minimum_should_match": "75%"}}}}""")
-    resp = requests.get(
-        SEARCH_URL,
-        params={
-            'source':
-            es_query.substitute(
-                object_a=object_a,
-                object_b=object_b,
-                MARKERS='( {} )'.format(' OR '.join(MARKERS)),
-                qualifier='( {} )'.format(' OR '.join(QUALIFIERS)))
-        },
-        auth=(USER, PWD))
+
+    body = Template(
+        '{ "query": { "bool": { "must": [ { "query_string": { "default_field": "text", "query": "\\"$object_a\\"" } }, { "query_string": { "default_field": "text", "query": "\\"$object_b\\"" } }, { "query_string": { "default_field": "text", "query": "$markers" } }, { "query_string": { "default_field": "text", "query": "$qualifier" } }, { "query_string": { "default_field": "text", "query": "\\"$prop\\"" } } ] } } }'
+    )
+
+    body2 = body.substitute(
+        object_a=object_a,
+        object_b=object_b,
+        prop=prop,
+        qualifier=' OR '.join(QUALIFIERS),
+        markers=' OR '.join(MARKERS))
+
+
+    headers = {'Content-Type': 'application/json'}
+
+    resp = requests.post(
+        SEARCH_URL, json=json.loads(body2), headers=headers, auth=(USER, PWD))
+
 
     if resp.status_code == 200:
         result = resp.json()['hits']['hits']
@@ -101,33 +115,41 @@ def query(object_a, object_b, prop):
 def worker(name, partition, props):
     """query es"""
     logger = worker_logger(str(name))
+    logger.debug('Worker {} started'.format(name))
     for object_a, object_b in partition:
-        logger.info('Check {} + {}'.format(object_a, object_b))
-        co_occ = count(object_a, object_b)
-        if co_occ > 0:
-            for prop in props:
-                logger.info('{} co-occurences of {} + {}'.format(co_occ, object_a, object_b))
-                hits = query(object_a, object_b, prop)
-                logger.info('{} hits for {}'.format(len(hits), prop))
-                with open('res_worker_{}.txt'.format(name), 'a') as f:
-                    f.write(hits)
-        else:
-            logger.info('No co-occurence')
+        a_occ = count(object_a, '')
+        b_occ = count(object_b, '')
+        logger.debug(
+            'Occ {}: {} | Occ {}: {}'.format(object_a, a_occ, object_b, b_occ))
+        if a_occ > 0 and b_occ > 0:
+            co_occ = count(object_a, object_b)
+            logger.info('{} co-occurences of {} + {}'.format(co_occ, object_a, object_b))
+            if co_occ > 0:
+                for prop in props:
+                    hits = query(object_a, object_b, prop)
+                    logger.info('{} hits for {}'.format(hits, prop))
+                    if hits:
+                        with open('res_worker_{}.txt'.format(name), 'a') as f:
+                            f.write(hits)
+            else:
+                logger.debug('No co-occurence')
 
 
 def main():
+
     objects = fileToList('arg/obj/movie.json')
+    shuffle(objects)
     props = fileToList('arg/prop/movie.json')
     objects_cross = numpy.array(list(combinations(objects, 2)))
     partitions = numpy.array_split(objects_cross, 8)
-    print(len(objects_cross))
     jobs = []
 
     for index, partition in enumerate(partitions):
         p = multiprocessing.Process(
             target=worker, args=(index, partition, props))
         jobs.append(p)
-      #  p.start()
+        p.start()
+
 
 
 if __name__ == '__main__':
