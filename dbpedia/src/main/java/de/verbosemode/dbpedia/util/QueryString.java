@@ -21,7 +21,7 @@ public class QueryString {
     public static Prefix RDF = Prefix.of().prefix("rdf").url("http://www.w3.org/1999/02/22-rdf-syntax-ns#").build();
     public static Prefix OWL = Prefix.of().prefix("owl").url("http://www.w3.org/2002/07/owl#").build();
     public static Prefix DBO = Prefix.of().prefix("dbo").url("http://dbpedia.org/ontology/").build();
-public static Prefix RDFS = Prefix.of().prefix("rdfs").url("http://www.w3.org/2000/01/rdf-schema#").build();
+    public static Prefix RDFS = Prefix.of().prefix("rdfs").url("http://www.w3.org/2000/01/rdf-schema#").build();
     // namespaces: http://eo.dbpedia.org/sparql?nsdecl
     @Singular
     private List<Prefix> prefixes;
@@ -41,8 +41,10 @@ public static Prefix RDFS = Prefix.of().prefix("rdfs").url("http://www.w3.org/20
         if (limit > 0) {
             buffer.append(" LIMIT ").append(limit);
         }
-        log.info(buffer.toString());
-        return QueryFactory.create(buffer.toString());
+
+        Query query = QueryFactory.create(buffer.toString());
+
+        return query;
 
     }
 

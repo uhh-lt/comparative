@@ -8,7 +8,12 @@
 .idea/**/tasks.xml
 .idea/dictionaries
 
-arg/**
+*.log
+
+.vscode/
+virtualenv/
+include/
+
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

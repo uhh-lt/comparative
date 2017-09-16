@@ -116,18 +116,18 @@ def worker(name, partition, props):
 
 
 def main():
-    objects = fileToList('arg/obj/movie.json')[:20]
-    props = fileToList('arg/prop/movie.json')[:1]
+    objects = fileToList('arg/obj/movie.json')
+    props = fileToList('arg/prop/movie.json')
     objects_cross = numpy.array(list(combinations(objects, 2)))
-    partitions = numpy.array_split(objects_cross, 4)
-
+    partitions = numpy.array_split(objects_cross, 8)
+    print(len(objects_cross))
     jobs = []
 
     for index, partition in enumerate(partitions):
         p = multiprocessing.Process(
             target=worker, args=(index, partition, props))
         jobs.append(p)
-        p.start()
+      #  p.start()
 
 
 if __name__ == '__main__':
