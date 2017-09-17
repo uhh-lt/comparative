@@ -1,10 +1,3 @@
-import json
+from more_itertools import grouper
 
-t = ['test', 'a b c']
-
-def jsonify(lst):
-    quote = ['"{}"'.format(x) for x in lst ]
-    joined =  ' OR '.join(quote)
-    return json.dumps(joined)
-    
-print(jsonify(t))
+print(list(grouper(10, ['a']*98)))
