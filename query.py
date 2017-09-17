@@ -13,19 +13,15 @@ import grequests
 logging.basicConfig(level=logging.INFO)
 
 QUALIFIERS = [
-    'better than', 'worse than', 'inferior to',
-    'superior to', 'prefer'
+    'better than', 'worse than', 'inferior to', 'superior to', 'prefer'
 ]
 
 MARKERS = [
-    'because', 'since', 'as long as', 'as things go',
-    'cause of', 'by reaso of', 'virtue of', 'considering',
-    'due to', 'for the reason that', 'sake of',
-    'as much as', 'view of', 'thanks to', 'since',
-    'therefor', 'thus'
+    'because', 'since', 'as long as', 'as things go', 'cause of',
+    'by reaso of', 'virtue of', 'considering', 'due to', 'for the reason that',
+    'sake of', 'as much as', 'view of', 'thanks to', 'since', 'therefor',
+    'thus'
 ]
-
-
 
 BASE_URL = 'https://9d0fec4462c1b8723270b0099e94777e.europe-west1.gcp.cloud.es.io:9243/commoncrawl/sentence'
 SEARCH_URL = BASE_URL + '/_search'
@@ -36,15 +32,18 @@ PWD = 'yvmONIpMhHdp96ZpsxDKbPy4'
 
 COUNT_CACHE = {}
 
+
 def match_phrase(phrase):
     return '{{ "match_phrase" : {{ "text": "{}"  }} }}'.format(phrase)
 
+
 def query_string_or(words, min_match=0):
-    quoted = ['\\"'+x+'\\"' for x in words]
+    quoted = ['\\"' + x + '\\"' for x in words]
     mms = ''
     if min_match > 0:
         mms = '"minimum_should_match" : {},'.format(min_match)
-    return '{{ "query_string" : {{ {} "default_field": "text", "query" : "{}" }} }}'.format(mms,' OR '.join(quoted))
+    return '{{ "query_string" : {{ {} "default_field": "text", "query" : "{}" }} }}'.format(
+        mms, ' OR '.join(quoted))
 
 
 def worker_logger(name):
@@ -84,44 +83,23 @@ def list_to_file(name, lst):
 
 def query(query_string):
     """check if a, b property, qualifier and marker combination exists"""
-
-    body = Template(
-        '{ "query": { "bool": { "must": [ { "query_string": { "default_field": "text", "query": "\\"$object_a\\"" } }, { "query_string": { "default_field": "text", "query": "\\"$object_b\\"" } }, { "query_string": { "default_field": "text", "query": "$markers" } }, { "query_string": { "default_field": "text", "query": "$qualifier" } }, { "query_string": { "default_field": "text", "query": "\\"$prop\\"" } } ] } } }'
-    )
-
-    body2 = body.substitute(
-        object_a=object_a,
-        object_b=object_b,
-        prop=prop,
-        qualifier=' OR '.join(QUALIFIERS),
-        markers=' OR '.join(MARKERS))
-
-    headers = {'Content-Type': 'application/json'}
-    return 0
-    """
-    resp = requests.post(
-        SEARCH_URL, json=json.loads(body2), headers=headers, auth=(USER, PWD))
-
-
-    if resp.status_code == 200:
-        result = resp.json()['hits']['hits']
-        text = []
-        for hit in result:
-            text.append(hit['_source']['text'])
-            return text
-    else:
-        resp.raise_for_status()
-        """
+    headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
+    return grequests.post(
+        SEARCH_URL,
+        data=query_string.encode('utf-8'),
+        headers=headers,
+        auth=(USER, PWD))
 
 
 def count(objects):
     """checks if a sentence with all the objects exist"""
     obj_key = ' '.join(['\\"' + o + '\\"' for o in objects])
-    es_query = ' {{ "query" : {{ "bool" : {{ "must": [ {} ] }} }} }}'.format(', '.join([match_phrase(x) for x in objects]))
+    es_query = ' {{ "query" : {{ "bool" : {{ "must": [ {} ] }} }} }}'.format(
+        ', '.join([match_phrase(x) for x in objects]))
 
     return grequests.get(
         COUNT_URL,
-        params={'source': es_query},
+        params={'source': es_query.encode('utf-8')},
         headers={'x-requested-object': obj_key.replace('\\"', '')},
         auth=(USER, PWD))
 
@@ -143,8 +121,12 @@ def count_all(obj_list, name):
             requests, size=50, exception_handler=exception_handler)
         for value in response:
             obj = value.request.headers['x-requested-object']
-            GLOBAL_LOGGER.info('Recieve {} {}'.format(obj, value.json()['count']))
-            dic[value.json()['count']].append(obj)
+            if 'count' in value.json():
+                GLOBAL_LOGGER.info(
+                    'Recieve {} {}'.format(obj, value.json()['count']))
+                dic[value.json()['count']].append(obj)
+            else:
+                GLOBAL_LOGGER.fatal('No count for {}'.format(obj))
         with open(file_name.format(name), 'w') as out:
             json.dump(dic, out)
     dic.pop('0', None)
@@ -160,34 +142,39 @@ def exception_handler(req, exception):
 
 
 def main():
-    object_cnt = 250
-    object_name = 'actor'
-    objects =  fileToList('arg/obj/{}.json'.format(object_name))
-    properties = fileToList('arg/prop/{}.json'.format(object_name))[:5]
-    shuffle(objects)
+    object_cnt = 10
+    with open('arg/conceptList.txt') as l:
+        for line in l:
+            try:
+                object_name = line.strip()
+                GLOBAL_LOGGER.info(object_name)
+                objects = fileToList('arg/obj/{}.json'.format(object_name))
+                properties = fileToList('arg/prop/{}.json'.format(object_name))[:5]
+                shuffle(objects)
+                obj_to_search = objects[:object_cnt]
 
-    obj_to_search = count_all(objects[:object_cnt], '{}{}'.format(object_name,object_cnt))
-    test = """
-    {{
-        "query" : {{
-            "bool": {{
-                "must": [
-                    {}
-                ]
-            }}
-        }}
-    }}
-    """.format(', '.join([
-        query_string_or(obj_to_search,  min_match=2)
-       # query_string_or(properties, min_match=1),
-       # query_string_or(MARKERS),
-       # query_string_or(QUALIFIERS)
-    ]))
-    GLOBAL_LOGGER.info(test)
+                es_query = '{{ "query" : {{ "bool": {{ "must": [ {} ] }} }} }}'.format(
+                    ', '.join([query_string_or(obj_to_search, min_match=2),query_string_or(properties,min_match=0)]))
 
+                GLOBAL_LOGGER.info('Concept: {} | Query UTF: {}'.format(
+                    object_name, es_query.encode('utf-8')))
 
-    #
-
+                request = query(es_query)
+                response = grequests.imap([request], exception_handler=exception_handler)
+                for result in response:
+                    if result.status_code is not 200:
+                        GLOBAL_LOGGER.info('Concept: {} | Error: {}'.format(
+                            object_name, result.status_code))
+                    else:
+                        hits = result.json()['hits']['total']
+                        GLOBAL_LOGGER.info(
+                            'Concept: {} | Hits: {}'.format(object_name, hits))
+                        file_name = 'results/{}.json'.format(object_name)
+                        GLOBAL_LOGGER.info('Write results to file: {}'.format(file_name))
+                        with open(file_name, 'w') as out:
+                            json.dump(result.json(), out)
+            except Exception:
+                GLOBAL_LOGGER.info('no dbpedia data for {}'.format(object_name))
 
 
 if __name__ == '__main__':
