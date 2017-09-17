@@ -4,28 +4,28 @@ import logging
 from string import Template
 from itertools import combinations
 from random import shuffle, randint
+from functools import reduce
 from collections import defaultdict
 from pprint import pprint as pp
-from requests import Session
-from concurrent.futures import ProcessPoolExecutor
-from requests_futures.sessions import FuturesSession
-
-
+from os.path import isfile
+import grequests
 
 logging.basicConfig(level=logging.INFO)
 
 QUALIFIERS = [
-    '\\"better than\\"', '\\"worse than\\"', '\\"inferior to\\"',
-    '\\"superior to\\"', 'prefer'
+    'better than', 'worse than', 'inferior to',
+    'superior to', 'prefer'
 ]
 
 MARKERS = [
-    'because', 'since', '\\"as long as\\"', '\\"as things go\\"',
-    '\\"cause of\\"', '\\"by reaso of\\"', '\\"virtue of\\"', 'considering',
-    '\\"due to\\"', '\\"for the reason that\\"', '\\"sake of\\"',
-    '\\"as much as\\"', '\\"view of\\"', '\\"thanks to\\"', 'since',
+    'because', 'since', 'as long as', 'as things go',
+    'cause of', 'by reaso of', 'virtue of', 'considering',
+    'due to', 'for the reason that', 'sake of',
+    'as much as', 'view of', 'thanks to', 'since',
     'therefor', 'thus'
 ]
+
+
 
 BASE_URL = 'https://9d0fec4462c1b8723270b0099e94777e.europe-west1.gcp.cloud.es.io:9243/commoncrawl/sentence'
 SEARCH_URL = BASE_URL + '/_search'
@@ -35,6 +35,16 @@ USER = 'elastic'
 PWD = 'yvmONIpMhHdp96ZpsxDKbPy4'
 
 COUNT_CACHE = {}
+
+def match_phrase(phrase):
+    return '{{ "match_phrase" : {{ "text": "{}"  }} }}'.format(phrase)
+
+def query_string_or(words, min_match=0):
+    quoted = ['\\"'+x+'\\"' for x in words]
+    mms = ''
+    if min_match > 0:
+        mms = '"minimum_should_match" : {},'.format(min_match)
+    return '{{ "query_string" : {{ {} "default_field": "text", "query" : "{}" }} }}'.format(mms,' OR '.join(quoted))
 
 
 def worker_logger(name):
@@ -55,6 +65,9 @@ def worker_logger(name):
     return logger
 
 
+GLOBAL_LOGGER = worker_logger('global')
+
+
 def fileToList(file):
     """read data file"""
     with open(file) as data:
@@ -69,9 +82,7 @@ def list_to_file(name, lst):
             data.write('{}\n'.format(line))
 
 
-
-
-def query(object_a, object_b, prop):
+def query(query_string):
     """check if a, b property, qualifier and marker combination exists"""
 
     body = Template(
@@ -103,72 +114,80 @@ def query(object_a, object_b, prop):
         """
 
 
-def worker(name, partition, props):
-    """query es
-    logger = worker_logger(str(name))
-    logger.info('Worker {} started'.format(name))
-    for object_a, object_b in partition:
-        a_occ = count([object_a])
-        b_occ = count([object_b])
-        if a_occ > 0 and b_occ > 0:
-            co_occ = count([object_a, object_b])
-            logger.info('{} co-occurences of {} + {}'.format(
-                co_occ, object_a, object_b))
-            if co_occ > 0:
-                for prop in props:
-                    hits = query(object_a, object_b, prop)
-                    logger.info('{} hits for {}'.format(hits, prop))
-                    if hits:
-                        with open('res_worker_{}.txt'.format(name), 'a') as f:
-                            f.write(hits)
-    """
-
-
-
-def count(objects, session):
-    """check if the combination a+b exists in the index"""
+def count(objects):
+    """checks if a sentence with all the objects exist"""
     obj_key = ' '.join(['\\"' + o + '\\"' for o in objects])
+    es_query = ' {{ "query" : {{ "bool" : {{ "must": [ {} ] }} }} }}'.format(', '.join([match_phrase(x) for x in objects]))
 
-    es_query = Template(
-        '{ "query": { "match_phrase": { "text": {"query": "$objects"} } } }')
-
-    return session.get(
+    return grequests.get(
         COUNT_URL,
-        params={'source': es_query.substitute(objects=obj_key)},
-        auth=(USER, PWD)).result()
+        params={'source': es_query},
+        headers={'x-requested-object': obj_key.replace('\\"', '')},
+        auth=(USER, PWD))
 
-def count_all(obj_list):
-    result = defaultdict(list)
-    session = FuturesSession(session=Session(),executor=ProcessPoolExecutor())
 
-    for obj in obj_list:
-        print('--> {}'.format(obj))
-        cnt = count([obj], session).json()['count']
-        result[cnt].append(obj)
-        print('<-- {} {}'.format(obj, cnt))
-    pp(result)
+def count_all(obj_list, name):
+    file_name = 'es/counts/{}.json'.format(name)
+    dic = {}
+    if isfile(file_name):
+        with open(file_name, 'r') as cached:
+            dic = json.load(cached)
+            GLOBAL_LOGGER.info('Using count cache for {}'.format(name))
+
+    else:
+        dic = defaultdict(list)
+        requests = []
+        for obj in obj_list:
+            requests.append(count([obj]))
+        response = grequests.imap(
+            requests, size=50, exception_handler=exception_handler)
+        for value in response:
+            obj = value.request.headers['x-requested-object']
+            GLOBAL_LOGGER.info('Recieve {} {}'.format(obj, value.json()['count']))
+            dic[value.json()['count']].append(obj)
+        with open(file_name.format(name), 'w') as out:
+            json.dump(dic, out)
+    dic.pop('0', None)
+    listed = []
+    for l in dic.values():
+        listed.extend(l)
+    return listed
+
+
+def exception_handler(req, exception):
+    GLOBAL_LOGGER.info(req)
+    GLOBAL_LOGGER.info(exception)
 
 
 def main():
-    proc_count = 2
-    object_name = 'prison'
-    objects = fileToList('arg/obj/{}.json'.format(object_name))[:100]
-    print(len(objects))
-    count_all(objects)
+    object_cnt = 250
+    object_name = 'actor'
+    objects =  fileToList('arg/obj/{}.json'.format(object_name))
+    properties = fileToList('arg/prop/{}.json'.format(object_name))[:5]
+    shuffle(objects)
+
+    obj_to_search = count_all(objects[:object_cnt], '{}{}'.format(object_name,object_cnt))
+    test = """
+    {{
+        "query" : {{
+            "bool": {{
+                "must": [
+                    {}
+                ]
+            }}
+        }}
+    }}
+    """.format(', '.join([
+        query_string_or(obj_to_search,  min_match=2)
+       # query_string_or(properties, min_match=1),
+       # query_string_or(MARKERS),
+       # query_string_or(QUALIFIERS)
+    ]))
+    GLOBAL_LOGGER.info(test)
 
 
-    """
-    props = fileToList('arg/prop/movie.json')[:1]
-    objects_cross = numpy.array(list(combinations(objects, 2)))
-    partitions = numpy.array_split(objects_cross, 4)
-    jobs = []
+    #
 
-    for index, partition in enumerate(partitions):
-        p = multiprocessing.Process(
-            target=worker, args=(index, partition, props))
-        jobs.append(p)
-        p.start()
-    """
 
 
 if __name__ == '__main__':
