@@ -1,11 +1,16 @@
 import json
-import multiprocessing
 import logging
-import numpy
+
 from string import Template
 from itertools import combinations
-from random import shuffle
-import requests
+from random import shuffle, randint
+from collections import defaultdict
+from pprint import pprint as pp
+from requests import Session
+from concurrent.futures import ProcessPoolExecutor
+from requests_futures.sessions import FuturesSession
+
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -36,7 +41,7 @@ def worker_logger(name):
     """create a logger for worker threads"""
     formatter = logging.Formatter('%(asctime)s - %(name)s  - %(message)s')
 
-    file_handler = logging.FileHandler('worker_{}.log'.format(name))
+    file_handler = logging.FileHandler('{}.log'.format(name))
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
 
@@ -44,7 +49,7 @@ def worker_logger(name):
     stream_handler.setLevel(logging.INFO)
     stream_handler.setFormatter(formatter)
 
-    logger = logging.getLogger('Worker ' + str(name))
+    logger = logging.getLogger(str(name) + ' ')
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
     return logger
@@ -58,27 +63,12 @@ def fileToList(file):
         return list(map(lambda entry: entry['label'], lst))
 
 
-def count(object_a, object_b):
-    """check if the combination a+b exists in the index"""
-    if hash(object_a + object_b) in COUNT_CACHE:
-        return COUNT_CACHE[hash(object_a + object_b)]
-    else:
-        es_query = Template(
-            '{ "query": { "match": { "text": {"query": "$object_a $object_b", "operator": "and" } } } }'
-        )
-        resp = requests.get(
-            COUNT_URL,
-            params={
-                'source': es_query.substitute(
-                    object_a=object_a, object_b=object_b)
-            },
-            auth=(USER, PWD))
-        if resp.status_code == 200:
-            cnt = int(resp.json()['count'])
-            COUNT_CACHE[hash(object_a + object_b)] = cnt
-            return cnt
-        else:
-            resp.raise_for_status()
+def list_to_file(name, lst):
+    with open(name, 'w') as data:
+        for line in lst:
+            data.write('{}\n'.format(line))
+
+
 
 
 def query(object_a, object_b, prop):
@@ -95,9 +85,9 @@ def query(object_a, object_b, prop):
         qualifier=' OR '.join(QUALIFIERS),
         markers=' OR '.join(MARKERS))
 
-
     headers = {'Content-Type': 'application/json'}
-
+    return 0
+    """
     resp = requests.post(
         SEARCH_URL, json=json.loads(body2), headers=headers, auth=(USER, PWD))
 
@@ -110,20 +100,20 @@ def query(object_a, object_b, prop):
             return text
     else:
         resp.raise_for_status()
+        """
 
 
 def worker(name, partition, props):
-    """query es"""
+    """query es
     logger = worker_logger(str(name))
-    logger.debug('Worker {} started'.format(name))
+    logger.info('Worker {} started'.format(name))
     for object_a, object_b in partition:
-        a_occ = count(object_a, '')
-        b_occ = count(object_b, '')
-        logger.debug(
-            'Occ {}: {} | Occ {}: {}'.format(object_a, a_occ, object_b, b_occ))
+        a_occ = count([object_a])
+        b_occ = count([object_b])
         if a_occ > 0 and b_occ > 0:
-            co_occ = count(object_a, object_b)
-            logger.info('{} co-occurences of {} + {}'.format(co_occ, object_a, object_b))
+            co_occ = count([object_a, object_b])
+            logger.info('{} co-occurences of {} + {}'.format(
+                co_occ, object_a, object_b))
             if co_occ > 0:
                 for prop in props:
                     hits = query(object_a, object_b, prop)
@@ -131,17 +121,46 @@ def worker(name, partition, props):
                     if hits:
                         with open('res_worker_{}.txt'.format(name), 'a') as f:
                             f.write(hits)
-            else:
-                logger.debug('No co-occurence')
+    """
+
+
+
+def count(objects, session):
+    """check if the combination a+b exists in the index"""
+    obj_key = ' '.join(['\\"' + o + '\\"' for o in objects])
+
+    es_query = Template(
+        '{ "query": { "match_phrase": { "text": {"query": "$objects"} } } }')
+
+    return session.get(
+        COUNT_URL,
+        params={'source': es_query.substitute(objects=obj_key)},
+        auth=(USER, PWD)).result()
+
+def count_all(obj_list):
+    result = defaultdict(list)
+    session = FuturesSession(session=Session(),executor=ProcessPoolExecutor())
+
+    for obj in obj_list:
+        print('--> {}'.format(obj))
+        cnt = count([obj], session).json()['count']
+        result[cnt].append(obj)
+        print('<-- {} {}'.format(obj, cnt))
+    pp(result)
 
 
 def main():
+    proc_count = 2
+    object_name = 'prison'
+    objects = fileToList('arg/obj/{}.json'.format(object_name))[:100]
+    print(len(objects))
+    count_all(objects)
 
-    objects = fileToList('arg/obj/movie.json')
-    shuffle(objects)
-    props = fileToList('arg/prop/movie.json')
+
+    """
+    props = fileToList('arg/prop/movie.json')[:1]
     objects_cross = numpy.array(list(combinations(objects, 2)))
-    partitions = numpy.array_split(objects_cross, 8)
+    partitions = numpy.array_split(objects_cross, 4)
     jobs = []
 
     for index, partition in enumerate(partitions):
@@ -149,7 +168,7 @@ def main():
             target=worker, args=(index, partition, props))
         jobs.append(p)
         p.start()
-
+    """
 
 
 if __name__ == '__main__':
