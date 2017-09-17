@@ -1,3 +1,10 @@
-with open('arg/conceptList.txt') as l:
-    for line in l:
-        object_name = line.strip()
+import json
+
+t = ['test', 'a b c']
+
+def jsonify(lst):
+    quote = ['"{}"'.format(x) for x in lst ]
+    joined =  ' OR '.join(quote)
+    return json.dumps(joined)
+    
+print(jsonify(t))
