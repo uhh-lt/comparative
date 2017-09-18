@@ -1,3 +1,8 @@
-from more_itertools import grouper
+a = ['the', 'a', 'okay']
+b = ['the']
 
-print(list(grouper(10, ['a']*98)))
+
+def remove_stopwords(lst, stopwords):
+    return [x for x in lst if x not in stopwords]
+
+print(remove_stopwords(a,b))
