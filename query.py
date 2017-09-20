@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import logging
 from random import shuffle
@@ -8,7 +11,7 @@ from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 
-QUALIFIERS = ['better','worse']
+QUALIFIERS = ['better than', 'is better']
 
 MARKERS = ['because']
 
@@ -23,7 +26,7 @@ COUNT_CACHE = {}
 
 
 def jsonify(lst):
-    quote = ['"{}"'.format(x) for x in lst]
+    quote = ['"{}"'.format((x.encode('utf-8').decode('utf-8'))) for x in lst]
     joined = ' OR '.join(quote)
     return json.dumps(joined)
 
@@ -42,7 +45,7 @@ def worker_logger(name):
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
     file_handler = logging.FileHandler(
-        'logs/{}.log'.format(str(datetime.now().strftime('%m-%d-%H:%M'))))
+        'logs/{}_query.log'.format(str(datetime.now().strftime('%m-%d-%H:%M'))))
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
 
@@ -62,7 +65,7 @@ LOG = worker_logger('global')
 
 def fileToList(file):
     """read data file"""
-    with open(file) as data:
+    with open(file, encoding='utf-8') as data:
         array = data.readlines()[0]
         lst = json.loads(array)
         return list(map(lambda entry: entry['label'], lst))
@@ -74,25 +77,24 @@ def list_to_file(name, lst):
             data.write('{}\n'.format(line))
 
 
-def query(query_string, concept):
+def query(partition, query_string, concept):
     """check if a, b property, qualifier and marker combination exists"""
     headers = {
         'Content-Type': 'application/json',
-        'charset': 'utf-8',
         'x-requested-object': concept.replace('\\"', '')
     }
 
     return grequests.post(
         SEARCH_URL,
-        data=query_string.encode('utf-8'),
+        data=query_string,
         headers=headers,
-        timeout=60 * 5,
+        timeout=60,
         auth=(USER, PWD))
 
 
 def exception_handler(req, exception):
-    LOG.info(req)
-    LOG.info(exception)
+    LOG.fatal(req.kwargs)
+    LOG.fatal(exception)
 
 
 def partition_to_size(size, data):
@@ -103,56 +105,67 @@ def remove_stopwords(lst, stopwords):
 
 
 stopwords = [
- 
+
 ]
 
 
 def main():
-    group_size = 750
-    max_props = 15
+    group_size = 500
+    max_props = 10
+    add_props = True
+    add_markers = False
     requests = []
-    with open('arg/conceptList.txt') as l:
+    LOG.info('Group size: {}'.format( group_size))
+    LOG.info('Qualifiers: {}'.format( QUALIFIERS))
+    if add_markers: LOG.info('Marker: {}'.format(MARKERS))
+    if add_props: LOG.info('Property size: {}'.format(max_props))
+
+    with open('arg/conceptList.txt', encoding='utf-8') as l:
         files = list(l)
-        shuffle(files)
+        resp_counter = 0
+        query_counter = 0
         for line in files:
             try:
                 object_name = line.strip().replace(' ', '_')
                 objects = fileToList('arg/obj/{}.json'.format(object_name))
                 properties = remove_stopwords(fileToList(
                     'arg/prop/{}.json'.format(object_name)), stopwords)[:max_props]
-                LOG.info(properties)
+                #LOG.info(properties)
                 shuffle(objects)
                 LOG.info(
                     'Start {} (size {})'.format(object_name, len(objects)))
                 partitions = partition_to_size(group_size, objects)
                 cnt = 0
                 for partition in partitions:
+
+                    parameters = [query_string_or(partition, min_match=2), query_string_or(QUALIFIERS)]
+                    if add_markers:
+                        parameters.append(query_string_or(MARKERS))
+                    if add_props:
+                        parameters.append(query_string_or(properties))
+
                     es_query = '{{ "query" : {{ "bool": {{ "filter": [ {} ] }} }} , "highlight" : {{ "pre_tags": ["**"], "post_tags" : ["**"], "fields" : {{ "text" : {{}} }} }} }}'.format(
-                        ', '.join([
-                            query_string_or(partition, min_match=2),
-                            query_string_or(properties),
-                            query_string_or(MARKERS),
-                            query_string_or(QUALIFIERS)
-                        ]))
-                    LOG.debug(es_query)
+                        ', '.join(parameters))
+                    LOG.info(es_query)
                     LOG.info('Query for ({}) {}; Partition size {}'.format(
                         cnt, object_name, len(partition)))
                     cnt = cnt + 1
-                    requests.append(     query(es_query, str(cnt) + '_' + object_name))
+                    query_counter += 1
+                    requests.append(     query(partition, es_query, str(cnt) + '_' + object_name))
                 cnt = 0
                 response = grequests.map(
-                    requests, size=10, exception_handler=exception_handler)
+                requests, size=25, exception_handler=exception_handler)
                 requests = []
                 for result in response:
-
-                    if result.status_code is 200 and result.json(
+                    resp_counter += 1
+                    if result and result.status_code is 200 and result.json(
                     )['hits']['total'] > 0:
                         file_name = 'results/{}.json'.format(
                             result.request.headers['x-requested-object'])
                         LOG.info('{} succeeded'.format(result.request.headers[
                             'x-requested-object']))
                         with open(file_name, 'w') as out:
-                            json.dump(result.json(), out)
+                            json.dump({'result': result.json()}, out)
                     else:
                         try:
                             result.raise_for_status()
@@ -167,6 +180,7 @@ def main():
                 pass
             except Exception as x:
                 LOG.info(x)
+        LOG.info('Responses {} | (Queries {})'.format(resp_counter, query_counter))
 
 
 if __name__ == '__main__':

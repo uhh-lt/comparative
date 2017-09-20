@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 import getch
+from random import sample
 
 sentences = set()
 hit = []
@@ -12,12 +13,15 @@ def read():
     file_list = os.listdir('results')
     file_list.remove('.DS_Store')
     for f in file_list:
-        with open('results/'+f) as data:
-            if 'json' in f:
-                j = data.readlines()[0]
-                hits= json.loads(j)['result']['hits']['hits']
-                for hit in hits:
-                    sentences.add(hit['_source']['text'])
+        try:
+            with open('results/' + f) as data:
+                if 'json' in f:
+                        j = data.readlines()[0]
+                        hits= json.loads(j)['result']['hits']['hits']
+                        for hit in hits:
+                            sentences.add(hit['_source']['text'])
+        except Exception:
+            pass
 
 
 def write(lst, name):
@@ -43,6 +47,7 @@ def prompt():
     write(hit, 'hits')
     write(miss, 'miss')
     write(skipped, 'skipped')
+    write(['Hits: {}'.format(len(hit)), 'Miss: {}'.format(len(miss)), 'Skipped: {}'.format(len(skipped)), 'Hit/Sum {}'.format(len(hit)/len(s_list)),], 'stats')
 
 
 
