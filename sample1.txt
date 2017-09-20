@@ -139,7 +139,7 @@ A free trial, demo, or anything that allows people to experience first hand that
 3 forwards are better than 2. Just because one of our guys hasn't found the net in a few games, doesn't mean he won't pop up and have a scorcher in the next.
 According to the S-man, the rest of the world (aka Windows users) are no better than a swarm of crack heads, wandering the corners looking for our next re-up.
 
-## Query: 2 out of 25 objects must match, 1 out of 10 properites must match, must at least two of 'better than', 'is better', 'because', 'worse than', 'is worse'
+## Query: 2 out of 250 objects must match, 1 out of 10 properites must match, must at least two of 'better than', 'is better', 'because', 'worse than', 'is worse'
 14. Maybe this is better than seeing him frogmarched away in chains.
 2010 The beginning of the movie version of an old tv-show is better than the rest of the film.
 A closer target is better than a far away target as it takes less time for the drones to hit it.
