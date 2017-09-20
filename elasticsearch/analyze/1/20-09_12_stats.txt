@@ -1,4 +1,0 @@
-Hits: 81
-Miss: 90
-Skipped: 54
-Hit/Sum 0.36

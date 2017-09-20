@@ -36,10 +36,11 @@ def write(lst, folder, name):
     return file_name
 
 def prompt(folder):
+    limit = 150
     s_list = list(sentences)
     s_list.sort(key=lambda a: len(a))
-    for i, sentence in enumerate(s_list[:150]):
-        print('({}/{}) {}'.format(i, len(sentences), sentence))
+    for i, sentence in enumerate(s_list[:limit]):
+        print('({}/{}) {}'.format(i, limit, sentence))
         print('(A)ccept | (D)ecline | (S)kip')
         choice = getch.getch()
         if choice.lower() == 'a':
