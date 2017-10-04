@@ -18,7 +18,7 @@ REQUEST_THREADS = 25
 
 
 BASE_URL = 'http://localhost:9222/commoncrawl/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=250'
+SEARCH_URL = BASE_URL + '/_search?size=500'
 
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(better OR worse OR superior OR inferior) AND {}"}}}}]}}}}}}'
 
@@ -42,20 +42,26 @@ def query(query_string, concept):
 def main():
 
     requests = []
+    """
     requests.append(
         query(
-            QUERY.format(jsonify_no(['cat', 'dog'], joiner=' AND ')),
-            'cat-dog'))
+            QUERY.format(jsonify_no(['car', 'bike'], joiner=' AND ')),
+            'car-bike'))
 
     requests.append(
         query(
-            QUERY.format(jsonify_no(['ruby', 'python'], joiner=' AND ')),
-            'ruby-python'))
+            QUERY.format(jsonify_no(['coke', 'pepsi'], joiner=' AND ')),
+            'coke-pepsi'))
 
     requests.append(
         query(
             QUERY.format(jsonify_no(['OS X', 'Windows'], joiner=' AND ')),
             'osx-windows'))
+    """
+    requests.append(
+        query(
+            QUERY.format(jsonify_no(['summer', 'winter'], joiner=' AND ')),
+            'summer-winter'))
     response = grequests.map(requests, size=REQUEST_THREADS, exception_handler=lambda x,y: print(y))
     for result in response:
         t = result.request.headers['x-type']

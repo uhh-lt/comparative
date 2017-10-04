@@ -3,24 +3,41 @@ import json
 import getch
 from datetime import datetime
 from collections import defaultdict
-
+from nltk.stem import PorterStemmer
+from random import shuffle
 sys.path.insert(0, '../')
+
+stemmer = PorterStemmer()
+
+
+def normalize(s):
+    puncts = '.?!/",;-\\:'
+    for sym in puncts:
+        s = s.replace(sym, '').replace('  ', ' ')
+    return ''.join([stemmer.stem(x) for x in s.lower().strip()])
 
 
 def read(file):
+    n = []
+    lines = []
+    cnt = 0
     with open(file) as data:
-        line = json.load(data)['hits']['hits']
-        return [x['_source']['text'] for x in line]
+        lines = [x['_source']['text'] for x in json.load(data)['hits']['hits']]
+        shuffle(lines)
+    return sorted(lines[:100], key=len)
 
-def label(a,b, sentences, target_file):
+
+def label(sentences, target_file):
     d = defaultdict(list)
     with open(target_file, 'w') as t:
-        t.write('# COMPARING {} to {}\n\n\n'.format(a,b))
+        t.write('# START\n')
         for i, s in enumerate(sentences):
-            print('{} ({}/{})'.format(s,i+1,len(sentences)))
-            print('(a) {} > {} \t (d) {} < {} \t (g) {} = {} \t (p) Out'.format(a,b,a,b,a,b))
-            su = len(d['>']) + len(d['<']) + len(d['=']) + len(d['o']) + len(d['skipped'])
-            print('> {} | < {} | = {} | o {} | sum: {}'.format(len(d['>']), len(d['<']),len(d['=']), len(d['o']), su))
+            print('{} ({}/{})'.format(s, i + 1, len(sentences)))
+            print('(a)  >  \t (d)  <  \t (g)  =  \t (p) Out')
+            su = len(d['>']) + len(d['<']) + len(d['=']) + len(d['o']) + len(
+                d['skipped'])
+            print('> {} | < {} | = {} | o {} | sum: {}'.format(
+                len(d['>']), len(d['<']), len(d['=']), len(d['o']), su))
             choice = getch.getch()
             if choice is 'a':
                 d['>'].append(s)
@@ -43,18 +60,19 @@ def label(a,b, sentences, target_file):
                 print(chr(27) + "[2J")
 
 
-
 def main():
-    label('Ruby', 'Python',read('ruby-python.json'), '{}-ruby-python.labeled'.format(str((datetime.now().strftime('%m-%d-%H:%M')))))
-    
-    label('cat', 'dog',
-          read('cat-dog.json'), '{}-cat-dog.labeled'.format(
-              str((datetime.now().strftime('%m-%d-%H:%M')))))
+    """
+    label(
+        read('coke-pepsi.json'), '{}-coke-pepsi.labeled'.format(
+            str((datetime.now().strftime('%m-%d-%H:%M')))))
 
-    label('OS X', 'Windows',read('osx-windows.json'), '{}-osx-windows.labeled'.format(str((datetime.now().strftime('%m-%d-%H:%M')))))
-    
+    label(
+        read('car-bike.json'), '{}-car-bike.labeled'.format(
+            str((datetime.now().strftime('%m-%d-%H:%M')))))
+    """
 
-
+    label(read('summer-winter.json'), '{}-summer-winter.labeled'.format(
+            str((datetime.now().strftime('%m-%d-%H:%M')))))
 
 
 if __name__ == '__main__':
