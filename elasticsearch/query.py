@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import sys
+sys.path.insert(0, '../')
 import os
 import argparse
 import json
@@ -10,7 +11,7 @@ from random import shuffle
 from collections import defaultdict
 from os.path import isfile
 import grequests
-from HelperModule import file_to_list, query_string_or
+from HelperModule.utils import file_to_list, query_string_or
 
 
 REQUEST_THREADS = 25
