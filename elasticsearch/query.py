@@ -10,6 +10,7 @@ from random import shuffle
 from collections import defaultdict
 from os.path import isfile
 import grequests
+from HelperModule import file_to_list, query_string_or
 
 
 REQUEST_THREADS = 25
@@ -35,21 +36,6 @@ PARSER.add_argument(
     help='if additional words are provided, how many of them must appear in the result (defaults to 1)')
 
 
-def jsonify(lst):
-    quote = ['"{}"'.format((x.encode('utf-8').decode('utf-8'))) for x in lst]
-    joined = ' OR '.join(quote)
-    return json.dumps(joined)
-
-
-def query_string_or(words, min_match=0):
-    quoted = jsonify(words)
-    mms = ''
-    if min_match > 0:
-        mms = '"minimum_should_match" : {},'.format(min_match)
-    return '{{ "query_string" : {{ {} "default_field": "text", "query" : {} }} }}'.format(
-        mms, quoted)
-
-
 def get_logger(folder, name):
     """create a logger for worker threads"""
     logging.basicConfig(level=logging.INFO)
@@ -69,17 +55,6 @@ def get_logger(folder, name):
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
     return logger
-
-
-
-
-
-def file_to_list(file):
-    """read data file"""
-    with open(file, encoding='utf-8') as data:
-        array = data.readlines()[0]
-        lst = json.loads(array)
-        return list(map(lambda entry: entry['label'], lst))
 
 
 def query(partition, query_string, concept):
