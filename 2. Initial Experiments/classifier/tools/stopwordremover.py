@@ -4,9 +4,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 
 class StopwordRemover(BaseEstimator, TransformerMixin):
-
     def __init__(self, language='english', remove_punctuation=True):
-
         self.stopwords = set(nltk.corpus.stopwords.words(language))
         self.remove_punctuation = remove_punctuation
 
@@ -29,11 +27,11 @@ class StopwordRemover(BaseEstimator, TransformerMixin):
 
 
 class PunctuationRemover(BaseEstimator, TransformerMixin):
-
     def fit(self, X, y=None):
         return self
 
-   def transform(self, documents):
-        for document in documents:
-            out = ' '.join(self.normalize(document))
-            yield
+
+def transform(self, documents):
+    for document in documents:
+        out = ' '.join(self.normalize(document))
+        yield
