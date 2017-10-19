@@ -1,0 +1,500 @@
+Ruby is even worse than Python.
+What's better about Ruby than Python?
+Things where Python is better than Ruby:
+Is Perl better than PHP, Python, Ruby, etc.?
+No one said here Ruby and Python were better.
+And ruby is better than either perl or python.
+15. Python has a much better Emacs mode than Ruby.
+There are much better alternatives (Python, Ruby).
+A Python/Ruby script might work better for this....
+ruby or python which is better for my app? [closed]
+Python and Ruby are better for longer-lived scripts.
+I do think that Ruby is better than Python or Groovy.
+What's better than Perl (Python/Ruby/Java/.Net/etc.)?
+Perhaps Ruby or Python would have been a better choice.
+Which is much better in languages like Ruby and Python."
+I have not given up on Python because I'm using Ruby now.
+to me as if Python meets them better than Ruby at present:
+Python and Ruby are even worse than Java performance wise.
+Ruby is popular because of Ruby on Rails, and so is Python.
+With regards to ORM, somehow Python is better off than Ruby.
+Python experience have decided Ruby better suits their needs.
+Who gave you the silly notion that Ruby and Python are better?
+I think that Ruby is a much better language, but Python started
+parts of Ruby that are better than Python, and if I switched to
+I disagree with this, no doubt because C++/Python/Ruby do not do
+Even Perl/Python/Ruby apps are much better in those two aspects.
+I have not used Ruby, but that is mostly because I chose Python.
+Ruby/Python, except that D is far easier to write, and has better
+Ruby, PHP, Python are more likely because they are not statically
+For this reason alone, Python is clearly better than Ruby or Perl.
+(Don't tell me about how much better Python and Ruby are than Java.
+(Whether that makes Ruby and Python better than Java is subjective.)
+The only reason Python is used over Ruby, is because of libraries...
+That's mainly because Python and Ruby don't have corresponding Apache
+Ruby over Python just as quickly, because I find Python just generally
+Just because I prefer Python doesnâ€™t mean Ruby isnâ€™t great (it is).
+I thought ruby supposed to be better than Perl and Python combined, but
+I know Python better than Ruby, but I still work much faster with Ruby.
+Why? Was it because they chose Ruby over Java, or Python over Smalltalk?
+For what tasks is Ruby better suited than say Bash, Perl, Python, or Java?
+Python, Ruby and even PHP handle this sort of thing much better than Bash.
+Ruby is similar to Python because it is highly dynamic and object-oriented.
+From what I have read, PHP is just an inferior language to Python and Ruby.
+Some people rightly claim Ruby or Python is better the Java for some tasks.
+Modern languages like scala, ruby and maybe python are much better at this.
+Many people think Ruby is Python with lax whitespace, or PHP with better OO.
+Perl's code structure is better than that tab block grock in Ruby and Python.
+Proves Superior to Ruby, Python, Perl and Other Dynamic Programming Languages
+why not use Ruby - the better python, as programming language for this paper.
+Erlang syntax is not Ruby's or Python's because Erlang is not Python or Ruby.
+I have read about the beauty of Ruby and how it's better than Python or Perl.
+Ruby I may or may not end up using again, because Python is fun to program in.
+No, it just means Python, Ruby, and PHP are doing better now than in the past.
+I'm just wondering if you guys think I would be better learning Python or Ruby.
+I think a better example of a very high level language would be python or ruby.
+The popularity of the ruby over python is because of RubyOnRails web framework.
+I like its roots in Ruby and Python and reading CoffeeScript feels better to me.
+Migration from python to ruby is problematic because ruby lacks certain features.
+However, this is not to say that Python/Ruby are better than PHP in all respects.
+Looking only at language features, both Python and Ruby are much better than Java.
+I've tried Python, and can see why people like it, but Ruby suits my style better.
+for json: i also think its better to just use python, ruby, perl and transform it.
+I also need to take a better look at how Ruby or Python handle this type of thing.
+that is: "Python (or Ruby) can "something", but php cann't this, so, php is worse!"
+Ruby is like perl and python, only better, and it is required to run this software.
+Similarly to Ruby, Python is also good for kids to learn because it is easy to read.
+However, the more I look at Python the more I am convinced that ruby is just better.
+DLR-based implementations of Ruby and Python should be better suited to that purpose.
+One of the reasons I chose Python over Ruby is because it isn't a TIMTOWTDI language.
+Although Python seems to be more popular than Ruby, I think, Ruby has better concepts.
+Compared to VB/PHP - Python/Ruby are much, much better designed languages than PHP/VB.
+Maybe we should stop using languages like Python, Ruby and Perl because they're "slow".
+The reason you say this is because you have little to no experience with Ruby or Python.
+I've been going through Ruby, enjoy it, like it better then Python, never really dug PHP.
+In fact, Python incorporated a Ruby feature into 2.4 because it worked so nicely in Ruby.
+Even other "weird" languages like Python or Ruby are accessible because they at least use
+We appreciate Python, Ruby, LAMP, REST, KISS, worse is better, and talk like a pirate day."
+I love Ruby but I would actually go with Python because I have way more experience with it.
+You don't write in Python/Ruby/Tcl/etc because you're not good enough to write in C or C++.
+They do this because C is a letter, Ruby is a stone, Python is a snake (or a comedy troupe).
+I think I did okay, but my Python skills are far better than my Ruby skills, so please test!
+All in all, I usually prefer Ruby to Python, because I love Ruby's metaprogramming support .
+I could suggest that I prefer Ruby to Python because of whitespace but that would be a crock.
+Teaching in Python, Ruby, or even Pascal (I'm showing muy age) would be better for beginners.
+Python would have also been a good choice but IMO it is an inferior language compared to Ruby.
+I was in the same boat as you Achim, experienced Python guy who got into Ruby because of Rails.
+I've played with Python but I'd like to learn Perl and Ruby, if only because I am overambitious.
+For better or worse, Ruby, Python, JavaScript and so on have changed how people see programming.
+This is because strings in ruby are mutable, as compared to languages like Java, C# or Python.\n
+Languages like Python, Ruby, Serversided JS and Perl, maybe even Lua and Pike do this job better.
+I kind of wish I had started with Salt or Ansible because I know far more Python, than I do Ruby.
+Ruby - because I have more fun using it than other languages I have tried (Java, C, Python, Lisp).
+Parrot seems to fill the gap, because one could replace ruby, python and perl (and others) with it.
+But I preferred Python over Ruby, because it had more libraries and seemed to be better documented.
+Python use in scientific programming language but ruby not use because python provide large library.
+Web --- Not really my area of expertise here, but Ruby is considered a tad worse than python overall.
+I have learned many more languages, Java, Ruby, Python, to name a few, because it's a job requirement.
+We're (mostly) a bunch of guys in slacks talking about whether or not we like Ruby better than Python.
+I don't learn Python and Ruby because I don't feel they'll teach me anything new or be more expressive.
+I am not sure a python for science or a ruby for science day would work better than a more general one.
+I felt so jealous at people who were using Ruby or Python because they are so happy and so productive...
+We will just be a little more conscious," because I don't see Python or Ruby as being inevitably slower.
+Similarly, auto-completion isn't as big of a deal in Ruby or Python because overall LOCs are much lower.
+Amongst the better known dynamically typed languages are Python, Ruby, JavaScript, Erlang and Smalltalk.
+This forced the issue for the JRuby developers, because Ruby, like Python, needs good string performance.
+A good thing about Ruby is that it keeps the python-dev guys on their toes thus producing a better Python.
+That left Python or Ruby, and I thought Python was better supported and so chose that for a sample project.
+Perhaps even better would be scripting languages such as Python and Ruby, but I don't know much about those.
+So I hope to pull that discussion over here because it's about Smalltalk vs. Ruby, not about Python vs. Ruby.
+I wanted to learn Ruby because I wanted a fairly simple general purpose scripting language that wasn't Python.
+Python uses %r because their equivalent of "inspect" is "repr" -- for Ruby a different letter might be better.
+Scripting languages like Python, Perl and Ruby all perform several factors of magnitude worse than JITed code.
+In uncompiled languages (ruby, python, etc), we can provide better syntaxes which make for more readable code.
+Ruby had won the hearts of Python programmers because it is more flexible and more object oriented than Python.
+But I would say Python and PHP and Ruby are all good choices too, even better choices from many points of view.
+Maybe someday the perl/python/ruby plugins for Eclipse will be better but until then Komodo has no competition.
+... comparing Python to Ruby from those of you who have ... Ruby's documentation of its libraries is much worse.
+Interpreted languages like Python and Ruby have better language design and thus are more pleasant to program with.
+I like Python better than ruby and wish rails ran on Python, which is why I was seriously taking a look at Django.
+Ubuntu 12.04 is recommended because of some incompatibilities between Python and Ruby on other Linux distributions.
+Perl, Python and Ruby fail to attract many Java and C++ programmers because, well, they force you to get stuff done.
+Even better, they are going to provide libraries for your favorite language: Java, GWT, Python, Ruby, PHP, and .NET.
+Or better yet, switch languages to something like Ruby or Python, as this is more complex than I like to do in Bash.
+The problem is Ruby and Python are not seen as enterprise ready or fit for anything better than simple applications.
+4.20PM - Wow, lots of searching and flicking through Twitter Ruby GEMs, thecoverage here is a lot worse than Python.
+The only things Python have going for it are a comprehensive library, "better than Ruby" performance, and mindshare.
+I've had to give up using Ruby for a couple projects because of serious performance issues compared to, say, Python.
+is obvius that no newcomer is nuts enough to learn perl when there are faar better alternatives like python,php,ruby.
+If Parrot cannot be better VM for Perl 5 (for any its major future revision), the same is true for Ruby, Python, etc.
+Again, this pain is needless, because the syntax of other languages (such as Python and Ruby) is significantly easier.
+If they chose Ruby, it's because in their mind it's better than PHP or Python, regardless of whether or not it's true.
+For languages I think Python or Ruby are better than basic, because both of them is actually used and they are simple.
+In practice I always finish up with C#/Java, Ruby, Javascript, Python and SQL because that's where the communities are.
+Notice that in the previous chart Ruby and Python are not shown because they represent only 0.6% and 0.2% respectively.
+I wonder whether thats just because there is more of a hype around languages like Haskell, Ocaml, Ruby, Java or Python.
+@Raj, Java is just a programming tool, although I think it is superior than scripting languages such as Python or Ruby.
+That's still much slower than Java, of course, but then that's a bad comparison; Ruby and Python are better comparisons.
+Ruby has better support for such declarative styles and I am glad the core python language is not going down that route.
+I learned Python first, and then came to Ruby because of Rails, but I now prefer Ruby over Python irrespective of Rails.
+In practice I always finish up with C#/Java, Ruby, Javascript, Python, and SQL because that's where the communities are.
+I prefer this one to LustyExplorer because I cannot compile vim against ruby in windows and with python I can do it fine.
+Dynamic languages like Python and Ruby are also bad, because their "metaprogramming" happens at runtime, not compilation.
+Saying that Python or Ruby are better than other languages because they don't need semicolons is ridiculous and childish.
+Perfect answer to a simple question, followed by a dozen comments fussing about whether Ruby or Python has better syntax.
+Languages such as Python and Ruby use singletons very little because you can use global variables within a module instead.
+Perl is the imagination made power (and pay my bills!) and Ruby because it's much more elegant and consistent than Python.
+The standard Python libraries themselves tend to be somewhat better thought out and structured than their Ruby equivalents.
+I use Python and love it so I'm going to be a little biased, and because of that I've had no reason to even look into Ruby.
+I'm a huge Python/Django & Ruby/Rails fan, but I will never stop using PHP because it is so broadly accepted and supported.
+Every time I say this people say "well, that's amazing because usually Python people hate Ruby and will never change sides".
+Obviously better than Java -- pick any site that's written in Perl or Ruby (even Python), and not Java, and ask yourself why.
+So Perl, Python and Ruby get a lot of attraction, because they can express the same stuff with less code and with less noise.
+I'm ultimately probably better off switching to Ruby/Python/Groovy at some point, but I wanted to get something working first.
+As a ruby newb and future ruby web developer, what did you find better in terms of programming versus the usual python or PHP?
+It also means they are unlikely to meet with you because they were wowed by your thought process on choosing Python over Ruby.
+And so you have many programmers choosing to use Python or Ruby because good libraries exist there for solving modern problems.
+Lisp, Scheme, Python, Ruby, and Smalltalk are all better than Java and .Net, and all lack those features you find so necessary.
+Plus you run into problems when the abstractions get leaky because you're not really writing Python (or Ruby or what have you).
+Hi Aaron, I gave up on Ruby for now precisely because it doesn't support Unicode natively while Python does, or so I thought...
+As far as Ruby and Python are concerned, people who know both still disagree about which one is superior at language level (i.e.
+a sequence reserve can be simply: s.reverse etc. if you use databases: ruby database binding API is arguably better than python.
+My feeling is: a really good PHP developer is that who has migrated from PHP to a better designed language, like Python or Ruby.
+Just because Perl and Ruby do it doesn't make it good and desirable - Python doesn't have the structure as was originally stated.
+You think people are using COBOL because "they don't think Ruby, Python, Scala, Lua, PHP, Java could possibly handle the 'load'"?
+@RomanLuštrik: I would personally use Perl, because I am familiar with it, but Python or Ruby should prove equally good solutions.
+Should I be required to install PHP, Ruby, Python just because once every few months I want to make a simple configuration change?
+Someone please tell me that Guido hasn't fallen for the "Python is losing to Ruby because Ruby only has one web framework" argument.
+If they perform better than their counterparts it might make python and ruby coders able to take on more platforms and capabilities.
+Some will say Python is better for GUI apps as it compiles more, and is a tad faster, and it's fairly similar to Ruby on the surface.
+Ruby is definitely better than python, but still not perfect, and still an order of magnitude slower than statically typed languages.
+I've observed that, on average, the quality of the libraries is better in Java than in the competition: Perl, Python, Ruby, whatever.
+I usually recommend Python over Ruby, as I prefer it, but in this case it may be better, due to everything inherently being an object.
+From the discussion here, it sounds like you might have better success using python 3.1 for development and ruby 1.8.6 for production.
+Yeah, I know I should program in Java or Python or Ruby or Kotlin or something else because it is obviously way cooler ... but I don't.
+I wonder if they didn't compare themselves to Ruby or Python because they couldn't contrive examples that produce huge LOC differences?
+I love the language but I'm considering getting better at python just because ruby is so slow I feel bad using it for anything serious.
+I felt quite hungover around this time because these solutions were over ten strokes behind in Python and nearly twenty behind in Ruby!
+It's namely the "explicit is always better than implicit" and the "flat is better than nested" items where python and ruby differ wildly.
+Aptana A better option for professional Web application developers, Aptana supports HTML5, CSS3, JavaScript, Ruby, Rails, PHP and Python.
+Stevey describes how totally crazy its founder - Lary Wall - was, turning Perl into a cult, and how and why Ruby and Python are superior.
+Python and Ruby were much more recently the "hot new thing" and have gotten a lot more attention in the last decade or so because of that.
+I love Ruby, more than I love Python (which I do love...) - but I feel Python is a better choice for teaching/learning as a first language.
+2. Um, Google App Engine currently only runs Python, not Ruby, but you were close, really, because they're almost the same language... NOT!
+Notice that Python, like Perl, but unlike Ruby, does not need to map the trailing newline because the Python raw_input function removes it.
+python is a full purpose language, just like ruby, perl, java, etc. python executes much faster than ruby, and the documentation is better.
+I'm not totally convinced the debugging tools for Perl, Python or PHP are substantially better than Ruby, even if they are slightly better.
+If your tasks are more complex, for instance because you want the script to run on other platforms too then I'd probably use Ruby or Python.
+Anyway, for this book, geany has been used, mainly because it handles both Python and Ruby (amongst many others), and is rather lightweight.
+"Is Ruby or Python better?") are off-topic since there isn't really a right or wrong answer, but the example question I gave is not that way.
+Personally I wish they would have hired someone to work on Jython, because I'm not too fond of Ruby (yet, it took me a while to love Python).
+This isn't a very compelling example though, because strings are immutable in most dynamically typed languages, such as Python and Ruby, too.
+Why does Python, Ruby, Bash have better tool and feature when it uses a low level language interface that was meant to be used by applescript?
+Your C# and VB devs can suddenly easily write web apps and your python and ruby devs can too - with the added bonus of much better performance.
+cPanel has become recognized because it supports a wide variety of applications such as Apache, PHP, MySQL, Python, Ruby on rails and many more.
+With dynamically typed languages, like PHP, Python, Ruby, your development will be much faster, but you will have to test your code much better.
+Of course, Python and Ruby will go the same way after a few years if they're as successful as Perl, because this richness is a mark of maturity.
+This is one area where MySQL Cookbook really shines, because it contains a large amount of sample code in Perl, PHP, Python, Java, and even Ruby.
+all perl, python, ruby or ghc packages) it may be better to initially do the builds in another repo, so that there is less disruption in rawhide.
+So Ruby/Python arise to displace PHP, because fewer people do Ruby/Python, because the 2nd world and 3rd world have tons of PHP and ASP developers.
+Should I learn it as well as Python/Ruby/PHP/whatever? 1.26 Is Perl better than PHP, Python, Ruby, etc.? 1.27 Which method to do $TASK_X is faster?
+Wanting to learn more about Google Wave, I ported the Wave Robot Python Client library to Ruby , mainly because I wanted to understand the protocol.
+If that's the case, use python or ruby or whatever easy to use high level language you have on hand because this program isn't actually IO intensive.
+I've implemented this in Python, but not in the Ruby version, and I think Michael's solution might be a better place to start from when persuing this.
+Nowadays, I've started to abhor starting new projects in java because I feel it's too verbose compared to untyped languages like PHP, python and ruby.
+(In other words, in my opinion, it's better to use Python than something else you're not already using, like Ruby or some other interpreted language).
+He talked about a global shift is happening because of the passion outside silicon valley in open source, Ruby, Python and other similar technologies.
+So Ruby-like syntax is a pure win over Python-like syntax - better for one-block functions, and equally ugly for no-block and multiple-block functions.
+Python and Ruby programmers come to Go because they don't have to surrender much expressiveness, but gain performance and get to play with concurrency.
+But it is much easier to improve the performance of python then ruby, because there are a few more sophisticated technologies for python then for ruby.
+The question is why would you use PHP, when there are languages out there, like Python or Ruby or even JavaScript, which are just plain better than PHP.
+I know little about Ruby or Python except that they're object-oriented, so I don't want to compare them, but out of C++/Java, Java is the better choice.
+For longer pure programming tasks you are better off using something else (be it Python, Ruby, Java, C++, Javascript, Go, ML, Julia, or something else).
+Arguments please, the only OO-related thing that I saw could be considered superior in Ruby 1.8 (compared to Python 2.4) is the handling of properties...
+And on a GNU system, your chance of having the GNU objc stuff and GCC installed actually seems a bit better than writing it in Ruby or maybe even Python.
+But If all us believe that python or ruby are better than PHP, we must all agree with the fact that PHP deployment is completely gracefully and painless.
+The windows version has ALWAYS been better than most linux-distro versions in working with the "presence or absence" of perl -- and later, ruby & python.
+Ruby and Python might be much better, so I will learn them after I've started making money with PHP and other technologies, in shaa Allaah (God willing).
+In our Nixpkgs repository  we have support for several programming languages: perl, python, ruby, haskell, lua, ... We've merged a better support for Go.
+Node is a good fit for CouchDB because Couch encourages asynchronous background processes, but people also use Ruby / Python / Java for the same purposes.
+I also think python is a good choice because it is similarly very easy, but I think its much less fun because it lacks the beautiful synchronicity of Ruby.
+Perl (and others) might be better suited to parse log files I'm about to look into Python and Ruby as I hear many good things about them for various tasks.
+I think JavaScript is no better than 10, Python and Ruby are together with Perl around 15, maybe Ruby has the highest level of these languages (Comments?).
+In other words, Parrot has certain features because the Python & Ruby folks needed them, and these will require Perl to adapt if it wants to take advantage.
+The book pitches itself as being aimed at "Engaged Java Developers" (dealing with hard problems, looking for better tools) and "Ruby and Python Developers".
+That it does not fail by default on I/O errors is the fundamental failure of the language, and makes it completely inferior to Python and Ruby for admin work
+Programmers refer to use modern programming languages like Java, Python or Ruby for their uses, because of their powerful built-in functions and flexibility.
+Ruby teaches you to use lambdas right out of the box while in Python they're considered advanced play because of the awful (magical) syntax for creating them.
+Then maybe you put node.js down because you didn't need a asynchronous Hello World server in your mostly Ruby (or Python Clojure, or Bog knows what else) shop.
+Ruby and Python are for people who need to write short programs from time to time, better than VB, of course, but no substitute for professional quality tools.
+"All the cool kids are using (Ruby/Python/TI-994A Extended Basic) because they don't have CPAN yet and they can become the uber-programmer for the cool modules."
+I guess in the end the choice really boils down to two things - whether you like Ruby or Python better and whether you like the defaults imposed to you by Rails.
+Python unicode support has always seemed trivial to me, and much better than the other languages I've worked with (c, php, perl, ruby, javascript, actionscript).
+If Moose is what lets people writing in Python or Ruby write clear OO code faster and easier with better maintainability and decent performance, then push Moose.
+Most open-source projects use Subversion as a repository because other larger projects, such as SourceForge, Apache, Python, Ruby and many others, use it as well.
+He's right, I'm simply parroting the stereotype that Perl is older than Python (or even Ruby which came into existence in the mid 90s) when I rightly know better.
+Once you know what needs to be done, you can certainly use python to do it, or even perl, or ruby, or C. Python is nice because it's quick and easy to start with.
+Lastly think about those who don't complain but just give up and leave, From past few years Ruby and Python scored some undeserved points because of all this FUD.
+Immutability fits into this complex because in Python/Perl/Ruby/other languages I often solve this with some form of monkeypatching, which is a form of mutability.
+For example, Ruby and Python are popular for more complex tasks because they have comprehensive libraries, whereas Perl is popular for quick data processing hacks.
+C is notable, because many other languages including Java are actually derived from it, and other languages including Ruby, Luna, Python, etc are implemented in C.
+Is it better than c++, python, lua, rust, Haskell, ruby, etc. Seth seems to be mainly concerned with tooling without being aware of the tooling that exists for us.
+I find that Python, Ruby, Javascript and SQL are much more productive than compiled languages such as Java because those languages have a very quick feedback loop.
+"As much as I love Ruby, I might recommend Python over Ruby to a total beginner because of Python's 'there's one best way to do something and this is it' philosophy.
+Many other languages (just like Python or Ruby), have become popular with a tagline "Obsoleting Perl", because they all thought a replacement was desperately needed.
+I thought I'd send this out to Nitro because I've seen the plethora of frameworks in the Python world and ... This kind of gateway structure for Ruby would be lovely.
+We'll probably have some male teaching assistants whenever we get to the full day Python or Ruby workshop, because a high teacher-to-student ratio is also important.)
+One of them ( Jan rather than Andrzej ) was of the opinion that Ruby was more object oriented than Python because you are able tack methods onto the built-in classes.
+Other languages are easier to port and maintain because Ruby, Python, and the like don't try to port their own entire desktop API with them from platform to platform.
+And now that MS has support for Python and Ruby, they are as evil as before but also stupid, because that means they don't have any direction to give to the community.
+That's why If you are a designer, I might suggest you start with JavaScript and then move on to a better designed, high level programming language like Ruby or Python.
+I'll advocate Perl, others will point out PHP is most commonly used, Ruby has a single obvious choice for frameworks, or Python is a better choice for unknown reasons.
+(And maybe inertia, but that inertia is there because of performance, and anyone who can write good C/C++/Java can write at least passable Ruby/Python/Lua/JavaScript.)
+Now that Python has a huge bucket of competing solutions, some arguably superior, especially in ORMs, the draw of Ruby vs Python seems to have been drastically reduced.
+Great products, ideas and methods have lost mind share to lesser things (not that Ruby is inferior to Python or vice versa) because they lack fluff, ribbons and glitter
+In addition the comparison on multi-core machines is also flawed because Ruby code uses only one CPU whereas Python uses all four due to use of multiprocessing library.
+This brings the .NET programmer closer to Python and Ruby when they need it, and it gives them a better experience with COM interop and other dynamic data, such as XML.
+I find Ruby better suited for interactive usage (irb), but like wise that Python has considerably better documentation on how to use stuff - that's why I prefer Python.
+Python or Ruby (it doesn't really matter which) would be my next choice (and very close to the other two) just because the dynamic typing could be problematic at first.
+I believe it's called monkey-patching in Ruby, but it's intentionally left out of Python because it leads to poorly designed (if you can even call it designed) structure.
+It's not analogous to the XML method, and isn't easily generated and serialized from a hash in Perl, Python, Ruby, et al to JSON, because it has duplicate keys for "add".
+It is doubtful that Python apps will ever be accepted as a core part of KDE, because it would essentially mean picking a scripting/desktop language, be it Ruby or Python.
+If you don't have a preference, start with Python as it is easy to learn and use and if it is too slow with Python, Perl and Ruby probably won't be able to do any better.
+That's why I don't want to discuss with those people who thinks Ruby is like Perl because they can only understand Python and what they can't understand must be like Perl.
+I wouldn't spend "TOOOOO" much time optimizing my code in a dynamic language like Python or Ruby -- because, they are NOT designed for CPU intensive number-crunching tasks.
+Just curious because I'm currently in the process of wrapping my head around VBA, which I'm told is not nearly as intuitive as Python or Ruby, but I know is useful at work.
+There is a good need for such tools because proxies are quite complex and not trivial to write even if you choose to use a high-level language such as Java, Python or Ruby.
+While much used bindings e.g. to Databases are of good quality I found niche libs to be better supported in Python even if for the same library there is also a Ruby binding.
+Regardless of whether we are using Python, Ruby, or Groovy, we better be writing idiomatic Python, Ruby, or Groovy code and not writing idiomatic Java code in said language.
+There are other languages with at least as much independence (eg Ruby, Python etc) that have better web frameworks, and are far better languages for developers to work with.
+Later they have patched some holes, but some of the original more "relaxed" nature of Python shows still (Ruby is worse than Python regarding large multiprogrammer programs).
+Why should I abandon Python for Ruby (Not Rails, but Ruby itself because Django blows Rails out of the water), and I know that this is a great place to find Ruby evangelists.
+I kind of like the Python language better and it seems to be more full-featured than Ruby for statistical, scientific and networking (let me know if you think this is wrong).
+Python has been around significantly longer than Ruby, & with Google's embrace of the language, Python's documentation has gotten noticeably better during the last few years.
+Python, Java, C#, Perl, Ruby, C++ and others are great tools for many kinds of applications and tools, but there is still no better choice than C for something like libraries.
+Python and Ruby are popular among web developers as well because of their rapid development cycle, with Python boasting computation efficiencies and Ruby boasting code design.
+If you don't know what JavaFX is, you're probably reading my blog because you're interested in Ruby, Python or the various other languages for NetBeans I've been involved with.
+A further advantage of perl or python (or ruby) would be that these should all have libraries for interfacing with matlab, and much better data structures than bash for tables.
+I don't think ruby-python developers are ignorant about the power of Intellij or Eclipse, because most of them(at least those I know) know java and used or still use the tools.
+Of the two, Ruby has always seemed the more interesting one (partly because it embraces functional programming more than Python does), but I haven't yet had occasion to use it.
+Not least because as part of my move away from C++ I have determined to be at least proficient in all the popular interpreted languages such as perl (obviously), python and ruby.
+People writing Ruby or Python will still be better off using proper Ruby or Python libraries than the .NET BCL, even if they are hosting their Ruby or Python in the .NET Runtime.
+(One reason why I moved from Python to Ruby for scripting was because the #python IRC channel was condescending and rude to people asking questions; #ruby denizens were friendly.
+While Ruby/Python/PERL/PHP are interesting and can do some things better/nicer than Java, I think that it will take some time for one of these languages to be on a par with Java.
+Please do continue with this series because it will no doubt provide me insight into doing things the Python way instead of the Ruby way which will hopefully be as good or better.
+Perl is awesome, but if left to the whim of fate on Windows, I fear the angry mob of Python, Ruby, whatever is new and thinking it's better than everything before it type thinking.
+There are plenty of existing tools for Ruby / perl / python that do what you want - far better to install them on the appserver and have PeopleTools call them and do what you need.
+You might want to look at a scripting language, or something like Ruby or Python, because they have way more scope for doing the sort of stuff that you need reflection for in Java.
+Python and Ruby are far better languages than PHP (for learning purposes), because you can do a variety of things with them (not just web development), and they have clearer syntax.
+Now - there's nothing to stop you writing your own code (maybe in Ruby, Python or Perl) including these features ... but wouldn't it be better to use the feature set that someone ...
+Ruby is not a primary language eevee is faimilar with (he's primarily a Python/Rust guy from what I could see - because I have been reading his other articles just a few days prior).
+For the sake of argument, let's substitute Perl with Python (or Smalltalk, Ruby, Lisp or C++), because even great Perl programmers tend to have strange ideas about object orientation.
+Languages like Ruby, Python, Lua, and Processing really aren't what you want if that's what you are looking for because they are designed to insulate the programmer from the hardware.
+We've already got support for Java , php , Ruby , and Perl in some form; make it better or add support for some other language you know and love (TCL, python, scheme, LISP, ML, etc.).
+This is a problem for languages like Ruby, Python, PHP, Perl, and others because in many cases extensions, libraries, and plugins for these languages are loaded by the VM using libdl.
+It's pretty popular in the scientific community simply because it combines the simplicity (and noobicity of the coders) of PHP, Python or Ruby with high-level mathematical constructs.
+Python or Ruby may actually help promote better programming practices, but they aren't as accessible as PHP in terms of examples, online docs and tutorials, and hosting is not as easy.
+That's because a lot of those applications may not even be written in D or have anything to do with D, like the mass of stuff written in dynamic languages like perl, python, ruby, etc.
+Python and Ruby are popular among web developers as well because of their rapid development cycle, with Python boasting computation efficiencies and Ruby boasting code design benefits.
+When I do finally break this addiction (I can stop whenever I want!), I've always thought that the next language choice was clear: Python, which seems to fit my style better than Ruby.
+When I first looked at the Python grammar I was excited (it's the best dynamically typed language I've seen); when I first looked at Ruby, all I felt was at least it's better than perl.
+I am always terribly amused when people claim that their favourite language out of the group of Perl, Python and Ruby is clearly and obviously much better than one or more of the others.
+I chose to learn Python over other languages like Ruby because of its application to statistical packages and because of it's reputation for being an easier scripting language to pick up.
+It is worth noting that because the APIs use the standard HTTP protocol you can easily work with them from any programming language including C#, Java, Ruby, Python, Perl, PHP and others.
+For example, someone might argue that Ruby is better than Python because they were able to rewrite their web site using Ruby in half the time it took to write the original Python version.
+However, because PHP is interpreted, PHP code is parsed and translated to ... including Perl, Python , and Ruby, PHP code is parsed, translated to .... Now, disable XCache in your php .ini
+Some languages fare better than others, for example, I wouldn't code Java in Emacs pretty much no matter what, for Ruby and Python I'm about half-and-half, but IntelliJ is winning me over.
+Ruby may be a better language than Python or Perl, but too few people are using it, and the documentation is still too obviously translated from Japanese for me to feel comfortable using it.
+I wrote this version because (a) I have begun writing Python programs, (b) I have found that Python is much faster than Ruby, and (c) I wanted to add some features and update the old program.
+So, help a Python/Django newb understand...is there something inherently better about Python versus Ruby, or Django versus Rails, that makes the first scale and perform better than the latter?
+As PHP frameworks become more mature, you start to see speed issues because unlike Java/Python/Ruby/.NET ALL of those PHP files have to get loaded on every request, creating a lot of disk I/O.
+I've used it to write single-page programs that perform better than what would take three days and 13 third-party libraries in C or C++, and wouldn't even be possible in Python, C#, Ruby, etc.
+I've mostly moved on to back-end programming in Java, Python, and Ruby, but I'm usually very excited to put my JavaScript boots back on simply because Chrome makes it so much fun to work with.
+:D - Just give them a new TDBGrid and a Firebird driver and they're happy 2) Part time developers who just need new cool features to play with just because their friends using Python/Ruby have.
+The performance is acceptable, worse than scala but better than languages like python or ruby, so if you are writing a game that is not processor intensive, then you shouldn't be too badly off.
+"Worse is Better" can be seen in languages too, for example the ideas behind Perl, Python, Ruby, Php even C# or Java, or whatever language that isn't assembler or C (C++ might fit here or not).
+I would probably recommend FLTK over FOX due to fluid, but FOX's online documentation is more thorough and the binding to scripting languages (python, ruby, etc) are better and better supported.
+It's those domains that you see people turning maybe away from the object oriented languages and turning to Python on every reason, to F# because Ruby and the like have different strings as well.
+And let's be realistic - Java devs always end up running the code through a debugger anyway (and the mass refactorings come later); that's no better or worse than how it's done in Python or Ruby.
+If you know you're writing a webapp but don't know python or ruby I'd lean towards RoR over Python Django - I think Rails is the stronger framework (conversely I like Python better as a language).
+The even better news is that it is actually possible to use a variety of tools: Python, Ruby, shell scripts and R to perform distributed fault tolerant processing of your data on a Hadoop cluster.
+As for learning, Javascript is good, I'd do python before ruby, mainly because the culture of python seems better in line with education: there's one good, and preferably obvious way do do things.
+As Ian said, people choose Rails because they like how the model helps them work and Ruby comes from that choice, and people choose Zope for similar reasons and Python comes as part of that choice.
+"Now it has become easier for languages like Python and Ruby to succeed without a lot of money because open source creates a strong network when people are excited about an idea and can collaborate.
+Kini pengguna Perl tidak perlu minder lagi, karena Perl kini sudah punya sistem objek yang modern dan "tidak mengerikan lagi", bahkan berani deh beradu superior dengan Ruby, Python, Javascript, dll.
+I've experimented a little bit with Python, Scheme, Pascal, Ruby, Java and other languages, just to figure out how they work, because working with them helps understanding a different point of view.
+If you're a programmer, learn to use a framework like Django (Python), Titanium (Perl), something smaller in Ruby (because Ruby on Rails is a bit big to start with) or one in your favourite language.
+Ruby has similar issues and although I do like Ruby much better than I like Python, I get the impression that Rails is roughly in the same boat at Django when it comes to managing/supporting the app.
+however, because SOAP::Lite to SOAP::Lite does work (and work very well, I find it hard to believe that Java (or Python, or Ruby, or whatever) cannot be coerced into understanding SOAP::Lite objects.
+An article that compares Perl and Python can be found here Although Ruby might be better as a language, there is hardly any code in Ruby that could be used for A-A-P, while there is plenty in Python.
+I still use Bash for most automation tasks because there's no guarantee that the next person in my job is going to be familiar with Perl, Ruby, and Python, but every unix admin is going to know Bash.
+Certainly connecting from C, Ruby, Perl, Python, PHP then for many use cases the Stomp version will be a little better - though it'll take a little while for the C, Python and PHP clients to show up.
+Reflection - because of the type restrictions .NET reflection is massively more painful and complex than the beautifully simple introspection capabilities of languages like Python, Ruby and Smalltalk.
+The languages like Python and Ruby can be better at programming small apps, but they really aren't good for large scale apps in my experiences, and they aren't as good for enterprise style deployment.
+I guess that even in 2009, I was pretty late to the game and because I spend most of my time with PHP and related, I figured that Ruby and Python developers probably caught onto the term much earlier.
+And I think it's important to qualify, to state as fact so that this subtle point isn't lost, that the reason people want to use Ruby or Python is not because people want to hide from specifying types.
+(This could be particularly tricky, because the Parrot project has the ambitious goal of being compatible with Perl, Python, and Ruby, and their manners of implementing objects are slightly different.)
+Learning Ruby: quite trivial, as Ruby is like Python, but sometimes there a Ruby-way and a non-Ruby-way (codeblocks and stuff like this) and to write nice Ruby programs you better write in the Ruby-way.
+To say nothing of Ruby on Rails, there are at least a dozen modern MVC frameworks out there for Perl, Python, J2EE and yes, PHP, that are much further along and more importantly seem better thought out.
+The answer to the questions "which is better / which should I learn - PHP, Ruby, or Python?" is simple: learn all 3. Diversify yourself and master 1 at a time, as a result you will become more valuable.
+I'd come to the conclusion Ruby was 'better' than most(certainly php, probably python, and javascript because is not well supported server-side), but i could not have said why as succinctly as you have.
+For example: Awk, Bash, Basic variants, C/C++, Java, Lisp variants, Lua, Pascal variants, Perl, PHP, Python, Ruby, XSLT - So the chances are better than good that the language of your choice will be OK.
+And because I'm a Microsoft MVP for Windows Azure, it's great to see that they've opened that up to allow people working on Java, Ruby, PHP, and Python to make highly scalable applications in the cloud .
+There are plenty that I don't think are worth using myself (C++, Java, Ruby, anything.NET, Perl, Python), but that's just because I can already do what I need to do using other languages (PHP, C, Obj-C).
+Ruby's blocks work because it's ruby, no one has found any pythonic way (syntax) to use blocks-like anonymous functions in python, and until that is done I doubt Guido will even consider putting them in.
+Ruby already has several libraries supporting actor style concurrency (see my blog post and interview about Revactor for an example), but this is interesting because it bridges over into the Python world.
+Way on the other side of town are dynamic languages like Python, Ruby and Javascript (and their non-OOP progenitors like Scheme, but I'll focus on OOP ones here because that's what I'm most familiar with).
+Rubymine does it better than most (not surprisingly, coming from the guys who brought you IntelliJ), but of course there are always going to be limitations with a dynamic-typed language like Ruby or Python.
+Here we still program in C (I don't, but others here do) because if we wrote in something like .NET, Ruby or Python the executable would be so much bigger and the binaries wouldn't fit on the device hardware .
+I would be far more interested if they made an IDE for Python or Ruby, or better, made scripting available to C++ Builder, so one can make the interface in Python (or Ruby), and the speed critical code in C++.
+I've used Python heavily (especially on embedded devices), Lua is interesting because of its take on objects, Ruby/RoR ... they are certainly different and I'm not sure "least surprise" is how I'd describe them!
+P.S I work in IT as a QA Tester my main interesting is gaining a better understanding of systems I have to test and using the right tool to allow me to do my job better whether its using Perl, Python, Ruby etc..
+You don't need to know how to write software programs, but you should know how to read code (C, Python, Perl, Ruby, etc.), because you will need to modify certain exploit scripts to suit your particular purposes.
+The reason why is because when looking for hosting packages I did notice that Ruby and Python are becoming quite common now and I've heard how nice of a language Ruby is as a language, so I decided to try it out.
+I'm including it largely because it illustrates some technical difficulties in integrating runtimes: the last posted version integrates Python 1.5 (which uses reference counting) with Ruby (which is fully gc'ed).
+What you have to keep in mind is that dynamic languages like Ruby, Python, JavaScript and Scala are often proposed as being better approaches to programming than, say, Java precisely because they are weakly-typed.
+It hardly matters that Python isn't quite as good as Ruby for creating these domain-specific languages (and it isn't, we must admit it) because doing so runs contrary to the principles we as pythonistas hold dear.
+I like Ruby, have never in person talked to someone who codes solely in python, and personally do not code in Python because I needed an OOP approach finally - but being a fan or ist for anything is really stupid.
+Perl is not my favorite (I'd rather use Groovy, Python , or Ruby ), but I find myself needing to use it at times, usually because I'm modifying or using an existing script or set of scripts already written in Perl.
+I like the idea of a language like Ruby or Python as an introductory language because I think the student has fewer details to worry about before starting to try and solve problems (variable typing, as an example).
+Scala is an awesome language and I've seen a lot of people make the transition from various languages (Java, Ruby, Python) and almost all of them like it better because it manages to combine the best of these worlds.
+Fowler: But Microsoft has done a really great job of allowing people to run PHP, Ruby, Python, and even Java on Azure, and they're trying to make it a lot better for people to move over to the Windows Azure platform.
+I put "scripting" in quotes above because labelling languages like Ruby and Python as "scripting languages" is unfair and indicative of the historically dismissive attitude that some programmers have held toward them.
+Abstract, hypothetical reasons why Ruby can't do X well don't really matter, because Python syntax and semantics suck (why anyone thinks import something is more or less magical than require 'something' is beyond me).
+The fluctuation of cost is hard to predict and nail down because the programming languages vary from platform to platform, and developers who code in Java, Ruby or Python charge more than PHP or Javascript developers.
+In other words, while Python has added a new hardcoded feature in order to achieve some of the power of Ruby, adding such a feature to Ruby would be unnecessary because of the underlying structure of the Ruby language.
+Python and Ruby are fair comparisons because a skilled programmer in these languages can produce code just as quickly as a skilled Perl programmer but guess whose program you'll be most likely to understand first time.
+I think you should consider another explanation, because its the one for me: Ruby, Python, et al just aren't that much "better" and when you couple that with their fairly obvious warts it doesn't make a compelling case.
+It's OK for us to accept contributions for things like IronPython and IronRuby, because these are areas where we are behind and need all the help we can get to persuade you to run your Python and Ruby code on our platform.
+I suspect it's because I'd attempted to setup yeoman in the past before there was a nice npm install pathway, coupled with the lack of dependecies my machine (I installed an up to date ruby+python in between break and fix).
+Things are actually the other way around than you describe; languages like Python and Ruby are both more powerful and more dangerous than Smalltalk because there is so little distinction between editing code and running it.
+Ok, so we can make a language like Python, Ruby, Lua, Lisp, etc, that is really elegant and clean, but runs more slowly, because we don't really care if we waste a few percent of an ever increasing number of computer cycles.
+And since these languages will eventually start out with fully-functional libraries (better than most languages will ever get, in fact: everything Perl has to provide, and possibly Python and Ruby later), they will be usable.
+Similarly, a lot of people are happy with Java as it is, and have no use for ruby, python, o'caml, you name it, because what they have does the job, it solves the problems they need solving in a way they are comfortable with.
+I have not digged into the code yet, so, I can not say much more, however I believe python is better because we can use swig to call some existing c functions(I am not sure whether there a similar bridge between Ruby and c++).
+Amazing! I've been particularly interested in what Code.org is doing because Code Fellows  is working on the same meme and market, i.e. teaching people to program and code languages of all kinds like Ruby on Rails, IOS, Python.
+Then you can try stuff like perl, ruby etc. and decide if you like them better to carry on programming in (I'm a perl-head because ruby and python have less capable object systems, but I don't really object to any of the three)
+I've dabbled a 'little' in Python, but have previously spent more time in Ruby and C.  I really want a better feel for it, as I have some things I'd like to port over, and use with some of the premium tools, like Canvas and Core.
+As for the argument of porting over Python and Ruby for .Net, that is because Microsof thas rightfully realized the importance of these languages and wants to make sure they are present in its most important development platform.
+Also, learning a high-level language with lots of abstraction capabilities (like Ruby, Python, Lisp or D) might help you program better in lower-level languages where some of the techniques might still be usable, but less obvious.
+I never learned Python in any depth (partly because I discovered Ruby, and fell in love with it, right around the same time I was tinkering with Python), but I've noticed that people say very similar things about the two languages.
+I think we might do better to just try to include high-school students in some of the professional development opportunities that already exist in, for example, the boulder ruby community and the Northern Colorado python community.
+The real point to take from Antonio Cangiano's article, Holy Shmoly, Ruby 1.9 smokes Python away! , is not that Ruby 1.9 runs circles around Python, but that Ruby 1.9's performance appears to be dramatically better than Ruby 1.8's.
+Speed is crucial to the long term wide use of Parrot, but for the immediate future consider that the JVM, Ruby, PHP, Python, and Perl all made huge gains in the market when their performance was dramatically worse than it is today.
+But if those queries had been implemented procedurally using a key/value or pile-of-files database, it may have well been the case that a high-level scripting language such as Tcl, Python, or Ruby may have worked out better than C.
+Perhaps it's only interesting because I learnt lambdas from a functional language background, where I expect that they work a particular way, and the rest of the world that learnt lambdas through Python, Ruby or JavaScript disagree.
+I've always viewed Ruby as a much closer competitor for Perls ecological niche, not just because of the borrowed ideas, but because both Perl and Ruby take their functional programming support rather more seriously that Python does.
+... "Groovy is the best choice because it was built from the ground up for the Java Platform and uses syntax that is familiar to Java developers, while leveraging some of best features that Python, Ruby and Smalltalk have to offer."
+Currently, it comes with a custom Theme called "Abyss" (i like red), and some syntax highlighting improvements for python and ruby (for example, function- and class names in definitions are better visible, python-decorators work now).
+Note:  Because of the way in which Jython and JRuby dynamically generate Java classes, you may encounter memory problems if you load several different Python or Ruby extensions, or if you unload and reload an extension multiple times.
+More or less both Python and Ruby as easy to learn (maybe Python is a bit easier and better documented overall, but Ruby has a beatiful "Pragmatic programmer" book that you can get for free and it is much better than the Python tutorial)
+However, learning how to solve simple (and not so simple) problems using Java (or Python, or PHP, or Ruby, or C#, or ...) may well make you more productive, and puts you in a better position to appreciate what is, and is not, achievable.
+which is a nice and short answer from someone who works on it (I don't and therefore can't really provide any useful answer anyway beside that I think, that C# is much better designed then Java but still not as good as Python and Ruby ;)
+The python code is more complex than Java, because Java programming language's syntax is like a C/C++ and etc, but Python... is exclusive, like Ruby (I think so, because yesterday I have red an article about Ruby hello world application)
+I would still have to lookup syntax and APIs in order to do what I wanted, mainly because I have been working across a large set of programming languages and frameworks (C#, VB, VB.NET, Python, Perl (yuck!), PHP, Django, Ruby, Rails, etc).
+I found this quite surprising because I assumed it was a me-too technology, but what we saw was highly impressive (They are even building support for both Python and Ruby right into Silverlight, something I also hope will happen with Flex).
+Jason: What I particularly like about the mlxcc project that Andy Bruno created is that it's a code-once/reuse-many approach because it has the core functionality in C code and uses SWIG to support languages like Perl, Python, Ruby, and PHP.
+I have worked at plenty of places who want to use Ruby or Python on some big enterprise-style projects, but are consistently "shot down" by IT managers and corporate security teams precisely because of the open source nature of the projects.
+And, wonderful as CPAN is, think how much better it will be if you can take existing Python and Ruby code and integrate it into your Perl6 project without even thinking about it, with a simple use Whatever :py; (or whatever it ends up being).
+some very large popular projects like PostgreSQL and Linux, etc use c c is very convenient for python and ruby extensions c# and java are arguably a better tool for the job for many kinds of software that want a c-like-object-oriented language
+1) giving JS end-users direct access to your terminal is the scariest idea ever, in terms of security, and is 100% impossible without some interfacing server language/framework (php/perl/ruby/c#/python/java/c++/NodeJS), because it is so scary.
+Second, I'm wondering if the primary use is mathematical, then perhaps my time would be better spent learning Mathematica Programming Language, or R, or something based less on GUI and more on simple coding of algorithms, maybe Python or Ruby?
+No bearing on the original topic, and I may just be calling out a typo, but for the record the current Python implementation is much faster than the implementations of Ruby, Perl, or PHP because it uses Java-esque bytecode partial-compilation.
+Python&Django/Pyramid, Scala&Lift/Play, Ruby&Rails, Groovy&Grails etc etc get a lot of buzz nowadays - and are definitely worth checking out if you're keen to learn something new - but there's never been a better time to be hacking PHP than now.
+If its me doing things, then Open Source rules, because almost everything that I need is open sourced (gcc/llvm, cmake, doxygen, python, ruby and eclipse) (I mainly program in C/C++, python, java, ruby and occasionally I do some web development)
+Ruby's great (and a close match for Python in niche and functionality, which is why I'm using it specifically), but our Ruby guys can't do that because they love to make things as concise as possible - it allows them to show how clever they are.
+But, I also want to touch one of python, ruby, php, whichever is not receiving too much criticism (for the right reasons) and has potential for growth (by growth i mean language becoming better and more popular, and not scope for career growth).
+It seems like the selling point of Ruby/Python/Java/etc is the code is more readable because it doesn't have built-in language support for regex syntax, therefore the code is more elegant looking because you don't have inline regular expressions.
+Some languages will lend themselves better to this than others, but among the likes of C, C++, Java, Ruby, Perl, Python, PHP, etc., it comes down to personal preference and the fine details of your project to know which is best suited for the task.
+Van Rossum: Python Not Much Worse Than Ruby "Python creator Guido van Rossum discusses the prospects and criticisms of Python, noting that critics of Python should supplement with Ruby rather than re-engineering Python apps into a better language."
+Amusing result for people who like bashing my favourite language... when i google for "Weird perl problem", i get back 1,880,000 results... could be bad... except that ruby (2,000,000), python (2,030,000) and php (3,490,000) seem to be doing worse.
+I've now used Ruby far more than I've used Python simply because I enjoy Ruby's syntax more, Rails is built in it and I genuinely like the community around it (which is not to imply that Python's community isn't just as likable, I just don't know).
+If you're working with certain languages, specifically dynamic languages like Ruby, JavaScript, Python, etc., then there is a real need for testing because the interpreter will not catch many errors that are caught by a compiler with strict typing.
+Ruby breaks through this barrier because it works for beginners who really need a glue language without limitations (Python, Perl or Ruby) as well as for people who are going to be pushing the limits of OO before they are through with their careers.
+I implemented it in OOOR because for me in Ruby it was a snap (I hadn't more time to waste), now if some Python red neck wants to rip the code and makes it an OpenERP module that document any OpenERP Object or collection of objects, then be my guest.
+I am guilty of writing a lot of poorly constructed programs because I should have considered the code optimization I would have learned in dealing with C. But still, learning Python has enabled me to make this jump to Ruby without too many headaches.
+(And even in a language without built-in support for tainting, there are usually much better ways, such as subtyping (Python, Ruby, Smalltalk, ...), annotations/attributes (Java, C#, ...), metadata (Clojure, ...) and static typing (Haskell, ML, ...).)
+There are lots of world class open source projects out there that gets picked because they are simply better than their closed source equivalents - linux, apache, postgresql, spamassassin, varnish, ruby, python, gcc/llvm, webkit, postfix, dovecot etc.
+People have to write one-off computer programs using Python or Ruby or something to scrape a site, rather than use a tool like Kapow, because newsrooms can't (and never have) invest that kind of money into something that really isn't mission-critical.
+Any "sane" web server runtime (either a recent IIS with ASP.NET or Apache with PHP/Python/Ruby, or a Java Servlet Container, or you pick yours) either leaves the %u... stuff alone (because this escaping style is deprecated), or translates the whole into
+Information Week explained "because REST isn't tied to a specific platform or technology, developers should be able to create Glass-compatible services using their favorite programming language, whether that's PHP, Python, Ruby, Java or something else."
+I plan on adding the UnityScript/C# with Unity3D myself eventually because I have experience with it, but for stuff like Python, Lua, and Ruby, I'll need some others to recommend good tutorials (not just any tutorial you can find on Google - good ones!)
+"Languages like Ruby and Python become popular and phase out of popularity just as quickly, but JavaScript remains because of its connection to browsers," says Sims. "We're focused on creating a great user experience right now and on educating the world."
+I'm interested in learning another scripting language, mostly for fast proto-typing and also because I have a gut feeling, that at least in Open Source circles, languages like Python and Ruby are starting to pick up steam for glueing together applications.
+As far as I know Parrot is a register based virtual machine and should be especially suited for _dynamic_ languages like Perl, Python, Ruby, ... Time will tell if the theoretic advantages here will result in a better real-world performance as the other VMs.
+And because this particular implementation kind of sucked (the plugin had to be written in C and was kind of befuddling and I'm more of a Perl/Python/Ruby/Java person), I'm so happy that modern Linux media players report this information right out of the box.
+And ideally I'd like to build things in my favorite programming language, which happens to be Ruby -- but only by a slim margin, because I love several other languages too, including Python, Scheme, Lisp, the "D" language, C (but not C++), and various others.
+You often see lots of grumbling and cursing in various companies because people actually end up doing that and companies end up with lots of stuff hooked to the DB - MS Access, perl, python, ruby, java, radius servers, openvpn, accounting and finance stuff...
+People start to create computer languages without carrying too much about the target processor opcodes (because in that time processor were just getting faster with time) and focus more on programmer convenience, and wild beasts like python and ruby were born..
+Apart from the fact that languages such as Python, Ruby, Haskell do have very powerful functional programming support for like 10-15 years - and IMHO better one than C# or LINQ - all this goes back to Lisp , which will be celebrating 50th anniversary next year.
+It is used in production at Google since May 2010, but beside the fact that it replaces C++ very effectively, it also tends to be used in place of Python or Ruby because its compilation speed is suitable for scripting, while it produces fast binary executables.
+I wanted to waste the least space possible on code to perform this function, because I was contrasting with Ruby and Python examples, where there is no need to write any code for this because both languages include strip methods in their built in String classes.
+OpenGL can be coded in anything, Delphi, Python, C (gcc), C++, perl, Ruby, etc. 4) The only thing you got right, remotely 5) completely bogus: Before version 9 or 10, DirectX was the most hard and retarded thing to pick up, then it slowly, very slowly, got better.
+NodeJS is particular interesting in its transfer of the browsers async programming model into the server-side space, though its hardly a new idea (python, ruby async servers have been around for a while) JS seems to be much better suited to this than those languages.
+Google code is very much Java and Javascript oriented (very much due to the fact that it's the languages they promote internally, with Python to a lesser extent), git hosts many more Ruby projects, again probably because the technologies behind are Rails/Ruby friendly.
+2006-08-10 .NET and Java to get better dynamic language support:  Microsoft and Sun Microsystems are committed to bringing dynamic language support to their development platforms, a move that could popularize Python and Ruby on .NET and the JVM...  Ars Technica  [ rm ]
+Even "rebel" languages like PHP and Perl have realized that it's unproductive not to follow standards (Perl+Python+Ruby are defining the Parrot VM so they can share code between languages; PHP 5.0 is modeling itself after Java so that it can integrate better with J2EE.).
+For me, ofcourse its not enough that's why I also know ASP & JSP & am learning Ruby then will look at Python & maybe perhaps .NET as well!! 4) Perhaps Ruby can answer this better as to what she needs!! 5) Yes, Ruby can run on apache but the recommended server is Lighttpd.
+This was true of languages like C, JavaScript, Python, Ruby and so forth, and secondarily true of Java (which originally emerged, ironically, as a language to better write web components), C# (which was an attempt to bind a Java-like language to the .NET world) and so on.
+I'm not really sure that's all that true: even if Python frameworks caught up with where Rails was, there are lots of Ruby frameworks -- inspired by people hitting places where Rails wasn't ideal -- that are better than Rails for lots of things (including Merb, which is mer
+So, from technical standpoint, spending valuable time and resources on improving what OS movement has/had (Python, Java, Ruby) would be much better time spent than working on Mono from scratch, just to have it now legally avaiable just on one MS alternative platform/distro.
+A few years ago I had a series of blog posts asking people to describe their actual pain points for Java, Ruby, C#, and Python, and I realized that it might help me explain ScalaTest better if I could gain a better idea of what people actually find painful using JUnit today.
+Whatever people think about Drupal or any other framework, keep in mind that apparently it's PHP (and not Ruby, Python or pure C) which is more than a good enough enabler because PHP allows people to build a sophisticated content-management-framework like Drupal on top of it.
+for speed i recommend everyone to couple that language with a faster lang like C or C++ anyway) they somewhat both fill the same ecosystem, and i predict that both ruby and python will grow (besides, every language with strong www aspect will grow because the www still grows)
+I can wax lyrical about the technical superiority of languages like Self, Smalltalk and Lisp as compared to lesser languages like Java and C# (and even Ruby and Python), but this doesn't matter a jot if people just aren't 'comfortable' with these supposedly 'superior' languages.
+Perhaps a more valid conclusion would be you are observing the bloat that results from performance optimizations so the most concise languages from your data are those that cannot be optimized because they are fundamentally inefficient (Python, Ruby, Javascript, Perl, Lua, PHP).
+If I have to do it with Python, Ruby, I know where to go (Django or Rails), but if I want to make a web application in Clojure, not because I'm forced to live in a Java world, but because I like the language and I want to give it a try, what libraries and frameworks should I use?
+It is fair to say that most web development today occurs in dynamic languages like PHP, Python, and Ruby, and we see the results: cross-site scripting attacks, applications that do not scale, and countless minor bugs entering production because they can only be detected at runtime.
+Haskell and other languages with real higher-order functions (Java and Python don't count, JavaScript and Perl and Ruby do, I haven't used C#, and I don't have the heart to test PHP) can take you to the next level, where you manipulate functions as if they were data, because they are.
+I think that this is very important step, which we need to do, because such format fragmentation is bad, and not only for independant software developers, but for other tools and languages, who reinventing own packaging, like vim, python, ruby, nodejs, php, eclipse and many many others
+Language specialists are becoming more common, because many internet-scale companies write high-concurrency components in functional programming like Erlang, Scala, or Clojure, generally handled by a different set of developers than the authors of the Ruby, Python, or PHP web components.
+I can write a wrapper layer for the C implementation of Python to have it do the correct automatic garbage collection, but can't figure out how to use Ruby for the same task, because finalization order isn't guaranteed and because it assumes C extension types are always through pointers.]
+(or less personally what happens when anyone has to maintain code written by someone else?) What you're really saying is the old argument that because C/C++/Fortran/Basic can be written cleanly we don't need languages like Java/Python/Ruby/Ratfor that make clean code a lot easier to write.
+A more strict interpretation of an 'interpreted language' only becomes useful when discussing performance issues of the VM, for example, compared with Python, Ruby was (is?) considered to be slower because it is an interpreted language, unlike Python - in other words, context is everything.
+That's not to say the other languages/frameworks you listed don't have problems (because they do... particularly JavaScript), but Ruby and Python are a good combination of cheap (free) and flexible, plus very easy to read/follow/maintain (for the most part), with a healthy software ecosystem.
+Yes, Code Academy has an excellent course over Python, but if I recall correctly it is better to take the Ruby one first, as there are things that you go over in the Ruby one that will give you "ah ha" moments in the python one (especially the latter tutorials, that don't guide you very much).
+so if you like to program with a bagillion diffrent ways to do one thing then perl is great for you, if you like easy to read and manage then python is for you...and ruby is close enough to python than it is good for readability and manageability(does ruby have better performance than python?)
+Guys, seriously, the cadence worked for Ruby on Rails, and the silly reference might have worked for Python on Planes if they went through with it, but you're going to have to come up with a better name than Snails on Methamphetamine if you ever want to make COBOL a "cool" programming language.
+In a recent blog post, Artima's Bill Venners notes that while dyanamic languages, such as Python or Ruby, tend to improve developer productivity, it's not because of their dynamic type system, but mainly because of their rich language features: Getting Dynamic Productivity in a Static Language :
+On the other hand, if you ask Tcl people about GUI programming, they'll all say "Tk" (even though there are other ways available), while if you try asking that to a group of Perl, Python, Ruby, etc. users you'd better be prepared for a long drawn out discussion of the many competing alternatives.
+Incidentially, some things I add to the course: - dtksh (which is wsh and ksh-93) - I dis Perl a bit, 'cause it's fun - I pay little attention to Python, Tcl, Ruby, et al, because it's too much for this class in five days and the premise is to use tools that come bundled with the operating system.
+None of the above stack with Enterprise Linux running a whole buffet of open source stuff like MySQL (now under Sun's domain so can be looked at seriously), Apache (there are apache gurus out there), Ruby ( not my personal choice)/ PHP (good luck) / Python (I like it because its a mature language).
+So, tell me, Mr. Coward: Does that single CD also contain an office suite, multiple SQL servers, a full suite of programming languages (C/C++, perl, ruby, python, java, and more), dozens of games, etc. etc. etc? No? Then you better count the CDs for MS Office, SQL Server, Visual Studio, etc. etc. etc.
+I have done a fair bit more looking into this and the only things I am left wondering are: Which should I learn after html/css - java/grails, ruby/ror, python/django, scala/lift - I think It is good because I can start out with the 'best' language rather than choosing a framework based on what I know.
+I care about the philosophy of a language, which is the philosophy of its community: and when I had to choose between Ruby or Python I chose Python because of (the perception I had) of its community; similarly, when I had to choose between Common Lisp and Scheme I chose Scheme because of the community.
+Similarity with C/Java/PHP can still be a consideration (see the accepted answer by Pat), but just because other languages contain superfluous syntax elements does not mean we should keep them in JavaScript, especially since many other languages (Coffeescript, Python, Ruby, Scala, Lua) do not require them.
+The result was that because of 1) objections to Sun's control of the language, and 2) Sun's priorities in terms of support for certain platforms and not others, Java lost a lot of ground in the back-end space to Python, Ruby, and others, and the space occupied by the applet was essentially devoured by Ajax.
+Your first argument is wrong: - "Why would anyone not want Ruby on Linux?" - "Because Python already exists" - "Why would anyone not want Python on Linux?" - "Because Perl exists" - "Why would anyone not want Java on Linux?" - "Because C++ exists" - "Why would anyone not want C++ on Linux?" - "Because C exists"
+I guess the point of this long winded post is that in regards to python marketing/evangelizing, especially as it relates to the rise in popularity of RoR/ruby and ajax when it comes to db web apps, python would be in a lot better position if it ironed out the portability issues in the underlying web and db apis.
+The path that took me to Nu started with Python and PyObjC, and frankly I think that Python isn't as good a match for Objective-C as Ruby is; this is primarily because in Ruby, everything is an object, and that means that under the covers, every Ruby (and now Nu) object can be implemented as an Objective-C object.
+After years of both OO, as much RM as I could get through SQL, and functional programming through Lisp, I feel that OO is the inferior abstraction framework, especially as implemented in Java and C++ (and Ruby and Python don't give me any special reason to re-embrace OO, though I appreciate their functional aspects).
+Groovy and Grails are cool, but really hasn't got the widespread community support nor awesome Gems etc. that Rails has... and so whilst I've looked at using it, frankly if I were going to use something other than Ruby/Rails it would be Python, just because since discovering Ruby and Rails my brain now likes Python too.
+Most of the features in the list I quoted are impossible without either a superhero-sized shoehorn to wedge feature after features into the internals without destroying the whole thing (because refactoring is nearly impossible), or magic candy-flavored unicorns (and the Ruby and Python communities have prior art there).
+So if you one day a better language comes about and takes over Python/Perl/Ruby (remember, languages do evolve), and Perl/Python/Ruby now becomes the "underlanguage", so now, are you going to change your point of view, in this case, we should not spend time learning Perl/Python/Ruby because they are now "underlanguages" ?
+There are a variety of other web frameworks out there, some of the most common of which are Pylons or Django for Python, Rails for Ruby (which I personally despise), or UnCommon Web for Common Lisp, all of which languages can also comfortably be used for non-web development (and are rather superior to Java, in my opinion).
+And what I mean by that is if Parrot becomes a good runtime for dynamic typed languages and the reason for the popularity of Perl is because of CPAN, and you can have automagic bindings between languages, then why use Perl when you can use Ruby or Python if they have 99% of the regex power of Perl and a much cleaner syntax.
+I know that Sun's SunStudio compiler suite now provides a variety of language 'bindings' (for want of a better term) -- if we could have documentation on how to migrate those bindings, and (more importantly) how to create our own (eg for c, c++, python, perl, ruby, lisp etc etc) then that would be a big win for the community.
+It's kind of funny since Java has built in support for scripting languages, which can run on the Java Virtual Machine (much better then any VM used by Python or Ruby), there are even nice implementations, like Groovy, which has all such loved elements of scripting languages: no parenthesis and semicolons, closures, dynamic typing).
+However, I find that the XNA framework is much more easier to dive into than most 3D libraries written in Java, and you can use Java with XNA; it's the same argument people make when picking up Ruby instead of Python because Ruby on Rails is something they connect to much more easily (or understand more) than, say, Django or Flask.
+That's why Python, despite its "non-Unix" origin is more viable scripting language now then, say, Perl (which is better integrated with Unix and has pretty innovative for scripting languages support of pointers and regular expressions), or Ruby (which has support of coroutines from day 1, not as "bolted on" feature like in Python).
+(They will still user perl for 1 liners because sometimes perl can do in one like what Ruby/Python will need 10, but for anything more than 2 lines of perl they will use Python/Ruby because they are better) Same goes for most other scripting languages - people still use them, but when they use Ruby or Python when there is a choice.
+(And there's a good reason a lot of people adopting Go have been coming not from the C++/Java camps that the Go developers expected, but from Python and Ruby: because Go gives you the raw speed of a concurrent and native-compiled language, plus libraries designed by actual engineers, without a lot of the verbose bullshit of C++ or Java.
+Anyone who's used Ruby or another dynamic language (I suppose Python is good, but I can't stand the syntax and whitespace-nazism) and started to really grok it and what you can do with a dynamic language with a friendly syntax generally feels a resistance from deep down in their soul-area when they have to go back to Java-land or worse.
+There is a mountain of evidence from many projects (Linux, Ruby on Rails, Python, etc.) about the quality demonstrated by such systems and there is a great belief in many places that the open source model may be superior in many ways to traditional (commercial, individual) development approaches that are happening in closed environments.
+The reason is that pure-as-in-only is a reasonable distinction to use to classify object-oriented languages, because there are languages like Java and C++, which clearly have values that don't have all that much in common with objects, and there are also languages like Python and Ruby, for which it can be argued that every value is an object 1
+Actually it's not that easy, because Python, Ruby and so on have compilers that compile them into bytecode for the JVM (which is a STACK BASED virtual machine), but Android uses the Dalvik VM, which is a REGISTER-BASED virtual machine (it's a completely different approach), and as such it doesn't use bytecode but a proprietary "Dalvik ByteSet".
+The big difference is in the idioms and conventions of the languages; for example, Ruby programmers, IME, tend to be much more willing to do things like adding new functionality to the built-in classes, while Python programmers are generally hesitant to do "monkeypatching" anywhere (and can't do it to the built-ins, because they're not mutable).
+.NET is not an operating system; it is closest in operation to the Java Virtual Machine: I believe your real question would be to choose between Visual Basic .NET, C#, or Java; do not forget, however, that other languages do exist (LISP, C++, Python, and Ruby, to name some of the more popular ones) which may be better suited to your environment.
+You'd be a great fit to our team if you have: - 2+ years of software engineering experience in production - Proven yourself as an A+ engineer through great work results, interesting hobby projects, open source contributions, or superior academic results - Deep experience with multiple programming languages including Python, C, Java, Ruby, JavaScript
+I think that Python is superior to many other languages for teaching introductory programming because it allows the student to focus less on details such as types, compilers, and writing boilerplate code and more on the algorithms and data structures relevant to performing their intended tasks (similar arguments could be made for languages such as Ruby).
+As the post above stated (which you clearly did not read, because you know better) this issue actually affects multiple application platforms to varying degrees (PHP, Java, ASP.NET, v8, Python and Ruby) so unless your proposed Apache solution is to just serve static content - and your business won't thank you for that - then it probably won't help at all.
+I might be inclined to start with an object-oriented language like Python/Ruby, plus one of the corresponding frameworks like Rails (Ruby) or Django (Python), because this will give you a quick route into OO/web application development and a lot of the knowledge will be easily transferable to other languages/platforms like Java, C# and even OO PHP or JavaScript.
+On another note, we are already seeing "enterprisey" toolkits from organizations like Apache, Sun, and Microsoft supporting both a SOAP (transport-independent) binding and a REST-compatible one over HTTP... Let's help these efforts out by better describing what it means to bind Web resources to languages like Java and C#, in addition to ones like Ruby and Python.
+A better error message spares the need for the newbie D programmer to know what the linker is doing (eventually to program in D seriously you need to know why the linker is working, but asking such knowledge from day zero is not wise, especially because some future D programmer may come from JavaScript, Python, Ruby, Java, etc where there is no experience about linkers).
+So I created phash to replace gperf in the long term, by using better algorithms to handle any data ( gperf fails to work with anagrams or weird keys), to create optimally fast C libraries or optimally small C libraries for fast hash lookups, and even provide backends to output perfect hashes for several popular programming languages, like perl (XS), java, ruby, php or python.
+I have extensive experience with C, C++, Java, Python, PHP, Perl, Javascript, SQL, and lots more... And, I'd be just as excluded by you because my CS degree is from the University of Utah, and I haven't worked at Google as I would be by the recruiter who's never written a line of code and doesn't know that someone with my background can learn Ruby and be proficient in a week or 2 at most.
+I have been trying out a bunch of Ruby, Python, Django, and PHP tutorials lately but they're all kind of useless because they're not directly applicable to a hosted, "live site" environment that I'm used to ... So, I'm trying to install MySQL on my Intel Macs running 10.5.4 (powerbook and imac) to have a local testing environment but BANG I'm an idiot and I cannot get through this apparently simple tutorial.
+The single implementation languages such as Python and Ruby (or at least dominant implementation languages, since even Python and Ruby have Jython and JRuby, for instance), have an advantage with respect to these issues because they have a strong decision maker (Guido or Matz) taking input but then giving strong direction (like it or not, Python 3000 will be what Guido wants it to be, an Ruby 1.9 will be whatever Matz wants it to be).
+In reality, such a language does not yet exist, making web applications development 10 times more difficult than what they should be: the minimum number of languages to use for a web app is 5: 1) html, 2) css, 3) javascript, 4) java/php/ruby/python/perl/whatever, 5) XML...and let's not count the various XML schemas required for various domains of the back end, because the number of 'languages' one needs to know will grow exponentially!
+I am looking into learning how to program and I am trying to pick a language that is pretty simple less than 6 months to get the fundamentals and I want to do some scripting/automating simple stuff and also be able to talk with com ports.I am pretty good with HTML and CSS should I look into a object oriented web language first or what.Looked a Python and Ruby because they both have web frameworks should I stick with those or try something else thanks.
+We are in a status quo and until the next Java release, we will be, for some, this thing is annoying because, they look at other platforms and see that things are moving somewhere, for instance .NET evolved in the last years and I think in the next months a good amount of java developers will migrate to .NET, just for this reason only and we should look to other posibilities like Python, Ruby, Scala, that will have their part of disappointed java developers that will find their way there.

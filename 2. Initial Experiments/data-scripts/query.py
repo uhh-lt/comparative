@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, '../../Other')
 import os
 import argparse
 import json
@@ -17,10 +17,10 @@ from HelperModule.utils import file_to_list, query_string_or, jsonify_no
 REQUEST_THREADS = 25
 
 
-BASE_URL = 'http://localhost:9222/commoncrawl/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=500'
+BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
+SEARCH_URL = BASE_URL + '/_search?size=6000'
 
-QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(better OR worse OR superior OR inferior) AND {}"}}}}]}}}}}}'
+QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(better OR worse OR superior OR inferior OR because) AND {}"}}}}]}}}}}}'
 
 
 
@@ -60,8 +60,16 @@ def main():
     """
     requests.append(
         query(
-            QUERY.format(jsonify_no(['summer', 'winter'], joiner=' AND ')),
-            'summer-winter'))
+            QUERY.format(jsonify_no(['ruby', 'python'], joiner=' AND ')),
+            'ruby-python'))
+    requests.append(
+        query(
+            QUERY.format(jsonify_no(['OS X', 'Windows'], joiner=' AND ')),
+            'osx-windows'))
+    requests.append(
+        query(
+            QUERY.format(jsonify_no(['Canon', 'Nikon'], joiner=' AND ')),
+            'canon-nikon'))
     response = grequests.map(requests, size=REQUEST_THREADS, exception_handler=lambda x,y: print(y))
     for result in response:
         t = result.request.headers['x-type']

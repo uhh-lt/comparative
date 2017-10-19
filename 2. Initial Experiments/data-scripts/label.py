@@ -1,10 +1,12 @@
 import sys
+sys.path.insert(0, '../../Other')
 import json
 import getch
 from datetime import datetime
 from collections import defaultdict
 from nltk.stem import PorterStemmer
-from random import shuffle
+from random import shuffle, sample
+
 sys.path.insert(0, '../')
 
 stemmer = PorterStemmer()
@@ -24,7 +26,7 @@ def read(file):
     with open(file) as data:
         lines = [x['_source']['text'] for x in json.load(data)['hits']['hits']]
         shuffle(lines)
-    return sorted(lines[:100], key=len)
+    return sorted(sample(lines,500), key=len)
 
 
 def label(sentences, target_file):
@@ -41,11 +43,15 @@ def label(sentences, target_file):
             choice = getch.getch()
             if choice is 'a':
                 d['>'].append(s)
-                t.write('{}\tBETTER\n'.format(s))
+                t.write('{}\A_GREATER_B\n'.format(s))
                 print(chr(27) + "[2J")
             elif choice is 'd':
                 d['<'].append(s)
-                t.write('{}\tWORSE\n'.format(s))
+                t.write('{}\A_LESSER_B\n'.format(s))
+                print(chr(27) + "[2J")
+            elif choice is 'd':
+                d['<'].append(s)
+                t.write('{}\A_LESSER_B\n'.format(s))
                 print(chr(27) + "[2J")
             elif choice is 'g':
                 d['='].append(s)
@@ -71,8 +77,15 @@ def main():
             str((datetime.now().strftime('%m-%d-%H:%M')))))
     """
 
-    label(read('summer-winter.json'), '{}-summer-winter.labeled'.format(
-            str((datetime.now().strftime('%m-%d-%H:%M')))))
+    examples = []
+    with open('canon-nikon-sentences.txt', 'w') as f:
+        for line in list(read('canon-nikon.json')):
+            f.write(line+'\n')
+
+    shuffle(examples)
+
+ #   label(examples, '{}.labeled'.format(
+ #           str((datetime.now().strftime('%m-%d-%H:%M')))))
 
 
 if __name__ == '__main__':
