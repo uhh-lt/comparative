@@ -1,14 +1,15 @@
 import re
 
 from pandas import DataFrame
-from tools import StopwordRemover, LengthAnalyzer, WordOccurence, BeforeFirstObject
-from sklearn.model_selection import train_test_split, KFold
+from tools import StopwordRemover, LengthAnalyzer, WordOccurence, BeforeAfterWord, BetweenWords
+from sklearn.model_selection import train_test_split, KFold, LeaveOneOut
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.linear_model import LogisticRegression, Perceptron
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC, LinearSVC
 from pprint import pprint
-
+from random import shuffle
+import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
 
@@ -17,20 +18,30 @@ def build_data_frame(file_name):
     rows = []
     with open(file_name, 'r') as data:
         for line in data:
-            text, label = re.split(r'\t', line)
-            rows.append({'text': text.strip(), 'label': label.strip()})
+            try:
+                text, label = line.rsplit(';')
+                rows.append({'text': text.strip(), 'label': label.strip().replace('?', '')})
+            except Exception as e:
+                pass
     data_frame = DataFrame(rows)
+
+
     return data_frame
 
 
 # nltk.download('stopwords')
+#nltk.download('punkt')
 
-DATA = build_data_frame('data/data.txt')
+DATA = build_data_frame('data/all-equal-dist.csv')
+
+LABELS = ['A_GREATER_B', 'A_LESSER_B', 'NO_COMP']
 
 
 def run_pipeline(model):
-    # train, test = train_test_split(DATA, test_size=0.2)
-    kf = KFold(n_splits=3, shuffle=True)
+    #train, test = train_test_split(DATA, test_size=0.2, shuffle=True)
+
+
+    kf = KFold(n_splits=2, shuffle=True)
     f1 = []
     for train_idx, test_idx in kf.split(DATA['text'].values, DATA['label'].values):
         train = DATA.iloc[train_idx]
@@ -38,41 +49,55 @@ def run_pipeline(model):
         test = DATA.iloc[test_idx]
 
         union = FeatureUnion(
-            [('meta', Pipeline([('length', LengthAnalyzer()), ])),
-           #  ('word-occ', Pipeline([('word-occ', WordOccurence(["better", "worse", "?", "than"]))])),
-
-          #   ('bag-of-words-first',
-            #  Pipeline([('before-first', BeforeFirstObject(
-            #      'OBJECT_A')), ('word-occ', WordOccurence(["better",
-            #                                                "worse", "?",
-            #                                                "than",
-            #                                                "because",
-            #                                                "inferior"])
-            #                     )]
-             #          )),
-             #('bag-of-words', Pipeline([('tfidf', CountVectorizer())])),
-             ])
+            [
+                # ('meta', Pipeline([
+                #    ('length', LengthAnalyzer())
+                # ])),
+                ('between-a-b', Pipeline([
+                    ('feat', BetweenWords('OBJECT_A', 'OBJECT_B')),
+                    ('bow', CountVectorizer())
+                ]))
+                # ('word-occ', Pipeline([
+                #    ('word-occ', WordOccurence(["better", "worse", "because", "inferior", "superior"]))]
+                # )),
+                # ('bow-before-obj-a', Pipeline([
+                #     ('before-obj-a', BeforeAfterWord('OBJECT_A', True)),
+                #     ('tfidf', CountVectorizer())
+                # ])),
+                # ('bow-before-obj-b', Pipeline([
+                #     ('before-obj-b', BeforeAfterWord('OBJECT_B', True)),
+                #     ('tfidf', CountVectorizer())
+                # ])),
+                # ('bow-after-obj-a', Pipeline([
+                #     ('before-obj-b', BeforeAfterWord('OBJECT_A', False)),
+                #     ('tfidf', CountVectorizer())
+                # ])),
+                # ('bow-after-obj-b', Pipeline([
+                #     ('after-obj-b', BeforeAfterWord('OBJECT_B', False)),
+                #     ('tfidf', CountVectorizer())
+                # ])),
+                # ('bag-of-words-whole', Pipeline([
+                #     ('count', CountVectorizer())
+                # ])),
+            ])
         pipeline = Pipeline([
             ('features', union),
             ('model', model)
         ])
         modela = pipeline.fit(train['text'].values, train['label'].values)
-        t = union.transform(train['text'].values)
-        print(list(t))
-        break
         predictions = modela.predict(test['text'].values)
-        f1.append(
-            f1_score(test['label'].values, predictions, labels=['BETTER', 'WORSE', 'NO_COMP', 'OUT'], average='micro'))
 
+        print(classification_report(test['label'].values, predictions, labels=LABELS))
 
-        # print(classification_report(test['label'].values, predictions, labels=['BETTER', 'WORSE', 'NO_COMP','OUT']))
-        # print(confusion_matrix(test['label'].values, predictions, labels=['BETTER', 'WORSE', 'NO_COMP','OUT']))
-    print(sum(f1) / len(f1))
+        print(confusion_matrix(test['label'].values, predictions, labels=LABELS))
 
 
 if __name__ == '__main__':
+    print("== Logistic Regression ==")
     run_pipeline(LogisticRegression())
+    print("\n\n== MultinomialNB ==")
     run_pipeline(MultinomialNB())
-    run_pipeline(SVC())
-    run_pipeline(LinearSVC())
-    run_pipeline(Perceptron())
+    #print("\n\n== Linear SVC ==")
+    # run_pipeline(SVC())
+    #run_pipeline(LinearSVC())
+    #run_pipeline(Perceptron())

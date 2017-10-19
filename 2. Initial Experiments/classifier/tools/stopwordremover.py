@@ -26,3 +26,14 @@ class StopwordRemover(BaseEstimator, TransformerMixin):
         for document in documents:
             out = ' '.join(self.normalize(document))
             yield out
+
+
+class PunctuationRemover(BaseEstimator, TransformerMixin):
+
+    def fit(self, X, y=None):
+        return self
+
+   def transform(self, documents):
+        for document in documents:
+            out = ' '.join(self.normalize(document))
+            yield
