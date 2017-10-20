@@ -53,22 +53,22 @@ def run_pipeline(model):
     union = FeatureUnion(
         [
 
-            # ('between-a-b', Pipeline([
-            #     ('feat', BetweenWords('OBJECT_A', 'OBJECT_B')),
-            #     ('bow', CountVectorizer()),
-            #     ('trans', TfidfTransformer())
-            # ])),
-            # #
-            # ('before-first-object', Pipeline([
-            #     ('feat', ObjectContext(True)),
-            #     ('bow',  CountVectorizer()),
-            #     ('trans', TfidfTransformer())
-            # ])),
-            # ('after-second-object', Pipeline([
-            #     ('feat', ObjectContext(False)),
-            #     ('bow',  CountVectorizer()),
-            #     ('trans', TfidfTransformer())
-            # ])),
+            ('between-a-b', Pipeline([
+                ('feat', BetweenWords('OBJECT_A', 'OBJECT_B')),
+                ('bow', CountVectorizer()),
+                ('trans', TfidfTransformer())
+            ])),
+            #
+            ('before-first-object', Pipeline([
+                ('feat', ObjectContext(True)),
+                ('bow',  CountVectorizer()),
+                ('trans', TfidfTransformer())
+            ])),
+            ('after-second-object', Pipeline([
+                ('feat', ObjectContext(False)),
+                ('bow',  CountVectorizer()),
+                ('trans', TfidfTransformer())
+            ])),
 
             #
             # ('bow-before-obj-a', Pipeline([
@@ -87,9 +87,9 @@ def run_pipeline(model):
             # #     ('after-obj-b', BeforeAfterWord('OBJECT_B', False)),
             # #     ('tfidf', CountVectorizer())
             # # ])),
-            ('bag-of-words-whole', Pipeline([
-                ('count', CountVectorizer()),
-            ])),
+            # ('bag-of-words-whole', Pipeline([
+            #     ('count', CountVectorizer()),
+            # ])),
         ])
     pipeline = Pipeline([
         ('features', union),
@@ -98,6 +98,7 @@ def run_pipeline(model):
 
     modela = pipeline.fit(train['text'].values, train['label'].values)
     predictions = modela.predict(test['text'].values)
+
 
     print(classification_report(test['label'].values, predictions, labels=LABELS))
     print(confusion_matrix(test['label'].values, predictions, labels=LABELS))
