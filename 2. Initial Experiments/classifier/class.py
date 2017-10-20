@@ -53,22 +53,22 @@ def run_pipeline(model):
     union = FeatureUnion(
         [
 
-            ('between-a-b', Pipeline([
-                ('feat', BetweenWords('OBJECT_A', 'OBJECT_B')),
-                ('bow', CountVectorizer()),
-                ('trans', TfidfTransformer())
-            ])),
-            #
-            ('before-first-object', Pipeline([
-                ('feat', ObjectContext(True)),
-                ('bow',  CountVectorizer()),
-                ('trans', TfidfTransformer())
-            ])),
-            ('after-second-object', Pipeline([
-                ('feat', ObjectContext(False)),
-                ('bow',  CountVectorizer()),
-                ('trans', TfidfTransformer())
-            ])),
+            # ('between-a-b', Pipeline([
+            #     ('feat', BetweenWords('OBJECT_A', 'OBJECT_B')),
+            #     ('bow', CountVectorizer()),
+            #     ('trans', TfidfTransformer())
+            # ])),
+            # #
+            # ('before-first-object', Pipeline([
+            #     ('feat', ObjectContext(True)),
+            #     ('bow',  CountVectorizer()),
+            #     ('trans', TfidfTransformer())
+            # ])),
+            # ('after-second-object', Pipeline([
+            #     ('feat', ObjectContext(False)),
+            #     ('bow',  CountVectorizer()),
+            #     ('trans', TfidfTransformer())
+            # ])),
 
             #
             # ('bow-before-obj-a', Pipeline([
@@ -87,9 +87,9 @@ def run_pipeline(model):
             # #     ('after-obj-b', BeforeAfterWord('OBJECT_B', False)),
             # #     ('tfidf', CountVectorizer())
             # # ])),
-            # ('bag-of-words-whole', Pipeline([
-            #     ('count', TfidfVectorizer(stop_words=set(nltk.corpus.stopwords.words('english')))),
-            # ])),
+            ('bag-of-words-whole', Pipeline([
+                ('count', CountVectorizer()),
+            ])),
         ])
     pipeline = Pipeline([
         ('features', union),
