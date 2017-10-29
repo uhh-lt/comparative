@@ -7,7 +7,8 @@
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
-
+**/**/*.bin
+**/**/embeddings/*
 *.log
 
 .vscode/
@@ -15,7 +16,7 @@ virtualenv/
 include/
 
 
-# Sensitive or high-churn files:
+# Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.xml

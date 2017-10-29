@@ -7,37 +7,49 @@ def all_occ(sentence, word):
     return [i for i, w in enumerate(nltk.word_tokenize(sentence)) if w == word]
 
 class BetweenWords(BaseEstimator, TransformerMixin):
-    """
-        :keyword abc
-    """
-    def __init__(self, word_a, word_b,min_a=True, min_b=True):
+
+    def __init__(self, word_a, word_b, first_occ_a=True, first_occ_b=True, ignore=False):
+        """
+        Returns all words between the two given; if b appears before a, all words between b and a
+        :param word_a: the word
+        :param word_b: the word
+        :param first_occ_a: use the first occurence of a; if False, the last one is used
+        :param first_occ_b: use the first occurence of b; if False, the last one is used
+        """
         self.word_a = word_a
         self.word_b = word_b
-        self.min_a = min_a
-        self.min_b
+        self.first_occ_a = first_occ_a
+        self.first_occ_b = first_occ_b
+        self.ignore = ignore
 
     def fit(self, X, y=None):
         return self
 
     def transform(self, documents):
         feat = []
-        for document in documents:
-            splitted = nltk.word_tokenize(document)
+        if not self.ignore:
+            for document in documents:
+                splitted = nltk.word_tokenize(document)
 
-            a_occ = sorted( all_occ(document, self.word_a))
-            b_occ = sorted(all_occ(document, self.word_b))
-
-
-
-
-
+                a_occ = sorted( all_occ(document, self.word_a))
+                b_occ = sorted(all_occ(document, self.word_b))
+                try:
+                    boundary = sorted([a_occ[0] if self.first_occ_a else a_occ[-1], b_occ[0] if self.first_occ_b else b_occ[-1]])
+                    feat.append(' '.join(splitted[boundary[0]+1:boundary[1]]))
+                except Exception as e:
+                    print(document)
+        else:
+            feat = ["Word"] * len(documents)
 
         return feat
 
 
-class ObjectContext(BaseEstimator, TransformerMixin):
-    def __init__(self, first):
-        self.first = first
+class BeforeAfterWord(BaseEstimator, TransformerMixin):
+    def __init__(self, word_a,before=True,first_occ=True,ignore=False):
+        self.word_a = word_a
+        self.first_occ = first_occ
+        self.before = before
+        self.ignore = ignore
 
     def fit(self, X, y=None):
         return self
@@ -45,34 +57,15 @@ class ObjectContext(BaseEstimator, TransformerMixin):
     def transform(self, documents):
         feat = []
         for document in documents:
-            splitted = nltk.word_tokenize(document)  # TODO: use proper segmenter
-            try:
-                a = splitted.index('OBJECT_A')
-                b = [index for index, value in enumerate(splitted) if value == 'OBJECT_B'][-1]
-
-                if self.first:
-                    feat.append(' '.join(splitted[:min([a, b])]))
+                splitted = nltk.word_tokenize(document)
+                a_occ = sorted( all_occ(document, self.word_a))
+                if self.before:
+                    boundary = sorted([0, a_occ[0] if self.first_occ else a_occ[-1]])
+                    feat.append(' '.join(splitted[boundary[0]+1:boundary[1]]))
                 else:
-                    feat.append(' '.join(splitted[max([a, b]) + 1:]))
-            except Exception as e:
-                print(splitted)
+                    boundary = sorted([a_occ[0] if self.first_occ else a_occ[-1],len(document)])
+                    feat.append(' '.join(splitted[boundary[0]:boundary[1]]))
+
         return feat
 
 
-class WordPos(BaseEstimator, TransformerMixin):
-    def __init__(self, word):
-        self.word = word
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, documents):
-        feat = []
-        for document in documents:
-            feat.append([i for i, x in enumerate(nltk.word_tokenize(document)) if x == self.word])
-
-        b = np.zeros([len(feat), len(max(feat, key=lambda x: len(x)))])
-        for i, j in enumerate(feat):
-            b[i][0:len(j)] = j
-        print(len(b))
-        return b

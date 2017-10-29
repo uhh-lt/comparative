@@ -8,3 +8,9 @@ class LengthAnalyzer(BaseEstimator, TransformerMixin):
 
     def transform(self, documents):
         return np.array([len(document) for document in documents]).reshape(-1, 1)
+
+
+    def get_feature_names(self):
+        return ['SENTENCE_LENGTH']
+
+
