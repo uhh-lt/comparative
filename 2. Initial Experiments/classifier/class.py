@@ -21,15 +21,15 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, KFold
 from tools import WordEmbedding, BetweenWords
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, make_scorer
 
 from tools.features.LengthOfSentence import LengthAnalyzer
 from tools.features.SentenceParts import BeforeAfterWord
 from xgboost import XGBClassifier
 from datetime import datetime
-from sklearn.utils import  shuffle
+from sklearn.utils import shuffle
 
-from tools.features.WordEmbedding import Glove100, Glove300
+# from tools.features.WordEmbedding import Glove100, Glove300
 
 K_BEST_K = 'all'
 
@@ -50,13 +50,15 @@ def build_data_frame(file_name):
 
 TRAIN = build_data_frame('data/train_80.csv')
 TEST = build_data_frame('data/test_20.csv')
-DATA = shuffle( pd.concat([TRAIN, TEST]), random_state=42)
+DATA = pd.concat([TRAIN, TEST])
 STOPWORDS = stopwords.words('english')
 
 k_fold = KFold(n_splits=5)
 splits = list(k_fold.split(DATA['text'], DATA['label']))
 
 LABELS = ['A_GREATER_B', 'A_LESSER_B', 'NO_COMP']
+
+embedding = WordEmbedding()
 
 
 def run_pipeline(prefix, model, save_feat=False):
@@ -65,28 +67,30 @@ def run_pipeline(prefix, model, save_feat=False):
         for train_index, test_index in splits:
             train = DATA.iloc[train_index]
             test = DATA.iloc[test_index]
-            embedding = WordEmbedding()
+            # train = TRAIN
+            # test = TEST
             k_best = SelectKBest(f_classif, k=K_BEST_K)
 
+            vectorizer = TfidfVectorizer()
             union = FeatureUnion(
                 [
-                    # ('between-a-b', Pipeline([
-                    #     ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
-                    #     ('bow', CountVectorizer()),
-                    # ])),
-                    # ('context-a', Pipeline([
-                    #     ('extract', BeforeAfterWord('OBJECT_A', before=True, first_occ=True)),
-                    #     ('bow', CountVectorizer())
-                    # ])),
-                    # ('context-b', Pipeline([
-                    #     ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
-                    #     ('bow', CountVectorizer()),
-                    # ])),
+                    ('between-a-b', Pipeline([
+                        ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
+                        ('bow', CountVectorizer()),
+                    ])),
+                    ('context-a', Pipeline([
+                        ('extract', BeforeAfterWord('OBJECT_A', before=False, first_occ=False)),
+                        ('bow', CountVectorizer())
+                    ])),
+                    ('context-b', Pipeline([
+                        ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
+                        ('bow', CountVectorizer()),
+                    ])),
                     ('embedding', Pipeline([
                         ('w2v', embedding)
                     ])),
                     ('tf-idf', Pipeline([
-                        ('tf-idf', TfidfVectorizer())
+                        ('tf-idf', vectorizer)
                     ])),
                     # ('length', Pipeline([
                     #     ('length-whole', LengthAnalyzer())
@@ -95,57 +99,80 @@ def run_pipeline(prefix, model, save_feat=False):
                 ])
             pipeline = Pipeline([
                 ('features', union),
-                #    ('k-best', k_best),
+                # ('k-best', k_best),
                 ('model', model),
             ])
-
+            # cv = grid_search(pipeline)
             predictions = pipeline.fit(train['text'].values, train['label'].values).predict(test['text'].values)
+
+            # save_prob(pipeline, train, test)
             # print("###############")
             # print(cv.best_estimator_)
+            # print("###############")
             # print(cv.best_params_)
+            # print("###############")
 
             report = classification_report(test['label'].values, predictions, labels=LABELS)
+            # report = classification_report(test['label'].values,
+            #                                cv.best_estimator_.fit(train['text'].values, train['label'].values).predict(
+            #                                    test['text'].values), labels=LABELS)
             f1 = '{:02.2f}'.format(f1_score(test['label'].values, predictions, labels=LABELS, average='weighted') * 100)
             matrix = confusion_matrix(test['label'].values, predictions, labels=LABELS)
 
             print(report, matrix)
 
-            if save_feat and False:
+            if save_feat:
                 feature_names = feat_names("BETW", union, 0) + feat_names("CTX_A", union, 1) + feat_names("CTX_B",
-                                                                                                          union, 2)
+                                                                                                          union,
+                                                                                                          2) + vectorizer.get_feature_names()
                 save_features(feature_names, k_best, model, summary(
                     [union.transformer_list[0][1].named_steps['extract'],
                      union.transformer_list[1][1].named_steps['extract'],
                      union.transformer_list[2][1].named_steps['extract']], k_best, model, report, matrix),
-                              './feature_checks/{}-{}-{}.csv'.format(f1, prefix, type(model).__name__))
-        print("#" * 100)
+                              './{}-{}-{}.csv'.format(f1, prefix, type(model).__name__))
+
     except Exception as e:
         print('{} {} failed'.format(type(model).__name__, prefix))
         print(e)
 
 
 def grid_search(pipeline):
-    return GridSearchCV(pipeline, verbose=1, n_jobs=10, param_grid={
-        'features__between-a-b__extract__first_occ_a': [True, False],
-        'features__between-a-b__extract__first_occ_b': [True, False],
+    scorer = make_scorer(f1_score, average='weighted')
+    return GridSearchCV(pipeline, verbose=1, n_jobs=16, param_grid={
+        # 'features__between-a-b__extract__first_occ_a': [True, False],
+        # 'features__between-a-b__extract__first_occ_b': [True, False],
         'features__context-a__extract__before': [True, False],
         'features__context-a__extract__first_occ': [True, False],
-        'features__context-b__extract__before': [True, False],
-        'features__context-b__extract__first_occ': [True, False],
+        # 'features__context-b__extract__before': [True, False],
+        # 'features__context-b__extract__first_occ': [True, False],
         # 'features__transformer_weights': [
-        #     {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 1},
-        #     {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 0},
-        #     {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 0, "tf-idf": 1},
-        #     {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 0, "tf-idf": 0},
-        #     {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 0.5, "tf-idf": 0.5},
-        #
-        #
+        # {'between-a-b': 1, 'context-a': 0, 'context-b': 0, 'embedding': 1, "tf-idf": 1},
+        # {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 1},
+        # {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 0.6},
+        # {'between-a-b': 2, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 1},
+        # {'between-a-b': 3, 'context-a': 1, 'context-b': 1, 'embedding': 3, "tf-idf": 3},
+        # {'between-a-b': 2, 'context-a': 1, 'context-b': 1, 'embedding': 2, "tf-idf": 1},
+        # {'between-a-b': 2, 'context-a': 1, 'context-b': 1, 'embedding': 1, "tf-idf": 2},
+        # {'between-a-b': 1, 'context-a': 1, 'context-b': 1, 'embedding': 0.5, "tf-idf": 0.5},
+        # {'between-a-b': 1, 'context-a': 0.5, 'context-b': 0.5, 'embedding': 1, "tf-idf": 1},
+        # {'between-a-b': 1, 'context-a': 0.5, 'context-b': 0.5, 'embedding': 0.5, "tf-idf": 1},
+        # {'between-a-b': 0.5, 'context-a': 0.5, 'context-b': 0.5, 'embedding': 0.5, "tf-idf": 1},
+
         # ]
     })
 
 
 def feat_names(prefix, union, index):
     return [prefix + '_' + feat for feat in union.transformer_list[index][1].named_steps['bow'].get_feature_names()]
+
+
+def save_prob(pipeline, train, test):
+    df = DataFrame(
+        np.array(pipeline.fit(train['text'].values, train['label'].values).predict_proba(test['text'].values)) * 100,
+        columns=LABELS)
+
+    df['Sentence'] = test['text'].values
+    df.to_csv(path_or_buf='./data/conf.csv', index=False, float_format='%.2f')
 
 
 def summary(*objs):
@@ -181,13 +208,13 @@ def save_features(feature_names, k_best, model, sum, output_fpath):
 if __name__ == '__main__':
 
     algo = [
-       LogisticRegression(),
-       LinearSVC(),
-       SGDClassifier(),
-       Perceptron(),
-       RandomForestClassifier(),
-       MLPClassifier(),
-       PassiveAggressiveClassifier()
+        LogisticRegression(),
+        LinearSVC(),
+        SGDClassifier(),
+        Perceptron(),
+        RandomForestClassifier(),
+        MLPClassifier(),
+        PassiveAggressiveClassifier(),
         # XGBClassifier(max_depth=6),
     ]
 
