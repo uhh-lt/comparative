@@ -6,13 +6,31 @@ import gensim
 from sklearn.feature_extraction.text import TfidfVectorizer
 from datetime import datetime
 
+
+class SpacyEmbedding(BaseEstimator, TransformerMixin):
+    def __init__(self, spacy):
+        self.spacy = spacy
+
+    def fit(self, X, y):
+        return self
+
+    def transform(self, documents):
+        vecs = []
+        for document in documents:
+            doc = self.spacy(document)
+
+            vecs.append(doc.vector)
+        return vecs
+
+
 class WordEmbedding(BaseEstimator, TransformerMixin):
     """
     http://nadbordrozd.github.io/blog/2016/05/20/text-classification-with-word2vec/
     """
 
     def __init__(self):
-        self.word2vec = gensim.models.KeyedVectors.load_word2vec_format('data/embeddings/GoogleNews-vectors-negative300.bin', binary=True)
+        self.word2vec = gensim.models.KeyedVectors.load_word2vec_format(
+            'data/embeddings/GoogleNews-vectors-negative300.bin', binary=True)
         self.word2weight = None
         self.dim = 300
         print('{} embedding loaded'.format(str(datetime.now())))
@@ -32,11 +50,12 @@ class WordEmbedding(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         return np.array([
-            np.mean([self.word2vec[w] #* self.word2weight[w]
+            np.mean([self.word2vec[w]  # * self.word2weight[w]
                      for w in words if w in self.word2vec] or
                     [np.zeros(self.dim)], axis=0)
             for words in X
         ])
+
 
 class Glove100(BaseEstimator, TransformerMixin):
     """
@@ -68,6 +87,7 @@ class Glove100(BaseEstimator, TransformerMixin):
                     [np.zeros(self.dim)], axis=0)
             for words in X
         ])
+
 
 class Glove300(BaseEstimator, TransformerMixin):
     """

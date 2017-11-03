@@ -3,6 +3,8 @@ import re
 import traceback
 from collections import defaultdict
 
+import spacy
+
 from pandas import DataFrame
 import numpy as np
 import pandas as pd
@@ -30,6 +32,8 @@ from datetime import datetime
 from sklearn.utils import shuffle
 
 # from tools.features.WordEmbedding import Glove100, Glove300
+from tools.features.WordEmbedding import SpacyEmbedding
+from tools.features.spacy_feat import POSCount, NERCount, POSSequence
 
 K_BEST_K = 'all'
 
@@ -48,9 +52,10 @@ def build_data_frame(file_name):
     return data_frame
 
 
+nlp = spacy.load('en')
 TRAIN = build_data_frame('data/train_80.csv')
 TEST = build_data_frame('data/test_20.csv')
-DATA = pd.concat([TRAIN, TEST])
+DATA = shuffle(pd.concat([TRAIN, TEST]), random_state=42)
 STOPWORDS = stopwords.words('english')
 
 k_fold = KFold(n_splits=5)
@@ -58,82 +63,100 @@ splits = list(k_fold.split(DATA['text'], DATA['label']))
 
 LABELS = ['A_GREATER_B', 'A_LESSER_B', 'NO_COMP']
 
-embedding = WordEmbedding()
+
+# embedding = WordEmbedding()
 
 
 def run_pipeline(prefix, model, save_feat=False):
-    try:
-        print('\n\n=== {} ({})==='.format(type(model).__name__, prefix))
-        for train_index, test_index in splits:
-            train = DATA.iloc[train_index]
-            test = DATA.iloc[test_index]
-            # train = TRAIN
-            # test = TEST
-            k_best = SelectKBest(f_classif, k=K_BEST_K)
+    print('\n\n=== {} ({})==='.format(type(model).__name__, prefix))
+    f1s = []
+    for train_index, test_index in splits:
+        train = DATA.iloc[train_index]
+        test = DATA.iloc[test_index]
+        # train = TRAIN
+        # test = TEST
+        k_best = SelectKBest(f_classif, k=K_BEST_K)
 
-            vectorizer = TfidfVectorizer()
-            union = FeatureUnion(
-                [
-                    ('between-a-b', Pipeline([
-                        ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
-                        ('bow', CountVectorizer()),
-                    ])),
-                    ('context-a', Pipeline([
-                        ('extract', BeforeAfterWord('OBJECT_A', before=False, first_occ=False)),
-                        ('bow', CountVectorizer())
-                    ])),
-                    ('context-b', Pipeline([
-                        ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
-                        ('bow', CountVectorizer()),
-                    ])),
-                    ('embedding', Pipeline([
-                        ('w2v', embedding)
-                    ])),
-                    ('tf-idf', Pipeline([
-                        ('tf-idf', vectorizer)
-                    ])),
-                    # ('length', Pipeline([
-                    #     ('length-whole', LengthAnalyzer())
-                    # ]))
+        vectorizer = TfidfVectorizer()
+        union = FeatureUnion(
+            [
+                ('between-a-b', Pipeline([
+                    ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
+                    ('bow', CountVectorizer()),
+                ])),
+                ('context-a', Pipeline([
+                    ('extract', BeforeAfterWord('OBJECT_A', before=False, first_occ=False)),
+                    ('bow', CountVectorizer())
+                ])),
+                ('context-b', Pipeline([
+                    ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
+                    ('bow', CountVectorizer()),
+                ])),
+                ('embedding', Pipeline([
+                    ('w2v', SpacyEmbedding(nlp))
+                ])),
+                ('tf-idf', Pipeline([
+                    ('tf-idf', vectorizer)
+                ])),
+                ('noun-count', Pipeline([
+                    ('noun', POSCount(nlp, spacy.parts_of_speech.NOUN))
+                ])),
+                ('adj-count', Pipeline([
+                    ('adj', POSCount(nlp, spacy.parts_of_speech.ADJ))
+                ])),
+                ('ner-count', Pipeline([
+                    ('ner', NERCount(nlp))
+                ])),
+                ('pos-seq', Pipeline([
+                    ('seq', POSSequence(nlp)),
+                    ('bow', CountVectorizer())
+                ])),
 
-                ])
-            pipeline = Pipeline([
-                ('features', union),
-                # ('k-best', k_best),
-                ('model', model),
+                ('length', Pipeline([
+                    ('length-whole', LengthAnalyzer())
+                ]))
+
             ])
-            # cv = grid_search(pipeline)
-            predictions = pipeline.fit(train['text'].values, train['label'].values).predict(test['text'].values)
+        pipeline = Pipeline([
+            ('features', union),
+            # ('k-best', k_best),
+            ('model', model),
+        ])
+        # cv = grid_search(pipeline)
+        fit = pipeline.fit(train['text'].values, train['label'].values)
 
-            # save_prob(pipeline, train, test)
-            # print("###############")
-            # print(cv.best_estimator_)
-            # print("###############")
-            # print(cv.best_params_)
-            # print("###############")
+        predictions = fit.predict(test['text'].values)
 
-            report = classification_report(test['label'].values, predictions, labels=LABELS)
-            # report = classification_report(test['label'].values,
-            #                                cv.best_estimator_.fit(train['text'].values, train['label'].values).predict(
-            #                                    test['text'].values), labels=LABELS)
-            f1 = '{:02.2f}'.format(f1_score(test['label'].values, predictions, labels=LABELS, average='weighted') * 100)
-            matrix = confusion_matrix(test['label'].values, predictions, labels=LABELS)
+        f1s.append(f1_score(test['label'], predictions, average='weighted'))
 
-            print(report, matrix)
+        # save_prob(pipeline, train, test)
+        # print("###############")
+        # print(cv.best_estimator_)
+        # print("###############")
+        # print(cv.best_params_)
+        # print("###############")
 
-            if save_feat:
-                feature_names = feat_names("BETW", union, 0) + feat_names("CTX_A", union, 1) + feat_names("CTX_B",
-                                                                                                          union,
-                                                                                                          2) + vectorizer.get_feature_names()
-                save_features(feature_names, k_best, model, summary(
-                    [union.transformer_list[0][1].named_steps['extract'],
-                     union.transformer_list[1][1].named_steps['extract'],
-                     union.transformer_list[2][1].named_steps['extract']], k_best, model, report, matrix),
-                              './{}-{}-{}.csv'.format(f1, prefix, type(model).__name__))
+        report = classification_report(test['label'].values, predictions, labels=LABELS)
+        # report = classification_report(test['label'].values,
+        #                                cv.best_estimator_.fit(train['text'].values, train['label'].values).predict(
+        #                                    test['text'].values), labels=LABELS)
+        f1 = '{:02.2f}'.format(f1_score(test['label'].values, predictions, labels=LABELS, average='weighted') * 100)
+        matrix = confusion_matrix(test['label'].values, predictions, labels=LABELS)
 
-    except Exception as e:
-        print('{} {} failed'.format(type(model).__name__, prefix))
-        print(e)
+        print(report, matrix)
+
+        if save_feat:
+            feature_names = feat_names("BETW", union, 0) + feat_names("CTX_A", union, 1) + feat_names("CTX_B",
+                                                                                                      union,
+                                                                                                      2) + vectorizer.get_feature_names()
+            save_features(feature_names, k_best, model, summary(
+                [union.transformer_list[0][1].named_steps['extract'],
+                 union.transformer_list[1][1].named_steps['extract'],
+                 union.transformer_list[2][1].named_steps['extract']], k_best, model, report, matrix),
+                          './{}-{}-{}.csv'.format(f1, prefix, type(model).__name__))
+
+    print("#######################################")
+    print(np.mean(np.array(f1s)))
 
 
 def grid_search(pipeline):
@@ -208,13 +231,13 @@ def save_features(feature_names, k_best, model, sum, output_fpath):
 if __name__ == '__main__':
 
     algo = [
-        LogisticRegression(),
-        LinearSVC(),
-        SGDClassifier(),
-        Perceptron(),
-        RandomForestClassifier(),
-        MLPClassifier(),
-        PassiveAggressiveClassifier(),
+        LogisticRegression(max_iter=1000),
+        # LinearSVC(),
+        # SGDClassifier(),
+        # Perceptron(),
+        # RandomForestClassifier(),
+        # MLPClassifier(),
+        # PassiveAggressiveClassifier(),
         # XGBClassifier(max_depth=6),
     ]
 
