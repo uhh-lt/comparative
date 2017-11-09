@@ -51,12 +51,12 @@ def main():
         requests.append(
             query(
                 QUERY.format(jsonify_no(obj, joiner=' AND ')),
-                'data/{}'.format('-'.join(obj))))
+                'data-annotation/{}'.format('-'.join(obj))))
                 
         requests.append(
             query(
                 QUERY_BETTER.format(jsonify_no(obj, joiner=' AND ')),
-                'data/{}-better'.format('-'.join(obj))))
+                'data-annotation/{}-better'.format('-'.join(obj))))
 
 
     response = grequests.map(requests, size=REQUEST_THREADS, exception_handler=lambda x,y: print(y))

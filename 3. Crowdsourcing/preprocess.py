@@ -68,7 +68,7 @@ if __name__ == '__main__':
             '{}-better'.format('-'.join(pair)): [pair,[],75]
         }
         for file, objects in files.items():
-            lines = read('data/{}.json'.format(file))
+            lines = read('data-annotation/{}.json'.format(file))
             filtered = [{'source': file, 'text':replace_objects(line,objects[0:1][0])} for line in lines if length_filter(line) and appears_once(line, objects[0]) and symbols(line) and not_contains(line, objects[1])]
             shuffle(filtered)
             sentences += filtered[:objects[2]]

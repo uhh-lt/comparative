@@ -43,8 +43,8 @@ def build_data_frame(file_name):
     with open(file_name, 'r') as data:
         for line in data:
             try:
-                text, label = line.rsplit(';')
-                rows.append({'text': text.strip(), 'label': label.strip().replace('?', '')})
+                text, label, comp, comment = line.rsplit('\t')
+                rows.append({'text': text.strip(), 'label': label.strip().replace('?', '').replace('UNCLEAR', 'NO_COMP')})
             except Exception as e:
                 pass
     data_frame = DataFrame(rows)
@@ -53,15 +53,16 @@ def build_data_frame(file_name):
 
 
 nlp = spacy.load('en')
-TRAIN = build_data_frame('data/train_80.csv')
-TEST = build_data_frame('data/test_20.csv')
-DATA = shuffle(pd.concat([TRAIN, TEST]), random_state=42)
+#TRAIN = build_data_frame('data/train_80.csv')
+#TEST = build_data_frame('data/test_20.csv')
+DATA = shuffle(build_data_frame('data/pre.tsv'), random_state=42)
 STOPWORDS = stopwords.words('english')
 
-k_fold = KFold(n_splits=5)
+k_fold = KFold(n_splits=2)
 splits = list(k_fold.split(DATA['text'], DATA['label']))
 
-LABELS = ['A_GREATER_B', 'A_LESSER_B', 'NO_COMP']
+LABELS = ['BETTER', 'WORSE',  'NO_COMP']
+#LABELS = ['A_GREATER_B', 'A_LESSER_B', 'NO_COMP']
 
 
 # embedding = WordEmbedding()
@@ -80,41 +81,41 @@ def run_pipeline(prefix, model, save_feat=False):
         vectorizer = TfidfVectorizer()
         union = FeatureUnion(
             [
-                ('between-a-b', Pipeline([
-                    ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
-                    ('bow', CountVectorizer()),
-                ])),
-                ('context-a', Pipeline([
-                    ('extract', BeforeAfterWord('OBJECT_A', before=False, first_occ=False)),
-                    ('bow', CountVectorizer())
-                ])),
-                ('context-b', Pipeline([
-                    ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
-                    ('bow', CountVectorizer()),
-                ])),
+                # ('between-a-b', Pipeline([
+                #     ('extract', BetweenWords("OBJECT_A", "OBJECT_B", first_occ_a=True, first_occ_b=True)),
+                #     ('bow', CountVectorizer()),
+                # ])),
+                # ('context-a', Pipeline([
+                #     ('extract', BeforeAfterWord('OBJECT_A', before=False, first_occ=False)),
+                #     ('bow', CountVectorizer())
+                # ])),
+                # ('context-b', Pipeline([
+                #     ('extract', BeforeAfterWord('OBJECT_B', before=False, first_occ=True)),
+                #     ('bow', CountVectorizer()),
+                # ])),
                 ('embedding', Pipeline([
                     ('w2v', SpacyEmbedding(nlp))
                 ])),
                 ('tf-idf', Pipeline([
-                    ('tf-idf', vectorizer)
+                    ('tf-idf', CountVectorizer())
                 ])),
-                ('noun-count', Pipeline([
-                    ('noun', POSCount(nlp, spacy.parts_of_speech.NOUN))
-                ])),
-                ('adj-count', Pipeline([
-                    ('adj', POSCount(nlp, spacy.parts_of_speech.ADJ))
-                ])),
-                ('ner-count', Pipeline([
-                    ('ner', NERCount(nlp))
-                ])),
-                ('pos-seq', Pipeline([
-                    ('seq', POSSequence(nlp)),
-                    ('bow', CountVectorizer())
-                ])),
+                # ('noun-count', Pipeline([
+                #     ('noun', POSCount(nlp, spacy.parts_of_speech.NOUN))
+                # ])),
+                # ('adj-count', Pipeline([
+                #     ('adj', POSCount(nlp, spacy.parts_of_speech.ADJ))
+                # ])),
+                # ('ner-count', Pipeline([
+                #     ('ner', NERCount(nlp))
+                # ])),
+                # ('pos-seq', Pipeline([
+                #     ('seq', POSSequence(nlp)),
+                #     ('bow', CountVectorizer())
+                # ])),
 
-                ('length', Pipeline([
-                    ('length-whole', LengthAnalyzer())
-                ]))
+                # ('length', Pipeline([
+                #     ('length-whole', LengthAnalyzer())
+                # ]))
 
             ])
         pipeline = Pipeline([
@@ -231,7 +232,7 @@ def save_features(feature_names, k_best, model, sum, output_fpath):
 if __name__ == '__main__':
 
     algo = [
-        LogisticRegression(max_iter=1000),
+        LogisticRegression(),
         # LinearSVC(),
         # SGDClassifier(),
         # Perceptron(),
