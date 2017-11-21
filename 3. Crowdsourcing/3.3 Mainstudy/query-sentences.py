@@ -102,38 +102,41 @@ for typ in data['source'].unique():
             b = next_brand[0]
             if next_brand != current_brand and used[current_brand] < limit and used[next_brand] < limit and stop <= 50 and current_brand[1] + next_brand[1] > 100 and len(
                     a) >= 3 and len(b) >= 3:
-                if query_count % 1000 == 0:
-                    time.sleep(5)
-                query_result = query(a, b, query_count)
-                res[a + '_' + b] = query_result
+                try:
+                    if query_count % 1000 == 0:
+                        time.sleep(5)
+                    query_result = query(a, b, query_count)
+                    res[a + '_' + b] = query_result
 
-                sentence = query_result[:1]
-                for t in res[a + '_' + b][:1]:
-                    obj_s_pairs.append({
-                        'id':
-                        t['_id'],
-                        'weight':
-                        current_brand[1] + next_brand[1],
-                        'a':
-                        a,
-                        'b':
-                        b,
-                        'with-marker':
-                        query_count % 10 == 0,
-                        'typ':
-                        typ,
-                        'source':
-                        data['source'],
-                        'sentence':
-                        t['_source']['text'],
-                        'highlighted':
-                        t['highlight']['text']
-                    })
-                query_count += 1
-                stop += 1
-                print(a, used[current_brand],b,used[next_brand],stop)
-                used[next_brand] += 1 if len(query_result) > 1 else 0
-                used[current_brand] += 1 if len(query_result) > 1 else 0
+                    sentence = query_result[:1]
+                    for t in res[a + '_' + b][:1]:
+                        obj_s_pairs.append({
+                            'id':
+                            t['_id'],
+                            'weight':
+                            current_brand[1] + next_brand[1],
+                            'a':
+                            a,
+                            'b':
+                            b,
+                            'with-marker':
+                            query_count % 10 == 0,
+                            'typ':
+                            typ,
+                            'source':
+                            data['source'],
+                            'sentence':
+                            t['_source']['text'],
+                            'highlighted':
+                            t['highlight']['text']
+                        })
+                    query_count += 1
+                    stop += 1
+                    print(a, used[current_brand],b,used[next_brand],stop)
+                    used[next_brand] += 1 if len(query_result) > 1 else 0
+                    used[current_brand] += 1 if len(query_result) > 1 else 0
+                except Exception as e:
+                    print(e)
 
 
 
