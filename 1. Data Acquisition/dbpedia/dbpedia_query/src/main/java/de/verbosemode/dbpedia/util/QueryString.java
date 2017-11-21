@@ -43,7 +43,7 @@ public class QueryString {
         }
 
         Query query = QueryFactory.create(buffer.toString());
-
+        System.out.println(buffer.toString());
         return query;
 
     }

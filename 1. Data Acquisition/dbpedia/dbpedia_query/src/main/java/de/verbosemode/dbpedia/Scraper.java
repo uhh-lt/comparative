@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Log
 public class Scraper {
-    public static final int MAX_LIMIT = 40000;
+    public static final int MAX_LIMIT = 400;
     private ObjectMapper mapper = new ObjectMapper();
 
 
@@ -49,7 +49,7 @@ public class Scraper {
             Collection<Entity> entities = mapper.readValue(saved, new TypeReference<Collection<Entity>>() {
             });
             return entities;
-        }
+        }py
         return Collections.emptyList();
     }
 
