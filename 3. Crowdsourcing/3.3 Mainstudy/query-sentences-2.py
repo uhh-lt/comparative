@@ -12,11 +12,11 @@ SEARCH_URL = BASE_URL + '/_search?size=150'
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 
-NAME = 'compsci'
+NAME = 'brand-list'
 
 data = pd.read_csv('data/cleaned-{}.csv'.format(NAME), encoding='latin-1')
 
-#markers = set()
+markers = set()
 
 
 def read_jb_json(names):
@@ -27,12 +27,12 @@ def read_jb_json(names):
                 markers.add(entry['key'])
 
 
-#read_jb_json([
-#    'data/marker/better.json', 'data/marker/worse.json',
-#    'data/marker/superior.json', 'data/marker/inferior.json'
-#])
+read_jb_json([
+    'data/marker/better.json', 'data/marker/worse.json',
+    'data/marker/superior.json', 'data/marker/inferior.json'
+])
 
-markers = ['better', 'worse']
+#markers = ['better', 'worse']
 
 
 def query(a, b, counter):
@@ -172,11 +172,11 @@ for index, pair in enumerate(pairs):
 
 print(len(pairs))
 """
-with open('bw-raw-sentences-{}.json'.format(NAME), 'w') as f:
+with open('raw-sentences-{}.json'.format(NAME), 'w') as f:
     try:
         json.dump(res, f)
     except Exception as e:
         print(e)
 
-with open('bw-sentences-{}.json'.format(NAME), 'w') as f:
+with open('sentences-{}.json'.format(NAME), 'w') as f:
     json.dump(obj_s_pairs, f)

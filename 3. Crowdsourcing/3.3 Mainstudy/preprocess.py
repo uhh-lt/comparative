@@ -20,7 +20,7 @@ def is_valid(words, sentence):
     return True
 
 
-sentences = load('sentences-bw-compsci.json')
+sentences = load('sentences-compsci.json')
 print(len(sentences))
 
 with open('sentence-compsci.txt', 'w') as out:
