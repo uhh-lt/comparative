@@ -105,6 +105,12 @@ for typ in data['source'].unique():
                 try:
                     if query_count % 1000 == 0:
                         time.sleep(1)
+                        with open('raw-sentence-{}-temp.json'.format(NAME), 'w') as tmp:
+                            print('raw dump')
+                            json.dump(res,tmp)
+                        with open('sentences-{}-temp.json'.format(NAME), 'w') as tmp2:
+                            print('sentence dump')
+                            json.dump(obj_s_pairs, tmp2)
                     query_result = query(a, b, query_count)
                     res[a + '_' + b] = query_result
 
@@ -124,7 +130,7 @@ for typ in data['source'].unique():
                             'typ':
                             typ,
                             'source':
-                            data['source'],
+                             typ,
                             'sentence':
                             t['_source']['text'],
                             'highlighted':
@@ -132,7 +138,7 @@ for typ in data['source'].unique():
                         })
                     query_count += 1
                     stop += 1
-                    print(a, used[current_brand],b,used[next_brand],stop)
+                    print(a, used[current_brand],b,used[next_brand],stop,len(res),len(obj_s_pairs))
                     used[next_brand] += 1 if len(query_result) > 1 else 0
                     used[current_brand] += 1 if len(query_result) > 1 else 0
                 except Exception as e:
