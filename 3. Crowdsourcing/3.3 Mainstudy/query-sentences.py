@@ -104,7 +104,7 @@ for typ in data['source'].unique():
                     a) >= 3 and len(b) >= 3:
                 try:
                     if query_count % 1000 == 0:
-                        time.sleep(5)
+                        time.sleep(1)
                     query_result = query(a, b, query_count)
                     res[a + '_' + b] = query_result
 
