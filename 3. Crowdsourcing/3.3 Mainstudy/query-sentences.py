@@ -167,7 +167,10 @@ for index, pair in enumerate(pairs):
 print(len(pairs))
 """
 with open('raw-sentences-{}.json'.format(NAME), 'w') as f:
-    json.dump({'sentences': res_ct, 'data':res}, f)
+    try:
+        json.dump(res, f)
+    except Exception as e:
+        print(e)
 
 with open('sentences-{}.json'.format(NAME), 'w') as f:
     json.dump(obj_s_pairs, f)
