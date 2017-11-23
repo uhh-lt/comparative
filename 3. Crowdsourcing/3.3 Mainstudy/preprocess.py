@@ -20,9 +20,10 @@ def is_valid(words, sentence):
     return True
 
 
-sentences = load('bw-sentences-compsci.json')
+file_name = 'sentences-git'
+sentences = load('{}.json'.format(file_name))
 print(len(sentences))
 
-with open('sentence-compsci.txt', 'w') as out:
+with open('{}.txt'.format(file_name), 'w') as out:
     for sentence in sentences:
         out.write(sentence+'\n')
