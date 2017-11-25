@@ -1,0 +1,28 @@
+{
+    "marker": [
+        "better",
+        "easier",
+        "faster",
+        "nicer",
+        "wiser",
+        "cooler",
+        "decent",
+        "safer",
+        "superior",
+        "solid",
+        "teriffic",
+        "worse",
+        "harder",
+        "slower",
+        "poorly",
+        "uglier",
+        "poorer",
+        "lousy",
+        "nastier",
+        "inferior",
+        "mediocre"
+    ],
+    "search_with_next_frequent": 5,
+    "maximum_appearance_per_term": 15,
+    "number_of_sentences": 1384
+}
