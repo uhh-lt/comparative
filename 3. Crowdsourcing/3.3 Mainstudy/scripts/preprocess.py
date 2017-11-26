@@ -30,9 +30,10 @@ def is_valid(words, sentence):
         return False
 
 
-typ = 'brands'
-setup = 'next_{}_max_{}'.format(5,15)
-file_name = '../final-data/{}/{}/sentences-brand-list'.format(typ,setup,typ)
+typ = 'comp-sci'
+setup = 'next_{}_max_{}'.format(3,25)
+
+file_name = '../final-data/{}/{}/sentences-compsci'.format(typ,setup,typ)
 #file_name = '../final-data/wordnet/sentences-wordnet'
 sentences = load('{}.json'.format(file_name))
 print(len(sentences))
