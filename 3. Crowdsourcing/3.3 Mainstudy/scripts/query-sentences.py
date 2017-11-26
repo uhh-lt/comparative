@@ -41,7 +41,7 @@ markers = markers_better + markers_worse
 
 
 def query(a, b, counter):
-    if counter % 10 == 0:
+    if counter % 100 == 0:
         query_string = QUERY.format(a, b)
     else:
         query_string = QUERY_BETTER.format(' OR '.join(markers).strip(), a, b)
