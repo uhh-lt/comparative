@@ -54,7 +54,6 @@ def query(a, b, counter):
         hits = res[0].json()['hits']['hits']
         return hits
     except KeyError as e:
-        exit()
         print('1',e)
 
 
@@ -78,7 +77,7 @@ for typ in data['source'].unique():
     for index, row in grouped.iterrows():
         brands.append((row['cleaned_name'], row['freq'], row['source']))
 
-    for current_brand in brands[:2]:
+    for current_brand in brands:
         stop = 0
         for next_brand in brands:
             a = current_brand[0]
