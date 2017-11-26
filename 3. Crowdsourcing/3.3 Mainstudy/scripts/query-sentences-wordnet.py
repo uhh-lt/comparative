@@ -4,6 +4,10 @@ import json
 from collections import defaultdict
 import time
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', action='store', dest='file')
 
 ES_ENDPOINT = "http://localhost:9222/freq-dict/freq"
 
@@ -15,7 +19,9 @@ QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" :
 
 NAME = 'wordnet'
 
-with open('../final-data/wordnet/wordnet-pairs.json') as d:
+f_p = parser.parse_args().file
+#'../final-data/wordnet/wordnet-pairs.json'
+with open(f_p) as d:
     data = json.load(d)
 
 markers_better = [

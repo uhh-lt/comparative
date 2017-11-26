@@ -1,9 +1,15 @@
 import pandas as pd
-import requests
+import grequests
 import json
 from collections import defaultdict
 import time
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', action='store', dest='file')
+parser.add_argument('-n', action='store', dest='look_at_next')
+parser.add_argument('-l', action='store', dest='max_appearance')
 
 ES_ENDPOINT = "http://localhost:9222/freq-dict/freq"
 
@@ -13,8 +19,13 @@ SEARCH_URL = BASE_URL + '/_search?size=15'
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 
-NAME = 'brand-list'
 
+args = parser.parse_args()
+NAME = args.file
+limit = int(args.max_appearance)
+next_frequent = int(args.look_at_next)
+
+print(NAME)
 data = pd.read_csv(
     '../data/old/cleaned-{}.csv'.format(NAME), encoding='latin-1')
 
@@ -36,24 +47,27 @@ def query(a, b, counter):
     else:
         query_string = QUERY_BETTER.format(' OR '.join(markers).strip(), a, b)
     headers = {'Content-Type': 'application/json'}
-    res = requests.post(
-        SEARCH_URL, data=query_string, headers=headers, timeout=60).json()
+    req = grequests.post(
+        SEARCH_URL, data=query_string, headers=headers, timeout=60)
+    res = grequests.map([req])
     try:
-        hits = res['hits']['hits']
+        hits = res[0].json()['hits']['hits']
         return hits
     except KeyError as e:
-        print(e)
+        exit()
+        print('1',e)
 
 
 used = defaultdict(int)
-limit = 15
-next_frequent = 5
+
 pairs = []
 
 res = {}
 query_count = 0
 obj_s_pairs = []
+used_ids = []
 for typ in data['source'].unique():
+    print(typ)
     t_data = data[data['source'] == typ]
 
     grouped = t_data.groupby(
@@ -64,7 +78,7 @@ for typ in data['source'].unique():
     for index, row in grouped.iterrows():
         brands.append((row['cleaned_name'], row['freq'], row['source']))
 
-    for current_brand in brands:
+    for current_brand in brands[:2]:
         stop = 0
         for next_brand in brands:
             a = current_brand[0]
@@ -75,7 +89,7 @@ for typ in data['source'].unique():
                     res[a + '_' + b] = query_result
 
                     sentence = query_result[:1]
-                    if len(query_result) > 0:
+                    if  len(query_result) > 0:
                         pairs.append({
                             'a': {
                                 'word': a,
@@ -86,39 +100,44 @@ for typ in data['source'].unique():
                                 'freq': next_brand[1]
                             }
                         })
-                    for t in res[a + '_' + b][:1]:
-                        obj_s_pairs.append({
-                            'id':
-                            t['_id'],
-                            'weight':
-                            current_brand[1] + next_brand[1],
-                            'a':
-                            a,
-                            'b':
-                            b,
-                            'without-marker':
-                            query_count % 10 == 0,
-                            'typ':
-                            typ,
-                            'source':
-                            typ,
-                            'sentence':
-                            t['_source']['text'],
-                            'highlighted':
-                            t['highlight']['text']
-                        })
+                    for t in res[a + '_' + b]:
+                        if t['_id'] not in used_ids:
+                            used_ids.append(t['_id'])
+                            obj_s_pairs.append({
+                                'id':
+                                t['_id'],
+                                'weight':
+                                current_brand[1] + next_brand[1],
+                                'a':
+                                a,
+                                'b':
+                                b,
+                                'without-marker':
+                                query_count % 10 == 0,
+                                'typ':
+                                typ,
+                                'source':
+                                typ,
+                                'sentence':
+                                t['_source']['text'],
+                                'highlighted':
+                                t['highlight']['text']
+                            })
+                            break
+
                     query_count += 1
                     stop += 1
                     print(a, used[a.lower()], b, used[b.lower()], stop,
-                          len(res), len(obj_s_pairs))
+                        len(res), len(obj_s_pairs))
                     used[a.lower()] += 1 if len(query_result) > 0 else 0
                     used[b.lower()] += 1 if len(query_result) > 0 else 0
                 except Exception as e:
                     print(e)
 
+
 import time
 
-folder = time.strftime("%H-%M")
+folder = time.strftime("%H-%M") + '_next_' + str(next_frequent) + '_max_'+str(limit)
 if not os.path.exists(folder):
     os.makedirs(folder)
 
@@ -134,7 +153,7 @@ with open('{}/raw-sentences-{}.json'.format(folder, NAME), 'w') as f:
             'data': res
         }, f)
     except Exception as e:
-        print(e)
+        print('3',e)
 
 with open('{}/sentences-{}.json'.format(folder, NAME), 'w') as f:
     json.dump(obj_s_pairs, f)
