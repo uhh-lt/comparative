@@ -19,7 +19,6 @@ SEARCH_URL = BASE_URL + '/_search?size=15'
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 
-
 args = parser.parse_args()
 NAME = args.file
 limit = int(args.max_appearance)
@@ -100,7 +99,7 @@ for typ in data['source'].unique():
                             }
                         })
                     for t in res[a + '_' + b]:
-                        if t['_id'] not in used_ids:
+                        if t['_id'] not in used_ids and used[a.lower()] < limit and used[b.lower()] < limit:
                             used_ids.append(t['_id'])
                             obj_s_pairs.append({
                                 'id':
@@ -122,14 +121,14 @@ for typ in data['source'].unique():
                                 'highlighted':
                                 t['highlight']['text']
                             })
-                            break
+                            used[a.lower()] += 1 if len(query_result) > 0 else 0
+                            used[b.lower()] += 1 if len(query_result) > 0 else 0
 
                     query_count += 1
                     stop += 1
                     print(a, used[a.lower()], b, used[b.lower()], stop,
                         len(res), len(obj_s_pairs))
-                    used[a.lower()] += 1 if len(query_result) > 0 else 0
-                    used[b.lower()] += 1 if len(query_result) > 0 else 0
+
                 except Exception as e:
                     print(e)
 
