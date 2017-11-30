@@ -13,6 +13,8 @@ ES_ENDPOINT = "http://localhost:9222/freq-dict/freq"
 
 freqs = {}
 
+#nltk.download('averaged_perceptron_tagger')
+
 
 def get_freq(term):
     contains_word = re.compile(r'\w')
@@ -44,7 +46,11 @@ def get_antonym(term):
     for syn in synset:
         for l in syn.lemmas():
             if l.antonyms():
-                return l.antonyms()[0].name()
+                for ant in l.antonyms():
+                    if ant.synset().pos() is 'n':
+                        print(ant.name(), (ant.synset().pos()))
+                        return ant.name()
+                    
     return None
 
 
