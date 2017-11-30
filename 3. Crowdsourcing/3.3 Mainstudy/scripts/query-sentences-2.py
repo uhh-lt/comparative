@@ -166,3 +166,41 @@ with open('{}/meta-{}.json'.format(folder, NAME), 'w') as f:
         'maximum_appearance_per_term': limit,
         'number_of_sentences': len(obj_s_pairs)
     }, f)
+
+
+
+
+def load(file):
+    
+    sentences = []
+    already = set()
+    
+    with open(file, 'r') as f:
+        data = json.load(f)
+        print(len(data))
+        for item in data:
+            idx, a,b, sentence, with_marker = ((item['id'], item['a'], item['b'], item['sentence'], item['without-marker']))
+            if sentence.lower() not in already and is_valid([a, b], sentence):
+                sentences.append('{}\t{}\t{}\t{}\t{}'.format(idx,sentence,a,b, with_marker))
+                
+                already.add(sentence.lower())
+    return sentences
+
+
+def is_valid(words, sentence):
+    count = 0
+    try:
+        for word in words:
+            count += sentence.lower().count(word.lower())
+        return count == 2
+    except Exception as e:
+        return False
+
+p = '{}/sentences-{}.json'.format(folder,NAME)
+res = load(p)
+
+with open ('{}/sentences-only-{}.tsv'.format(folder,NAME),'w') as f:
+    f.write('id\tsentence\ta\tb\twithout_marker\n')
+    for sentence in res:
+        f.write(sentence+'\n')
+
