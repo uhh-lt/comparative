@@ -18,7 +18,7 @@ def clean(col_name, path, file):
     data['freq'] = data.apply(
         lambda row: get_freq(row['cleaned_name']), axis=1)
 
-    data.to_csv('data/cleaned-{}'.format(file), index_label='index')
+    data.to_csv('../data/cleaned-{}'.format(file), index_label='index')
 
 
 def get_freq(term):
@@ -39,5 +39,5 @@ def get_freq(term):
         return -1
 
 
-clean('Concept', 'data', 'compsci.csv')
-clean('brand_name', 'data', 'brand-list.csv')
+clean('name', '../data', 'compsci.csv')
+clean('name', '../data', 'brands.csv')

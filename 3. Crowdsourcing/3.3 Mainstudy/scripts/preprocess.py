@@ -12,9 +12,9 @@ def load(file):
         data = json.load(f)
         print(len(data))
         for item in data:
-            a,b, sentence, with_marker = ((item['a'], item['b'], item['sentence'], item['without-marker']))
+            i, a,b, sentence, with_marker = ((item['id'], item['a'], item['b'], item['sentence'], item['without-marker']))
             if sentence.lower() not in already and is_valid([a, b], sentence):
-                sentences.append('{}\t{}\t{}\t{}\t{}'.format(idx,sentence,a,b, with_marker))
+                sentences.append('{}\t{}\t{}\t{}\t{}'.format(i,sentence,a,b, with_marker))
                 idx+=1
                 already.add(sentence.lower())
     return sentences
@@ -30,15 +30,15 @@ def is_valid(words, sentence):
         return False
 
 
-typ = 'comp-sci'
-setup = 'next_{}_max_{}'.format(3,25)
+typ = 'wordnet'
+#setup = 'next_{}_max_{}'.format(3,25)
 
-file_name = '../final-data/{}/{}/sentences-compsci'.format(typ,setup,typ)
-#file_name = '../final-data/wordnet/sentences-wordnet'
+#file_name = '../final-data/{}/{}/sentences-compsci'.format(typ,setup,typ)
+file_name = '../final-data/wordnet/sentences-wordnet'
 sentences = load('{}.json'.format(file_name))
 print(len(sentences))
 
-with open('../final-data/{}/{}/{}-sentences-only.tsv'.format(typ,setup,typ), 'w') as out:
+with open('../final-data/wordnet/{}-sentences-only.tsv'.format(typ), 'w') as out:
     out.write('id\tsentence\ta\tb\twithout_marker\n')
     for sentence in sentences:
         out.write(sentence+'\n')

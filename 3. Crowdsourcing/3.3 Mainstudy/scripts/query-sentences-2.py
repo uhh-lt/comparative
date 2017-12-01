@@ -26,7 +26,7 @@ next_frequent = int(args.look_at_next)
 
 print(NAME)
 data = pd.read_csv(
-    '../data/old/cleaned-{}.csv'.format(NAME), encoding='latin-1')
+    '../data/cleaned-{}.csv'.format(NAME), encoding='latin-1')
 
 markers_better = [
     'better', 'easier', 'faster', 'nicer', 'wiser', 'cooler', 'decent',
@@ -81,7 +81,7 @@ for typ in data['source'].unique():
         for next_brand in brands:
             a = current_brand[0]
             b = next_brand[0]
-            if next_brand != current_brand and used[a.lower()] < limit and used[b.lower()] < limit and stop < next_frequent  and len(a) >= 3 and len(b) >= 3:
+            if next_brand != current_brand and used[a.lower()] < limit and used[b.lower()] < limit and stop <= next_frequent  and len(a) >= 3 and len(b) >= 3:
                 try:
                     query_result = query(a, b, query_count)
                     res[a + '_' + b] = query_result
@@ -111,7 +111,7 @@ for typ in data['source'].unique():
                                 'b':
                                 b,
                                 'without-marker':
-                                query_count % 10 == 0,
+                                query_count % 100 == 0,
                                 'typ':
                                 typ,
                                 'source':
@@ -126,8 +126,7 @@ for typ in data['source'].unique():
 
                     query_count += 1
                     stop += 1
-                    print(a, used[a.lower()], b, used[b.lower()], stop,
-                        len(res), len(obj_s_pairs))
+                    print(a, used[a.lower()], b, used[b.lower()], len(obj_s_pairs))
 
                 except Exception as e:
                     print(e)
