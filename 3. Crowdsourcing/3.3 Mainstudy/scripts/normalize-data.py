@@ -6,7 +6,7 @@ import chardet
 from collections import defaultdict
 
 
-ES_ENDPOINT = "http://localhost:9222/freq-dict/freq"
+ES_ENDPOINT = "http://localhost:9222/fd2/freq"
 
 
 def clean(col_name, path, file):
@@ -24,7 +24,7 @@ def clean(col_name, path, file):
 def get_freq(term):
     contains_word = re.compile(r'\w')
     try:
-        query = '{{ "query": {{ "query_string": {{ "fields": ["word"], "query": "\\"{}\\"" }} }} }}'.format(
+        query = '{{ "query": {{ "query_string": {{ "fields": ["word"], "query": "\\"{}\\"" }} }} ,  "sort" : {{"freq" : "desc"}} }}'.format(
             str(term).strip().encode('utf-8').decode('utf-8'))
         res = requests.post(
             url=ES_ENDPOINT + "/_search", data=query.encode('utf-8'))
