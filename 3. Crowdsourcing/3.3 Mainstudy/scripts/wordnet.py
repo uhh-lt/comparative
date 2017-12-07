@@ -6,6 +6,7 @@ import re
 import requests
 import time
 import os
+import random
 
 #df = pd.read_csv('data/things.csv')
 
@@ -50,7 +51,7 @@ def get_antonym(term):
                     if ant.synset().pos() is 'n':
                         print(ant.name(), (ant.synset().pos()))
                         return ant.name()
-                    
+
     return None
 
 
@@ -68,12 +69,14 @@ for synset in wn.all_synsets('n'):
         freq_a = get_freq(a)
         freq_b = get_freq(b)
         pairs.append({
+            'use_marker': random.random() >= 0.1,
+            'type': 'wordnet',
             'a': {
                 'word': a,
-                'freq' : freq_a
+                'freq': freq_a
             },
-            'b' : {
-                'word' : b,
+            'b': {
+                'word': b,
                 'freq': freq_b
             },
         })
@@ -85,6 +88,12 @@ if not os.path.exists(folder):
 with open('{}/wordnet-pairs.json'.format(folder), 'w') as f:
     print(len(pairs))
     json.dump(pairs, f)
+
+with open('{}/wordnet-pairs.tsv'.format(folder), 'w') as f:
+    f.write('word_a\tfreq_a\tword_b\tfreq_b\ttype\tuse_marker\n')
+    for p in pairs:
+        f.write('{}\t{}\t{}\t{}\t{}\t{}\n'.format(p['a']['word'], p['a']['freq'], p['b']['word'], p['b']['freq'], p['type'],p['use_marker'] ))
+
 
 
 
