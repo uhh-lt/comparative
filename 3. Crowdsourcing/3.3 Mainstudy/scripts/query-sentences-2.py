@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
 
 
-ES_ENDPOINT = "http://localhost:9222/freq-dict/freq"
+ES_ENDPOINT = "http://localhost:9222/fq2/freq"
 
 BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
 SEARCH_URL = BASE_URL + '/_search?size=1000'
