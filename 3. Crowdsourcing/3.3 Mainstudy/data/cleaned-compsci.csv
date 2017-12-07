@@ -965,7 +965,6 @@ index,name,source,type,cleaned_name,freq
 963,ALGOL 60,https://en.wikipedia.org/wiki/List_of_programming_languages,language,ALGOL 60,12
 964,ALGOL 68,https://en.wikipedia.org/wiki/List_of_programming_languages,language,ALGOL 68,21
 965,ALGOL W,https://en.wikipedia.org/wiki/List_of_programming_languages,language,ALGOL W,21
-966,Alice,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Alice,144203
 967,Alma-0,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Alma-0,18
 968,AmbientTalk,https://en.wikipedia.org/wiki/List_of_programming_languages,language,AmbientTalk,12
 969,Amiga E,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Amiga E,24
@@ -994,10 +993,8 @@ index,name,source,type,cleaned_name,freq
 992,Babbage,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Babbage,123
 993,Bash,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Bash,1143
 994,BASIC,https://en.wikipedia.org/wiki/List_of_programming_languages,language,BASIC,350
-995,bc,https://en.wikipedia.org/wiki/List_of_programming_languages,language,bc,185743
 996,BCPL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,BCPL,59
 997,BeanShell,https://en.wikipedia.org/wiki/List_of_programming_languages,language,BeanShell,56
-998,Batch (Windows/Dos),https://en.wikipedia.org/wiki/List_of_programming_languages,language,Batch,71747
 999,Bertrand,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Bertrand,443
 1000,Blockly,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Blockly,0
 1001,BlooP,https://en.wikipedia.org/wiki/List_of_programming_languages,language,BlooP,4131
@@ -1059,7 +1056,6 @@ index,name,source,type,cleaned_name,freq
 1057,COWSEL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,COWSEL,0
 1058,CPL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,CPL,17
 1059,Cryptol,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Cryptol,0
-1060,Crystal,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Crystal,97053
 1061,Csound,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Csound,18
 1062,CSP,https://en.wikipedia.org/wiki/List_of_programming_languages,language,CSP,30
 1063,CUDA,https://en.wikipedia.org/wiki/List_of_programming_languages,language,CUDA,405
@@ -1081,7 +1077,6 @@ index,name,source,type,cleaned_name,freq
 1079,DIBOL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,DIBOL,0
 1080,Draco,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Draco,16
 1081,DRAKON,https://en.wikipedia.org/wiki/List_of_programming_languages,language,DRAKON,13
-1082,Dylan,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Dylan,80244
 1083,DYNAMO,https://en.wikipedia.org/wiki/List_of_programming_languages,language,DYNAMO,700
 1084,Easy PL/I,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Easy PL/I,0
 1085,EASYTRIEVE PLUS,https://en.wikipedia.org/wiki/List_of_programming_languages,language,EASYTRIEVE PLUS,0
@@ -1096,7 +1091,6 @@ index,name,source,type,cleaned_name,freq
 1094,Epigram,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Epigram,54
 1095,EPL (Easy Programming Language),https://en.wikipedia.org/wiki/List_of_programming_languages,language,EPL,1422
 1096,Erlang,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Erlang,12
-1097,es,https://en.wikipedia.org/wiki/List_of_programming_languages,language,es,25809
 1098,Escher,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Escher,615
 1099,ESPOL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,ESPOL,52
 1100,Esterel,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Esterel,25
@@ -1124,7 +1118,6 @@ index,name,source,type,cleaned_name,freq
 1122,FOCUS,https://en.wikipedia.org/wiki/List_of_programming_languages,language,FOCUS,525
 1123,FOIL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,FOIL,60
 1124,FORMAC,https://en.wikipedia.org/wiki/List_of_programming_languages,language,FORMAC,338
-1125,@Formula,https://en.wikipedia.org/wiki/List_of_programming_languages,language,@Formula,173107
 1126,Forth,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Forth,375
 1127,Fortran – ISO/IEC 1539,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Fortran – ISO/IEC 1539,0
 1128,Fortress,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Fortress,1114
@@ -1142,7 +1135,6 @@ index,name,source,type,cleaned_name,freq
 1140,GDScript,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GDScript,0
 1141,GDL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GDL,62
 1142,GJ,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GJ,349
-1143,GEORGE,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GEORGE,18476
 1144,GLSL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GLSL,128
 1145,GNU E,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GNU E,0
 1146,GM,https://en.wikipedia.org/wiki/List_of_programming_languages,language,GM,523
@@ -1212,7 +1204,6 @@ index,name,source,type,cleaned_name,freq
 1210,JavaFX Script,https://en.wikipedia.org/wiki/List_of_programming_languages,language,JavaFX Script,58
 1211,Jython,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Jython,37
 1212,LabVIEW,https://en.wikipedia.org/wiki/List_of_programming_languages,language,LabVIEW,161
-1213,Ladder,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Ladder,11376
 1214,Lagoona,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Lagoona,69
 1215,LANSA,https://en.wikipedia.org/wiki/List_of_programming_languages,language,LANSA,126
 1216,Lasso,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Lasso,442
@@ -1223,7 +1214,6 @@ index,name,source,type,cleaned_name,freq
 1221,Legoscript,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Legoscript,0
 1222,LIL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,LIL,334
 1223,LilyPond,https://en.wikipedia.org/wiki/List_of_programming_languages,language,LilyPond,12
-1224,Limbo,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Limbo,25659
 1225,Limnor,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Limnor,14
 1226,LINC,https://en.wikipedia.org/wiki/List_of_programming_languages,language,LINC,121
 1227,Lingo,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Lingo,87
@@ -1260,7 +1250,6 @@ index,name,source,type,cleaned_name,freq
 1258,Maple,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Maple,462
 1259,MAPPER (now part of BIS),https://en.wikipedia.org/wiki/List_of_programming_languages,language,MAPPER,693
 1260,MARK-IV (now VISION:BUILDER),https://en.wikipedia.org/wiki/List_of_programming_languages,language,MARK-IV,1279
-1261,Mary,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mary,653999
 1262,MASM Microsoft Assembly x86,https://en.wikipedia.org/wiki/List_of_programming_languages,language,MASM Microsoft Assembly x86,0
 1263,MATH-MATIC,https://en.wikipedia.org/wiki/List_of_programming_languages,language,MATH-MATIC,0
 1264,Mathematica,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mathematica,24
@@ -1291,7 +1280,6 @@ index,name,source,type,cleaned_name,freq
 1289,Mohol,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mohol,71
 1290,MOO,https://en.wikipedia.org/wiki/List_of_programming_languages,language,MOO,83
 1291,Mortran,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mortran,0
-1292,Mouse,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mouse,44050
 1293,MPD,https://en.wikipedia.org/wiki/List_of_programming_languages,language,MPD,264
 1294,Mathcad,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Mathcad,14
 1295,MSIL – deprecated name for CIL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,MSIL – deprecated name for CIL,0
@@ -1356,7 +1344,6 @@ index,name,source,type,cleaned_name,freq
 1354,Pascal – ISO 7185,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Pascal – ISO 7185,0
 1355,PCASTL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,PCASTL,19
 1356,PCF,https://en.wikipedia.org/wiki/List_of_programming_languages,language,PCF,35
-1357,PEARL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,PEARL,122701
 1358,PeopleCode,https://en.wikipedia.org/wiki/List_of_programming_languages,language,PeopleCode,31
 1359,Perl,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Perl,18021
 1360,PDL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,PDL,204
@@ -1406,13 +1393,11 @@ index,name,source,type,cleaned_name,freq
 1404,R,https://en.wikipedia.org/wiki/List_of_programming_languages,language,R,38
 1405,R++,https://en.wikipedia.org/wiki/List_of_programming_languages,language,R++,38
 1406,Racket,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Racket,89
-1407,RAPID,https://en.wikipedia.org/wiki/List_of_programming_languages,language,RAPID,43470
 1408,Rapira,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Rapira,138
 1409,Ratfiv,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Ratfiv,0
 1410,Ratfor,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Ratfor,43
 1411,rc,https://en.wikipedia.org/wiki/List_of_programming_languages,language,rc,532
 1412,REBOL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,REBOL,13
-1413,Red,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Red,20078
 1414,Redcode,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Redcode,25
 1415,REFAL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,REFAL,38
 1416,Reia,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Reia,23
@@ -1453,13 +1438,11 @@ index,name,source,type,cleaned_name,freq
 1451,SETL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SETL,45
 1452,SIMPOL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SIMPOL,30
 1453,SIGNAL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SIGNAL,357
-1454,SiMPLE,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SiMPLE,56274
 1455,SIMSCRIPT,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SIMSCRIPT,34
 1456,Simula,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Simula,14
 1457,Simulink,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Simulink,79
 1458,Singularity,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Singularity,118
 1459,SISAL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SISAL,1504
-1460,SLIP,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SLIP,135298
 1461,Smalltalk,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Smalltalk,310
 1462,Small Basic,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Small Basic,64
 1463,SML,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SML,22
@@ -1476,7 +1459,6 @@ index,name,source,type,cleaned_name,freq
 1474,SQR,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SQR,79
 1475,Squeak,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Squeak,332
 1476,Squirrel,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Squirrel,307
-1477,SR,https://en.wikipedia.org/wiki/List_of_programming_languages,language,SR,54600
 1478,S/SL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,S/SL,20
 1479,Stackless Python,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Stackless Python,26
 1480,Starlogo,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Starlogo,53
@@ -1495,7 +1477,6 @@ index,name,source,type,cleaned_name,freq
 1493,TADS,https://en.wikipedia.org/wiki/List_of_programming_languages,language,TADS,22
 1494,TAL,https://en.wikipedia.org/wiki/List_of_programming_languages,language,TAL,1358
 1495,Tcl,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Tcl,2883
-1496,Tea,https://en.wikipedia.org/wiki/List_of_programming_languages,language,Tea,28347
 1497,TECO,https://en.wikipedia.org/wiki/List_of_programming_languages,language,TECO,537
 1498,TELCOMP,https://en.wikipedia.org/wiki/List_of_programming_languages,language,TELCOMP,29
 1499,TeX,https://en.wikipedia.org/wiki/List_of_programming_languages,language,TeX,306
@@ -2640,7 +2621,6 @@ index,name,source,type,cleaned_name,freq
 2638,HCISPP,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,HCISPP,0
 2639,CASP,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,CASP,359
 2640,CSA+,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,CSA+,123
-2641,Security+,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,Security+,158363
 2642,OSCP,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,OSCP,13
 2643,OSWP,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,OSWP,0
 2644,OSCE,https://en.wikipedia.org/wiki/List_of_computer_security_certifications,certification,OSCE,39924
