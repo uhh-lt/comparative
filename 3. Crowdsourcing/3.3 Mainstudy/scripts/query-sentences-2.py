@@ -69,46 +69,43 @@ obj_s_pairs = []
 used_ids = []
 for typ in list(data['type'].unique()):
     t_data = data[data['type'] == typ]
-
-
     for row in list(t_data.iterrows()):
         d = row[1]
         a = d['word_a']
         b = d['word_b']
-        count = d['count']
-        if a != b and count >= limit:
+        if a != b:
             try:
                 query_result = query(a, b, d['use_marker'])
                 res[a + '_' + b] = query_result
+                if(len(query_result) >= min_freq):
+                    added = 0
+                    for t in res[a + '_' + b]:
+                        if t['_id'] not in used_ids:
+                            used_ids.append(t['_id'])
+                            obj_s_pairs.append({
+                                'id':
+                                t['_id'],
+                                'a':
+                                a,
+                                'b':
+                                b,
+                                'marker':
+                                d['use_marker'],
+                                'typ':
+                                typ,
+                                'sentence':
+                                t['_source']['text'],
+                                'highlighted':
+                                t['highlight']['text']
+                            })
+                            used[a.lower()] += 1
+                            used[b.lower()] += 1
+                            added +=1
+                    data.set_value(row[0], 'd_type', NAME)
+                    query_count += 1
 
-                added = 0
-                for t in res[a + '_' + b]:
-                    if t['_id'] not in used_ids:
-                        used_ids.append(t['_id'])
-                        obj_s_pairs.append({
-                            'id':
-                            t['_id'],
-                            'a':
-                            a,
-                            'b':
-                            b,
-                            'marker':
-                            d['use_marker'],
-                            'typ':
-                            typ,
-                            'sentence':
-                            t['_source']['text'],
-                            'highlighted':
-                            t['highlight']['text']
-                        })
-                        used[a.lower()] += 1
-                        used[b.lower()] += 1
-                        added +=1
-                data.set_value(row[0], 'd_type', NAME)
-                query_count += 1
-
-                print(a, used[a.lower()], b, used[b.lower()], added)
-                added = 0
+                    print(a, used[a.lower()], b, used[b.lower()], added)
+                    added = 0
             except Exception as e:
                 print(e)
 
