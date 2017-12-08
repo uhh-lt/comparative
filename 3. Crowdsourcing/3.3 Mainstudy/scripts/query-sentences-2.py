@@ -8,6 +8,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
+parser.add_argument('-m', action='store', dest='min_freq')
 
 
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
@@ -20,6 +21,7 @@ QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" :
 
 args = parser.parse_args()
 NAME = args.file
+min_freq = args.min_freq
 
 
 print(NAME)
@@ -73,7 +75,8 @@ for typ in list(data['type'].unique()):
         d = row[1]
         a = d['word_a']
         b = d['word_b']
-        if a != b:
+        count = d['count']
+        if a != b and count >= limit:
             try:
                 query_result = query(a, b, d['use_marker'])
                 res[a + '_' + b] = query_result
