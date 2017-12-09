@@ -8,7 +8,6 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
-parser.add_argument('-m', action='store', dest='min_freq')
 
 
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
@@ -21,7 +20,6 @@ QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" :
 
 args = parser.parse_args()
 NAME = args.file
-min_freq = args.min_freq
 
 
 print(NAME)
@@ -43,8 +41,8 @@ markers_worse = [
 markers = markers_better + markers_worse
 
 
-def query(a, b, counter):
-    if counter:
+def query(a, b, use_marker):
+    if not use_marker:
         query_string = QUERY.format(a, b)
     else:
         query_string = QUERY_BETTER.format(' OR '.join(markers).strip(), a, b)
@@ -59,10 +57,20 @@ def query(a, b, counter):
         print('1',e)
 
 
+def is_valid(words, sentence):
+    count = 0
+    try:
+        for word in words:
+            count += sentence.lower().count(word.lower())
+        return count == 2
+    except Exception as e:
+        return False
+
+
 used = defaultdict(int)
-
+hits_counter = defaultdict(int)
 pairs = []
-
+all_sentences = set()
 res = {}
 query_count = 0
 obj_s_pairs = []
@@ -76,12 +84,21 @@ for typ in list(data['type'].unique()):
         if a != b:
             try:
                 query_result = query(a, b, d['use_marker'])
-                res[a + '_' + b] = query_result
-                if len(query_result) >= int(min_freq):
-                    added = 0
+                already = set()
+                sentences = []
+                for hit in query_result:
+                    sentence = hit['_source']['text']
+                    if sentence.lower() not in already and is_valid([a, b],
+                                                                    sentence):
+                        sentences.append(hit)
+                        already.add(sentence.lower())
+                res[a + '_' + b] = sentences
+                if len(sentences) >= 100:
                     for t in res[a + '_' + b]:
                         if t['_id'] not in used_ids:
+                            all_sentences.add('{}\t{}\t{}\t{}\t{}'.format(t['_id'],t['_source']['text'],a,b,d['use_marker']))
                             used_ids.append(t['_id'])
+                            hits_counter[a+'_'+b] += 1
                             obj_s_pairs.append({
                                 'id':
                                 t['_id'],
@@ -100,12 +117,12 @@ for typ in list(data['type'].unique()):
                             })
                             used[a.lower()] += 1
                             used[b.lower()] += 1
-                            added +=1
-                    data.set_value(row[0], 'd_type', NAME)
-                    query_count += 1
-
-                    print(a, used[a.lower()], b, used[b.lower()], added)
-                    added = 0
+                    print('{} {}  {}'.format(a,b,len(sentences)))
+                else:
+                    hits_counter[a+'_'+b] += int(len(sentences))
+                    print('NOT {} {}  {}'.format(a,b,len(sentences)))
+                data.set_value(row[0], 'd_type',NAME)
+                data.set_value(row[0], 'count',int(hits_counter[a+'_'+b]))
             except Exception as e:
                 print(e)
 
@@ -121,7 +138,7 @@ with open('{}/raw-sentences-{}.json'.format(folder, NAME), 'w') as f:
         json.dump({
             'meta': {
                 'marker': markers,
-                'sentences': len(pairs)
+                'sentences': len(res)
             },
             'data': res
         }, f)
@@ -131,63 +148,24 @@ with open('{}/raw-sentences-{}.json'.format(folder, NAME), 'w') as f:
 with open('{}/sentences-{}.json'.format(folder, NAME), 'w') as f:
     json.dump(obj_s_pairs, f)
 
-with open('{}/pairs-{}.json'.format(folder, NAME), 'w') as f:
-    json.dump(pairs, f)
 
 with open('{}/meta-{}.json'.format(folder, NAME), 'w') as f:
     json.dump({
         'marker': markers,
-        'number_of_sentences': len(obj_s_pairs)
+        'number_of_sentences': len(all_sentences)
     }, f)
 
 
 
 
-def load(file):
 
-    sentences = []
-    already = set()
-    m = defaultdict(int)
-
-
-    with open(file, 'r') as f:
-        d = json.load(f)
-        for item in d:
-
-            idx, a,b, sentence, with_marker = ((item['id'], item['a'], item['b'], item['sentence'], item['marker']))
-
-
-            if sentence.lower() not in already and is_valid([a, b], sentence):
-                sentences.append('{}\t{}\t{}\t{}\t{}'.format(idx,sentence,a,b, with_marker))
-                already.add(sentence.lower())
-                m[a+'€'+b] += 1
-
-    for k,v in m.items():
-        try:
-            a,b = k.split('€')
-            r = data.loc[(data['word_a'] == a) & (data['word_b'] == b)]
-            data.set_value(r.index, 'count', v)
-        except e:
-            pass
-
-    return sentences
-
-
-def is_valid(words, sentence):
-    count = 0
-    try:
-        for word in words:
-            count += sentence.lower().count(word.lower())
-        return count == 2
-    except Exception as e:
-        return False
 
 p = '{}/sentences-{}.json'.format(folder,NAME)
-res = load(p)
 
 with open ('{}/sentences-only-{}.tsv'.format(folder,NAME),'w') as f:
     f.write('id\tsentence\ta\tb\tmarker\n')
-    for sentence in res:
+    for sentence in all_sentences:
         f.write(sentence + '\n')
 
 data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
+
