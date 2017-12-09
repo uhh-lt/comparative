@@ -79,8 +79,8 @@ for typ in list(data['type'].unique()):
     t_data = data[data['type'] == typ]
     for row in list(t_data.iterrows()):
         d = row[1]
-        a = d['word_a']
-        b = d['word_b']
+        a = d['word_a'].replace('_','')
+        b = d['word_b'].replace('_','')
         if a != b:
             try:
                 query_result = query(a, b, d['use_marker'])

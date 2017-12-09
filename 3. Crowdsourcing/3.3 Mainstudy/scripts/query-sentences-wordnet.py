@@ -37,7 +37,7 @@ markers = markers_better + markers_worse
 
 
 def query(a, b, counter):
-    if counter % 50 == 0:
+    if counter % 10 == 0:
         query_string = QUERY.format(a, b)
     else:
         query_string = QUERY_BETTER.format(' OR '.join(markers).strip(), a, b)
@@ -51,7 +51,7 @@ def query(a, b, counter):
         print(e)
 
 
-limit = 5
+limit = 10
 pairs = []
 res = {}
 query_count = 0
@@ -75,7 +75,7 @@ for pair in data:
                 'b':
                 b,
                 'without-marker':
-                query_count % 50 == 0,
+                query_count % 10 == 0,
                 'typ':
                 'wordnet',
                 'source':
