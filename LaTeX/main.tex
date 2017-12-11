@@ -1,0 +1,60 @@
+% ---------------------------------------------------------------------
+% Das Dokument kompiliert mit pdflatex und ist auf Basis 
+% von Koma-Script entstanden. 
+%
+% Autor des Templates (für Anmerkungen): 
+% Michael von Riegen, riegen@informatik.uni-hamburg.de
+%
+% Einzelne Code-Teile für das Titelblatt sind aus dem Template 
+% von Benjamin Kirchheim entnommen.
+%
+% 25.05.09, Frank Langanke: Vorlage auf aktuelle KOMA-Version aktualisiert
+% 26.05.09, Michael von Riegen: Anmerkung --> aktuelles Koma-Script ist nötig!
+% 17.10.2016 neues Uni logo
+% ---------------------------------------------------------------------
+\documentclass[11pt,DIV=15,BCOR=20mm,bibliography=totoc]{scrbook}
+
+% Import von Paketen und Optionen die das gesamte Dokument betreffen
+% sind in myPreamble.sty ausgelagert.
+\usepackage{myPreamble}
+   
+% Arbeitet man nur an einem Kapitel, wird durch folgenden Befehl nur dieses eingebunden.
+% Spart manuelles auskommentieren von vielen include-Befehlen;
+% hat keine Auswirkung auf input-Befehle
+% \includeonly{kapitel1}
+   
+\begin{document}
+
+% TITELSEITE
+\include{_titlepage}
+
+% VERZEICHNISSE (Inhaltsverzeichnis, Abkürzungen)
+% Vorspann einleiten --> Seitennummerierung römisch
+\frontmatter
+
+% Inhaltsverzeichnis
+\tableofcontents
+\cleardoublepage
+
+% Hauptteil einleiten --> Seitennummerierung wieder arabisch
+\mainmatter
+
+\include{1-introduction}
+\include{2-data}
+\include{3-classification}
+\include{4-end}
+%\include{kapitel5}
+%\include{kapitel6}
+%\include{kapitel7}
+\cleardoublepage
+
+% VERZEICHNISSE (Abbildungen, Tabellen)
+% Literatur 
+\bibliographystyle{apalike}
+\bibliography{mathesis}
+\cleardoublepage
+
+% ERKLÄRUNG
+\input{_eidversicherung}
+    
+\end{document}

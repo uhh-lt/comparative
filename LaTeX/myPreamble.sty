@@ -1,0 +1,100 @@
+ % packages
+%	\usepackage[ngerman,german]{babel}
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+  \usepackage[pdftex]{color} 
+  \usepackage{setspace}
+  \usepackage[pdftex]{graphicx}  
+	\usepackage[final]{listings}  
+  \usepackage{ae,aecompl}
+  \usepackage{booktabs}
+	% ok-zeichen usw
+  \usepackage{amsfonts} 
+  
+  % Die folgenden drei Pakete ersetzen das veraltete palatino-Paket.
+	% Für die Begründung siehe 'Das Latex2-Sündenregister' von Mart Trettin
+	\usepackage{mathpazo}
+	\usepackage[scaled=.95]{helvet}
+	\usepackage{courier}
+  \setkomafont{sectioning}{\normalcolor\bfseries}
+
+	% pdfbookmarks 
+	% (generiert für PDF auch gleich 
+	% ein Inhaltsverzeichnis und Links)
+  \usepackage[
+  	pdfstartview=FitH,   
+  	pdffitwindow=true,
+  	colorlinks,
+  	linkcolor=black,
+  	anchorcolor=black,
+  	citecolor=black,
+  	urlcolor=black
+  ]{hyperref}
+  \usepackage{capt-of}
+  \usepackage{booktabs}
+ \usepackage{multirow}
+  %%% color box
+  \usepackage{tcolorbox}
+  \newtcolorbox[auto counter,number within=section]{ebox}[2][]{%
+  colback=green!5!white,colframe=green!75!black,fonttitle=\bfseries, title=Example.~\thetcbcounter: #2,#1}
+\usepackage[inline]{enumitem}
+\usepackage[autostyle]{csquotes} 
+  % charts
+  \usepackage{tikz}
+% \usepackage{pgf-pie}
+
+  % Linien in Kopf- und Fußzeilen einschalten
+	\usepackage[headsepline,footsepline]{scrpage2}
+	
+	% Seitenstil setzen
+	\pagestyle{scrheadings}
+	
+	% Anpassung der Kopf- und Fußzeile (Koma-Guide: 'Kopf- und Fußzeilen mit scrpage2')
+	\ohead[\pagemark]{\pagemark}
+	\chead[\headmark]{\headmark}
+	\ofoot{}
+	
+	% Den Seitenstil 'scrheadings' statt des vordefinierten 'scrplain'
+	% auch für Index- und Kapitelseiten benutzen.
+	\renewcommand*{\chapterpagestyle}{scrheadings}
+	\renewcommand*{\indexpagestyle}{scrheadings}
+	
+	% Leere Seiten erzeugt durch cleardoublepage sollen auch
+	% den Seitenstil 'scrheadings' benutzen (Koma-Guide: 'Vakatseiten').
+	\KOMAoptions{cleardoublepage=scrheadings}
+    
+  % Zeilenabstand
+  \setstretch{1.24}
+  
+	% Ränder	
+	\setlength{\textwidth}{15cm}        % Textbreite
+	\setlength{\textheight}{24cm}       % Texthöhe
+	\setlength{\topmargin}{-12mm}       % oberer Rand
+  
+  % PDF Dokumentinformationen
+  \hypersetup
+  {
+  	pdftitle     = {Titel},
+  	pdfsubject   = {Universität Hamburg},
+  	pdfauthor    = {MIrco Franzek},
+  	pdfkeywords  = {Keywords},
+  	plainpages   = false, pdfpagelabels
+  }
+  
+  % Listingsformatierung (Quelltexte)
+  \definecolor{lightgrey}{rgb}{0.90,0.90,0.90}
+  \lstloadlanguages{XML}
+  \lstset{
+    tabsize=2,
+    escapeinside={(*@}{@*)},
+    captionpos=t,
+    framerule=0pt,
+    backgroundcolor=\color{lightgrey},
+    basicstyle=\small\ttfamily,
+    keywordstyle=\small\bfseries,
+    numbers=left,
+    fontadjust
+  }
+  
+% Tabellenbezeichnungen als Überschriften
+\KOMAoptions{captions=tableheading}      

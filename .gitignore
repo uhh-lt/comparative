@@ -9,6 +9,7 @@
 .idea/dictionaries
 **/**/*.bin
 **/**/embeddings/*
+main.pdf
 *.log
 *.aux
 *.glo
