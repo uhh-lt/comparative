@@ -71,9 +71,17 @@ Most of those portals are specific to a few domains and a subset of properties, 
 Most of the time, those systems only deliver facts and no reasons. An insurance X might be the best in the comparison (e.g. best price), yet the internet is full of complaints about lousy service.
 Examples of systems like this are check24.de, Verivox, Idealo, gocompare.com, and compare.com, just to name a few.
 
-Check24.de can compare a wide variety of different objects like several insurance types, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type), Check24.de shows a ranking of different service providers. The user can choose different properties to re-rank the list.
+Check24.de can compare a wide variety of different objects like several insurance types, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type, see figure \ref{img:check24}), Check24.de shows a ranking of different service providers. The user can choose different properties to re-rank the list.
 For instance, to compare different DSL providers, the user has to enter her address, how fast the internet should be and if he wants telephone and television as well. She can then select price, speed, and grade (rating) to sort the resulting list.
+
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{images/ds-sys/check24}
+\label{img:check24}
+\caption{Check24.de DSL Provider}
+\end{figure}
 The other mentioned sites work similarly. They provide more of a ranking than real comparisons.
+
+
 
 Another interesting type of websites are Question Answering Portals like quora.com or gutefrage.net. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
 On quora.com, more than 2.380.000 questions have the phrase \enquote{better than} in their title. If \emph{Ruby} and \emph{Python} are added, 10.100 questions remain.\footnote{Checked via Google on 11th of December. Search phrase: \texttt{"better than" site:quora.com} and \texttt{ruby python "better than" site:quora.com}}
@@ -81,8 +89,15 @@ Same is true for the German site gutefrage.net, though, the numbers are smaller 
 
 More interestingly are systems which can compare any objects on arbitrary properties. Two examples are diffen.com and versus.com
 
-Versus.com aggregates different freely available data sources like Wikipedia and official statistic reports. For example, the comparison of \enquote{Hamburg vs. Berlin} uses Wikipedia for the number of universities, worldstadiums.com for the availability of sport facilities and the Economist for the Big Mac Index. Presumably, some human processing is involved as the possible comparisons are limited. For instance, a comparison of Hamburg and Darmstadt is not possible as Darmstadt is not available on Versus.com. Likewise, \enquote{Ruby vs. Python} is not possible, versus.com suggests to compare \enquote{Rome vs. Pyongyang} instead. Versus.com does not provide a rating which of the two compared objects is better. It is not possible to check automatically whether Hamburg or Berlin is better for a short city trip. The user must search manually all valid properties like the number of museums, or theaters, the price of public transport tickets and so on.
-Similar to Versus.com, Diffen.com aggregates different data sources. All in all, the aggregated information is similar to Versus.com. The comparison is also tabular. Besides the automatically aggregated data, users can add more information on their own. Diffen.com describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Even Diffen.com does not enforce any restrictions on the objects of comparison, it faces the same problem as Versus.com: objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.\newline
+Versus.com aggregates different freely available data sources like Wikipedia and official statistic reports. For example, the comparison of \enquote{Hamburg vs. Berlin} uses Wikipedia for the number of universities, worldstadiums.com for the availability of sport facilities and the Economist for the Big Mac Index. Presumably, some human processing is involved as the possible comparisons are limited. For instance, a comparison of Hamburg and Darmstadt is not possible as Darmstadt is not available on Versus.com. Likewise, \enquote{Ruby vs. Python} is not possible, versus.com suggests to compare \enquote{Rome vs. Pyongyang} instead. Although Versus.com shows how many users \enquote{liked} the objects, it does not give a clear statement which one is better. For instance, it is not possible to check automatically whether Hamburg or Berlin is better for a short city trip. The user must search manually all valid properties like the number of museums, or theaters, the price of public transport tickets and so on.
+
+Similar to Versus.com, Diffen.com aggregates different data sources (see figure \ref{img:diffversus}). All in all, the aggregated information is similar to Versus.com. The comparison is also tabular. Besides the automatically aggregated data, users can add more information on their own. Diffen.com describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Even Diffen.com does not enforce any restrictions on the objects of comparison, it faces the same problem as Versus.com: objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.\newline
+
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{images/ds-sys/diffversus}
+\label{img:diffversus}
+\caption{\enquote{Hamburg vs. Berlin} on Diffen.com and Versus.com}
+\end{figure}
 
 Neither Versus.com nor Diffen.com provides a comprehensible reason why an object is better than another one. They merely aggregate facts and bring them face to face. Despite the aggregation approach of both systems, many meaningful comparisons are not possible or not helpful (\enquote{Hamburg vs. Darmstadt}, \enquote{Java vs. C\#}, \enquote{Dr Pepper vs. Orange Juice}).
 Also, the user can not define the properties for the comparison. The sites provide every information available for the objects. Versus.com shows 42 properties for \enquote{Hamburg vs. Berlin} and only 35 for \enquote{Hamburg vs. Munich}.
