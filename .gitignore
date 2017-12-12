@@ -10,6 +10,7 @@
 **/**/*.bin
 **/**/embeddings/*
 main.pdf
+*.pxm
 *.log
 *.aux
 *.glo
