@@ -77,7 +77,7 @@ obj_s_pairs = []
 used_ids = []
 for typ in list(data['type'].unique()):
     t_data = data[data['type'] == typ]
-    for row in list(t_data.iterrows()):
+    for row in t_data.iterrows():
         d = row[1]
         a = d['word_a'].replace('_','')
         b = d['word_b'].replace('_','')
@@ -124,7 +124,7 @@ for typ in list(data['type'].unique()):
                 data.set_value(row[0], 'd_type',NAME)
                 data.set_value(row[0], 'count',int(hits_counter[a+'_'+b]))
             except Exception as e:
-                print(e)
+                print(a,b,e)
 
 
 import time

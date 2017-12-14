@@ -54,11 +54,12 @@ def get_freq(term):
 
 
 
+
 with open('../data/jbt-seed.txt', 'r') as rIn:
     for line in rIn:
         get_words(line.strip())
         time.sleep(1)
-with open('jbt.csv', 'w') as f:
+with open('cleaned-jbt.csv', 'w') as f:
     f.write(header)
     for line in groups:
         f.write(line)

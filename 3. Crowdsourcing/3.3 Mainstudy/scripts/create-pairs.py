@@ -22,10 +22,11 @@ min_freq = int(args.min_freq)
 res = {}
 used = defaultdict(int)
 pairs = []
+hashes = set()
 data = pd.read_csv('../data/cleaned-{}.csv'.format(file), encoding='latin-1')
 
-for typ in data['source'].unique():
-    t_data = data[data['source'] == typ]
+for typ in data['type'].unique():
+    t_data = data[data['type'] == typ]
 
     grouped = t_data.groupby(
         'cleaned_name', as_index=False).max().sort_values(
@@ -33,23 +34,22 @@ for typ in data['source'].unique():
     brands = []
 
     for index, row in grouped.iterrows():
-        brands.append((row['cleaned_name'], row['freq'], row['source']))
+        brands.append((row['cleaned_name'], row['freq'], row['type']))
 
     for current_brand in brands:
         stop = 0
         for next_brand in brands:
             a = current_brand[0]
             b = next_brand[0]
-    
-            if next_brand != current_brand and used[a.lower()] < limit and used[b.lower(
-            )] < limit and stop <= next_frequent and current_brand[1] >= min_freq and next_brand[1] >= min_freq:
+            h = hash(a) + hash(b)
+            if h not in hashes and next_brand != current_brand and used[a.lower()] < limit and used[b.lower()] < limit and stop <= next_frequent and current_brand[1] >= min_freq and next_brand[1] >= min_freq:
+                hashes.add(h)
                 pairs.append({
-                    'type' : current_brand[2],
-                    'use_marker' : random.random() >=  0.1,
+                    'type': current_brand[2],
+                    'use_marker': random.random() >= 0.1,
                     'a': {
                         'word': current_brand[0],
                         'freq': current_brand[1],
-
                     },
                     'b': {
                         'word': next_brand[0],
@@ -58,11 +58,12 @@ for typ in data['source'].unique():
                 })
                 used[a.lower()] +=1
                 used[b.lower()] +=1
-sort = sorted(pairs, key=lambda x: x['a']['freq'],reverse=True)
+
+"""
 with open('pairs-{}.json'.format(file), 'w') as f:
     json.dump({'meta': {'type' : file, 'max_apperance_per_term' : limit, 'next_frequent' : next_frequent, 'min_freq' :min_freq ,  'pairs' : len(pairs)}, 'data':sort}, f)
-    print('end')
+"""
 with open ('pairs-{}.tsv'.format(file), 'w') as f:
     f.write('word_a\tfreq_a\tword_b\tfreq_b\ttype\tuse_marker\n')
-    for p in sort:
+    for p in pairs:
         f.write('{}\t{}\t{}\t{}\t{}\t{}\n'.format(p['a']['word'], p['a']['freq'], p['b']['word'], p['b']['freq'], p['type'],p['use_marker'] ))
