@@ -5,26 +5,34 @@ from collections import defaultdict
 from pprint import pprint
 import json
 import re
+import time
 
 ES_ENDPOINT = "http://localhost:9222/fd2/freq"
-url_pattern = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/trigram/jo/similar/{}?numberOfEntries=25&format=json'
+url_pattern = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/trigram/jo/similar/{}?numberOfEntries=10&format=json'
 
 groups = []
 dups = set()
 header = 'name,source,type,cleaned_name,freq\n'
 pattern = '{},{},{},{},{}\n'
 
+nlp = spacy.load('en')
+
 def get_words(term):
-    req = requests.get(url_pattern.format(term)).json()['results']
+    req = requests.get(url_pattern.format(term.lower())).json()['results']
     for word in req:
         term2 = word['key']
-        h = hash(term) + hash(term2)
-        if h not in dups and ( editdistance.eval(term,term2) >= 2 or editdistance.eval(term,term2) == 0):
+        h = hash(term.lower()) + hash(term2.lower())
+
+        if h not in dups and (editdistance.eval(term, term2) >= 2
+                              or editdistance.eval(term, term2) == 0):
             dups.add(h)
-            freq = get_freq(term2)
-            line = pattern.format(term2, 'jobimtext', 'seed=' + term, term2,
-                                  freq)
-            groups.append(line)
+            token = nlp(term2)
+            if token[0].pos_ is 'NOUN':
+                print(term, term2, h)
+                freq = get_freq(term2)
+                line = pattern.format(term2, 'jobimtext', 'seed=' + term, term2,
+                                    freq)
+                groups.append(line)
 
 
 def get_freq(term):
@@ -44,10 +52,12 @@ def get_freq(term):
         return -1
 
 
-get_words('apple')
-get_words('prune')
 
 
+with open('../data/jbt-seed.txt', 'r') as rIn:
+    for line in rIn:
+        get_words(line.strip())
+        time.sleep(1)
 with open('jbt.csv', 'w') as f:
     f.write(header)
     for line in groups:
