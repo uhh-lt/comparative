@@ -5,6 +5,7 @@ from collections import defaultdict
 import time
 import os
 import argparse
+import random 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
@@ -13,7 +14,7 @@ parser.add_argument('-f', action='store', dest='file')
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
 
 BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=1000'
+SEARCH_URL = BASE_URL + '/_search?size=50'
 
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
@@ -52,7 +53,7 @@ def query(a, b, use_marker):
     res = grequests.map([req])
     try:
         hits = res[0].json()['hits']['hits']
-        return hits
+        return res[0].json()['hits']['total'], hits
     except KeyError as e:
         print('1',e)
 
@@ -83,7 +84,7 @@ for typ in list(data['type'].unique()):
         b = d['word_b'].replace('_','')
         if a != b:
             try:
-                query_result = query(a, b, d['use_marker'])
+                total, query_result = query(a, b, d['use_marker'])
                 already = set()
                 sentences = []
                 for hit in query_result:
@@ -93,7 +94,7 @@ for typ in list(data['type'].unique()):
                         sentences.append(hit)
                         already.add(sentence.lower())
                 res[a + '_' + b] = sentences
-                if len(sentences) >= 100:
+                if int(total) >= 100:
                     for t in res[a + '_' + b]:
                         if t['_id'] not in used_ids:
                             all_sentences.add('{}\t{}\t{}\t{}\t{}'.format(t['_id'],t['_source']['text'],a,b,d['use_marker']))
@@ -117,10 +118,10 @@ for typ in list(data['type'].unique()):
                             })
                             used[a.lower()] += 1
                             used[b.lower()] += 1
-                    print('{} {}  {}'.format(a,b,len(sentences)))
+                    print('{} {}  {}'.format(a,b,total))
                 else:
                     hits_counter[a+'_'+b] += int(len(sentences))
-                    print('NOT {} {}  {}'.format(a,b,len(sentences)))
+                    #print('NOT {} {}  {}'.format(a,b,len(sentences)))
                 data.set_value(row[0], 'd_type',NAME)
                 data.set_value(row[0], 'count',int(hits_counter[a+'_'+b]))
             except Exception as e:
@@ -167,5 +168,9 @@ with open ('{}/sentences-only-{}.tsv'.format(folder,NAME),'w') as f:
     for sentence in all_sentences:
         f.write(sentence + '\n')
 
-data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
+with open ('{}/sentences-only-sample-{}.tsv'.format(folder,NAME),'w') as f:
+    f.write('id\tsentence\ta\tb\tmarker\n')
+    for sentence in random.sample(all_sentences, 200):
+        f.write(sentence + '\n')
 
+data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))

@@ -15,16 +15,16 @@ parser.add_argument('-l', action='store', dest='max_appearance')
 
 args = parser.parse_args()
 file = args.file
-limit = int(args.max_appearance)
-next_frequent = int(args.look_at_next)
-min_freq = int(args.min_freq)
+#limit = int(args.max_appearance)
+#next_frequent = int(args.look_at_next)
+#min_freq = int(args.min_freq)
 
 res = {}
 used = defaultdict(int)
 pairs = []
 hashes = set()
 data = pd.read_csv('../data/cleaned-{}.csv'.format(file), encoding='latin-1')
-
+cnt = 0
 for typ in data['type'].unique():
     t_data = data[data['type'] == typ]
 
@@ -42,11 +42,11 @@ for typ in data['type'].unique():
             a = current_brand[0]
             b = next_brand[0]
             h = hash(a) + hash(b)
-            if h not in hashes and next_brand != current_brand and used[a.lower()] < limit and used[b.lower()] < limit and stop <= next_frequent and current_brand[1] >= min_freq and next_brand[1] >= min_freq:
+            if h not in hashes and next_brand != current_brand:
                 hashes.add(h)
                 pairs.append({
                     'type': current_brand[2],
-                    'use_marker': random.random() >= 0.1,
+                    'use_marker': cnt % 100 != 0,
                     'a': {
                         'word': current_brand[0],
                         'freq': current_brand[1],
@@ -56,6 +56,7 @@ for typ in data['type'].unique():
                         'freq': next_brand[1],
                     }
                 })
+                cnt += 1
                 used[a.lower()] +=1
                 used[b.lower()] +=1
 
