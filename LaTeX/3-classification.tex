@@ -2,3 +2,41 @@
 \section{The problem}
 \section{Features}
 \label{sec:features}
+This section presents a summary of features (see table \ref{tbl:features}) which are used to identify comparative arguments.  Each feature falls into one of the following categories (as described in \cite{Aker2017What-works-and-}): \emph{Structural features} capture statistics about tokens and punctuation, as the number of tokens per sentence. \emph{Lexical features} capture statistics on the presence of particular n-grams or verbs. \emph{Syntactic features} represent part-of-speech sequences and their properties. \emph{Indicators show the presence of specific keywords.}
+\cite{Aker2017What-works-and-} mentions contextual features as well. Since the data for this thesis consists of isolated sentences, those features are left out.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+\centering
+\caption{Classification Features}
+
+\label{tbl:features}
+\begin{tabular}{{p{2.5cm}p{5.5cm}p{2cm}p{4cm}}}
+\toprule
+Name   & Description & Type & Used in \\ \midrule
+%STRUCTURAL
+number of tokens & Number of tokens in the argumentative component or in the adjacent sentences         & Structural  & \cite{Stab2014Identifying-Arg}     \\ \midrule
+
+punctuation       &  Number of punctuation marks. Boolean feature if the sentences ends with a question mark           &  Structural    &     \cite{Stab2014Identifying-Arg}     \\\midrule
+% LEXICAL
+n-grams & Boolean features for all uni-, bi- and tri-grams & Lexical & \cite{Stab2014Identifying-Arg}, \cite{Dusmanu2017Argument-Mining}  \\\midrule
+
+WordNet verb synsets & ? & Lexical & \cite{Dusmanu2017Argument-Mining}\\\midrule
+
+verbs and adverbs & Boolean features for words like \enquote{believe} or \enquote{really} & Lexical & \cite{Stab2014Identifying-Arg} \\\midrule
+
+modal verbs & Boolean feature if the sentence contains a modal verb & Lexical & \cite{Stab2014Identifying-Arg} \\\midrule
+
+% STRUCTURAL
+structure of the parse tree & depth, number of subclauses & Structural & \cite{Stab2014Identifying-Arg}, \cite{Park2014Identifying-App}  \\ \midrule
+
+
+% INDICATOR
+Discourse markers & Boolean features for the presence of cue words & Indictator & \cite{Stab2014Identifying-Arg}, \cite{Eckle-Kohler2015On-the-Role-of-}, \cite{Park2014Identifying-App} \\ \midrule
+
+% OTHER
+Sentiment & Polarity label (positive, negative, neutral) and score & Other &  \cite{Dusmanu2017Argument-Mining} \\
+ \bottomrule
+\end{tabular}
+\end{table}
