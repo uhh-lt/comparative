@@ -5,8 +5,8 @@ from collections import defaultdict
 import time
 import os
 import argparse
-import random 
-
+import random
+from textacy.similarity import jaccard
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
 
@@ -14,7 +14,7 @@ parser.add_argument('-f', action='store', dest='file')
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
 
 BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=100'
+SEARCH_URL = BASE_URL + '/_search?size=250'
 
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
@@ -40,6 +40,29 @@ markers_worse = [
 ]
 
 markers = markers_better + markers_worse
+
+
+def replace_objects(sentence, objects, color=True):
+    a1 = '<span style="color: #9A14B2; font-weight: bold">' if color else '*'
+    a2 = ':[OBJECT_A]</span>' if color else '*'
+    b1 = '<span style="color: #6CB219; font-weight: bold">' if color else '§'
+    b2 = ':[OBJECT_B]</span>' if color else '$'
+    try:
+        sentence_lower = sentence.lower()
+        a_start = sentence_lower.index(objects[0].lower())
+        b_start = sentence_lower.index(objects[1].lower())
+        if a_start < b_start:
+            first = sentence[:a_start] + a1 + objects[0] + a2
+            middle = sentence[a_start + len(objects[0]):b_start]
+            end = b1 + objects[1] + b2 + sentence[b_start + len(objects[1]):]
+            return True, first + middle + end
+        else:
+            first = sentence[:b_start] + a1 + objects[1] + a2
+            middle = sentence[b_start + len(objects[1]):a_start]
+            end = b1 + objects[0] + b2 + sentence[a_start + len(objects[0]):]
+            return True, first + middle + end
+    except Exception as e:
+        return False, ''
 
 
 def query(a, b, use_marker):
@@ -71,7 +94,7 @@ def is_valid(words, sentence):
 used = defaultdict(int)
 hits_counter = defaultdict(int)
 pairs = []
-all_sentences = set()
+all_sentences = list()
 res = {}
 query_count = 0
 obj_s_pairs = []
@@ -96,8 +119,20 @@ for typ in list(data['type'].unique()):
                 res[a + '_' + b] = sentences
                 if int(total) >= 100:
                     for t in res[a + '_' + b]:
-                        if t['_id'] not in used_ids:
-                            all_sentences.add('{}\t{}\t{}\t{}\t{}'.format(t['_id'],t['_source']['text'],a,b,d['use_marker']))
+                        ok, replaced = replace_objects(t['_source']['text'],
+                                                       (a, b))
+                        ok, replaced2 = replace_objects(
+                            t['_source']['text'], (a, b), color=False)
+                        if t['_id'] not in used_ids and ok:
+                            all_sentences.append({'id' : t['_id'],
+                            'raw_text' : t['_source']['text'],
+                            'text_readable' : replaced2,
+                            'text_html' : replaced,
+                            'object_a' : a,
+                            'object_b' : b,
+                            'marker' : d['use_marker']
+                              })
+
                             used_ids.append(t['_id'])
                             hits_counter[a+'_'+b] += 1
                             obj_s_pairs.append({
@@ -128,9 +163,19 @@ for typ in list(data['type'].unique()):
                 print(a,b,e)
 
 
-import time
+selected_sentences = []
 
-folder = time.strftime("%H-%M")
+for sentence in all_sentences:
+    max_sim = 0
+    sentence_a = sentence['raw_text']
+    for sentence_b in selected_sentences:
+        sim = jaccard(sentence_a,sentence_b['raw_text'])
+        if sim > max_sim:
+            max_sim = sim
+    if max_sim < 0.9:
+        selected_sentences.append(sentence)
+
+folder = '{}-{}'.format(time.strftime("%H-%M"),NAME)
 if not os.path.exists(folder):
     os.makedirs(folder)
 
@@ -141,36 +186,32 @@ with open('{}/raw-sentences-{}.json'.format(folder, NAME), 'w') as f:
                 'marker': markers,
                 'sentences': len(res)
             },
-            'data': res
+     'ddata': res
         }, f)
     except Exception as e:
         print('3',e)
 
-with open('{}/sentences-{}.json'.format(folder, NAME), 'w') as f:
-    json.dump(obj_s_pairs, f)
+#data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
+#with open('{}/sentences-{}.json'.format(folder, NAME), 'w') as f:
+#    json.dump(obj_s_pairs, f)
 
 
 with open('{}/meta-{}.json'.format(folder, NAME), 'w') as f:
     json.dump({
         'marker': markers,
-        'number_of_sentences': len(all_sentences)
+        'number_of_sentences': len(selected_sentences)
     }, f)
 
+with open('{}/sentences-all-{}.tsv'.format(folder, NAME), 'w') as f:
+    f.write('id\ttext_html\ttext_readable\ta\tb\tmarker\traw_text\n')
+    for u in selected_sentences:
+        f.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(u['id'], u[
+            'text_html'], u['text_readable'], u['object_a'], u['object_b'], u[
+                'marker'], u['raw_text']))
 
+with open ('{}/sentences-sample-{}.tsv'.format(folder,NAME),'w') as f:
+    f.write('id\ttext_html\ttext_readable\ta\tb\tmarker\traw_text\n')
+    for u in random.sample(selected_sentences,2600 ):
+        f.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(u['id'], u['text_html'], u['text_readable'], u['object_a'], u['object_b'], u['marker'], u['raw_text']))
 
-
-
-
-p = '{}/sentences-{}.json'.format(folder,NAME)
-
-with open ('{}/sentences-only-{}.tsv'.format(folder,NAME),'w') as f:
-    f.write('id\tsentence\ta\tb\tmarker\n')
-    for sentence in all_sentences:
-        f.write(sentence + '\n')
-
-with open ('{}/sentences-only-sample-{}.tsv'.format(folder,NAME),'w') as f:
-    f.write('id\tsentence\ta\tb\tmarker\n')
-    for sentence in random.sample(all_sentences, 700):
-        f.write(sentence + '\n')
-
-data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
+#data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
