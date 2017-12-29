@@ -34,9 +34,17 @@ A lot of
 \label{sec:argth}
 \subsection{Argument Mining}
 \label{sec:argmine}
-\cite{Lippi2016Argumentation-M} gives a summary of the research topic \emph{Argument Mining} in general. They introduce five dimensions to describe Argument Mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of Argument Mining Systems are defined. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is defined as a classification problem. Second, the boundaries of the argumentative units are identified; this is understood as a segmentation problem. Third, the relations between argumentative units are identified. For instance, claims and premises are connected with a \enquote{support} relation.\newline
+\cite{Lippi2016Argumentation-M} gave a summary of the research topic \emph{Argument Mining} in general. They introduced five dimensions to describe Argument Mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of Argument Mining Systems are defined. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is described as a classification problem. Second, the boundaries of the argumentative units are identified; this is understood as a segmentation problem. Third, the relations between argumentative units are identified. For instance, claims and premises are connected with a \enquote{support} relation.
 
+Section \ref{sec:problem} presents a classification of the problem discussed in this thesis using the presented dimensions.\newline
 
+%07 biomed
+In 2007, \cite{fiszman2007interpreting} described a system which is capable of recognising comparative sentences and their components such as the compared entities, the property on which the entities are compared to and the direction of comparison. The results of the evaluation indicate that the outcome of the system has a high quality. However, the presented system is thoroughly specific to the domain of studies to drug therapy. The system uses patterns generated from those sentences, as well as domain knowledge. Therefore, the methods cannot be transferred for the problem of this thesis.
+
+%  12 sci
+\cite{park2012identifying} presented another domain-specific approach on argumentative sentence detection. The problem is formulated as a binary classification task (a sentence is either comparative or not). As in \cite{fiszman2007interpreting}, the features are tailored for medical publications. Lexical features capture the presence of specific words, some of them bound to the medical domain. The analysis of 274 sentences resulted in syntactic features. Similar to \cite{fiszman2007interpreting}, the features cannot be directly transferred to other domains.
+
+% 10 biomed
 A recent publication on Comparative Argument Mining is \cite{gupta2017identifying}, where a set of rules for the identification of comparative sentences (and the compared entities) is derived from \emph{Syntactic Parse Trees}. With those rules, the authors achieved a F1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent. Also, comparisons are frequent in biomedical publications.\newline
 
 Because this thesis deals with user-generated content from the web, publications dealing with similar data are of interest.
@@ -47,27 +55,23 @@ In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining}
 
 Many publications on argument mining are dealing with a classification problem of some kind. Publications dealing with the identification of argument structures are of relevance for this thesis.
 
+%what works and what does not
 \cite{Aker2017What-works-and-} summarized and compared features used in other publications for identification of argumentative sentences. In addition, a Convolutional Neural Network (as described in \cite{Kim2014Convolutional-N}) was tested. Two existing corpora and six different classification algorithms were used. As a result, structural features are most expressive; Random Forest is the best classifier.
 
 \cite{Stab2014Identifying-Arg} described a two-step procedure to identify components or arguments (such as claim and premise) and their relationships (\enquote{premise A supports claim B}). The identification step is formulated as a multi-class classification. The features are examined for the classification task in this thesis. For the identification of argumentative components, a F1 score of 0.72 is reported.
 
-The detection of claims in six different data sets is presented in \cite{Daxenberger2017What-is-the-Ess}. \dots
+%essence of a claim
+How different datasets represent the argumentative unit of a claim is analysed in \cite{Daxenberger2017What-is-the-Ess}. After an analysis of the datasets and their annotation scheme, \cite{Daxenberger2017What-is-the-Ess} conducted two experiments.
+In the first one, each learner (Logistic Regression, Convolutional Neural Networks and LSTM) was trained and evaluated (10-fold cross-validation) on each dataset one after another. On average, the macro F1 score for identifying claims was 0.67 (all results ranging from 0.60 to 0-80). No significant difference between the results of Logistic Regression and the neural models was found. In isolation, lexical, structural and word embeddings were the best features, while structural features turned out to be the weakest.
+The second experiment was conducted in a cross-domain fashion. For each pair of datasets, one was used as the training set and the other one as the test set. The average macro F1 score was 0.54. In this scenario, the best feature combination outperformed all neural models. However, as X assumed, there might not be enough training data for the neural models.
+As the last point, \cite{Daxenberger2017What-is-the-Ess} noted that all claims share at least some lexical clues.
+
 
 The role of discourse markers in the identification of claims and premises are discussed in \cite{Eckle-Kohler2015On-the-Role-of-}. A discourse marker is a word or a phrase which connects discourse units (citation). For instance, the word \enquote{as} can show a relation between claim and premise: \enquote{As the students get frustrated, their performance generally does not improve}.  A similar function for words like \enquote{better}, \enquote{worse} or \enquote{because} is expected in this thesis. \cite{Eckle-Kohler2015On-the-Role-of-} showed that discourse markers are good at discriminating claim and premises. If claim and premise are merged into one class \enquote{argumentative}, this can be used to identify argumentative sentences. The F1 score is not presented, but the accuracy is between 64.53 and 72.79 percent.
 
 A summary of several features for the identification of argumentative sentences can be found in chapter \ref{sec:features}.
 
-%To my knowledge, there is no work dealing with Comparative Argument Mining (CAM) without domain restrictions. However, there is a lot of work on Argument Mining in general.\newline
 
-%
-%The concept of claims was analyzed for six data sets in \cite{Daxenberger2017What-is-the-Ess}. The intention was to test how different conceptualization of claims impairs their classification. In cross-domain experiments, classifiers were trained on one full dataset (source domain) and tested against the other datasets (target domain). Featured-based approaches with all features outperformed the deep learning approaches in most combinations. Additionally, in-domain experiments on one dataset (10-fold cross-validation) were conducted. Here, Logistic Regression with syntax features gave the best results. Also, lexical and embedding features were useful.\newline
-%
-%
-%User-generated web discourse was used as the data source in this thesis. Therefore, it is valuable to review articles which handle this kind of data.
-%Argument mining for twitter data is performed in \cite{Dusmanu2017Argument-Mining}. In addition to find argumentative tweets, the authors try to distinguish factual arguments from personal opinion and find the source for the first one. Since tweets are short and user-generated, this can provide some insights for this thesis. For the task of argument identification, a F1 score of 0.78 is reached using Logistic Regression. As in \cite{Daxenberger2017What-is-the-Ess}, \emph{lexical features} (unigrams, bigrams and WordNet verb synsets) where quite powerful: Logistic Regression with lexical features produced a F1 score of 0.73.\newline
-%
-%%Papers I think are interesting because of features used
-%In \cite{Wachsmuth2017Building-an-arg}, a basic framework for argument search engines is created. A common data structure for arguments is developed which makes it possible to transform different argument concepts into it. The prototype\footnote{Available at: http://www.args.me (Last checked: xx.xx.xxxx)} is also capable of retrieving competetive arguments.
 
 
 
