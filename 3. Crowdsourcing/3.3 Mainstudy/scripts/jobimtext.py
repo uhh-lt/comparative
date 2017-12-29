@@ -7,32 +7,43 @@ import json
 import re
 import time
 
-ES_ENDPOINT = "http://localhost:9222/fd2/freq"
-url_pattern = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/trigram/jo/similar/{}?numberOfEntries=10&format=json'
-
+ES_ENDPOINT = 'http://localhost:9222/fd2/freq'
+#url_pattern = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/trigram/jo/similar/{}?numberOfEntries=10&format=json'
+url_pattern = 'http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/senses/{}%23NP?sensetype=CW&format=json'
 groups = []
 dups = set()
+lemmas = set()
 header = 'name,source,type,cleaned_name,freq\n'
 pattern = '{},{},{},{},{}\n'
-
+words = []
 nlp = spacy.load('en')
 
 def get_words(term):
-    req = requests.get(url_pattern.format(term.lower())).json()['results']
-    for word in req:
-        term2 = word['key']
-        h = hash(term.lower()) + hash(term2.lower())
-
-        if h not in dups and (editdistance.eval(term, term2) >= 2
-                              or editdistance.eval(term, term2) == 0):
-            dups.add(h)
+    req = requests.get(url_pattern.format(term.lower())).json()['result']
+    for res in req:
+        sense = res['senses']
+        added = 0
+        for word in sense[:5]:
+            term2 = word.split('#')[0]
             token = nlp(term2)
-            if token[0].pos_ is 'NOUN':
-                print(term, term2, h)
-                freq = get_freq(term2)
-                line = pattern.format(term2, 'jobimtext', 'seed=' + term, term2,
-                                    freq)
-                groups.append(line)
+            pos = [t.pos_ for t in token]
+            lemmatized = ' '.join([t.lemma_ for t in token])
+            h = hash(term.lower()) + hash(term2.lower())
+            if lemmatized not in lemmas and h not in dups and editdistance.eval(
+                    term, term2) >= 4 and added <= 5:
+                if 'NOUN' in pos and 'PUNCT' not in pos and len(lemmatized) > 5:
+                    dups.add(h)
+                    lemmas.add(lemmatized)
+                    print(term, lemmatized, h)
+                    freq = get_freq(lemmatized)
+                    line = pattern.format(
+                        lemmatized, 'jobimtext',
+                        'seed=' + term + ';cui=' + res['cui'], lemmatized, freq)
+                    if freq > 0:
+                        groups.append(line)
+                        words.append('{}\t{}\t({})'.format(term, lemmatized, ', '.join(pos)))
+                        added += 1
+
 
 
 def get_freq(term):
@@ -53,13 +64,17 @@ def get_freq(term):
 
 
 
-
-
-with open('../data/jbt-seed.txt', 'r') as rIn:
+with open('../data/jbt-seed-2.txt', 'r') as rIn:
     for line in rIn:
-        get_words(line.strip())
-        time.sleep(1)
-with open('cleaned-jbt.csv', 'w') as f:
+        if '#' not in line:
+            get_words(line.strip())
+            time.sleep(1)
+
+with open('../data/cleaned-jbt.csv', 'w') as f:
     f.write(header)
     for line in groups:
         f.write(line)
+
+with open('../data/words-jbt.csv', 'w') as f:
+    for line in sorted(words):
+        f.write(line+'\n')

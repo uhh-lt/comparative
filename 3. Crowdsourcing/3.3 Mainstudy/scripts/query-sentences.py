@@ -14,7 +14,7 @@ parser.add_argument('-f', action='store', dest='file')
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
 
 BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=50'
+SEARCH_URL = BASE_URL + '/_search?size=100'
 
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
@@ -123,7 +123,7 @@ for typ in list(data['type'].unique()):
                     hits_counter[a+'_'+b] += int(len(sentences))
                     #print('NOT {} {}  {}'.format(a,b,len(sentences)))
                 data.set_value(row[0], 'd_type',NAME)
-                data.set_value(row[0], 'count',int(hits_counter[a+'_'+b]))
+                data.set_value(row[0], 'count',int(total))
             except Exception as e:
                 print(a,b,e)
 
@@ -170,7 +170,7 @@ with open ('{}/sentences-only-{}.tsv'.format(folder,NAME),'w') as f:
 
 with open ('{}/sentences-only-sample-{}.tsv'.format(folder,NAME),'w') as f:
     f.write('id\tsentence\ta\tb\tmarker\n')
-    for sentence in random.sample(all_sentences, 200):
+    for sentence in random.sample(all_sentences, 700):
         f.write(sentence + '\n')
 
 data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))

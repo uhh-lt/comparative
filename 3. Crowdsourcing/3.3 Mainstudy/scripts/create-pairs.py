@@ -56,7 +56,7 @@ for typ in data['type'].unique():
                         'freq': next_brand[1],
                     }
                 })
-                cnt += 1
+                cnt += 2
                 used[a.lower()] +=1
                 used[b.lower()] +=1
 
