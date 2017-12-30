@@ -9,15 +9,9 @@ import random
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', action='store', dest='file')
-parser.add_argument('-n', action='store', dest='look_at_next')
-parser.add_argument('-m', action='store', dest='min_freq')
-parser.add_argument('-l', action='store', dest='max_appearance')
 
 args = parser.parse_args()
 file = args.file
-#limit = int(args.max_appearance)
-#next_frequent = int(args.look_at_next)
-#min_freq = int(args.min_freq)
 
 res = {}
 used = defaultdict(int)
@@ -46,7 +40,7 @@ for typ in data['type'].unique():
                 hashes.add(h)
                 pairs.append({
                     'type': current_brand[2],
-                    'use_marker': cnt % 100 != 0,
+                    'use_marker': cnt % 10 != 0,
                     'a': {
                         'word': current_brand[0],
                         'freq': current_brand[1],
@@ -57,14 +51,15 @@ for typ in data['type'].unique():
                     }
                 })
                 cnt += 2
-                used[a.lower()] +=1
-                used[b.lower()] +=1
-
+                used[a.lower()] += 1
+                used[b.lower()] += 1
 """
 with open('pairs-{}.json'.format(file), 'w') as f:
     json.dump({'meta': {'type' : file, 'max_apperance_per_term' : limit, 'next_frequent' : next_frequent, 'min_freq' :min_freq ,  'pairs' : len(pairs)}, 'data':sort}, f)
 """
-with open ('pairs-{}.tsv'.format(file), 'w') as f:
+with open('pairs-{}.tsv'.format(file), 'w') as f:
     f.write('word_a\tfreq_a\tword_b\tfreq_b\ttype\tuse_marker\n')
     for p in pairs:
-        f.write('{}\t{}\t{}\t{}\t{}\t{}\n'.format(p['a']['word'], p['a']['freq'], p['b']['word'], p['b']['freq'], p['type'],p['use_marker'] ))
+        f.write('{}\t{}\t{}\t{}\t{}\t{}\n'.format(
+            p['a']['word'], p['a']['freq'], p['b']['word'], p['b']['freq'],
+            p['type'], p['use_marker']))

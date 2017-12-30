@@ -37,6 +37,7 @@ main.pdf
 *.synctex.gz
 .vscode/
 virtualenv/
+ve/
 include/
 
 node_modules/
