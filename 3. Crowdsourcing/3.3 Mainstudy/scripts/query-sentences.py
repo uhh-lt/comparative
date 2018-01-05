@@ -14,7 +14,7 @@ parser.add_argument('-f', action='store', dest='file')
 ES_ENDPOINT = "http://localhost:9222/fq2/freq"
 
 BASE_URL = 'http://localhost:9222/commoncrawl2/sentence'
-SEARCH_URL = BASE_URL + '/_search?size=250'
+SEARCH_URL = BASE_URL + '/_search?size=50'
 
 QUERY_BETTER = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "({}) AND (\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
 QUERY = ' {{"query" : {{"bool": {{"must": [{{"query_string": {{"default_field" : "text","query" : "(\\"{}\\" AND \\"{}\\")"}}}}]}}}}, "highlight" : {{"fields" : {{"text" : {{}}}} }} }}'
@@ -117,7 +117,7 @@ for typ in list(data['type'].unique()):
                         sentences.append(hit)
                         already.add(sentence.lower())
                 res[a + '_' + b] = sentences
-                if int(total) >= 100:
+                if int(total) >= 50:
                     for t in res[a + '_' + b]:
                         ok, replaced = replace_objects(t['_source']['text'],
                                                        (a, b))
@@ -213,5 +213,4 @@ with open ('{}/sentences-sample-{}.tsv'.format(folder,NAME),'w') as f:
     f.write('id\ttext_html\ttext_readable\ta\tb\tmarker\traw_text\n')
     for u in random.sample(selected_sentences,2600 ):
         f.write('{}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(u['id'], u['text_html'], u['text_readable'], u['object_a'], u['object_b'], u['marker'], u['raw_text']))
-
 #data.to_csv('{}/{}-with-counts.csv'.format(folder,NAME))
