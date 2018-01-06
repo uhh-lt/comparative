@@ -1,10 +1,12 @@
-\chapter{Data}
-\section{Common Crawl}
-The raw data used for the creation of the dataset was derived from CommonCrawl. CommonCrawl is a non-profit organisation which crawls the web and releases the data and metadata with a loose license. This master thesis uses the crawl data from DATE. Furthermore, the data was processed: HTML was stripped out, and the content was splitted into sentences using X. To make the data maintainable, the sentences where imported into an ElasticSearch index. The index has a size of 1.1tb and contains 3,288,963,864 sentences.
+\chapter{Building a data set for Comparative Argument Mining}
+\section{Common Crawl Text Corpus}
+The raw data used for the creation of the dataset was derived from CommonCrawl. CommonCrawl is a non-profit organisation which crawls the web and releases the data and metadata with a loose license. This master thesis uses the crawl data from DATE. Furthermore, the data was processed: HTML was stripped out, and the content was splitted into sentences using X. To make the data maintainable, the sentences where imported into an ElasticSearch index. The index has a size of 1.1tb and contains 3,288,963,864 unique sentences.
 
-The get an idea how many sentences in the index may be comparative, searches with cue words was performed. The query \texttt{better OR easier OR faster OR nicer OR wiser OR cooler OR decent OR safer OR superior OR solid OR teriffic OR worse OR harder OR slower OR poorly OR uglier OR poorer OR lousy OR nastier OR inferior OR mediocre} yields 55,627,400 results, the more specific query \texttt{is better than} yields 428,932 results.
+To get an idea how many sentences in the index may be comparative, searches with cue words was performed. The query \texttt{better OR easier OR faster OR nicer OR wiser OR cooler OR decent OR safer OR superior OR solid OR teriffic OR worse OR harder OR slower OR poorly OR uglier OR poorer OR lousy OR nastier OR inferior OR mediocre} yields 55,627,400 results, the more specific query \texttt{is better than} yields 428,932 results.
 
 Those numbers indicate that the index contains enough comparative sentences to create machine learning data set.
+
+Lesen \cite{Panchenko:2017aa}
 
 \section{Prestudy}
 Previous to the main study, a pre-study was conducted to assess the quality of the annotation guidelines, the approach of sentence generation and the task itself.
@@ -72,25 +74,44 @@ The annotators where asked to assign one of the four following classes to each s
 In a test first step, 112 sentences where obtained with the procedure described in chapter \ref{sec:prestudy-processing}.
 Twelve sentences were used as test sentences to filter out people who did not read the annotation guidelines.
 
-The sentences were preprocessed: the first object was replaced by OBJECT\_A, the second by OBJECT\_B. After this step, sentences look like:
-\begin{quotation}
-This is potentially useful for OBJECT\_A, PHP, JS and OBJECT\_B.
-\end{quotation}
+The sentences were preprocessed: the first object was replaced by OBJECT\_A, the second by OBJECT\_B. Examples are shown in table \ref{tbl:pre1s}. The removal was done so that the annotators can concentrate on the comparative structure of the sentence and are not biased by the objects.
 
-\begin{quotation}
-Also keep in mind that OBJECT\_A blends will give you worse mileage than OBJECT\_B.
-\end{quotation}
 
-\begin{quotation}
-Snowboarding during OBJECT\_A is a lot better than during OBJECT\_B.
-\end{quotation}
+% Beispielsätze PreStudy 1. Teil
+\begin{table}[h]
+\centering
+\caption{Sentences for the first pre-study}
+\label{tbl:pre1s}
+\begin{tabular}{{p{12cm}p{3cm}}}
+\toprule
+Sentence            & Expected Class \\ \midrule
+This is potentially useful for OBJECT\_A, PHP, JS and OBJECT\_B.                                 & NO\_COMP       \\
+Also keep in mind that OBJECT\_A blends will give you worse mileage than OBJECT\_B & WORSE      \\ 
+Snowboarding during OBJECT\_A is a lot better than during OBJECT\_B. & BETTER \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-The removal was done so that the annotators can concentrate on the comparative structure of the sentence and are not biased by the objects.
+
 
 This test step delivered valuable insights. First, the amount of test sentences was to small. Users might see the same test sentence twice. Second, the phrasing of the annotation guidelines was to confusing, especially the distinction between NO\_COMP and UNCLEAR.
-Also, the complete removal of the original objects also removed context of the sentences.\newline
+Third, the complete removal of the original objects also removed parts of the sense of the sentences, which can make the annotation process harder.\newline
 
-The actual pre-study was conducted with 200 sentences and 51 test sentences. Furthermore, the preprocessing was changed. Instead of removing the original objects, :[OBJECT\_A] was appended to the first object, :[OBJECT\_B] to the second object. Also, each object was highlighted in a different color. In this way, the annotators could quickly see the objects of interest while the sense of the sentence remains intact.
+The actual pre-study was conducted with 200 sentences and 51 test sentences. Furthermore, the preprocessing was changed. Instead of removing the original objects, :[OBJECT\_A] was appended to the first object, :[OBJECT\_B] to the second object. Also, each object was highlighted in a different color. Example sentences are shown in table \ref{tbl:pre2s}. In this way, the annotators could quickly see the objects of interest while the sense of the sentence remains intact.
+% Beispielsätze PreStudy 2. Teil
+\begin{table}[h]
+\centering
+\caption{Sentences for the second pre-study}
+\label{tbl:pre2s}
+\begin{tabular}{{p{12cm}p{3cm}}}
+\toprule
+Sentence                                                                                                           & Expected Class \\ \midrule
+I'd go with \textbf{{\color[HTML]{9A14B2} python:{[}OBJECT\_A{]}}} or \textbf{{\color[HTML]{6CB219}ruby:{[}OBJECT\_B{]}}}.                                 & NO\_COMP       \\
+I prefer \textbf{{\color[HTML]{9A14B2}ruby:{[}OBJECT\_A{]}}} over \textbf{{\color[HTML]{6CB219}python:{[}OBJECT\_B{]}}} on windows.                                              & BETTER         \\
+I've tried \textbf{{\color[HTML]{9A14B2}python:{[}OBJECT\_A{]}}}, and can see why people like it, but \textbf{{\color[HTML]{6CB219}ruby:{[}OBJECT\_B{]}}} suits my style better. & WORSE          \\
+i think this car is a far better deal than the \textbf{{\color[HTML]{9A14B2}bmw{:[OBJECT\_A]}}} 5 series or \textbf{{\color[HTML]{6CB219}mercedes:[OBJECT\_B]}} 320e.                                                                                                                &        UNCLEAR        \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \label{sec:annotation-guidelines}
 \subsection{Results}
@@ -100,8 +121,18 @@ Each sentence was annotated by three annotators. Figure \ref{pre:dist} shows the
 \centering
 \caption{Class Distribution in the prestudy}
 \label{pre:dist}
-\includegraphics[scale=0.6]{images/prestudy/label_distribution.pdf}
+\begin{tikzpicture}
+\pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
+    {59.76/NO\_COMP,
+    23.11/BETTER,
+    9.16/WORSE,
+    7.97/UNCLEAR }
+\end{tikzpicture}
 \end{figure}
+
+
+%\includegraphics[scale=0.6]{images/prestudy/label_distribution.pdf}
+
 
 Crowdflower has a trust value for each annotator. This trust value and the number of votes per class gives a value of confidence for each label.\footnote{How the confidence is calculated in detail can be found at https://success.crowdflower.com/hc/en-us/articles/201855939-How-to-Calculate-a-Confidence-Score (Last checked: 19.12.2017)}
 

@@ -2,7 +2,7 @@
 %	\usepackage[ngerman,german]{babel}
 	\usepackage[utf8]{inputenc}
 	\usepackage[T1]{fontenc}
-  \usepackage[pdftex]{color} 
+  
   \usepackage{setspace}
   \usepackage[pdftex]{graphicx}  
 	\usepackage[final]{listings}  
@@ -10,6 +10,12 @@
   \usepackage{booktabs}
 	% ok-zeichen usw
   \usepackage{amsfonts} 
+  
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+  \definecolor{cblue}{RGB}{43,152,202}
+  \definecolor{cgreen}{RGB}{137,198,68}
+  \definecolor{cred}{RGB}{223,28,26}
+  \definecolor{cgray}{RGB}{222,221,223}
   
   % Die folgenden drei Pakete ersetzen das veraltete palatino-Paket.
 	% Für die Begründung siehe 'Das Latex2-Sündenregister' von Mart Trettin
@@ -41,7 +47,7 @@
 \usepackage[autostyle]{csquotes} 
   % charts
   \usepackage{tikz}
-% \usepackage{pgf-pie}
+\usepackage{pgf-pie}
 
   % Linien in Kopf- und Fußzeilen einschalten
 	\usepackage[headsepline,footsepline]{scrpage2}
