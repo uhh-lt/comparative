@@ -27,15 +27,18 @@ def build_feature_union():
                                        Pipeline([('step-1',
                                                   MeanWordEmbedding())]))
         contains_jjr = ('contains-jjr', Pipeline([('step-1', ContainsPos('JJR'))]))
-        unigram = ('unigram', Pipeline([('step-1', NGram(1,data['sentence'].values, min_freq=1))]))
-        #bigram = ('bigram', Pipeline([('step-1', NGram(2,data['sentence'].values))]))
-        #trigram = ('trigram', Pipeline([('step-1', NGram(3,data['sentence'].values))]))
+        contains_jjs = ('contains-jjs', Pipeline([('step-1', ContainsPos('JJS'))]))
+        contains_nnp = ('contains-nnp', Pipeline([('step-1', ContainsPos('NNP'))]))
+        unigram = ('unigram', Pipeline([('step-1', NGram(1,data['sentence'].values))]))
+        bigram = ('bigram', Pipeline([('step-1', NGram(2,data['sentence'].values))]))
+
         return FeatureUnion([
         #mean_word_embedding,
-        #contains_jjr,
-        unigram,
-        #bigram,
-        #trigram
+        contains_jjr,
+        #contains_jjs,
+        #contains_nnp,
+        #unigram,
+        #bigram
         ])
 
 
