@@ -1,61 +1,74 @@
 from features.mean_wordembedding import *
 from features.contains_pos import *
 from features.ngram import *
+
+from transformers.sentence_split import *
+
 from pandas import DataFrame as df
 
-from sklearn.pipeline import Pipeline, FeatureUnion
+from sklearn.pipeline import Pipeline, FeatureUnion, make_pipeline
 from sklearn.utils import shuffle
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, make_scorer, f1_score
+from sklearn.dummy import DummyClassifier
 
 
-def load_data(file_name):
+def load_data(file_name, min_confidence=0.7):
     frame = df.from_csv(path='data/' + file_name)
+    frame = frame[frame['label:confidence'] >= min_confidence]
     return shuffle(frame, random_state=42)
 
 
 def split_data(splits, data):
     """create splits for k fold validation"""
     k_fold = StratifiedKFold(n_splits=splits)
-    for train_index, test_index in k_fold.split(data['sentence'],
-                                                data['assigned_class']):
+    for train_index, test_index in k_fold.split(data['raw_text'],
+                                                data['label']):
         yield data.iloc[train_index], data.iloc[test_index]
 
-def build_feature_union():
-        mean_word_embedding = ('mean-wordembedding',
-                                       Pipeline([('step-1',
-                                                  MeanWordEmbedding())]))
-        contains_jjr = ('contains-jjr', Pipeline([('step-1', ContainsPos('JJR'))]))
-        contains_jjs = ('contains-jjs', Pipeline([('step-1', ContainsPos('JJS'))]))
-        contains_nnp = ('contains-nnp', Pipeline([('step-1', ContainsPos('NNP'))]))
-        unigram = ('unigram', Pipeline([('step-1', NGram(1,data['sentence'].values))]))
-        bigram = ('bigram', Pipeline([('step-1', NGram(2,data['sentence'].values))]))
 
-        return FeatureUnion([
-        #mean_word_embedding,
-        contains_jjr,
+def build_feature_union():
+    mean_word_embedding = ('mwe',
+                           Pipeline([('step-1', MeanWordEmbedding())]))
+    contains_jjr = ('contains-jjr', Pipeline([('step-1', ContainsPos('JJR'))]))
+    unigram = ('unigram',
+               Pipeline([('pre', SentenceSplit()), ('step-1', NGram(1, data['raw_text'].values))]))
+    bigram = ('bigram',
+              Pipeline([('step-1', NGram(2, data['raw_text'].values))]))
+    trigram =  ('trigram', make_pipeline(NGram(3, data['raw_text'].values)))
+
+    return FeatureUnion([
+
+        mean_word_embedding,
+        #contains_jjr,
         #contains_jjs,
         #contains_nnp,
-        #unigram,
+        unigram,
         #bigram
-        ])
-
-
+    ]
+    )
 
 # ------ Classification
-labels = ['BETTER', 'WORSE', 'UNCLEAR',  'NO_COMP']
-data = load_data('200-cw.csv')
-#data = load_data('test.csv')
+labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
+data = load_data('brands_500.csv')
+
+def run_pipeline(estimator, feature_union=build_feature_union()):
+    pipeline = Pipeline([('features', feature_union),  ('estimator',
+                                                       estimator)])
+    fitted = pipeline.fit(train['raw_text'].values,
+                          train['label'].values)
+    predictions = fitted.predict(test['raw_text'].values)
+
+    report = classification_report(
+        test['label'].values, predictions, labels=labels)
+    conf = confusion_matrix(
+        test['label'].values, predictions, labels=labels)
+    return report, conf
+
 
 for train, test in split_data(2, data):
-    feature_union = build_feature_union()
-    pipeline = Pipeline([('features', feature_union), ('estimator', LogisticRegression())])
-
-
-    fitted = pipeline.fit(train['sentence'].values, train['assigned_class'].values)
-    predictions = fitted.predict(test['sentence'].values)
-
-    report = classification_report(test['assigned_class'].values, predictions, labels=labels)
-    conf = confusion_matrix(test['assigned_class'].values, predictions, labels=labels)
-    print(report,'\n',conf,'\n------------------')
+#    report_dummy, conf_dummy = run_pipeline(DummyClassifier(strategy='most_frequent'))
+    report, conf = run_pipeline(LogisticRegression())
+#    print('Baseline: Most Frequent Class\n', report_dummy)
+    print('Result\n', report, conf)
