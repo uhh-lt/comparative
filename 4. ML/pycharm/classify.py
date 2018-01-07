@@ -51,7 +51,7 @@ def build_feature_union(data):
         before_mwe,
         middle_mwe,
         after_mew,
-
+        #
         all_n,
         before_n,
         middle_n,
@@ -65,29 +65,62 @@ data = load_data('500_cleaned.csv')  # [342:350]
 
 
 def run_pipeline(estimator, feature_union):
-    print(type(estimator))
+    train, test = train_test_split(data, stratify=data['label'])
+
     pipeline = Pipeline([('features', feature_union), ('estimator',
                                                        estimator)])
+    scorer = make_scorer(f1_score, average='weighted')
 
-    param_grid = {'foo' : [1]}
-    pipeline = GridSearchCV(estimator=pipeline, param_grid=pipeline, verbose=30)
+    fitted = pipeline.fit(train,
+                          train['label'].values)
 
+    predictions = fitted.predict(test)
+
+    report = classification_report(test['label'].values, predictions, labels=labels)
+    conf = confusion_matrix(test['label'].values, predictions, labels=labels)
+    print('RUN ------')
+    print(report)
+    print(conf)
+
+
+def run_grid_search(estimator, feature_union):
+    train, test = train_test_split(data, stratify=data['label'])
+    print(len(train), len(test), len(data))
+
+    pipeline = Pipeline([('features', feature_union), ('estimator',
+                                                       estimator)])
+    print(pipeline.get_params().keys())
+
+    scorer = make_scorer(f1_score, average='weighted')
+
+    param_grid = {
+        'features__before-n__ngram__n': [1, 2, 3],
+        'features__middle-n__ngram__n': [1, 2, 3],
+        'features__after-n__ngram__n': [1, 2, 3],
+        'features__all-n__ngram__n': [1, 2, 3],
+
+        'features__before-n__ngram__min_freq': [1, 2],
+        'features__middle-n__ngram__min_freq': [1, 2],
+        'features__after-n__ngram__min_freq': [1, 2],
+        'features__all-n__ngram__min_freq': [1, 2],
+        'features__transformer_weights': [{'all-n': 0}, {'all-n': 1}]
+        #   'features__transformer_weights': [{'all-mwe': 0}, {'all-mwe': 1}, {'before-mwe': 0}, {'before-mwe': 1},
+        #                                    {'middle-mwe': 0}, {'middle-mwe': 1}, {'after-mwe': 0}, {'after-mwe': 1},
+        #                                   {'all-mwe': 0, 'before-mwe': 0, 'after-mwe': 0, 'middle-mwe': 0}]
+    }
+
+    pipeline = GridSearchCV(pipeline, param_grid=param_grid, verbose=30, scoring=scorer, cv=2)
 
     fitted = pipeline.fit(train,
                           train['label'].values)
     predictions = fitted.predict(test)
+    print("---------------------")
+    print(pipeline.cv_results_)
+    print("---------------------")
+    print(pipeline.best_params_)
+    print("---------------------")
+    print(pipeline.best_score_)
 
-    report = classification_report(
-        test['label'].values, predictions, labels=labels)
-    conf = confusion_matrix(
-        test['label'].values, predictions, labels=labels)
-    return report, conf
 
-
-for train, test in split_data(2, data):
-    f = build_feature_union(data)
-    # report_dummy, conf_dummy = run_pipeline(DummyClassifier(strategy='most_frequent'), f)
-    # print('Baseline: Most Frequent Class\n', report_dummy)
-
-    report, conf = run_pipeline(LogisticRegression(), f)
-    print('Result\n', report, conf)
+run_grid_search(LogisticRegression(), build_feature_union(data))
+run_pipeline(LogisticRegression(), build_feature_union(data))

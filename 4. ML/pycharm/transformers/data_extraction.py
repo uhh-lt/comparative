@@ -1,9 +1,10 @@
-from sklearn.base import TransformerMixin
+from sklearn.base import TransformerMixin, BaseEstimator
 import numpy as np
 
 empty = 'A<<%%EMPTY%%>>A'
 
-class ExtractRawSentence(TransformerMixin):
+
+class ExtractRawSentence(TransformerMixin, BaseEstimator):
 
     def transform(self, dataframe):
         results = []
@@ -15,7 +16,7 @@ class ExtractRawSentence(TransformerMixin):
         return self
 
 
-class ExtractFirstPart(TransformerMixin):
+class ExtractFirstPart(TransformerMixin, BaseEstimator):
     """returns all words before the first object"""
 
     def transform(self, dataframe):
@@ -37,7 +38,7 @@ class ExtractFirstPart(TransformerMixin):
         return self
 
 
-class ExtractLastPart(TransformerMixin):
+class ExtractLastPart(TransformerMixin, BaseEstimator):
     """returns all words after the second object"""
 
     def transform(self, dataframe):
@@ -57,7 +58,7 @@ class ExtractLastPart(TransformerMixin):
         return self
 
 
-class ExtractMiddlePart(TransformerMixin):
+class ExtractMiddlePart(TransformerMixin, BaseEstimator):
     """returns all words between the first and the second object"""
 
     def transform(self, dataframe):
