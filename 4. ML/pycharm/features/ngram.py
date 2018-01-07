@@ -2,11 +2,13 @@ from textacy.extract import ngrams
 from .base_feature import BaseFeature
 from collections import OrderedDict
 
+empty = 'A<<%%EMPTY%%>>A'
+
 
 class NGram(BaseFeature):
     """Collects all n-grams and creates a boolean n-gram vector"""
 
-    def __init__(self, n, docs, min_freq=1):
+    def __init__(self,  docs, n=1, min_freq=1):
         self.n = n
         self.min_freq = min_freq
         self.n_grams = self.get_all_ngrams(docs)
@@ -36,8 +38,10 @@ class NGram(BaseFeature):
                         for k in self.n_grams}.items()))
             n_grams = self.get_ngrams(doc)
             for n_gram in n_grams:
-                n_gram_dict[n_gram] = 1
+                if n_gram in n_gram_dict:
+                    n_gram_dict[n_gram] = 1
 
             result = list(n_gram_dict.values())
             results.append(result)
+
         return results

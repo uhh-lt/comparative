@@ -1,5 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 from .base_feature import BaseFeature
+import numpy as np
 
 
 class MeanWordEmbedding(BaseFeature):
@@ -10,4 +11,4 @@ class MeanWordEmbedding(BaseFeature):
         for doc in documents:
             pre = MeanWordEmbedding.nlp(doc)
             result.append(pre.vector)
-        return result
+        return np.array(result)
