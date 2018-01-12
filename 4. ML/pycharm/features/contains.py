@@ -13,3 +13,16 @@ class ContainsPos(BaseFeature):
             pos = [t.tag_ for t in pre]
             result.append(self.pos.upper() in pos)
         return super(ContainsPos, self).reshape(result)
+
+class ContainsWord(BaseFeature):
+
+    def __init__(self, word):
+        self.word = word
+
+    def transform(self, documents):
+        result = []
+        for doc in documents:
+            pre = ContainsPos.nlp(doc)
+            words = [t.text for t in pre]
+            result.append(self.word in words)
+        return super(ContainsWord, self).reshape(result)

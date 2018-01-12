@@ -1,6 +1,8 @@
 from textacy.extract import ngrams
 from .base_feature import BaseFeature
 from collections import OrderedDict
+import numpy as np
+from util.ngram import get_ngrams
 
 empty = 'A<<%%EMPTY%%>>A'
 
@@ -8,46 +10,27 @@ empty = 'A<<%%EMPTY%%>>A'
 class NGram(BaseFeature):
     """Collects all n-grams and creates a boolean n-gram vector"""
 
-    def __init__(self, docs, n=1, min_freq=1):
-        print(self)
+    def __init__(self, n_grams, n=1, min_freq=1):
         self.n = n
         self.min_freq = min_freq
-        self.n_grams = []
-
-    def get_ngrams(self, document):
-        return sorted([
-            n.text
-            for n in ngrams(
-                NGram.nlp(document),
-                self.n,
-                filter_stops=False,
-                min_freq=self.min_freq)
-        ])
-
-    def get_all_ngrams(self, documents):
-        n_grams = set()
-        for doc in documents:
-            for n_gram in self.get_ngrams(doc):
-                n_grams.add(n_gram)
-        return sorted(list(n_grams))
-
-    def lazy_n_gram(self, documents):
-        if len(self.n_grams) == 0:
-            self.n_grams = self.get_all_ngrams(documents)
-        return self.n_grams
+        self.n_grams = n_grams
 
     def transform(self, documents):
         results = []
         for i, doc in enumerate(documents):
             n_gram_dict = OrderedDict(
                 sorted({k: 0
-                        for k in self.lazy_n_gram(documents)}.items()))
-            n_grams = self.get_ngrams(doc)
+                        for k in self.n_grams}.items()))
+            n_grams = get_ngrams(doc, self.n, min_freq=self.min_freq)
+
             for n_gram in n_grams:
                 if n_gram in n_gram_dict:
                     n_gram_dict[n_gram] = 1
+                else:
+                    print(self.n, 'out of dict {}'.format(n_gram))
 
             result = list(n_gram_dict.values())
             results.append(result)
 
-        return results
+        r = np.reshape(np.asarray(results), (len(results), -1))
+        return r

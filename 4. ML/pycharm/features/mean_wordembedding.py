@@ -11,4 +11,4 @@ class MeanWordEmbedding(BaseFeature):
         for doc in documents:
             pre = MeanWordEmbedding.nlp(doc)
             result.append(pre.vector)
-        return np.array(result)
+        return np.array(result).reshape(len(result), -1)

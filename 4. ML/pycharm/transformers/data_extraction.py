@@ -10,6 +10,7 @@ class ExtractRawSentence(TransformerMixin, BaseEstimator):
         results = []
         for index, row in dataframe.iterrows():
             results.append(row['raw_text'])
+
         return results
 
     def fit(self, X, y):
@@ -29,8 +30,6 @@ class ExtractFirstPart(TransformerMixin, BaseEstimator):
             else:
                 begin, end = b_index, a_index
             res = str(text[:begin])
-            if '' == res:
-                res = empty
             results.append(res)
         return results
 
@@ -49,8 +48,6 @@ class ExtractLastPart(TransformerMixin, BaseEstimator):
                 res = text.split(a)[-1]
             else:
                 res = text.split(b)[-1]
-            if '' == res:
-                res = empty
             results.append(res)
         return results
 
