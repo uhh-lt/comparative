@@ -9,6 +9,10 @@ class MeanWordEmbedding(BaseFeature):
     def transform(self, documents):
         result = []
         for doc in documents:
-            pre = MeanWordEmbedding.nlp(doc)
-            result.append(pre.vector)
+            if len(doc) == 0:
+                print("<< {} >>".format(doc))
+                result.append(np.array([0] * 300))
+            else:
+                pre = MeanWordEmbedding.nlp(doc)
+                result.append(pre.vector)
         return np.array(result).reshape(len(result), -1)

@@ -10,10 +10,11 @@ empty = 'A<<%%EMPTY%%>>A'
 class NGram(BaseFeature):
     """Collects all n-grams and creates a boolean n-gram vector"""
 
-    def __init__(self, n_grams, n=1, min_freq=1):
+    def __init__(self, n_grams, n=1, min_freq=1, count=False):
         self.n = n
         self.min_freq = min_freq
         self.n_grams = n_grams
+        self.count = count
 
     def transform(self, documents):
         results = []
@@ -25,9 +26,13 @@ class NGram(BaseFeature):
 
             for n_gram in n_grams:
                 if n_gram in n_gram_dict:
-                    n_gram_dict[n_gram] = 1
+                    if self.count:
+                        n_gram_dict[n_gram] += 1
+                    else:
+                        n_gram_dict[n_gram] = 1
                 else:
-                    print(self.n, 'out of dict {}'.format(n_gram))
+                    pass
+               #     print(self.n, 'out of dict {}'.format(n_gram))
 
             result = list(n_gram_dict.values())
             results.append(result)
