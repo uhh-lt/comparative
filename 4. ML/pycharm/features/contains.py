@@ -1,5 +1,6 @@
 from .base_feature import BaseFeature
 
+
 class ContainsPos(BaseFeature):
     """Boolean feature; checks if the sentences contains the given POS"""
 
@@ -14,15 +15,19 @@ class ContainsPos(BaseFeature):
             result.append(self.pos.upper() in pos)
         return super(ContainsPos, self).reshape(result)
 
+
 class ContainsWord(BaseFeature):
 
-    def __init__(self, word):
-        self.word = word
+    def __init__(self, words):
+        self.words = words
 
     def transform(self, documents):
         result = []
         for doc in documents:
             pre = ContainsPos.nlp(doc)
             words = [t.text for t in pre]
-            result.append(self.word in words)
-        return super(ContainsWord, self).reshape(result)
+            tmp = []
+            for w in self.words:
+                tmp.append(w in words)
+            result.append(tmp)
+        return result
