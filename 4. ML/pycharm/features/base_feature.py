@@ -6,9 +6,8 @@ import numpy as np
 class BaseFeature(BaseEstimator, TransformerMixin):
     nlp = spacy.load('en')
 
-    def reshape(self,array):
-        return np.array(array).reshape(-1,1)
+    def reshape(self, array):
+        return np.array(array).reshape(-1, 1)
 
-
-    def fit(self,X,y):
+    def fit(self, X, y):
         return self

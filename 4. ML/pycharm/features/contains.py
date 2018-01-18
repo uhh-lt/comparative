@@ -17,6 +17,7 @@ class ContainsPos(BaseFeature):
 
 
 class ContainsWord(BaseFeature):
+    """boolean feature if the string contains this word"""
 
     def __init__(self, words):
         self.words = words

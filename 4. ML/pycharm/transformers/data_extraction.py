@@ -1,7 +1,4 @@
 from sklearn.base import TransformerMixin, BaseEstimator
-import numpy as np
-
-empty = 'A<<%%EMPTY%%>>A'
 
 
 class ExtractRawSentence(TransformerMixin, BaseEstimator):
@@ -15,6 +12,8 @@ class ExtractRawSentence(TransformerMixin, BaseEstimator):
 
     def fit(self, X, y):
         return self
+
+
 
 
 class ExtractFirstPart(TransformerMixin, BaseEstimator):
