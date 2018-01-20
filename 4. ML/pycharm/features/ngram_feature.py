@@ -35,3 +35,7 @@ class NGramFeature(BaseFeature):
         if self.with_oov:
             n_grams += ['OUT_OF_VOC']
         return OrderedDict(sorted({k: 0 for k in n_grams}.items()))
+
+
+    def get_feature_names(self):
+        return ['ngram_{}'.format(n) for n in self.n_grams]

@@ -32,3 +32,6 @@ class ContainsWord(BaseFeature):
                 tmp.append(w in words)
             result.append(tmp)
         return result
+
+    def get_feature_names(self):
+        return ['cue_{}'.format(w) for w in self.words]

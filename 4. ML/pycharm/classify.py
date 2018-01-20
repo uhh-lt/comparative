@@ -5,11 +5,13 @@ from pandas import DataFrame as df
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier, LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, GridSearchCV
 from sklearn.pipeline import Pipeline
+from sklearn.tree import export_graphviz
 from sklearn.svm import LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import shuffle
+import subprocess
 
 from features.ngram_feature import NGramFeature
 from transformers.data_extraction import *
@@ -48,63 +50,113 @@ def setup_n_grams(d):
         d['raw_text'].values, n=3)
 
 
-def build_features():
-    feat = best_so_far
-
-    combis = list(combinations(feat, len(feat)))
-    print('{} feature combinations'.format(len(combis)))
-    return combis
+def get_score(test, predictions, labels):
+    print(classification_report(test['label'].values, predictions, labels=labels))
+    print(confusion_matrix(test['label'].values, predictions, labels=labels))
+    return f1_score(test['label'].values, predictions, labels=labels, average='weighted')
 
 
-def run_pipeline(estimator, feature_union, train, test, labels):
-    pipeline = Pipeline([('features', feature_union), ('estimator',
-                                                       estimator)])
+def linear_svc(features, splits, labels):
+    print('********* SVC *********')
+    pipeline = make_pipeline(FeatureUnion(features), LinearSVC())
 
-    fitted = pipeline.fit(train,
-                          train['label'].values)
+    for split in splits:
+        train, test = split
+        fitted = pipeline.fit(train,
+                              train['label'].values)
+        predictions = fitted.predict(test)
 
-    predictions = fitted.predict(test)
-
-    report = classification_report(test['label'].values, predictions, labels=labels)
-    conf = confusion_matrix(test['label'].values, predictions, labels=labels)
-    f1 = f1_score(test['label'].values, predictions, labels=labels, average='weighted')
-    return f1, str(report), str(conf)
+        get_score(test, predictions, labels)
 
 
-def run_estimator(estimator, data, label, features):
-    key = str(type(estimator))
-    print('Start {}'.format(key))
-    f1_sum = 0
-    for train, test in split_data(3, data):
-        f1, report, conf = run_pipeline(estimator, FeatureUnion(features), train, test, label)
-        print(report)
-        print(conf)
-        f1_sum += f1
-    print('\nAverage F1 Score {}\n==========================\n\n'.format(f1_sum / 3))
-    return f1_sum / 3
+def decision_tree(features, splits, labels):
+    print('********* DecisionTree *********')
+
+    for i, split in enumerate(list(splits)[:1]):
+        classifier = DecisionTreeClassifier(max_depth=10, max_features= 'auto')
+        union = FeatureUnion(features)
+        pipeline = make_pipeline(union, classifier)
+
+        param_grid = {
+            'max_depth': [None, 10, 100], 'max_features': [None, 'auto', 'log2'], 'max_leaf_nodes': [None, 5, 10]
+        }
+
+        # pipeline = GridSearchCV(pipeline, param_grid={}, cv=splits)
+
+        train, test = split
+        fitted = pipeline.fit(train,
+                              train['label'].values)
+
+        predictions = fitted.predict(test)
+
+        export_graphviz(
+            classifier,
+            out_file='tree-{}.dot'.format(i),
+            feature_names=get_feature_names(fitted),
+            class_names=_labels,
+            rounded=True,
+            filled=True
+        )
+        subprocess.call(['dot', '-Tpdf', 'tree-{}.dot'.format(i), '-o' 'tree-{}.pdf'.format(i)])
+
+        get_score(test, predictions, labels)
+
+
+def get_feature_names(pipeline):
+    lst = pipeline.named_steps['featureunion'].transformer_list
+    names = []
+    for t in lst:
+        names += t[1].steps[-1][1].get_feature_names()
+    print(names)
+    return names
+
+
+def logistic_regression(features, splits, labels):
+    print('********* LogisticRegression *********')
+    pipeline = make_pipeline(FeatureUnion(features), LogisticRegression())
+
+    for split in splits:
+        train, test = split
+        fitted = pipeline.fit(train,
+                              train['label'].values)
+        predictions = fitted.predict(test)
+
+        get_score(test, predictions, labels)
+
+
+def sgd(features, splits, labels):
+    print('********* SGD *********')
+    pipeline = make_pipeline(FeatureUnion(features), SGDClassifier())
+
+    for split in splits:
+        train, test = split
+        fitted = pipeline.fit(train,
+                              train['label'].values)
+        predictions = fitted.predict(test)
+
+        get_score(test, predictions, labels)
 
 
 if __name__ == '__main__':
     _labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
     _data = load_data('train-data.csv')
-    unigrams, bigrams, trigrams = setup_n_grams(_data)
+    unigrams, bigrams, trigrams = [], [], []  # setup_n_grams(_data)
+    print('Build n-grams')
     ## 0.704
     best_so_far = [
 
         ('better-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER))),  # 0.613
-        ('vsm', make_pipeline(ExtractRawSentence(), TfidfVectorizer())),  # 0.621
-        ('uni', make_pipeline(ExtractRawSentence(), NGramTransformer(n=1), NGramFeature(unigrams))),  # 0.628
+        # ('tfidf', make_pipeline(ExtractRawSentence(), TfidfVectorizer())),  # 0.621
+        ('ngram', make_pipeline(ExtractRawSentence(), NGramTransformer(n=1), NGramFeature(unigrams))),  # 0.628
         ('bw-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER + CUE_WORDS_WORSE))),  # 0.645
-        ('vsm-m', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),  # 0.671
-        ('bigram-m', make_pipeline(ExtractMiddlePart(), NGramTransformer(n=2), NGramFeature(bigrams))),  # 0.671
+        #  ('tf-m', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),  # 0.671
+        ('bi-m', make_pipeline(ExtractMiddlePart(), NGramTransformer(n=2), NGramFeature(bigrams))),  # 0.671
         ('uni-m', make_pipeline(ExtractMiddlePart(), NGramTransformer(n=1), NGramFeature(unigrams))),  # 0.678
 
     ]
-
-    f1 = 0
-    estimators = [LogisticRegression(), DecisionTreeClassifier(), LinearSVC(), SGDClassifier()]
-
-    for estimator in estimators:
-        f1 += run_estimator(estimator, _data, _labels, best_so_far)
-        print('\n**************************************************\n>>>>>> {}\n\n'.format(f1 / len(estimators)))
-        f1 = 0
+    print('Build features')
+    splits = list(split_data(3, _data))
+    decision_tree(best_so_far, splits, _labels)
+    # linear_svc(best_so_far)
+    # logistic_regression(best_so_far)
+    # sgd(best_so_far)

@@ -14,6 +14,10 @@ class ExtractRawSentence(TransformerMixin, BaseEstimator):
         return self
 
 
+    def get_feature_names(self):
+        return 'FullExtractor'
+
+
 
 
 class ExtractFirstPart(TransformerMixin, BaseEstimator):
@@ -36,6 +40,10 @@ class ExtractFirstPart(TransformerMixin, BaseEstimator):
         return self
 
 
+    def get_feature_names(self):
+        return 'FirstExtractor'
+
+
 class ExtractLastPart(TransformerMixin, BaseEstimator):
     """returns all words after the second object"""
 
@@ -52,6 +60,10 @@ class ExtractLastPart(TransformerMixin, BaseEstimator):
 
     def fit(self, X, y):
         return self
+
+
+    def get_feature_names(self):
+        return 'LastExtractor'
 
 
 class ExtractMiddlePart(TransformerMixin, BaseEstimator):
@@ -74,3 +86,6 @@ class ExtractMiddlePart(TransformerMixin, BaseEstimator):
 
     def fit(self, X, y):
         return self
+
+    def get_feature_names(self):
+        return 'MiddleExtractor'
