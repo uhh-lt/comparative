@@ -20,3 +20,6 @@ class NGramTransformer(BaseFeature):
                 sorted([t.text for t in ngrams(doc, n=self.n, filter_stops=False, min_freq=self.min_freq,
                                                filter_punct=self.filter_punct)]))
         return result
+
+    def fit(self, X, y):
+        return self

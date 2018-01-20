@@ -27,6 +27,9 @@ class NGramFeature(BaseFeature):
         r = np.reshape(np.asarray(results), (len(results), -1))
         return r
 
+    def fit(self, X, y):
+        return self
+
     def get_n_gram_dict(self):
         n_grams = self.n_grams
         if self.with_oov:
