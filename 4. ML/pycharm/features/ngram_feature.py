@@ -9,7 +9,7 @@ class NGramFeature(BaseFeature):
     """Collects all n-grams and creates a boolean n-gram vector"""
 
     def __init__(self, base_n_grams, with_oov=False):
-        self.n_grams = base_n_grams
+        self.base_n_grams = base_n_grams
         self.with_oov = with_oov
 
     def transform(self, n_gram_lists):
@@ -31,11 +31,13 @@ class NGramFeature(BaseFeature):
         return self
 
     def get_n_gram_dict(self):
-        n_grams = self.n_grams
+        n_grams = self.base_n_grams
         if self.with_oov:
             n_grams += ['OUT_OF_VOC']
-        return OrderedDict(sorted({k: 0 for k in n_grams}.items()))
-
+        unordered_dict = {k: 0 for k in n_grams}
+        items = unordered_dict.items()
+        ordered_dict = OrderedDict(sorted(items))
+        return ordered_dict
 
     def get_feature_names(self):
-        return ['ngram_{}'.format(n) for n in self.n_grams]
+        return ['ngram_{}'.format(n) for n in self.base_n_grams]

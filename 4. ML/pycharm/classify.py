@@ -1,17 +1,10 @@
-from itertools import combinations
-
 from bs4 import BeautifulSoup
 from pandas import DataFrame as df
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier, LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
+from sklearn.metrics import classification_report, confusion_matrix, f1_score, accuracy_score
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.tree import export_graphviz
 from sklearn.svm import LinearSVC
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import shuffle
-import subprocess
 
 from features.ngram_feature import NGramFeature
 from transformers.data_extraction import *
@@ -26,7 +19,8 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
                     "teriffic"]
 
 
-def load_data(file_name, min_confidence=0.6, binary=False):
+def load_data(file_name, min_confidence=0, binary=False):
+    print('### Minimum Confidence {}'.format(min_confidence))
     frame = df.from_csv(path='data/' + file_name)
     frame = frame[frame['label:confidence'] >= min_confidence]
     frame['raw_text'] = frame.apply(
@@ -46,60 +40,35 @@ def split_data(splits, data):
 
 
 def setup_n_grams(d):
-    return get_all_ngrams(d['raw_text'].values, n=1), get_all_ngrams(d['raw_text'].values, n=2), get_all_ngrams(
-        d['raw_text'].values, n=3)
+    return get_all_ngrams(d['raw_text'].values, n=1), get_all_ngrams(d['raw_text'].values, n=2)
 
 
-def get_score(test, predictions, labels):
-    print(classification_report(test['label'].values, predictions, labels=labels))
-    print(confusion_matrix(test['label'].values, predictions, labels=labels))
-    return f1_score(test['label'].values, predictions, labels=labels, average='weighted')
+def perform_classification(pipeline, data):
+    f1 = 0
+    acc = 0
+    for train, test in split_data(3, data):
+        fitted = pipeline.fit(train, train['label'])
+        predicted = fitted.predict(test)
+        f1 += f1_score(test['label'].values, predicted, average='weighted', labels=_labels)
+        acc += accuracy_score(test['label'].values, predicted)
+
+        print(classification_report(test['label'].values, predicted, labels=_labels))
+        print(confusion_matrix(test['label'].values, predicted, labels=_labels))
+
+    print('Average F1 {} | Accuracy {}'.format((f1 / 3), (acc / 3)))
+    return f1 / 3
 
 
-def linear_svc(features, splits, labels):
-    print('********* SVC *********')
-    pipeline = make_pipeline(FeatureUnion(features), LinearSVC())
+def perform_grid_search(pipeline, data, param_grid):
+    print(pipeline.get_params().keys())
 
-    for split in splits:
-        train, test = split
-        fitted = pipeline.fit(train,
-                              train['label'].values)
-        predictions = fitted.predict(test)
+    cv = GridSearchCV(pipeline, param_grid=param_grid, cv=StratifiedKFold(n_splits=3, random_state=42),
+                      scoring="f1_weighted", verbose=10)
+    cv.fit(data, data['label'])
 
-        get_score(test, predictions, labels)
-
-
-def decision_tree(features, splits, labels):
-    print('********* DecisionTree *********')
-
-    for i, split in enumerate(list(splits)[:1]):
-        classifier = DecisionTreeClassifier(max_depth=10, max_features= 'auto')
-        union = FeatureUnion(features)
-        pipeline = make_pipeline(union, classifier)
-
-        param_grid = {
-            'max_depth': [None, 10, 100], 'max_features': [None, 'auto', 'log2'], 'max_leaf_nodes': [None, 5, 10]
-        }
-
-        # pipeline = GridSearchCV(pipeline, param_grid={}, cv=splits)
-
-        train, test = split
-        fitted = pipeline.fit(train,
-                              train['label'].values)
-
-        predictions = fitted.predict(test)
-
-        export_graphviz(
-            classifier,
-            out_file='tree-{}.dot'.format(i),
-            feature_names=get_feature_names(fitted),
-            class_names=_labels,
-            rounded=True,
-            filled=True
-        )
-        subprocess.call(['dot', '-Tpdf', 'tree-{}.dot'.format(i), '-o' 'tree-{}.pdf'.format(i)])
-
-        get_score(test, predictions, labels)
+    print("Best parameters set found on development set:")
+    print(cv.best_params_)
+    print(cv.best_score_)
 
 
 def get_feature_names(pipeline):
@@ -107,56 +76,71 @@ def get_feature_names(pipeline):
     names = []
     for t in lst:
         names += t[1].steps[-1][1].get_feature_names()
-    print(names)
     return names
 
 
-def logistic_regression(features, splits, labels):
+def linear_svc(features, data, grid=False):
+    print('********* SVC *********')
+
+    pipeline = make_pipeline(FeatureUnion(features), LinearSVC())
+
+    param_grid = {
+        'featureunion__ngram__extractrawsentence__processing': ['remove', 'replace', 'replace_dist'],
+        'featureunion__bi-m__extractmiddlepart__processing': ['remove', 'replace', 'replace_dist'],
+        'featureunion__uni-m__extractmiddlepart__processing': ['remove', 'replace', 'replace_dist'],
+        'featureunion__ngram__ngramfeature__base_n_grams': [unigrams],
+        'featureunion__bi-m__ngramfeature__base_n_grams': [bigrams],
+        'featureunion__uni-m__ngramfeature__base_n_grams': [unigrams]
+    }
+
+    if grid:
+        perform_grid_search(pipeline, data, param_grid)
+    else:
+        return perform_classification(pipeline, data)
+
+
+def logistic_regression(features, data, grid=False):
     print('********* LogisticRegression *********')
     pipeline = make_pipeline(FeatureUnion(features), LogisticRegression())
-
-    for split in splits:
-        train, test = split
-        fitted = pipeline.fit(train,
-                              train['label'].values)
-        predictions = fitted.predict(test)
-
-        get_score(test, predictions, labels)
+    if grid:
+        perform_grid_search(pipeline, data, {})
+    else:
+        return perform_classification(pipeline, data)
 
 
-def sgd(features, splits, labels):
+def sgd(features, data, grid=False):
     print('********* SGD *********')
     pipeline = make_pipeline(FeatureUnion(features), SGDClassifier())
-
-    for split in splits:
-        train, test = split
-        fitted = pipeline.fit(train,
-                              train['label'].values)
-        predictions = fitted.predict(test)
-
-        get_score(test, predictions, labels)
+    if grid:
+        perform_grid_search(pipeline, data, {})
+    else:
+        return perform_classification(pipeline, data)
 
 
 if __name__ == '__main__':
     _labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
-    _data = load_data('train-data.csv')
-    unigrams, bigrams, trigrams = [], [], []  # setup_n_grams(_data)
+    # _labels = ['ARG', 'NONE']
+    _data = load_data('train-data.csv', binary=False)
+    unigrams, bigrams = setup_n_grams(_data)
     print('Build n-grams')
-    ## 0.704
+    _processing = 'replace'
     best_so_far = [
 
-        ('better-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER))),  # 0.613
-        # ('tfidf', make_pipeline(ExtractRawSentence(), TfidfVectorizer())),  # 0.621
-        ('ngram', make_pipeline(ExtractRawSentence(), NGramTransformer(n=1), NGramFeature(unigrams))),  # 0.628
-        ('bw-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER + CUE_WORDS_WORSE))),  # 0.645
-        #  ('tf-m', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),  # 0.671
-        ('bi-m', make_pipeline(ExtractMiddlePart(), NGramTransformer(n=2), NGramFeature(bigrams))),  # 0.671
-        ('uni-m', make_pipeline(ExtractMiddlePart(), NGramTransformer(n=1), NGramFeature(unigrams))),  # 0.678
+        ('better-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER))),
+        ('bw-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER + CUE_WORDS_WORSE))),
+        ('ngram',
+         make_pipeline(ExtractRawSentence(processing=_processing), NGramTransformer(n=1), NGramFeature(unigrams))),
+        (
+            'bi-m',
+            make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=2), NGramFeature(bigrams))),
+        (
+            'uni-m',
+            make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=1), NGramFeature(unigrams))),
 
     ]
     print('Build features')
-    splits = list(split_data(3, _data))
-    decision_tree(best_so_far, splits, _labels)
-    # linear_svc(best_so_far)
-    # logistic_regression(best_so_far)
-    # sgd(best_so_far)
+    f1_a = sgd(best_so_far, _data, grid=False)
+    f1_b = logistic_regression(best_so_far, _data, grid=False)
+    f1_c = linear_svc(best_so_far, _data, grid=False)
+
+    print('==============\nAverage of all averages F1 {}'.format((f1_a + f1_b + f1_c) / 3))
