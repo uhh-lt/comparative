@@ -1,5 +1,6 @@
 from sklearn.base import TransformerMixin, BaseEstimator
 import re
+import numpy as np
 
 
 def process(text, a, b, mode=None):
@@ -28,6 +29,24 @@ def process(text, a, b, mode=None):
         _b = re.sub(second, 'OBJECT_B', _a, flags=re.IGNORECASE)
         return re.sub('  ', ' ', _b)
     return text
+
+
+class ExtractAnyField(TransformerMixin, BaseEstimator):
+
+    def __init__(self, field, converter=str):
+        self.field = field
+        self.converter = converter
+
+    def transform(self, dataframe):
+        results = []
+        for index, row in dataframe.iterrows():
+            results.append(self.converter(row[self.field]))
+
+        reshape2 = np.array(results).reshape(-1, 1)
+        return reshape2
+
+    def fit(self, X, y):
+        return self
 
 
 class ExtractRawSentence(TransformerMixin, BaseEstimator):
@@ -89,9 +108,9 @@ class ExtractLastPart(TransformerMixin, BaseEstimator):
         for index, row in dataframe.iterrows():
             a, b, text = row['a'], row['b'], row['raw_text']
             if text.index(a) > text.index(b):
-                res = a+text.split(a)[-1]
+                res = a + text.split(a)[-1]
             else:
-                res = b+text.split(b)[-1]
+                res = b + text.split(b)[-1]
             results.append(process(res, a, b, self.processing))
         return results
 
@@ -114,10 +133,10 @@ class ExtractMiddlePart(TransformerMixin, BaseEstimator):
             a, b, text = row['a'], row['b'], row['raw_text']
             a_index, b_index = text.index(a), text.index(b)
             if a_index < b_index:
-                begin, end = a_index, b_index +len(b)
+                begin, end = a_index, b_index + len(b)
             else:
-                begin, end = b_index, a_index +len(a)
-            res = process(text[begin:end],a,b,self.processing)
+                begin, end = b_index, a_index + len(a)
+            res = process(text[begin:end], a, b, self.processing)
 
             results.append(res)
 

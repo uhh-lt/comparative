@@ -3,9 +3,11 @@ from pandas import DataFrame as df
 from sklearn.linear_model import SGDClassifier, LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, f1_score, accuracy_score
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC, SVC
 from sklearn.utils import shuffle
-
+from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier, GradientBoostingClassifier
+from sklearn.linear_model.ridge import RidgeClassifier
 from features.ngram_feature import NGramFeature
 from transformers.data_extraction import *
 from transformers.n_gram_transformers import NGramTransformer
@@ -19,7 +21,7 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
                     "teriffic"]
 
 
-def load_data(file_name, min_confidence=0, binary=False):
+def load_data(file_name, min_confidence=1, binary=False):
     print('### Minimum Confidence {}'.format(min_confidence))
     frame = df.from_csv(path='data/' + file_name)
     frame = frame[frame['label:confidence'] >= min_confidence]
@@ -120,7 +122,8 @@ def sgd(features, data, grid=False):
 if __name__ == '__main__':
     _labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
     # _labels = ['ARG', 'NONE']
-    _data = load_data('train-data.csv', binary=False)
+    #  _data = load_data('train-data.csv', binary=False)
+    _data = load_data('train-data-with-sent.csv', binary=False)
     unigrams, bigrams = setup_n_grams(_data)
     print('Build n-grams')
     _processing = 'replace'
@@ -138,9 +141,19 @@ if __name__ == '__main__':
             make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=1), NGramFeature(unigrams))),
 
     ]
+    f1 = 0
     print('Build features')
-    f1_a = sgd(best_so_far, _data, grid=False)
-    f1_b = logistic_regression(best_so_far, _data, grid=False)
-    f1_c = linear_svc(best_so_far, _data, grid=False)
+    # f1_a = sgd(best_so_far, _data, grid=False)
+    # f1_b = logistic_regression(best_so_far, _data, grid=False)
+    # f1_c = linear_svc(best_so_far, _data, grid=False)
+    cf = [LinearSVC(loss='hinge'),RandomForestClassifier(), ExtraTreesClassifier(), RidgeClassifier(), GradientBoostingClassifier(), SVC(),
+          MultinomialNB(), GaussianNB(), LinearSVC(), LogisticRegression(), SGDClassifier()]
+    for c in cf:
+        try:
+            print('********* {} *********'.format(type(c)))
+            pipeline = make_pipeline(FeatureUnion(best_so_far), c)
+            f1 += perform_classification(pipeline, _data)
+        except Exception as e:
+            print(e)
 
-    print('==============\nAverage of all averages F1 {}'.format((f1_a + f1_b + f1_c) / 3))
+    print('==============\nAverage of all averages F1 {}'.format((f1) / len(cf)))
