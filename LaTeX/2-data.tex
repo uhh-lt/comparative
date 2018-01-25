@@ -188,5 +188,82 @@ However, the annotator for \emph{UNCLEAR} only had 0.87 trust, while the one for
 All things considered, the result of the prestudy is satisfactory. The annotators agreed in the majority of decisions. 
 
 
-
+\newpage
 \section{Main Study}
+\subsection{Task Description}
+\subsection{Data Generation}
+Three domains were fixed for the sentences of the main study. The domains were chosen in a way that a majority of people can decide whether a sentence contains a comparison or not.
+
+The most specific domain was "Computer Science Concepts". It contains objects like programming languages, database products and technology standards such as Bluetooth and Ethernet.  Many computer science concepts can be compared objectively, for instance, one can compare Bluetooth and Ethernet on their transmission speed. Some basic knowledge of computer science was needed to label sentences correctly. For example, to compare Eclipse and NetBeans, the annotator must know what an Integrated Development Environment (IDE) is and that both objects are Java IDEs.  The need of the knowledge was communicated to the prospective annotators. The objects for this domain were manually extracted from "List of ..." articles from Wikipedia.
+
+The second, broader domain was "Brands". It contains objects from of different types (car brands, electronics brands, and food). As brands are present in everyday life of people, it is expected that anyone can label the majority of sentences containing well known brands such as Coca-Cola or Mercedes. As with computer science, the objects for this domain were extracted from "List of ..." articles from Wikipedia.
+
+The last domain is not restricted to any topic. For each one of 25 randomly selected seed words, ten similar words were extracted using JoBimText, a software package for distributional semantics. The seed words were created using https://randomlists.com\footnote{Last checked: 25.01.2018}. Listing \ref{lst:jbtres} shows the result\footnote{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/similar/harvard\%23NP?numberOfEntries=10&format=json Last checked: 25.01.2018; Some uninteresting fields were removed for brevity} for the seed word \emph{harvard}.
+
+\begin{lstlisting}[language=json,label=lst:jbtres,caption=Similar words to "Harvard"]
+{
+   "results":[
+      { "score":688.0, "key":"harvard#NP" },
+      { "score":245.0, "key":"yale#NP" },
+      { "score":163.0, "key":"princeton#NP" },
+      { "score":152.0, "key":"mit#NP" },
+      { "score":143.0, "key":"stanford#NP" },
+      { "score":133.0, "key":"university#NP"},
+      { "score":132.0, "key":"tufts#NP" },
+      { "score":130.0,"key":"cornell#NP"},
+      { "score":127.0, "key":"nyu#NP" },
+      { "score":113.0, "key":"university#NN" }
+   ]
+}
+\end{lstlisting}
+This method covers a wide are of possible comparison patterns.\newline
+
+Especially for brands and computer science, the object lists are long (4493 brands and 1339 for computer science).The frequency of each object was checked using a frequency dictionary to reduce the number of possible pairs. All objects with a frequency of zero and ambiguous objects were removed from the list. For instance, the objects "RAID" (a hardware concept) and "Unity" (a game engine) were removed from the computer science list as they are also regularly used nouns.
+
+The remaining objects were combined to pairs. For each type, all possible combinations were created. For brands and computer science, the type is the source list. For the unrestricted domain, the seed word was used. This procedure guarantees that only meaningful pairs are created.
+The ElasticSearch Index was then queried for entries containing both objects of each pair. For 90\% of the queries, the marker terms where added to the query. This was done to check whether there is a chance that those two objects were compared. All pairs were the query yielded at least 100 sentences were kept. Those pairs are frequent enough and have a high chance of generating comparative sentences.
+
+From the sentences of those pairs, 2500 for each category were randomly sampled as candidates for the crowdsourcing campaign. 250 sentences were manually labelled to check if there are enough comparative sentences. Those labels were discarded for the crowdsourcing campaign.
+The label distribution of the 250 sentences is presented in the figures FIGURE NUMBERS.
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.49\textwidth}
+        \centering
+       \begin{tikzpicture}
+\pie [rotate=180,radius=2,color= {cgray, cgreen, cred, cblue}]
+    {68.9/NONE,
+    15.2/BETTER,
+    5.7/WORSE,
+    10.2/OTHER }
+    \label{pre:brands}
+\end{tikzpicture}        \caption{Brands}
+    \end{minipage}\hfill
+    \begin{minipage}{0.49\textwidth}
+        \centering
+      \begin{tikzpicture}
+\pie [rotate=180,radius=2, color= {cgray, cgreen, cred, cblue}]
+    {53.00/NONE,
+    19.70/BETTER,
+    11.60/WORSE,
+    15.70/OTHER }
+\end{tikzpicture}
+        \caption{Computer Science}
+    \end{minipage}
+    \end{figure}
+    
+    \begin{figure}[h]
+    \centering
+    \begin{minipage}{0.49\textwidth}
+        \centering
+       \begin{tikzpicture}
+\pie [rotate=180,radius=2,color= {cgray, cgreen, cred, cblue}]
+    {65.50/NONE,
+    16.10/BETTER,
+    7.20/WORSE,
+    11.20/OTHER }
+\end{tikzpicture}        \caption{Unrestricted}
+    \end{minipage}\hfill
+    \end{figure}
+    
+In all samples, at least 30\% of the sentences are comparative. This number shows that the sampling method is sufficient to sample sentences for the crowdsourcing campaign.
