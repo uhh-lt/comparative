@@ -1,0 +1,92 @@
+### Minimum Confidence 1
+Build n-grams
+Build features
+********* SGD *********
+             precision    recall  f1-score   support
+
+        ARG       0.87      0.72      0.79        96
+       NONE       0.86      0.94      0.90       171
+
+avg / total       0.86      0.86      0.86       267
+
+[[ 69  27]
+ [ 10 161]]
+             precision    recall  f1-score   support
+
+        ARG       0.92      0.79      0.85        96
+       NONE       0.89      0.96      0.92       171
+
+avg / total       0.90      0.90      0.90       267
+
+[[ 76  20]
+ [  7 164]]
+             precision    recall  f1-score   support
+
+        ARG       0.90      0.73      0.80        95
+       NONE       0.86      0.95      0.91       170
+
+avg / total       0.87      0.87      0.87       265
+
+[[ 69  26]
+ [  8 162]]
+Average F1 0.8744131336260307 | Accuracy 0.8773325795585706
+********* LogisticRegression *********
+             precision    recall  f1-score   support
+
+        ARG       0.90      0.76      0.82        96
+       NONE       0.88      0.95      0.91       171
+
+avg / total       0.89      0.88      0.88       267
+
+[[ 73  23]
+ [  8 163]]
+             precision    recall  f1-score   support
+
+        ARG       0.91      0.80      0.85        96
+       NONE       0.90      0.95      0.92       171
+
+avg / total       0.90      0.90      0.90       267
+
+[[ 77  19]
+ [  8 163]]
+             precision    recall  f1-score   support
+
+        ARG       0.84      0.74      0.79        95
+       NONE       0.86      0.92      0.89       170
+
+avg / total       0.86      0.86      0.85       265
+
+[[ 70  25]
+ [ 13 157]]
+Average F1 0.877669408701352 | Accuracy 0.87979176972181
+********* SVC *********
+             precision    recall  f1-score   support
+
+        ARG       0.86      0.77      0.81        96
+       NONE       0.88      0.93      0.90       171
+
+avg / total       0.87      0.87      0.87       267
+
+[[ 74  22]
+ [ 12 159]]
+             precision    recall  f1-score   support
+
+        ARG       0.88      0.80      0.84        96
+       NONE       0.89      0.94      0.91       171
+
+avg / total       0.89      0.89      0.89       267
+
+[[ 77  19]
+ [ 11 160]]
+             precision    recall  f1-score   support
+
+        ARG       0.82      0.79      0.80        95
+       NONE       0.88      0.90      0.89       170
+
+avg / total       0.86      0.86      0.86       265
+
+[[ 75  20]
+ [ 17 153]]
+Average F1 0.8724398551165632 | Accuracy 0.8735589946529103
+==============
+Average of all averages F1 0.874840799147982
