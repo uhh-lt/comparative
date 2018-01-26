@@ -24,7 +24,7 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
                     "teriffic"]
 
 
-def load_data(file_name, min_confidence=0.67, binary=False):
+def load_data(file_name, min_confidence=0.67, binary=False, source=None):
     print('### Minimum Confidence {}'.format(min_confidence))
     frame = df.from_csv(path='data/' + file_name)
     frame = frame[frame['label:confidence'] >= min_confidence]
@@ -33,6 +33,8 @@ def load_data(file_name, min_confidence=0.67, binary=False):
         axis=1)
     if binary:
         frame['label'] = frame.apply(lambda row: row['label'] if row['label'] == 'NONE' else 'ARG', axis=1)
+    if source is not None:
+        frame = frame[frame['type'] == source]
     return shuffle(frame)
 
 
@@ -85,45 +87,49 @@ def get_feature_names(pipeline):
     return names
 
 
-if __name__ == '__main__':
-    _data = load_data('train-data.csv', binary=False)
-    _data_other_merged = _data[_data['label'] != 'OTHER']
-    _data_other_merged['label'] = _data_other_merged.apply(
-        lambda row: row['label'] if row['label'] != 'OTHER' else 'NONE', axis=1)
+def experiment_b():
+    types = set(['brands', 'compsci', 'jbt'])
+    train_types = set(itertools.combinations(types, 2))
 
-    unigrams, bigrams, trigrams = setup_n_grams(_data)
-    _data_sets = [('4 Label', ['BETTER', 'WORSE', 'OTHER', 'NONE'], load_data('train-data.csv')),
-                  ('3 Label, w/o OTHER', ['BETTER', 'WORSE', 'NONE'], _data[_data['label'] != 'OTHER']),
-                  ('3 Label, OTHER merged', ['BETTER', 'WORSE', 'NONE'], _data_other_merged),
-                  ('Binary', ['ARG', 'NONE'], load_data('train-data.csv', binary=True))]
+    for train_type in train_types:
+        a, b = train_type
+        test_type = list(types - set(train_type))
+        print('*** Train on {} {} Test on {}'.format(a, b, test_type))
+        _train = load_data('train-data.csv', source=a).append(load_data('train-data.csv', source=b))
+        _test = load_data('train-data.csv', source=test_type[0])
+        print(len(_train))
+        _dict = _train.append(_test)
+        model = initialize_infersent(_dict['raw_text'].values)
 
+        pipe = make_pipeline(
+            FeatureUnion([('infersent-m', make_pipeline(ExtractMiddlePart(processing=None), InfersentFeature(model)))]),
+            LinearSVC())
+        print(pipe)
+        labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
+        fitted = pipe.fit(_train, _train['label'].values)
+        predicted = fitted.predict(_test)
+
+        print(classification_report(_test['label'].values, predicted, labels=labels))
+        print(confusion_matrix(_test['label'].values, predicted, labels=labels))
+
+
+def experiment_a(source=None):
+    global features
+    _data = load_data('train-data.csv', binary=False, source=source)
+    # _data_other_merged = _data.copy()
+    # _data_other_merged['label'] = _data_other_merged.apply(   lambda row: row['label'] if row['label'] != 'OTHER' else 'NONE', axis=1)
+    # unigrams, bigrams, trigrams = setup_n_grams(_data)
+    _data_sets = [('4 Label', ['BETTER', 'WORSE', 'OTHER', 'NONE'], _data),
+                  # ('3 Label, w/o OTHER', ['BETTER', 'WORSE', 'NONE'], _data[_data['label'] != 'OTHER']),
+                  # ('3 Label, OTHER merged', ['BETTER', 'WORSE', 'NONE'], _data_other_merged),
+                  # ('Binary', ['ARG', 'NONE'], load_data('train-data.csv', binary=True,source=source))
+                  ]
     print('Build n-grams')
-    _processing = 'replace'
-    """_best_so_far = [
-
-        ('better-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER))),
-        ('bw-m', make_pipeline(ExtractMiddlePart(), ContainsWord(CUE_WORDS_BETTER + CUE_WORDS_WORSE))),
-        ('ngram',
-         make_pipeline(ExtractRawSentence(processing=_processing), NGramTransformer(n=1), NGramFeature(unigrams))),
-        (
-            'bi-m',
-            make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=2), NGramFeature(bigrams))),
-        (
-            'uni-m',
-            make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=1), NGramFeature(unigrams))),
-
-    ]"""
     model = initialize_infersent(_data['raw_text'].values)
     best_so_far = [[
-
-        #    (      'bi-m',    make_pipeline(ExtractMiddlePart(processing=_processing), NGramTransformer(n=2), NGramFeature(bigrams))),
-        # (   'tri-m',   make_pipeline(ExtractMiddlePart(processing=None), NGramTransformer(n=3), NGramFeature(trigrams))),
-
         ('infersent-m', make_pipeline(ExtractMiddlePart(processing=None), InfersentFeature(model))),
-        # 0.762
 
     ]]
-
     f1 = 0
     print('Build features')
     classifiers = [LinearSVC()]
@@ -139,3 +145,8 @@ if __name__ == '__main__':
                     f1 += perform_classification(pipeline, data, label)
                 except Exception as e:
                     print(e)
+
+
+if __name__ == '__main__':
+    # experiment_b()
+    experiment_a()
