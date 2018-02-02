@@ -16,4 +16,4 @@ assert len(check['id'].value_counts()) == 1
 assert check['id'].value_counts()[0] == len(input_data) - len(answered)
 assert check['id'].value_counts().get(True) is None
 
-unanswered.to_csv('unanswered_brands.csv', index=False)
+unanswered[['a','also_acceptable','b','expected_label','id','marker','raw_text','text_html','text_readable']].to_csv('unanswered_brands.csv', index=False)
