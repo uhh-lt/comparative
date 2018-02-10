@@ -15,6 +15,10 @@ class ContainsPos(BaseFeature):
             result.append(self.pos.upper() in pos)
         return super(ContainsPos, self).reshape(result)
 
+    def get_feature_names(self):
+        return ['contains_pos_{}'.format(self.pos)]
+
+
 
 class ContainsWord(BaseFeature):
     """boolean feature if the string contains this word"""

@@ -1,8 +1,26 @@
 \chapter{Building a data set for Comparative Argument Mining}
+There's not dataset.
 \section{Common Crawl Text Corpus}
 The raw data used for the creation of the dataset was derived from CommonCrawl. CommonCrawl is a non-profit organisation which crawls the web and releases the data and metadata with a loose license. This master thesis uses the crawl data from DATE. Furthermore, the data was processed: HTML was stripped out, and the content was splitted into sentences using X. To make the data maintainable, the sentences where imported into an ElasticSearch index. The index has a size of 1.1tb and contains 3,288,963,864 unique sentences.
 
-To get an idea how many sentences in the index may be comparative, searches with cue words was performed. The query \texttt{better OR easier OR faster OR nicer OR wiser OR cooler OR decent OR safer OR superior OR solid OR teriffic OR worse OR harder OR slower OR poorly OR uglier OR poorer OR lousy OR nastier OR inferior OR mediocre} yields 55,627,400 results, the more specific query \texttt{is better than} yields 428,932 results.
+To get an idea how many sentences in the index may be comparative, searches with cue words was performed. The query \ref{lst:es-cc-query} yields 55,627,400 results, the more specific query \texttt{is better than} yields 428,932 results.
+
+\begin{lstlisting}[label=lst:es-cc-query,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Candidates for Comparative Sentences]
+{
+  "query":{
+    "bool":{
+      "must":[
+        {
+          "query_string":{
+            "default_field":"text",
+            "query":"better OR easier OR faster OR nicer OR wiser OR cooler OR decent OR safer OR superior OR solid OR teriffic OR worse OR harder OR slower OR poorly OR uglier OR poorer OR lousy OR nastier OR inferior OR mediocre"
+          }
+        }
+      ]
+    }
+  }
+}
+\end{lstlisting}
 
 Those numbers indicate that the index contains enough comparative sentences to create machine learning data set.
 
@@ -14,69 +32,78 @@ Previous to the main study, a pre-study was conducted to assess the quality of t
 
 \subsection{Data Selection and Preprocessing}
 \label{sec:prestudy-processing}
-To obtain comparative sentences from the ElasticSearch index, Query \ref{lst:es-query-a} was used. The sentence must contain two comparable objects (like "Apple" and "Pear") and at least one cue word. Presence of the cue words \enquote{better}, \enquote{worse}, \enquote{superior} and \enquote{inferior} should increase the probability of the sentence to be comparative. Because the pre-study was conducted on a small data set (1000 sentences) the list of cue words is rather short. In this way, the amount of noisy sentences should be reduced.
+To obtain comparative sentences from the ElasticSearch index, Query \ref{lst:es-query-a} was used. The sentence must contain two comparable objects (like "Apple" and "Pear") and at least one cue word. Presence of the cue words \enquote{better}, \enquote{worse}, \enquote{superior} and \enquote{inferior} should increase the probability of the sentence to be comparative. In this way, the amount of noisy sentences should be reduced.
 However, not all comparisons will contain one of the cue words, so 25\% of the sentences sentences where obtained without the cue words.
 
 
-\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}]
-  {
-        "query" : {
-            "bool": {
-                "must": [
-                    {
-                        "query_string": {
-                            "default_field" : "text",
-                            "query" :  "(better OR worse OR superior OR inferior) AND \"<OBJECT_A>\" AND \"<OBJECT_B>\""
-                        }
-                    }
-                ]
-            }
+\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query]
+{
+  "query":{
+    "bool":{
+      "must":[
+        {
+          "query_string":{
+            "default_field":"text",
+            "query":"(better OR worse OR superior OR inferior) AND \"<OBJECT_A>\" AND \"<OBJECT_B>\""
+          }
         }
+      ]
     }
+  }
+}
 \end{lstlisting}
 
 
 
-Ten hand-selected object pairs were used (see table \ref{tbl:prestudy-objects}). The pairs were chosen to cover a wide range of different objects, which was expected to yield differently phrased arguments. The pairs where chosen to obtain a wide range of different objects, which will lead to different comparisons. Some sentences contain programming- and computer specific terms, so a need for this knowledge was expressed.
+Ten hand-selected object pairs were used (see table \ref{tbl:prestudy-objects}). It was expected that those pairs will yield differently phrased comparisons, as, for instance, cars are compared in a different way than programming languages. Some sentences contain programming- and computer specific terms, so a need for this knowledge was expressed in the title of the crowdsourcing task.
 \begin{table}[h]
 \centering
 \caption{Objects of the Annotation Prestudy}
 \label{tbl:prestudy-objects}
 \begin{tabular}{@{}llrrr@{}}
 \toprule
-First Object & Second Object      & \# Sentences & Mean Length  & Std                             \\ \midrule
-Ruby    & Python    & 109    & 235.94 & 48.70 \\
-BMW    & Mercedes    & 107 & 246.66 & 47.68\\
-USA & Europe & 106 & 241.90 & 50.80\\
-Beef & Chicken & 106 & 241.76 & 52.66  \\
-Android & iPhone    &   104 & 211.08  & 36.46 \\
-Cat & Dog      &     104 & 216.65 & 43.01 \\ 
-Football & Baseball   &  104 & 230.19  & 42.29 \\ 
-Wine & Beer  & 104 & 228.07 & 49.20 \\
-Car & Bicycle & 103 & 242.54 & 47.89\\
-Summer & Winter &  103 & 211.65 & 36.16\\  \midrule 
- \multicolumn{2}{c}{Average} & 1050 & 230.76 & 47.41\\ 
+First Object & Second Object      & \# Sentences                             \\ \midrule
+Ruby    & Python    & 109      \\
+BMW    & Mercedes    & 107  \\
+USA & Europe & 106 \\
+Beef & Chicken & 106   \\
+Android & iPhone    &   104  \\
+Cat & Dog      &     104  \\ 
+Football & Baseball   &  104 \\ 
+Wine & Beer  & 104  \\
+Car & Bicycle & 103 \\
+Summer & Winter &  103\\  \midrule 
+ & & 1050 \\ 
 \bottomrule  
                                
 \end{tabular}
 \end{table}
 
-The retrieved sentences where further filtered and processed. Each sentence must be between 15 and 200 characters long and must not contain more than seven punctuation characters. In this ways, lists are removed. Also, the sentence must contain each of the two objects exactly once.
-
+All retrieved sentences contain each of the objects exactly once.
 
 \subsection{Task}
-The annotators where asked to assign one of the four following classes to each sentence.\newline
+Using the method described above, 1050 sentences were obtained for the prestudy. The annotators were asked to assigne one of the following classes to the sentences. Each sentence was annotated by three annotators.
 
-\emph{BETTER}: This class should be used if the sentence indicates that object A is better in any way than object B.
+The annotators where asked to assign one of the four classes (see table \ref{tbl:prestudyclasses}) to each sentence.
 
-\emph{WORSE}: Same as \emph{BETTER}, but the sentence must indicate that object A is worse than object B.
+\begin{table}[h]
+\centering
+\caption{Classes for the Prestudy}
+\label{tbl:prestudyclasses}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Class & Description \\ \midrule
+BETTER & The first object in the sentence (object A) is better than the second one (object B)\\
+WORSE & The first object is worse \\
+UNCLEAR & Neither BETTER nor WORSE fits, but the sentence is comparative\\
+NO\_COMP & The sentence is not comparative\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\emph{UNCLEAR}: If the sentence contains an argument, but it is not between A and B, this class should be used.
 
-\emph{NO\_COMP}: All other sentences fall into this category.\newline
 
-In a test first step, 112 sentences where obtained with the procedure described in chapter \ref{sec:prestudy-processing}.
-Twelve sentences were used as test sentences to filter out people who did not read the annotation guidelines.
+In a first step, 100 sentences were annotated. To ensure the quality, twelve additional sentences were setup as test sentences. If one annotator failed three test sentences, he was removed from the task.
 
 The sentences were preprocessed: the first object was replaced by OBJECT\_A, the second by OBJECT\_B. Examples are shown in table \ref{tbl:pre1s}. The removal was done so that the annotators can concentrate on the comparative structure of the sentence and are not biased by the objects.
 
@@ -84,7 +111,7 @@ The sentences were preprocessed: the first object was replaced by OBJECT\_A, the
 % Beispielsätze PreStudy 1. Teil
 \begin{table}[h]
 \centering
-\caption{Sentences for the first pre-study}
+\caption{Sentences for the first step}
 \label{tbl:pre1s}
 \begin{tabular}{{p{12cm}p{3cm}}}
 \toprule
@@ -98,14 +125,14 @@ Snowboarding during OBJECT\_A is a lot better than during OBJECT\_B. & BETTER \\
 
 
 
-This test step delivered valuable insights. First, the amount of test sentences was to small. Users might see the same test sentence twice. Second, the phrasing of the annotation guidelines was to confusing, especially the distinction between NO\_COMP and UNCLEAR.
-Third, the complete removal of the original objects also removed parts of the sense of the sentences, which can make the annotation process harder.\newline
+This test step delivered valuable insights. First, the amount of test sentences was to small. Users might see the same test sentence twice. Second, the phrasing of the annotation guidelines was to confusing, especially the distinction between NO\_COMP and UNCLEAR as well as their class names.
+Third, the complete removal of the original objects is suspected to partly obscure the sense of the sentences.\newline
 
-The actual pre-study was conducted with 200 sentences and 51 test sentences. Furthermore, the preprocessing was changed. Instead of removing the original objects, :[OBJECT\_A] was appended to the first object, :[OBJECT\_B] to the second object. Also, each object was highlighted in a different color. Example sentences are shown in table \ref{tbl:pre2s}. In this way, the annotators could quickly see the objects of interest while the sense of the sentence remains intact.
+In a second step, 200 new sentences were annotated, again with three annotations per sentences. This time, 51 test questions were used, so that it is less likely that annotators will see the same question twice. Furthermore, the preprocessing was changed. Instead of removing the original objects, :[OBJECT\_A] was appended to the first object, :[OBJECT\_B] to the second object. Also, each object was highlighted in a different color. Example sentences are shown in table \ref{tbl:pre2s}. In this way, the annotators could quickly see the objects of interest while the sense of the sentence remains intact.
 % Beispielsätze PreStudy 2. Teil
 \begin{table}[h]
 \centering
-\caption{Sentences for the second pre-study}
+\caption{Sentences for the second step}
 \label{tbl:pre2s}
 \begin{tabular}{{p{12cm}p{3cm}}}
 \toprule
@@ -127,10 +154,10 @@ Each sentence was annotated by three annotators. Figure \ref{pre:dist} shows the
 \label{pre:dist}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {59.76/NO\_COMP,
-    23.11/BETTER,
-    9.16/WORSE,
-    7.97/UNCLEAR }
+    {59.76/NO\_COMP (150),
+    23.11/BETTER (58),
+    9.16/WORSE (23),
+    7.97/UNCLEAR (20)}
 \end{tikzpicture}
 \end{figure}
 

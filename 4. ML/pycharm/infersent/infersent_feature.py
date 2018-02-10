@@ -19,3 +19,7 @@ class InfersentFeature(BaseFeature):
     def transform(self, sentences):
         encode = self.model.encode(sentences, tokenize=True)
         return encode
+
+    def get_feature_names(self):
+        return ['infersent_{}'.format(w) for w in range(0,4096)]
+

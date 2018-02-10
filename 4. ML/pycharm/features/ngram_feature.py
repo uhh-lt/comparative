@@ -8,9 +8,10 @@ from textacy.extract import ngrams as ngram_extract
 class NGramFeature(BaseFeature):
     """Collects all n-grams and creates a boolean n-gram vector"""
 
-    def __init__(self, base_n_grams, with_oov=False):
+    def __init__(self, base_n_grams, n=1, with_oov=False):
         self.base_n_grams = base_n_grams
         self.with_oov = with_oov
+        self.n = n
 
     def transform(self, n_gram_lists):
         results = []
@@ -40,4 +41,4 @@ class NGramFeature(BaseFeature):
         return ordered_dict
 
     def get_feature_names(self):
-        return ['ngram_{}'.format(n) for n in self.base_n_grams]
+        return ['{}-gram_{}'.format(self.n, n) for n in self.base_n_grams]
