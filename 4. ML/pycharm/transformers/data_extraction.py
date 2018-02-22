@@ -137,7 +137,7 @@ class ExtractMiddlePart(TransformerMixin, BaseEstimator):
             else:
                 begin, end = b_index, a_index + len(a)
             res = process(text[begin:end], a, b, self.processing)
-          
+
             results.append(res)
 
         return results

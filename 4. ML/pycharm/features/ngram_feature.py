@@ -1,8 +1,6 @@
-from .base_feature import BaseFeature
 from collections import OrderedDict
 import numpy as np
-from util.ngram import get_ngrams
-from textacy.extract import ngrams as ngram_extract
+from .base_feature import BaseFeature
 
 
 class NGramFeature(BaseFeature):
