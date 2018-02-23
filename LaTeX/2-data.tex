@@ -1,61 +1,36 @@
 \chapter{Building a data set for Comparative Argument Mining}
-There's not dataset.
+Due to the novelty of Argument Mining (and especially Comparative Argument Mining), the supply of datasets is small. Thus, a new data set had to be created.
+
+This dataset was designed to answer the questions if a given sentence compares two known objects, and if it does, if the first-mentioned object is better or worse than the second one. Those questions will be translated to several classification tasks in the later chapters.
+
+The dataset was created using the crowdsourcing platform CrowdFlower\footnote{https://www.crowdflower.com 23.02.2018}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest are highlighted.
+
+The final dataset consists of 7421 sentences, each containing one of 273 object pairs. The sentences were labelled with one of three classes. Each sentence was at least annotated by three different annotators.
+
 \section{Common Crawl Text Corpus}
-The raw data used for the creation of the dataset was derived from CommonCrawl. CommonCrawl is a non-profit organisation which crawls the web and releases the data and metadata with a loose license. This master thesis uses the crawl data from DATE. Furthermore, the data was processed: HTML was stripped out, and the content was splitted into sentences using X. To make the data maintainable, the sentences where imported into an ElasticSearch index. The index has a size of 1.1tb and contains 3,288,963,864 unique sentences.
+The sentences for the crowdsourcing campaign were obtained from a CommonCrawl\footnote{https://commoncrawl.org 23.02.2018} dataset. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
 
-To get an idea how many sentences in the index may be comparative, searches with cue words was performed. The query \ref{lst:es-cc-query} yields 55,627,400 results, the more specific query \texttt{is better than} yields 428,932 results.
+The data used in this thesis was already preprocessed\footnote{Download Link} (see \cite{Panchenko:2017aa}). First, it contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were then split into sentences.
 
-\begin{lstlisting}[label=lst:es-cc-query,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Candidates for Comparative Sentences]
-{
-  "query":{
-    "bool":{
-      "must":[
-        {
-          "query_string":{
-            "default_field":"text",
-            "query":"better OR easier OR faster OR nicer OR wiser OR cooler OR decent OR safer OR superior OR solid OR teriffic OR worse OR harder OR slower OR poorly OR uglier OR poorer OR lousy OR nastier OR inferior OR mediocre"
-          }
-        }
-      ]
-    }
-  }
-}
-\end{lstlisting}
+The resulting sentences were used to obtain the sentences for the crowdsourcing campaign. To make them manageable, an ElasticSearch index (from now on called "the index") was created. The index contains 3,288,963,864 unique sentences.
 
-Those numbers indicate that the index contains enough comparative sentences to create machine learning data set.
+To get an idea if there are enough comparative sentences in the index, it was queried for all sentences containing one of the words \enquote{\emph{better}} or \enquote{\emph{worse}},  as those words often indicate a comparison. This query returns 32,946,247 matching sentences. Querying for \enquote{\emph{is better than}} still returns 428,932 sentences.
 
-Lesen \cite{Panchenko:2017aa}
-
-\section{Prestudy}
-Previous to the main study, a pre-study was conducted to assess the quality of the annotation guidelines, the approach of sentence generation and the task itself.
+Those numbers show that there are enough sentences in the index to create a dataset for the given task. Even if only 1\% of the sentences containing \enquote{\emph{is better than}} are truly comparative, there would be 4289 training examples for the machine learning algorithm.
 
 
-\subsection{Data Selection and Preprocessing}
-\label{sec:prestudy-processing}
-To obtain comparative sentences from the ElasticSearch index, Query \ref{lst:es-query-a} was used. The sentence must contain two comparable objects (like "Apple" and "Pear") and at least one cue word. Presence of the cue words \enquote{better}, \enquote{worse}, \enquote{superior} and \enquote{inferior} should increase the probability of the sentence to be comparative. In this way, the amount of noisy sentences should be reduced.
-However, not all comparisons will contain one of the cue words, so 25\% of the sentences sentences where obtained without the cue words.
+\section{Prestudies}
+Before the mainstudy could start, several questions had to be answered.
 
+First, how to extract sentences from the index? Second, how to preprocess those sentences? Third, which labels should be assigned to the sentences? Fourth, how to phrase the guidelines?
 
-\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query]
-{
-  "query":{
-    "bool":{
-      "must":[
-        {
-          "query_string":{
-            "default_field":"text",
-            "query":"(better OR worse OR superior OR inferior) AND \"<OBJECT_A>\" AND \"<OBJECT_B>\""
-          }
-        }
-      ]
-    }
-  }
-}
-\end{lstlisting}
+Two prestudies were conducted to answer those questions.
 
 
 
-Ten hand-selected object pairs were used (see table \ref{tbl:prestudy-objects}). It was expected that those pairs will yield differently phrased comparisons, as, for instance, cars are compared in a different way than programming languages. Some sentences contain programming- and computer specific terms, so a need for this knowledge was expressed in the title of the crowdsourcing task.
+\subsection{Sentence Selection}
+The sentences for the crowdsourcing campaign should have a high probability of being comparative so that enough positive examples for the machine learning part are present. To ensure this, a list of cue words which indicate comparison was compiled. For the prestudy, those words were \enquote{\emph{better}}, \enquote{\emph{worse}}, \enquote{\emph{inferior}}, \enquote{\emph{superior}}, and \enquote{\emph{because}}. Comparable objects are needed as well. A list of object pairs was selected by hand (see table \ref{tbl:prestudy-objects}). The pairs were selected in a way that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this is that pets are compared differently than programming languages. In this way, there will be different comparison patterns in the data.
+
 \begin{table}[h]
 \centering
 \caption{Objects of the Annotation Prestudy}
@@ -63,23 +38,67 @@ Ten hand-selected object pairs were used (see table \ref{tbl:prestudy-objects}).
 \begin{tabular}{@{}llrrr@{}}
 \toprule
 First Object & Second Object      & \# Sentences                             \\ \midrule
-Ruby    & Python    & 109      \\
-BMW    & Mercedes    & 107  \\
-USA & Europe & 106 \\
-Beef & Chicken & 106   \\
-Android & iPhone    &   104  \\
-Cat & Dog      &     104  \\ 
-Football & Baseball   &  104 \\ 
-Wine & Beer  & 104  \\
-Car & Bicycle & 103 \\
-Summer & Winter &  103\\  \midrule 
- & & 1050 \\ 
+Ruby    & Python    & 100      \\
+BMW    & Mercedes    & 100  \\
+USA & Europe & 100 \\
+Beef & Chicken & 100   \\
+Android & iPhone    &   100  \\
+Cat & Dog      &     100  \\ 
+Football & Baseball   &  100 \\ 
+Wine & Beer  & 100  \\
+Car & Bicycle & 100 \\
+Summer & Winter &  100\\
 \bottomrule  
                                
 \end{tabular}
 \end{table}
 
-All retrieved sentences contain each of the objects exactly once.
+However, not all comparisons will contain one of the cue words mentioned above. Two different queries were used to overcome the coverage problem. Sevenhundred-fivtey sentences were obtained using query \ref{lst:es-query-a} (seventy-five for each pair) and 250 using query \ref{lst:es-query-b} (twenty-five for each pair). The second query will also match not-anticipated sentences such as \enquote{\emph{I like X more than Y since Z.}}.
+
+
+
+\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query A]
+{ "query":{  "bool":{ "must":[ {
+          "query_string":{
+            "default_field":"text",
+            "query":"(better OR worse OR superior OR inferior) AND \"<OBJECT_A>\" AND \"<OBJECT_B>\""
+          }
+        } ] } } }
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:es-query-b,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query B (shortened)]
+[...]
+          "query_string":{
+            "default_field":"text",
+            "query":" \"<OBJECT_A>\" AND \"<OBJECT_B>\""
+[...]
+\end{lstlisting}
+
+Table \ref{tbl:example_sentences} shows some sentences obtained with this method. The objects of interest ar printed in italics.
+
+\begin{table}[h]
+\centering
+\caption{Example Sentences}
+\label{tbl:example_sentences}
+\begin{tabular}{@{}llr@{}}
+\toprule
+\# & Sentence   &  Cue Words Used                      \\ \midrule
+1 & He's the best pet that you can get, Better than a \emph{dog} or \emph{cat}. & Yes \\
+2 &\emph{Android} phones have better processing power than \emph{iPhone} & Yes \\
+3 & 10 Things \emph{Android} Does Better Than \emph{iPhone} OS & Yes \\
+4 & \emph{Dog} scared of \emph{cat} & No \\
+5 & In fact, many 'supercars' will use \emph{BMW} or \emph{Mercedes} engines. & No \\
+
+\bottomrule  
+                               
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Prestudy A}
+
+\subsection{Prestudy B}
 
 \subsection{Task}
 Using the method described above, 1050 sentences were obtained for the prestudy. The annotators were asked to assigne one of the following classes to the sentences. Each sentence was annotated by three annotators.
