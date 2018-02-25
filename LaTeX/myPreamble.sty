@@ -82,8 +82,8 @@
   {
   	pdftitle     = {Titel},
   	pdfsubject   = {Universität Hamburg},
-  	pdfauthor    = {MIrco Franzek},
-  	pdfkeywords  = {Keywords},
+  	pdfauthor    = {Mirco Franzek},
+  	pdfkeywords  = {natural langauge procressing, data mining},
   	plainpages   = false, pdfpagelabels
   }
   
@@ -139,4 +139,8 @@
   
 \usepackage{tabularx}
 % Tabellenbezeichnungen als Überschriften
-\KOMAoptions{captions=tableheading}      
+%\KOMAoptions{captions=tableheading}      
+
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
