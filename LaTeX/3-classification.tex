@@ -1,38 +1,74 @@
 \chapter{Classification of Comparative Sentences}
-\section{Description of the experiments}
-The goal of this thesis is to train a machine learning model in a way that it can decide whether a sentence contains a comparison between two defined objects or not.
+\section{Experiments}
+The data collected from the crowdsourcing task was used as training data for classification problems. In the first problem, the machine learning algorithms were trained so that they were able to assign one of the three original classes (see table X) to the data. The second problem is a simplification of the first one as it is designed as a binary classification problem. The classes \texttt{BETTER} and \texttt{WORSE}were merged into the class \texttt{ARG}.
 
-To achieve this goal, the task was formulated in three ways of different granularity. In all tasks, the machine learning model was provided with the sentence and the objects.
+For all problems, three classification algorithms were used: L2 regulised Logistic Regression, and eXtreme Gradient Boosting. 
 
-In the first experiment, the model was trained to classify a sentence into one of the four categories described above.
-As stated below, the class OTHER adds uncertainty to the model. This problem is handled in next experiments. In the second experiment, all sentences with this class were removed prior training. In the third experiment, the class OTHER was joined with the class NONE.  Thus, in those experiments, the model has to decide between three classes.
+Logistic Regression is a simple, frequently used classification algorithm, for instance, it was used in \cite{Daxenberger2017What-is-the-Ess} with great success. The sklearn implementation (\cite{scikit-learn}) was used.
 
-In the fourth experiment, BETTER, WORSE and OTHER are joined to the class ARG while the fifth experiment joins BETTER and WORSE to ARG and OTHER with NONE. Thus, the fourth and fifth experiments are binary classification tasks.
+Extreme Gradient Boosting ...
 
-\section{Evaluation}
-The evaluation of the results was done with stratified k-fold cross-validation where k is 3. The overall F1 score of each fold is the weighted average of the F1 scores of each class, where the weights are the number of examples per class. It was produced using the \texttt{classification\_report} function of sklearn.
-While discussing the features, single F1 scores are presented. Those scores are the unweighted average of the F1 scores of each fold.
 
-Following \cite{Daxenberger2017What-is-the-Ess}, the results were also evaluated with training on two of the domains and evaluating on the leftover one.
+The data was split into a train (5937 examples; 4270 \texttt{NONE}, 1158 \texttt{BETTER} and 509 \texttt{WORSE}) and a dev (x examples) set. The dev set stayed untouched until the final evaluation presented in section \ref{sec:final}. During the development, the experiments were evaluated using stratified k-fold cross-validation where k is five. The evaluation was done with the sklearn implementation. The weighted F1 score is used as the metric. In the following, the worst, best and median folds are shown.
 
-\section{Algorithms}
-The classification was performed with SkLearn (\cite{scikit-learn}).
+\section{Baseline}
+As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:majorityclass}, assigns all sentences to the class \texttt{NONE}.
+
+
+
+    \begin{table}[h]
+\centering
+\caption{ Majority Class Baseline }
+\label{tbl:majority_class_baseline }
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+      & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
+                 & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
+
+    
+\texttt{BETTER}	 & 0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 \\ 
+\texttt{WORSE}	 & 0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 \\ 
+\texttt{NONE}	 & 0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 \\ \midrule 
+average	 & 0.52	 & 0.72	 & 0.60	 &0.52	 & 0.72	 & \textbf{0.60}	 &0.52	 & 0.72	 & 0.60	 \\ \bottomrule
+
+    \end{tabular}
+\end{table}
+
+
+The second baseline, shown in table \ref{tbl:ngrambs} used LogisticRegression and for classification and an unigram model (as described in \ref{sec:ngram}). The unigram model is build using the vocabulary of all test sentences in the given fold.
+
+    \begin{table}[h]
+\centering
+\caption{ cap }
+\label{tbl:cap }
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+      & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
+                 & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
+
+    
+\texttt{BETTER}	 & 0.44	 & 0.49	 & 0.46	 &0.50	 & 0.51	 & 0.51	 &0.52	 & 0.58	 & 0.55	 \\ 
+\texttt{WORSE}	 & 0.33	 & 0.19	 & 0.24	 &0.25	 & 0.15	 & 0.18	 &0.28	 & 0.18	 & 0.22	 \\ 
+\texttt{NONE}	 & 0.82	 & 0.84	 & 0.83	 &0.83	 & 0.87	 & 0.85	 &0.83	 & 0.85	 & 0.84	 \\ \midrule 
+average	 & 0.70	 & 0.72	 & 0.71	 &0.72	 & 0.74	 & 0.72	 &0.73	 & 0.74	 & 0.73	 \\ \bottomrule
+
+    \end{tabular}
+\end{table}
+
+
+
 
 \section{Features}
-Several features and feature combinations were tested. The results are presented in table X and Y. As described above, the F1 scores in the tables are the unweighted averages of the three F1 scores of each fold.
+\subsection{N-Gram Models}
+\label{sec:ngram}
 
-Every feature was tested on different parts of the sentence: the whole sentence, all words before the first object, all words after the second object and all words between objects. In doing so, the objects either stayed in the sentence, were removed or replaced. Two different replacement strategies were tested: replacing both objects with OBJECT and replacing the first object with OBJECT\_A and the second object with OBJECT\_B. The replacement approach should test if the objects influence the decision of the classifier. For example, if "Python" is always the "better" object the classifier might become biased.
+\subsection{Sentence Embeddings}
+\subsection{Other Features}
+% n-grams
+% sentence embeddings
+% POS JJR
 
-The following section only describes features which worked out well, leaving out bad combinations (for example, using only the first or last part was not helpful in most cases).\newline
-
-In the first step, n-gram models where tested. Every uni-, bi and trigram in the whole training set was implemented as a binary feature. Restricting on frequency was not helpful. Also, trigrams were not helpful which can be explained by the length of the sentences.
-
-
-
-\section{Results}
-
-
-\subsection{Three labels}
-\subsection{Binary}
+\section{Final results}
+\label{sec:final}
 
 \section{Discussion}
