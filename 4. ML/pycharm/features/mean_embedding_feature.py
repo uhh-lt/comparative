@@ -13,11 +13,16 @@ class MeanWordEmbedding(BaseFeature):
         self.length = len(documents)
         result = []
         for doc in documents:
+            mwe = np.array([float(0)] * 384)
             if len(doc) == 0:
-                result.append(np.array([0] * 300))
+                result.append(np.array([float(0)] * 384))
             else:
                 pre = MeanWordEmbedding.nlp(doc)
-                result.append(pre.vector)
+                for token in pre:
+                    mwe += token.vector
+                mwe /= len(pre)
+                result.append(mwe)
+
         return np.array(result).reshape(len(result), -1)
 
     def get_feature_names(self):

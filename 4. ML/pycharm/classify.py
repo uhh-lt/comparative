@@ -1,93 +1,136 @@
-import itertools
-
-from sklearn.metrics import classification_report, confusion_matrix, f1_score, accuracy_score
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-from sklearn.pipeline import make_pipeline, FeatureUnion
-from sklearn.svm import LinearSVC
+from nltk import NaiveBayesClassifier
+from sklearn.dummy import DummyClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.metrics import classification_report, f1_score
+from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import LinearSVC, SVC
 from xgboost import XGBClassifier
 
-from infersent.infersent_feature import *
-from transformers.data_extraction import ExtractMiddlePart
+from features.contains_features import ContainsPos
+from features.count_features import PunctuationCount, NamedEntitiesByCategory, NounChunkCount
+from features.mean_embedding_feature import MeanWordEmbedding
+from features.misc_features import PositionOfObjects
+from features.ngram_feature import NGramFeature
+from infersent.infersent_feature import initialize_infersent, InfersentFeature
+from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
+from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
+from util.misc_utils import latex_table
+from util.ngram_utils import get_all_ngrams
+from collections import OrderedDict
+from pprint import pprint
+
+import datetime
+
+now = datetime.datetime.now()
+
+classifier_pattern = """
+----------------------
+- {}
+----------------------"""
+feature_name_pattern = """
+========================================================================================
+
+======================
+- {}
+======================"""
+
+classifiers = [LinearSVC(), SGDClassifier(), GaussianNB(), KNeighborsClassifier(),
+               SVC(), RandomForestClassifier(), AdaBoostClassifier(), GradientBoostingClassifier(),
+               LogisticRegression(), XGBClassifier()]
 
 
-def perform_classification(classifier, data, labels, min_f1=0.66):
-    f1 = 0
-    acc = 0
-    for train, test in k_folds(3, data, random_state=222):
-        raw_text = train['raw_text'].values
+def n_gram_pipeline(n, extractor, processing=None):
+    def _n_gram_pipeline(train):
+        ngram_base = extractor(processing=processing).transform(train)
+        unigrams = get_all_ngrams(ngram_base, n)
+        return [extractor(processing=processing), NGramTransformer(n), NGramFeature(unigrams)]
+
+    return _n_gram_pipeline
+
+
+def infersent_pipeline(extractor, processing=None):
+    def _infersent_pipeline(train):
+        raw_text = extractor(processing=processing).transform(train)
         infersent_model = initialize_infersent(raw_text)
-        pipeline = make_pipeline(FeatureUnion(
-            [
-                ('infersent-m',
-                 make_pipeline(ExtractMiddlePart(processing='replace_dist'), InfersentFeature(infersent_model)))]),
-            classifier)
+        return [extractor(processing=processing), InfersentFeature(infersent_model)]
 
-        fitted = pipeline.fit(train, train['label'])
-        predicted = fitted.predict(test)
-        f1 += f1_score(test['label'].values, predicted, average='weighted', labels=labels)
-        acc += accuracy_score(test['label'].values, predicted)
-
-        # get_misclassified(predicted, test)
-
-        print(classification_report(test['label'].values, predicted, labels=labels))
-        print(confusion_matrix(test['label'].values, predicted, labels=labels))
-
-    print('Average F1 {} | Accuracy {}'.format((f1 / 3), (acc / 3)))
-    return f1 / 3
+    return _infersent_pipeline
 
 
-def perform_grid_search(pipeline, data, param_grid):
-    print(pipeline.get_params().keys())
+feature_builder = [
 
-    cv = GridSearchCV(pipeline, param_grid=param_grid, cv=StratifiedKFold(n_splits=3, random_state=42),
-                      scoring="f1_weighted", verbose=10)
-    cv.fit(data, data['label'])
+    ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
+    ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
+    (
+        'Unigram WS + DR',
+        n_gram_pipeline(1, ExtractRawSentence, 'replace_dist')),
+    ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
+    (
+        'Unigram WS + DR',
+        n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')), (
+        'Unigram WS + RE',
+        n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
+    ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
+    ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
+    ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
+    ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
+    ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
+    ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
 
-    print("Best parameters set found on development set:")
-    print(cv.best_params_)
-    print(cv.best_score_)
+    ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
+    ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
+    ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
+    ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
+    ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
+    ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
+    ('Position of Objects WS', lambda train: [PositionOfObjects()]),
+    ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
+    ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
+    ('Sentence Embedding WS + DR', infersent_pipeline(ExtractRawSentence, 'replace_dist')),
+    ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
 
-
-def experiment_b():
-    types = set(['brands', 'compsci', 'jbt'])
-    train_types = set(itertools.combinations(types, 2))
-
-    for train_type in train_types:
-        a, b = train_type
-        test_type = list(types - set(train_type))
-        print('*** Train on {} {} Test on {}'.format(a, b, test_type))
-        _train = load_data('train-data.csv', source=a).append(load_data('train-data.csv', source=b))
-        _test = load_data('train-data.csv', source=test_type[0])
-        print(len(_train))
-        _dict = _train.append(_test)
-        model = initialize_infersent(_dict['raw_text'].values)
-
-        pipe = make_pipeline(
-            FeatureUnion([('infersent-m', make_pipeline(ExtractMiddlePart(processing=None), InfersentFeature(model)))]),
-            LinearSVC())
-        print(pipe)
-        labels = ['BETTER', 'WORSE', 'OTHER', 'NONE']
-        fitted = pipe.fit(_train, _train['label'].values)
-        predicted = fitted.predict(_test)
-
-        print(classification_report(_test['label'].values, predicted, labels=labels))
-        print(confusion_matrix(_test['label'].values, predicted, labels=labels))
+]
 
 
-def experiment_a(source=None):
-    _data = load_data('data.csv', min_confidence=0, binary=False, source=source)
+def run_classification(data, labels):
+    by_score = []
+    for _builder in feature_builder:
+        name, builder = _builder
+        print(feature_name_pattern.format(name.upper()))
+        for classifier in classifiers:
 
-    # Ridge 0.76
-    classifiers = [XGBClassifier()]
-    for classifier in classifiers:
-        print('## {}'.format(type(classifier)))
+            print(classifier_pattern.format(classifier))
 
-        f1 = perform_classification(classifier, _data, ['BETTER', 'WORSE', 'NONE'])
+            res = []
 
-    print('\n\n')
+            for train, test in k_folds(5, data):
+                steps = builder(train) + [classifier]
+                pipeline = make_pipeline(*steps)
+                fitted = pipeline.fit(train, train['label'].values)
+                predicted = fitted.predict(test)
+                print(classification_report(test['label'].values, predicted, labels=labels))
+                f1 = f1_score(test['label'].values, predicted, average='weighted',
+                              labels=labels)
+                by_score.append((f1, '{} {}'.format(type(classifier), name)))
+
+                res.append((f1_score(test['label'].values, predicted, average='weighted',
+                                     labels=labels), (test['label'].values, predicted)))
+
+                print("\n\n")
+            res = sorted(res, key=lambda x: x[0])
+            # latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
+    pprint(sorted(by_score, key=lambda x: x[0], reverse=True))
 
 
-if __name__ == '__main__':
-    # experiment_b()
-    experiment_a()
+print('# THREE CLASSES')
+_data = load_data('data.csv', min_confidence=0, binary=False)[:10]
+run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
+print('\n\n--------------------------------------------\n\n')
+print('# BINARY CLASSES')
+_data_bin = load_data('data.csv', min_confidence=0, binary=True)
+
+# run_classification(_data_bin, ['ARG', 'NONE'])
