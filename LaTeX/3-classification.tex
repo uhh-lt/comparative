@@ -1,25 +1,93 @@
 \chapter{Classification of Comparative Sentences}
-\section{Experiments}
+\section{Experiments -}
 The data collected from the crowdsourcing task was used as training data for classification problems. In the first problem, the machine learning algorithms were trained so that they were able to assign one of the three original classes (see table X) to the data. The second problem is a simplification of the first one as it is designed as a binary classification problem. The classes \texttt{BETTER} and \texttt{WORSE}were merged into the class \texttt{ARG}.
-
-For all problems, three classification algorithms were used: L2 regulised Logistic Regression, and eXtreme Gradient Boosting. 
-
-Logistic Regression is a simple, frequently used classification algorithm, for instance, it was used in \cite{Daxenberger2017What-is-the-Ess} with great success. The sklearn implementation (\cite{scikit-learn}) was used.
-
-Extreme Gradient Boosting ...
 
 
 The data was split into a train (5937 examples; 4270 \texttt{NONE}, 1158 \texttt{BETTER} and 509 \texttt{WORSE}) and a dev (x examples) set. The dev set stayed untouched until the final evaluation presented in section \ref{sec:final}. During the development, the experiments were evaluated using stratified k-fold cross-validation where k is five. The evaluation was done with the sklearn implementation. The weighted F1 score is used as the metric. In the following, the worst, best and median folds are shown.
 
-\section{Baseline}
-As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:majorityclass}, assigns all sentences to the class \texttt{NONE}.
+\section{Choice of Algorithms}
+To find the best performing classification algorithms, nine (see table \ref{tbl:algo}) were selected and compared. For all algorithms under test, the unigrams of the whole sentence were used as binary features (the implementation is described in section \ref{sec:ngrams}). Unigrams are a simple yet efficient feature for text classification (\cite{cavnar1994n}) which makes them suitable as a baseline feature for comparisons. Stratified k-fold with k equals five was used to assess the quality of the algorithm. The unweighted average of the five F1 scores was used to make the different algorithms more comparable.
+
+\begin{table}[h]
+\centering
+\label{tbl:algo}
+\caption{Classification Algorithms}
+\begin{tabularx}{\textwidth}{XlX}
+\toprule
+Algorithm & F1 Score & Reason\\ \midrule
+
+XGBoost & 0.00 & -\\  
+
+Linear SVC & 0.73 & Used in \cite{Aker2017What-works-and-}\\  
+
+Support Vector Machine & 0.00 & Used in \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M,Habernal2016Argumentation-M}\\ 
+
+Stochastic Gradient Descent & 0.00 & -\\ 
+
+Naive Bayes & 0.00 & Used in \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M}\\  
+
+K Neighbors & 0.00 & Used in \cite{Aker2017What-works-and-}\\ 
+
+Decision Tree & 0.00 & Used in \cite{Stab2014Identifying-Arg,Lippi2016Argumentation-M}\\ 
+
+AdaBoost & 0.00 & Used in \cite{Aker2017What-works-and-}\\  
+
+Random Forest & 0.00 & Used in \cite{Dusmanu2017Argument-Mining,Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Lippi2016Argumentation-M}\\  
+
+Logistic Regression & 0.00 & Used in \cite{Dusmanu2017Argument-Mining,Daxenberger2017What-is-the-EssAker2017What-works-and-}, \cite{Lippi2016Argumentation-M}\\ \bottomrule 
+\end{tabularx}
+
+\end{table}
+
+
+For all algorithms except XGBoost, the implementation available from SKLearn (\cite{scikit-learn}) was used. The three best classifiers were further used in the experiments.
+
+
+
+
+
+
+
+
+
+\section{Features}
+The following section briefly describes each feature used for both classification tasks. 
+
+Two observations are true for all features. First, the F1 score increases by at least five points if only the part of the sentence between both objects of interest is used (from now on called \enquote{\emph{middle part}}).
+
+ Second, the objects do not make any significant difference. All features were tested with four versions of the sentence (eventually with the middle part only). 
+\begin{enumerate}
+\item the sentence stayed unchanged
+\item the objects of interest removed completely from the sentence
+\item both objects replaced with \emph{OBJECT}
+\item the first object replaced with \emph{OBJECT\_A}, the second object replaced with \emph{OBJECT\_B}
+\end{enumerate}
+If not stated differently, all features used the unchanged middle part of the original sentence.
+
+
+\subsection{N-Gram Models}
+Uni-, bi- and trigram models were used as features. The respective n-grams were computed using \emph{textacy}\footnote{https://github.com/chartbeat-labs/textacy}, a higher level library building upon \emph{spaCy}\footnote{https://github.com/explosion/spaCy}).  The basis for the n-grams were all training instances of the given fold. Each n-gram was modelled as a binary feature. 
+
+The idea behind using trigram models despite the short text length was to capture trigrams like \enquote{\emph{is better than}} or \enquote{\emph{is worse because}} which would indicate a comparison. However, the performance of trigram models was not satisfying.
+\label{sec:ngrams}
+
+\subsection{Sentence Embeddings}
+\subsection{Other Features}
+
+% n-grams
+% sentence embeddings
+% POS JJR
+
+\section{Classification with three classes}
+\subsection{Baseline}
+As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:majority_class_baseline}, assigns all sentences to the class \texttt{NONE}.
 
 
 
     \begin{table}[h]
 \centering
-\caption{ Majority Class Baseline }
-\label{tbl:majority_class_baseline }
+\caption{ Majority Class Baseline (three classes)}
+\label{tbl:majority_class_baseline}
 \begin{tabular}{@{}lccccccccc@{}}
 \toprule
       & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
@@ -34,39 +102,30 @@ average	 & 0.52	 & 0.72	 & 0.60	 &0.52	 & 0.72	 & \textbf{0.60}	 &0.52	 & 0.72	 
     \end{tabular}
 \end{table}
 
+The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:random_baseline}.
 
-The second baseline, shown in table \ref{tbl:ngrambs} used LogisticRegression and for classification and an unigram model (as described in \ref{sec:ngram}). The unigram model is build using the vocabulary of all test sentences in the given fold.
-
-    \begin{table}[h]
-\centering
-\caption{ cap }
-\label{tbl:cap }
-\begin{tabular}{@{}lccccccccc@{}}
-\toprule
-      & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
-                 & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
-
-    
-\texttt{BETTER}	 & 0.44	 & 0.49	 & 0.46	 &0.50	 & 0.51	 & 0.51	 &0.52	 & 0.58	 & 0.55	 \\ 
-\texttt{WORSE}	 & 0.33	 & 0.19	 & 0.24	 &0.25	 & 0.15	 & 0.18	 &0.28	 & 0.18	 & 0.22	 \\ 
-\texttt{NONE}	 & 0.82	 & 0.84	 & 0.83	 &0.83	 & 0.87	 & 0.85	 &0.83	 & 0.85	 & 0.84	 \\ \midrule 
-average	 & 0.70	 & 0.72	 & 0.71	 &0.72	 & 0.74	 & 0.72	 &0.73	 & 0.74	 & 0.73	 \\ \bottomrule
+ \begin{table}[h]
+                \centering
+\caption{ Random Baseline (stratified, three classes) }
+\label{tbl:random_baseline}
+ \begin{tabular}{@{}lccccccccc@{}}
+              \toprule
+               & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
+               & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
+\texttt{BETTER}	 & 0.17	 & 0.17	 & 0.17	 &0.21	 & 0.23	 & 0.22	 &0.18	 & 0.18	 & 0.18	 \\ 
+\texttt{WORSE}	 & 0.10	 & 0.09	 & 0.09	 &0.05	 & 0.04	 & 0.04	 &0.15	 & 0.14	 & 0.15	 \\ 
+\texttt{NONE}	 & 0.71	 & 0.71	 & 0.71	 &0.72	 & 0.71	 & 0.72	 &0.73	 & 0.74	 & 0.74	 \\ \midrule 
+average	 & 0.55	 & 0.55	 & 0.55	 &0.56	 & 0.56	 & \textbf{0.56}	 &0.57	 & 0.58	 & 0.58	 \\ \bottomrule
 
     \end{tabular}
 \end{table}
 
+For both baselines, the SKLearn's \texttt{DummyClassifer} was used.
+\subsection{Results}
 
-
-
-\section{Features}
-\subsection{N-Gram Models}
-\label{sec:ngram}
-
-\subsection{Sentence Embeddings}
-\subsection{Other Features}
-% n-grams
-% sentence embeddings
-% POS JJR
+\section{Binary classification}
+\subsection{Baseline}
+\subsection{Results}
 
 \section{Final results}
 \label{sec:final}

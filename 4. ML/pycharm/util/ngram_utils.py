@@ -5,24 +5,20 @@ nlp = spacy.load('en')
 
 
 def get_ngrams(document, n, min_freq=1, filter_punct=True):
-    return sorted([
-        n.text
-        for n in ngrams(
-            nlp(document),
-            n,
-            filter_stops=False,
-            min_freq=min_freq,filter_punct=filter_punct)
-    ])
+    return sorted(
+        [n.text for n in
+         ngrams(nlp(document), n, filter_stops=False, min_freq=min_freq, filter_punct=filter_punct)])
 
 
-def get_all_ngrams(documents, n=1, min_freq=1,  filter_punct=True):
+def get_all_ngrams(documents, n=1, min_freq=1, filter_punct=True):
     n_grams = set()
+    key = ''
+    for doc in sorted(documents):
+        key += doc
+
     for doc in documents:
         for n_gram in get_ngrams(doc, n, min_freq, filter_punct):
             n_grams.add(n_gram)
     return sorted(list(n_grams))
 
 
-def _setup_n_grams(d):
-    return get_all_ngrams(d['raw_text'].values, n=1), get_all_ngrams(d['raw_text'].values, n=2), get_all_ngrams(
-        d['raw_text'].values, n=3)

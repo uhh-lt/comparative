@@ -1,7 +1,8 @@
 from nltk import NaiveBayesClassifier
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier, \
+    ExtraTreesClassifier
+from sklearn.linear_model import LogisticRegression, SGDClassifier, RidgeClassifier
 from sklearn.metrics import classification_report, f1_score
 from sklearn.naive_bayes import MultinomialNB, GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
@@ -22,10 +23,8 @@ from util.misc_utils import latex_table
 from util.ngram_utils import get_all_ngrams
 from collections import OrderedDict
 from pprint import pprint
-
+from sklearn.tree import DecisionTreeClassifier
 import datetime
-
-now = datetime.datetime.now()
 
 classifier_pattern = """
 ----------------------
@@ -38,9 +37,12 @@ feature_name_pattern = """
 - {}
 ======================"""
 
-classifiers = [LinearSVC(), SGDClassifier(), GaussianNB(), KNeighborsClassifier(),
-               SVC(), RandomForestClassifier(), AdaBoostClassifier(), GradientBoostingClassifier(),
-               LogisticRegression(), XGBClassifier()]
+classifiers = [RidgeClassifier(), XGBClassifier(), LinearSVC(), SVC(), SGDClassifier(), GaussianNB(),
+               KNeighborsClassifier(),
+               DecisionTreeClassifier(), AdaBoostClassifier(), RandomForestClassifier(), LogisticRegression(),
+               ExtraTreesClassifier()]
+
+n_gram_cache = {}
 
 
 def n_gram_pipeline(n, extractor, processing=None):
@@ -63,35 +65,34 @@ def infersent_pipeline(extractor, processing=None):
 
 feature_builder = [
 
-    ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
     ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
-    (
-        'Unigram WS + DR',
-        n_gram_pipeline(1, ExtractRawSentence, 'replace_dist')),
-    ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
-    (
-        'Unigram WS + DR',
-        n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')), (
-        'Unigram WS + RE',
-        n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
-    ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
-    ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
-    ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
-    ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
-    ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
-    ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
-
-    ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
-    ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
-    ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
-    ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
-    ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
-    ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
-    ('Position of Objects WS', lambda train: [PositionOfObjects()]),
-    ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
-    ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-    ('Sentence Embedding WS + DR', infersent_pipeline(ExtractRawSentence, 'replace_dist')),
-    ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
+    # (
+    #     'Unigram WS + DR',
+    #     n_gram_pipeline(1, ExtractRawSentence, 'replace_dist')),
+    # ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
+    # (
+    #     'Unigram WS + DR',
+    #     n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')), (
+    #     'Unigram WS + RE',
+    #     n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
+    # ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
+    # ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
+    # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
+    # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
+    # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
+    # ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
+    # ('Sentence Embedding WS + DR', infersent_pipeline(ExtractRawSentence, 'replace_dist')),
+    # ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
+    # ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
+    # ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
+    # ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
+    # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
+    # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
+    # ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
+    # ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
+    # ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
+    # ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
+    # ('Position of Objects WS', lambda train: [PositionOfObjects()]),
 
 ]
 
@@ -106,28 +107,34 @@ def run_classification(data, labels):
             print(classifier_pattern.format(classifier))
 
             res = []
-
+            f1_overall = 0;
             for train, test in k_folds(5, data):
-                steps = builder(train) + [classifier]
-                pipeline = make_pipeline(*steps)
-                fitted = pipeline.fit(train, train['label'].values)
-                predicted = fitted.predict(test)
-                print(classification_report(test['label'].values, predicted, labels=labels))
-                f1 = f1_score(test['label'].values, predicted, average='weighted',
-                              labels=labels)
-                by_score.append((f1, '{} {}'.format(type(classifier), name)))
+                try:
+                    steps = builder(train) + [classifier]
+                    pipeline = make_pipeline(*steps)
+                    fitted = pipeline.fit(train, train['label'].values)
+                    predicted = fitted.predict(test)
+                    print(classification_report(test['label'].values, predicted, labels=labels))
+                    f1 = f1_score(test['label'].values, predicted, average='weighted',
+                                  labels=labels)
+                    f1_overall += f1
 
-                res.append((f1_score(test['label'].values, predicted, average='weighted',
-                                     labels=labels), (test['label'].values, predicted)))
-
-                print("\n\n")
+                    res.append((f1_score(test['label'].values, predicted, average='weighted',
+                                         labels=labels), (test['label'].values, predicted)))
+                    now = datetime.datetime.now()
+                    print("{}:{}:{}\n\n".format(now.hour, now.minute, now.second))
+                except Exception as e:
+                    print(e)
+                    print('Fail for {}'.format(type(classifier)).upper())
             res = sorted(res, key=lambda x: x[0])
+            print('OVERALL F1 {}'.format(f1_overall / 5.0))
+            by_score.append((f1_overall / 5.0, '{} {}'.format(type(classifier), name)))
             # latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
     pprint(sorted(by_score, key=lambda x: x[0], reverse=True))
 
 
 print('# THREE CLASSES')
-_data = load_data('data.csv', min_confidence=0, binary=False)[:10]
+_data = load_data('data.csv', min_confidence=0, binary=False)
 run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
 print('\n\n--------------------------------------------\n\n')
 print('# BINARY CLASSES')

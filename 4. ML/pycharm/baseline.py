@@ -17,7 +17,8 @@ file_name = 'baseline-{}-{}-{}:{}'.format(now.day, now.month, now.hour, now.minu
 
 
 def create_baseline(data, labels):
-    classifiers = [LogisticRegression(), DummyClassifier(strategy='most_frequent')]
+    cache = {}
+    classifiers = [DummyClassifier(), DummyClassifier(strategy='most_frequent')]
 
     for classifier in classifiers:
         print('=========== {} =========== '.format(classifier))
@@ -42,11 +43,11 @@ def create_baseline(data, labels):
         latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
 
 
-print('# THREE CLASSES BASELINE')
-_data = load_data('data.csv', min_confidence=0, binary=False)[:100]
-create_baseline(_data, ['BETTER', 'WORSE', 'NONE'])
+#print('# THREE CLASSES BASELINE')
+#_data = load_data('data.csv', min_confidence=0, binary=False)
+#create_baseline(_data, ['BETTER', 'WORSE', 'NONE'])
 
 print('# BINARY CLASSES BASELINE')
-_data_bin = load_data('data.csv', min_confidence=0, binary=True)[:100]
+_data_bin = load_data('data.csv', min_confidence=0, binary=True)
 
 create_baseline(_data_bin, ['ARG', 'NONE'])
