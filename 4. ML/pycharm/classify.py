@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, Gradien
     ExtraTreesClassifier
 from sklearn.linear_model import LogisticRegression, SGDClassifier, RidgeClassifier
 from sklearn.metrics import classification_report, f1_score
-from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.svm import LinearSVC, SVC
@@ -19,7 +19,7 @@ from infersent.infersent_feature import initialize_infersent, InfersentFeature
 from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
 from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
-from util.misc_utils import latex_table
+from util.misc_utils import latex_table, get_logger
 from util.ngram_utils import get_all_ngrams
 from collections import OrderedDict
 from pprint import pprint
@@ -37,10 +37,12 @@ feature_name_pattern = """
 - {}
 ======================"""
 
-classifiers = [RidgeClassifier(), XGBClassifier(), LinearSVC(), SVC(), SGDClassifier(), GaussianNB(),
-               KNeighborsClassifier(),
-               DecisionTreeClassifier(), AdaBoostClassifier(), RandomForestClassifier(), LogisticRegression(),
-               ExtraTreesClassifier()]
+logger = get_logger('xgb_dr_wo')
+
+classifiers = [XGBClassifier(n_jobs=4, n_estimators=25)]
+# classifiers = [RidgeClassifier(), XGBClassifier(), LinearSVC(), SVC(), SGDClassifier(), GaussianNB(),
+#               KNeighborsClassifier(), DecisionTreeClassifier(), RandomForestClassifier(),
+#               LogisticRegression(), ExtraTreesClassifier()]
 
 n_gram_cache = {}
 
@@ -49,7 +51,7 @@ def n_gram_pipeline(n, extractor, processing=None):
     def _n_gram_pipeline(train):
         ngram_base = extractor(processing=processing).transform(train)
         unigrams = get_all_ngrams(ngram_base, n)
-        return [extractor(processing=processing), NGramTransformer(n), NGramFeature(unigrams)]
+        return [extractor(processing=processing), NGramTransformer(n), NGramFeature(unigrams, n=n)]
 
     return _n_gram_pipeline
 
@@ -65,34 +67,39 @@ def infersent_pipeline(extractor, processing=None):
 
 feature_builder = [
 
-    ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
-    # (
-    #     'Unigram WS + DR',
-    #     n_gram_pipeline(1, ExtractRawSentence, 'replace_dist')),
-    # ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
-    # (
-    #     'Unigram WS + DR',
-    #     n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')), (
-    #     'Unigram WS + RE',
-    #     n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
-    # ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
-    # ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
-    # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
-    # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
-    # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
-    # ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-    # ('Sentence Embedding WS + DR', infersent_pipeline(ExtractRawSentence, 'replace_dist')),
-    # ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
-    # ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
     # ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
-    # ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
-    # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
-    # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
-    # ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
+
     # ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
     # ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
     # ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
     # ('Position of Objects WS', lambda train: [PositionOfObjects()]),
+
+    #  ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
+    ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
+    ('Bigram MP + DR', n_gram_pipeline(2, ExtractMiddlePart, 'replace_dist')),
+    # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
+    # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
+    # ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
+    ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
+    ('Unigram MP DR', n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')),
+    # ('Unigram MP Remove', n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
+
+    # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
+    ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
+    ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
+
+    ('Mean Word Embedding MP', lambda train: [ExtractMiddlePart(), MeanWordEmbedding()]),
+    ('Mean Word Embedding MP + DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), MeanWordEmbedding()]),
+
+    ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
+    ('Contains JJR MP DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('JJR')]),
+    #  ('Contains JJS MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')]),
+    ('Contains RBR MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBR')]),
+    ('Contains RBR MP + DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('RBR')]),
+    # ('Contains RBS MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBS')]),
+    # # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
+    # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
+    # ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
 
 ]
 
@@ -101,10 +108,10 @@ def run_classification(data, labels):
     by_score = []
     for _builder in feature_builder:
         name, builder = _builder
-        print(feature_name_pattern.format(name.upper()))
+        logger.info(feature_name_pattern.format(name.upper()))
         for classifier in classifiers:
 
-            print(classifier_pattern.format(classifier))
+            logger.info(classifier_pattern.format(classifier))
 
             res = []
             f1_overall = 0;
@@ -114,30 +121,34 @@ def run_classification(data, labels):
                     pipeline = make_pipeline(*steps)
                     fitted = pipeline.fit(train, train['label'].values)
                     predicted = fitted.predict(test)
-                    print(classification_report(test['label'].values, predicted, labels=labels))
+                    logger.info(classification_report(test['label'].values, predicted, labels=labels))
                     f1 = f1_score(test['label'].values, predicted, average='weighted',
                                   labels=labels)
                     f1_overall += f1
+                    print(steps)
 
                     res.append((f1_score(test['label'].values, predicted, average='weighted',
                                          labels=labels), (test['label'].values, predicted)))
                     now = datetime.datetime.now()
-                    print("{}:{}:{}\n\n".format(now.hour, now.minute, now.second))
+                    logger.info("{}:{}:{}\n\n".format(now.hour, now.minute, now.second))
                 except Exception as e:
-                    print(e)
-                    print('Fail for {}'.format(type(classifier)).upper())
+                    logger.info(e)
+                    logger.info('Fail for {}'.format(type(classifier)).upper())
             res = sorted(res, key=lambda x: x[0])
-            print('OVERALL F1 {}'.format(f1_overall / 5.0))
+            logger.info('OVERALL F1 {}'.format(f1_overall / 5.0))
             by_score.append((f1_overall / 5.0, '{} {}'.format(type(classifier), name)))
-            # latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
-    pprint(sorted(by_score, key=lambda x: x[0], reverse=True))
+            try:
+                logger.info(latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap'))
+            except Exception as e:
+                logger.info("No table")
+    logger.info(sorted(by_score, key=lambda x: x[0], reverse=True))
 
 
-print('# THREE CLASSES')
+logger.info('# THREE CLASSES')
 _data = load_data('data.csv', min_confidence=0, binary=False)
 run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
-print('\n\n--------------------------------------------\n\n')
-print('# BINARY CLASSES')
+logger.info('\n\n--------------------------------------------\n\n')
+logger.info('# BINARY CLASSES')
 _data_bin = load_data('data.csv', min_confidence=0, binary=True)
 
 # run_classification(_data_bin, ['ARG', 'NONE'])

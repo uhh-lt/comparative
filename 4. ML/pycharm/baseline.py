@@ -7,18 +7,19 @@ from features.ngram_feature import NGramFeature
 from transformers.data_extraction import ExtractRawSentence
 from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
-from util.misc_utils import latex_table
+from util.misc_utils import latex_table, latex_table_bin
 from util.ngram_utils import get_all_ngrams
 
 import datetime
+
+
 
 now = datetime.datetime.now()
 file_name = 'baseline-{}-{}-{}:{}'.format(now.day, now.month, now.hour, now.minute)
 
 
-def create_baseline(data, labels):
-    cache = {}
-    classifiers = [DummyClassifier(), DummyClassifier(strategy='most_frequent')]
+def create_baseline(data, labels, table_fkt):
+    classifiers = [DummyClassifier(random_state=42), DummyClassifier(strategy='most_frequent')]
 
     for classifier in classifiers:
         print('=========== {} =========== '.format(classifier))
@@ -40,14 +41,13 @@ def create_baseline(data, labels):
 
             print("===========")
         res = sorted(res, key=lambda x: x[0])
-        latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
+        table_fkt([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
 
-
-#print('# THREE CLASSES BASELINE')
-#_data = load_data('data.csv', min_confidence=0, binary=False)
-#create_baseline(_data, ['BETTER', 'WORSE', 'NONE'])
 
 print('# BINARY CLASSES BASELINE')
 _data_bin = load_data('data.csv', min_confidence=0, binary=True)
+create_baseline(_data_bin, ['ARG', 'NONE'], latex_table_bin)
 
-create_baseline(_data_bin, ['ARG', 'NONE'])
+print('# THREE CLASSES BASELINE')
+_data = load_data('data.csv', min_confidence=0, binary=False)
+create_baseline(_data, ['BETTER', 'WORSE', 'NONE'], latex_table)

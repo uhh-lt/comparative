@@ -1,23 +1,65 @@
 from sklearn.metrics import precision_recall_fscore_support
+import logging
+from datetime import datetime
 
 
 def latex_table(res, cap=''):
-    b_row = '\\texttt{BETTER}\t & '
-    w_row = '\\texttt{WORSE}\t & '
+    try:
+        b_row = '\\texttt{BETTER}\t & '
+        w_row = '\\texttt{WORSE}\t & '
+        n_row = '\\texttt{NONE}\t & '
+        a_row = 'average\t & '
+        for v in res:
+            precision, recall, f1, support = precision_recall_fscore_support(v[0], v[1], average=None,
+                                                                             labels=['BETTER', 'WORSE', 'NONE'])
+            b_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[0], recall[0], f1[0])
+            w_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[1], recall[1], f1[1])
+            n_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[2], recall[2], f1[2])
+            precision, recall, f1, support = precision_recall_fscore_support(v[0], v[1], average='weighted',
+                                                                             labels=['BETTER', 'WORSE', 'NONE'])
+            a_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision, recall, f1)
+
+        b_row = b_row[:-1] + '\\\ '
+        w_row = w_row[:-1] + '\\\ '
+        n_row = n_row[:-1] + '\\\ \midrule '
+        a_row = a_row[:-1] + '\\\ \\bottomrule'
+        tbl = """ \\begin{table}[h]
+                        \centering"""
+
+        tbl += '\caption{{ {} }}'.format(cap)
+        tbl += '\label{{tbl:{} }}'.format(cap.lower().replace(' ', '_'))
+
+        tbl += """ \\begin{tabular}{@{}lccccccccc@{}}
+                      \\toprule
+                       & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\\ \midrule
+                       & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\\ \\toprule"""
+        tbl += b_row
+        tbl += w_row
+        tbl += n_row
+        tbl += a_row
+        tbl += """
+            \end{tabular}
+        \end{table}
+            """
+        return tbl
+    except Exception as e:
+        return 'kaputt'
+
+
+def latex_table_bin(res, cap=''):
+    b_row = '\\texttt{ARG}\t & '
     n_row = '\\texttt{NONE}\t & '
     a_row = 'average\t & '
     for v in res:
         precision, recall, f1, support = precision_recall_fscore_support(v[0], v[1], average=None,
-                                                                         labels=['BETTER', 'WORSE', 'NONE'])
+                                                                         labels=['ARG', 'NONE'])
         b_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[0], recall[0], f1[0])
-        w_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[1], recall[1], f1[1])
-        n_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[2], recall[2], f1[2])
+        n_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision[1], recall[1], f1[1])
         precision, recall, f1, support = precision_recall_fscore_support(v[0], v[1], average='weighted',
-                                                                         labels=['BETTER', 'WORSE', 'NONE'])
+                                                                         labels=['ARG', 'NONE'])
         a_row += '{:04.2f}\t & {:04.2f}\t & {:04.2f}\t &'.format(precision, recall, f1)
 
     b_row = b_row[:-1] + '\\\ '
-    w_row = w_row[:-1] + '\\\ '
     n_row = n_row[:-1] + '\\\ \midrule '
     a_row = a_row[:-1] + '\\\ \\bottomrule'
     print(""" \\begin{table}[h]
@@ -30,7 +72,6 @@ def latex_table(res, cap=''):
                & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\\ \midrule
                & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\\ \\toprule""")
     print(b_row)
-    print(w_row)
     print(n_row)
     print(a_row)
     print("""
@@ -38,3 +79,14 @@ def latex_table(res, cap=''):
 \end{table}
     """)
 
+
+def get_logger(name):
+    now = datetime.now()
+    s = '{}-{}-{}:{}'.format(name, now.day, now.hour, now.minute)
+    logger = logging.getLogger(s)
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler(s + '.log')
+    ch = logging.StreamHandler()
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    return logger

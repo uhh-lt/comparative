@@ -12,7 +12,7 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
                     "teriffic"]
 
 
-def load_data(file_name, min_confidence=0.67, binary=False, source=None):
+def load_data(file_name, min_confidence=0.0, binary=False, source=None):
     print('### Minimum Confidence {}'.format(min_confidence))
     frame = df.from_csv(path='data/' + file_name)
     frame = frame[frame['label:confidence'] >= min_confidence]
