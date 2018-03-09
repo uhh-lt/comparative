@@ -82,7 +82,7 @@ def latex_table_bin(res, cap=''):
 
 def get_logger(name):
     now = datetime.now()
-    s = '{}-{}-{}:{}'.format(name, now.day, now.hour, now.minute)
+    s = '{}-{}-({}_{})'.format(name, now.day, now.hour, now.minute)
     logger = logging.getLogger(s)
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(s + '.log')

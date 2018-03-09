@@ -39,7 +39,7 @@ feature_name_pattern = """
 
 logger = get_logger('xgb_dr_wo')
 
-classifiers = [XGBClassifier(n_jobs=4, n_estimators=25)]
+classifiers = [XGBClassifier(n_jobs=8, n_estimators=100)]
 # classifiers = [RidgeClassifier(), XGBClassifier(), LinearSVC(), SVC(), SGDClassifier(), GaussianNB(),
 #               KNeighborsClassifier(), DecisionTreeClassifier(), RandomForestClassifier(),
 #               LogisticRegression(), ExtraTreesClassifier()]
@@ -73,29 +73,44 @@ feature_builder = [
     # ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
     # ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
     # ('Position of Objects WS', lambda train: [PositionOfObjects()]),
+    ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
+    ('Sentence Embedding MP + replace dist', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
+    ('Sentence Embedding MP + replace', infersent_pipeline(ExtractMiddlePart, 'replace')),
+    ('Sentence Embedding MP + replace remove', infersent_pipeline(ExtractMiddlePart, 'remove')),
 
     #  ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
     ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
-    ('Bigram MP + DR', n_gram_pipeline(2, ExtractMiddlePart, 'replace_dist')),
+    ('Bigram MP + replace_dist', n_gram_pipeline(2, ExtractMiddlePart, 'replace_dist')),
+    ('Bigram MP + replace', n_gram_pipeline(2, ExtractMiddlePart, 'replace')),
+    ('Bigram MP + remove', n_gram_pipeline(2, ExtractMiddlePart, 'remove')),
     # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
     # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
     # ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
     ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
-    ('Unigram MP DR', n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')),
+    ('Unigram MP replace_dist', n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')),
+    ('Unigram MP replace', n_gram_pipeline(1, ExtractMiddlePart, 'replace')),
+    ('Unigram MP replace_remove', n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
     # ('Unigram MP Remove', n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
 
     # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
-    ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-    ('Sentence Embedding MP + DR', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
 
     ('Mean Word Embedding MP', lambda train: [ExtractMiddlePart(), MeanWordEmbedding()]),
-    ('Mean Word Embedding MP + DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), MeanWordEmbedding()]),
+    ('Mean Word Embedding MP + replace_dist',
+     lambda train: [ExtractMiddlePart(processing='replace_dist'), MeanWordEmbedding()]),
+    ('Mean Word Embedding MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), MeanWordEmbedding()]),
+    ('Mean Word Embedding MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), MeanWordEmbedding()]),
 
     ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
-    ('Contains JJR MP DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('JJR')]),
+    (
+    'Contains JJR MP + replace_dist', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('JJR')]),
+    ('Contains JJR MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), ContainsPos('JJR')]),
+    ('Contains JJR MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), ContainsPos('JJR')]),
     #  ('Contains JJS MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')]),
     ('Contains RBR MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBR')]),
-    ('Contains RBR MP + DR', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('RBR')]),
+    (
+    'Contains RBR MP + replace_dist', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('RBR')]),
+    ('Contains RBR MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), ContainsPos('RBR')]),
+    ('Contains RBR MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), ContainsPos('RBR')]),
     # ('Contains RBS MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBS')]),
     # # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
     # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
