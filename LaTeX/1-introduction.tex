@@ -84,14 +84,21 @@ Comparison Portals solely compare and deliver facts. Because of that, they can o
 
 Examples of classical Comparative Portals are \emph{Check24, Verivox, Idealo, GoCompare,} and \emph{Compare}\footnote{https://check24.de, https://verivox.de, https://idealo.de, https://gocompare.com, https://compare.com - all last checked: 12.12.2017}, just to name a few.
 
-As an example, Check24 can compare a wide variety of different objects like several insurances, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type, see figure \ref{img:check24}), Check24 shows a ranking of different service providers. The user can choose different properties to re-rank the list.
+As an example, Check24 can compare a wide variety of different objects like several insurances, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type, see figure \ref{img:check24_1}), Check24 shows a ranking of different service providers. The user can choose different properties to re-rank the list (see figure \ref{img:check24_2}).
 For instance, to compare different DSL providers, the user has to enter her address, how fast the internet should be and if she wants telephone and television as well. She can then select price, speed, and grade (rating) to sort the resulting list.
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth]{images/ds-sys/check24}
-\label{img:check24}
+\includegraphics[width=1\textwidth]{images/ds-sys/check24_1}
+\label{img:check24_1}
 \caption{Check24 DSL Provider}
 \end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=1\textwidth,scale=0.8]{images/ds-sys/check24_2}
+\label{img:check24_2}
+\caption{Check24 DSL Provider Results}
+\end{figure}
+
 The other mentioned sites work similarly. They provide more of a ranking than a comparison.\newline
 
 
@@ -103,12 +110,18 @@ More interestingly are systems which can compare any objects on arbitrary proper
 
 Versus aggregates freely available data sources like Wikipedia and official statistic reports. For example, the comparison of \enquote{Hamburg vs. Berlin} uses Wikipedia for the number of universities, worldstadiums.com for the availability of sport facilities and the Economist for the Big Mac Index. Presumably, some human processing is involved as the possible comparisons are limited. For instance, a comparison of Hamburg and Darmstadt is not possible as Darmstadt is not available on Versus. Likewise, \enquote{Ruby vs. Python} is not possible, Versus suggests to compare \enquote{Rome vs. Pyongyang} instead. Although Versus shows how many users \enquote{liked} the objects, it does not give a clear statement which one is better. For instance, it is not possible to check automatically whether Hamburg or Berlin is better for a short city trip. The user must search manually all valid properties like the number of museums, theaters, the price of public transport tickets and so on.
 
-Similar to Versus, Diffen aggregates different data sources (see figure \ref{img:diffversus}). All in all, the aggregated information is similar to Versus. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Diffen does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.\newline
+Similar to Versus, Diffen aggregates different data sources (see figures \ref{img:diffen} and \ref{img:versus}). All in all, the aggregated information is similar to Versus. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Diffen does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.\newline
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth]{images/ds-sys/diffversus}
-\label{img:diffversus}
-\caption{\enquote{Hamburg vs. Berlin} on Diffen and Versus}
+\includegraphics[width=1\textwidth]{images/ds-sys/diffen}
+\label{img:diffen}
+\caption{\enquote{Hamburg vs. Berlin} on Diffen}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{images/ds-sys/versus}
+\label{img:versus}
+\caption{\enquote{Hamburg vs. Berlin} on Versus}
 \end{figure}
 
 Neither Versus nor Diffen provides a comprehensible reason why an object is better than another one. They merely aggregate facts and bring them face to face. Despite the aggregation approach of both systems, many meaningful comparisons are not possible or not helpful (like \enquote{Hamburg vs. Darmstadt}, \enquote{Java vs. C\#}, \enquote{Dr Pepper vs. Orange Juice}).
