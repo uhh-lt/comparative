@@ -129,7 +129,7 @@ def run_classification(data, labels):
             logger.info(classifier_pattern.format(classifier))
 
             res = []
-            f1_overall = 0;
+            f1_overall = 0x;
             for train, test in k_folds(5, data):
                 try:
                     steps = builder(train) + [classifier]
@@ -162,7 +162,7 @@ def run_classification(data, labels):
 logger.info('# THREE CLASSES')
 _data = load_data('data.csv', min_confidence=0, binary=False)
 run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
-logger.info('\n\n--------------------------------------------\n\n')
+logger.info('\n\nx--------------------------------------------\n\n')
 logger.info('# BINARY CLASSES')
 _data_bin = load_data('data.csv', min_confidence=0, binary=True)
 
