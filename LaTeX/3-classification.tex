@@ -11,7 +11,7 @@ To find the best performing classification algorithms, eleven (see table \ref{tb
 \begin{table}[h]
 \centering
 \label{tbl:algo}
-\caption{\textbf{Classification Algorithms:} all evaluated classification algorithms.}
+\caption{Classification Algorithms}
 \begin{tabularx}{\textwidth}{XlX}
 \toprule
 Algorithm & F1 Score & Used in\\ \midrule
@@ -85,7 +85,7 @@ The idea behind using trigram models despite the short text length was to captur
 \label{sec:ngrams}
 
 \subsection{Part of Speech}
-Several boolean features were used to model the apperance of parts-of-speech in the sentence. The part-of-speech tagging was done with \emph{spaCy}. The feature capturing the apperance of the part-of-speeches \emph{comparative adverb (RBR)} and \emph{comparative adjectives (JJR)}\footnote{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html} has an equal performance to the unigram model. Other part-of-speech tags did not get a result above the baseline (for instance \emph{superlative adjective (RBS)} However, using this feature in isolation, no training example is assigned to the class
+Several boolean features were used to model the apperance of parts-of-speech in the sentence. The part-of-speech tagging was done with \emph{spaCy}. The feature capturing the apperance of the part-of-speeches \emph{comparative adverb (RBR)} and \emph{comparative adjective (JJR)}\footnote{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html} had an equal performance to the unigram model. Other part-of-speech tags did not get a result above the baseline (for instance \emph{superlative adjective (RBS)} However, using this feature in isolation, no training example is assigned to the class ?
 
 \subsection{Mean Word Embeddings}
 
@@ -106,7 +106,7 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 
     \begin{table}[h]
 \centering
-\caption{\textbf{Most Frequent Baseline:} All sentences are classified as \texttt{NONE}. }
+\caption{ Majority Class Baseline (three classes)}
 \label{tbl:majority_class_baseline}
 \begin{tabular}{@{}lccccccccc@{}}
 \toprule
@@ -126,7 +126,7 @@ The second baseline is created by assigning classes to the data at random, respe
 
  \begin{table}[h]
                 \centering
-\caption{\textbf{Random Baseline:} The classes are randomly assigned, the distribution in the data set is kept.}
+\caption{ Random Baseline (stratified, three classes) }
 \label{tbl:random_baseline}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule
@@ -150,7 +150,7 @@ Table \ref{tbl:bin_maj}; Table \ref{tbl:bin_strat}
 
  \begin{table}[h]
                 \centering
-\caption{\textbf{Random Baseline:} Baseline for the binary classification task. The classes are randomly assigned, the distribution in the data set is kept.}
+\caption{Random Baseline (stratified, binary)}
 \label{tbl:bin_strat}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule
@@ -165,7 +165,7 @@ average	 & 0.58	 & 0.58	 & 0.58	 &0.60	 & 0.60	 & 0.60	 &0.61	 & 0.60	 & 0.60	 \
 
  \begin{table}[h]
                 \centering
-\caption{\textbf{Most Frequent Baseline:} Baseline for the binary classification task. All sentences are classified as \texttt{NONE}. }
+\caption{Majority Class Baseline}
 \label{tbl:bin_maj}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule

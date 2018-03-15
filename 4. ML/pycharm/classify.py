@@ -1,30 +1,22 @@
-from nltk import NaiveBayesClassifier
-from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier, \
-    ExtraTreesClassifier
-from sklearn.linear_model import LogisticRegression, SGDClassifier, RidgeClassifier
+import datetime
+
 from sklearn.metrics import classification_report, f1_score
-from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline
-from sklearn.svm import LinearSVC, SVC
 from xgboost import XGBClassifier
 
 from features.contains_features import ContainsPos
-from features.count_features import PunctuationCount, NamedEntitiesByCategory, NounChunkCount
+from features.count_features import NounChunkCount, NamedEntitiesByCategory, PunctuationCount
 from features.mean_embedding_feature import MeanWordEmbedding
 from features.misc_features import PositionOfObjects
 from features.ngram_feature import NGramFeature
 from infersent.infersent_feature import initialize_infersent, InfersentFeature
-from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
+from transformers.data_extraction import ExtractMiddlePart, ExtractRawSentence
 from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
 from util.misc_utils import latex_table, get_logger
 from util.ngram_utils import get_all_ngrams
-from collections import OrderedDict
-from pprint import pprint
-from sklearn.tree import DecisionTreeClassifier
-import datetime
+
+LABEL = 'most_frequent_class'
 
 classifier_pattern = """
 ----------------------
@@ -37,7 +29,7 @@ feature_name_pattern = """
 - {}
 ======================"""
 
-logger = get_logger('xgb_dr_wo')
+logger = get_logger('xgb_test_it3')
 
 classifiers = [XGBClassifier(n_jobs=8, n_estimators=100)]
 # classifiers = [RidgeClassifier(), XGBClassifier(), LinearSVC(), SVC(), SGDClassifier(), GaussianNB(),
@@ -47,11 +39,12 @@ classifiers = [XGBClassifier(n_jobs=8, n_estimators=100)]
 n_gram_cache = {}
 
 
-def n_gram_pipeline(n, extractor, processing=None):
+def n_gram_pipeline(n, extractor, processing=None, filter_punct=True, min_freq=1):
     def _n_gram_pipeline(train):
         ngram_base = extractor(processing=processing).transform(train)
-        unigrams = get_all_ngrams(ngram_base, n)
-        return [extractor(processing=processing), NGramTransformer(n), NGramFeature(unigrams, n=n)]
+        unigrams = get_all_ngrams(ngram_base, n, min_freq=min_freq, filter_punct=filter_punct)
+        return [extractor(processing=processing), NGramTransformer(n, min_freq=min_freq, filter_punct=filter_punct),
+                NGramFeature(unigrams, n=n)]
 
     return _n_gram_pipeline
 
@@ -67,54 +60,40 @@ def infersent_pipeline(extractor, processing=None):
 
 feature_builder = [
 
-    # ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
-
-    # ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
-    # ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
-    # ('Noun Chunk MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
-    # ('Position of Objects WS', lambda train: [PositionOfObjects()]),
     ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-    ('Sentence Embedding MP + replace dist', infersent_pipeline(ExtractMiddlePart, 'replace_dist')),
-    ('Sentence Embedding MP + replace', infersent_pipeline(ExtractMiddlePart, 'replace')),
-    ('Sentence Embedding MP + replace remove', infersent_pipeline(ExtractMiddlePart, 'remove')),
+    ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
 
-    #  ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
-    ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
-    ('Bigram MP + replace_dist', n_gram_pipeline(2, ExtractMiddlePart, 'replace_dist')),
-    ('Bigram MP + replace', n_gram_pipeline(2, ExtractMiddlePart, 'replace')),
-    ('Bigram MP + remove', n_gram_pipeline(2, ExtractMiddlePart, 'remove')),
-    # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
-    # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
-    # ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
-    ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
-    ('Unigram MP replace_dist', n_gram_pipeline(1, ExtractMiddlePart, 'replace_dist')),
-    ('Unigram MP replace', n_gram_pipeline(1, ExtractMiddlePart, 'replace')),
-    ('Unigram MP replace_remove', n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
-    # ('Unigram MP Remove', n_gram_pipeline(1, ExtractMiddlePart, 'remove')),
-
-    # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
-
+    ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
     ('Mean Word Embedding MP', lambda train: [ExtractMiddlePart(), MeanWordEmbedding()]),
-    ('Mean Word Embedding MP + replace_dist',
-     lambda train: [ExtractMiddlePart(processing='replace_dist'), MeanWordEmbedding()]),
-    ('Mean Word Embedding MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), MeanWordEmbedding()]),
-    ('Mean Word Embedding MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), MeanWordEmbedding()]),
 
+    ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
+    ('Unigram WP', n_gram_pipeline(1, ExtractMiddlePart)),
+
+    ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
+    ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
+
+    ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
+    ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
+
+    ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
     ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
-    (
-    'Contains JJR MP + replace_dist', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('JJR')]),
-    ('Contains JJR MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), ContainsPos('JJR')]),
-    ('Contains JJR MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), ContainsPos('JJR')]),
-    #  ('Contains JJS MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')]),
+
+    ('Contains JJS WS', lambda train: [ExtractRawSentence(), ContainsPos('JJS')]),
+    ('Contains JJS MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')]),
+
+    ('Contains RBR WS', lambda train: [ExtractRawSentence(), ContainsPos('RBR')]),
     ('Contains RBR MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBR')]),
-    (
-    'Contains RBR MP + replace_dist', lambda train: [ExtractMiddlePart(processing='replace_dist'), ContainsPos('RBR')]),
-    ('Contains RBR MP + replace', lambda train: [ExtractMiddlePart(processing='replace'), ContainsPos('RBR')]),
-    ('Contains RBR MP + remove', lambda train: [ExtractMiddlePart(processing='remove'), ContainsPos('RBR')]),
-    # ('Contains RBS MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBS')]),
-    # # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
-    # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
-    # ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
+
+    ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
+    ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
+
+    ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
+    ('Noun Chunk Count MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
+
+    ('Position of Objects WS', lambda train: [PositionOfObjects()]),
+
+    ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
+    ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
 
 ]
 
@@ -129,21 +108,21 @@ def run_classification(data, labels):
             logger.info(classifier_pattern.format(classifier))
 
             res = []
-            f1_overall = 0x;
+            f1_overall = 0;
             for train, test in k_folds(5, data):
                 try:
                     steps = builder(train) + [classifier]
                     pipeline = make_pipeline(*steps)
-                    fitted = pipeline.fit(train, train['label'].values)
+                    fitted = pipeline.fit(train, train[LABEL].values)
                     predicted = fitted.predict(test)
-                    logger.info(classification_report(test['label'].values, predicted, labels=labels))
-                    f1 = f1_score(test['label'].values, predicted, average='weighted',
+                    logger.info(classification_report(test[LABEL].values, predicted, labels=labels))
+                    f1 = f1_score(test[LABEL].values, predicted, average='weighted',
                                   labels=labels)
                     f1_overall += f1
                     print(steps)
 
-                    res.append((f1_score(test['label'].values, predicted, average='weighted',
-                                         labels=labels), (test['label'].values, predicted)))
+                    res.append((f1_score(test[LABEL].values, predicted, average='weighted',
+                                         labels=labels), (test[LABEL].values, predicted)))
                     now = datetime.datetime.now()
                     logger.info("{}:{}:{}\n\n".format(now.hour, now.minute, now.second))
                 except Exception as e:
@@ -160,10 +139,10 @@ def run_classification(data, labels):
 
 
 logger.info('# THREE CLASSES')
-_data = load_data('data.csv', min_confidence=0, binary=False)
+_data = load_data('data.csv', binary=False)
 run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
-logger.info('\n\nx--------------------------------------------\n\n')
-logger.info('# BINARY CLASSES')
-_data_bin = load_data('data.csv', min_confidence=0, binary=True)
+# logger.info('\n\nx--------------------------------------------\n\n')
+# logger.info('# BINARY CLASSES')
+# _data_bin = load_data('data.csv', min_confidence=0, binary=True)
 
 # run_classification(_data_bin, ['ARG', 'NONE'])

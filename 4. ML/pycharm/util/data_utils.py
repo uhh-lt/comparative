@@ -12,10 +12,10 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
                     "teriffic"]
 
 
-def load_data(file_name, min_confidence=0.0, binary=False, source=None):
-    print('### Minimum Confidence {}'.format(min_confidence))
+def load_data(file_name, min_ratio=0.6, binary=False, source=None):
+    print('### Minimum Ratio {}'.format(min_ratio))
     frame = df.from_csv(path='data/' + file_name)
-    frame = frame[frame['label:confidence'] >= min_confidence]
+    frame = frame[frame['ratio'] >= min_ratio]
     frame['raw_text'] = frame.apply(
         lambda row: BeautifulSoup(row['text_html'], "lxml").text.replace(':[OBJECT_A]', '').replace(':[OBJECT_B]', ''),
         axis=1)

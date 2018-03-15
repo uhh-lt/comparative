@@ -1,31 +1,20 @@
-from nltk import NaiveBayesClassifier
-from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier, \
-    ExtraTreesClassifier
-from sklearn.linear_model import LogisticRegression, SGDClassifier, RidgeClassifier
-from sklearn.metrics import classification_report, f1_score, make_scorer
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn.neighbors import KNeighborsClassifier
+import random
+
+import numpy as np
+from sklearn.metrics import f1_score, make_scorer
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import make_pipeline
-from sklearn.svm import LinearSVC, SVC
 from xgboost import XGBClassifier
 
-from features.contains_features import ContainsPos
-from features.count_features import PunctuationCount, NamedEntitiesByCategory, NounChunkCount
-from features.mean_embedding_feature import MeanWordEmbedding
-from features.misc_features import PositionOfObjects
 from features.ngram_feature import NGramFeature
 from infersent.infersent_feature import initialize_infersent, InfersentFeature
-from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
+from transformers.data_extraction import ExtractMiddlePart
 from transformers.n_gram_transformers import NGramTransformer
-from util.data_utils import load_data, k_folds
-from util.misc_utils import latex_table, get_logger
+from util.data_utils import load_data
+from util.misc_utils import get_logger
 from util.ngram_utils import get_all_ngrams
-from collections import OrderedDict
-from pprint import pprint
-from sklearn.tree import DecisionTreeClassifier
-import datetime
+
+LABEL = 'most_frequent_class'
 
 classifier_pattern = """
 ----------------------
@@ -45,13 +34,7 @@ classifiers = [XGBClassifier()]
 #               KNeighborsClassifier(), DecisionTreeClassifier(), RandomForestClassifier(),
 #               LogisticRegression(), ExtraTreesClassifier()]
 
-n_gram_cache = {}
-
-import numpy as np
-
 np.random.seed(1337)
-import random
-
 random.seed(1337)
 
 
@@ -75,40 +58,45 @@ def infersent_pipeline(extractor, processing=None):
 
 feature_builder = [
     ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-
 ]
 
 
-def run_classification(data, labels):
-    by_score = []
-
-    params = {
-
-        'n_estimators': [200, 300, 400],
-        'max_depth': [6, 12, 24],
-        'learning_rate': [0.01, 0.3],
-
-        'reg_lambda': [0, 1, 5, 100],
-        'reg_alpha': [0, 1, 5, 100]
-    }
+def run_classification(data):
+    params = [
+        # default model
+        {'max_depth': [6],
+         'min_child_weight': [1],
+         'gamma': [0],
+         'subsample': [1]},
+        # more complex
+        {'max_depth': [12],
+         'min_child_weight': [0]
+         },
+        # less complex
+        {'max_depth': [2]},
+        # more regulized
+        {'alpha': [0.5],
+         'lambda': [2]
+         }
+    ]
     logger.info(params)
-    cv = RandomizedSearchCV(XGBClassifier(), param_distributions=params, cv=5, verbose=5,
-                            scoring=make_scorer(f1_score, average='weighted'))
+    cv = GridSearchCV(XGBClassifier(), param_grid=params, cv=5, verbose=5,
+                      scoring=make_scorer(f1_score, average='weighted'))
 
     raw_text = ExtractMiddlePart().transform(data)
     infersent_model = initialize_infersent(raw_text)
     pipeline = make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model), cv)
     print(pipeline.get_params().keys())
-    fitted = pipeline.fit(data, data['label'].values)
+    fitted = pipeline.fit(data, data[LABEL].values)
     logger.info(cv.best_params_)
     logger.info(cv.best_score_)
 
 
 logger.info('# THREE CLASSES')
-_data = load_data('data.csv', min_confidence=0, binary=False)
-run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
+_data = load_data('data.csv', binary=False)
+run_classification(_data)
 logger.info('\n\n--------------------------------------------\n\n')
 logger.info('# BINARY CLASSES')
-_data_bin = load_data('data.csv', min_confidence=0, binary=True)
+_data_bin = load_data('data.csv', binary=True)
 
 # run_classification(_data_bin, ['ARG', 'NONE'])
