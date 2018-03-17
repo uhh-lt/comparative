@@ -22,10 +22,8 @@
 
 
 
-
+\chapter{Background}
 \section{Related Work}
-
-
 \label{sec:argth}
 \label{sec:argmine}
 \cite{Lippi2016Argumentation-M} gave a summary of the research topic \enquote{Argument Mining} in general. They introduced five dimensions to describe Argument Mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of Argument Mining Systems are defined. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is described as a classification problem. Second, the boundaries of the argumentative units are identified; this is understood as a segmentation problem. Third, the relations between argumentative units are identified. For instance, claims and premises are connected with a \enquote{support} relation.
@@ -70,7 +68,7 @@ A summary of several features for the identification of argumentative sentences 
 
 
 
-\subsection{Domain-Specific Comparative Systems}
+\section{Domain-Specific Comparative Systems}
 The enormous amount of Comparison Portals shows the need for comparisons. Frequently aired television spots empathize the popularity of those portals.
 
 Most of those portals are specific to a few domains and a subset of properties, for example, car insurances and their price. Because of that, those systems have some restrictions. Comparisons are only possible between objects of the domains and predefined properties. Source of the data is usually databases. Humans are involved in gathering, entering and processing the data.
@@ -127,7 +125,32 @@ To summarize, a lot of different comparison portals exist and are widely used. E
 
 Adding information like comments and product reviews can enrich the comparison with reasons and opinions, such as \enquote{Ruby is easier to learn than C} or \enquote{Python is more suitable for scientific applications than Erlang as many libraries exist}.
 
-\section{Background}
-\subsection{n-gram}
+\section{Vector Representations for Documents}
+In order to use most machine learning algorithm with text, the text must be transformed into a fixed-length vector. The vector is either sparse or dense. Sparse vectors have a high dimensionalty, were most components are zero. This introduces a lot parameters to learn for the machine learning algorithm. Dense vectors only have hundreds or less components, which are almost never zero.
+
+\subsection{Sparse Vectors}
+\label{sec:bow_model}
+A simple yet efficient method to create fixed-length vectors of documents is the \emph{bag-of-words}-model (BOW). In the first step, a vocabulary of all words in all documents is created.
+
+Next, feature vectors of the size of the vocabulary can be generated. The i-th component of the vector corresponds to the i-th word in the vocabulary. If the i-th word is present in the document, the component is set to one or to the frequency of the word in the sentence.
+
+Another option is to use weighted values instead of word frequencies, as many words (like \emph{the}, \emph{an} or \emph{end}) occur in almost every document. Those words hardly contribute to the meaning of the sentence.  Commonly, \emph{term frequency} \emph{inverse document frequency} (TF-IDF) is used. The TF-IDF value for a word \emph{w} in a document \emph{d} is calculated as:
+
+\[\text{TF-IDF}(w,d) = tf(w,d) \times \log{\frac{N}{n}} \]
+
+where $tf(w,d)$ is the frequency of word w in document d, \emph{N} is the total number of documents and \emph{n} is the number of documents containg the word \emph{w}. Words appearing in almost every document will get a TF-IDF score near zero, while words which appear seldomly will get a high score.\\
+
+The main drawback of BOW is that all sequence information is lost. On one hand, the two words \enquote{Steve} and \enquote{Jobs} refer to a person if they are \enquote{Steve} is directly followed by \enquote{Jobs}. On the other hand, if there are ten words between \enquote{Steve} and \enquote{Jobs}, they might mean something totally different. Another drawback is that the document vector size is equal to the vocabulary size. Even for short documents like sentences, the vectors will have thousands of components, while many components will be zero.\\
+
+The BOW model can be further extended by using n-grams instead of words. An n-gram is any subsequence of n words. For example, the uni- and bigrams of the sentence \emph{I like cats} are \emph{(I, like, cats)} and \emph{(<s> I, I like, like cats, cats </s>})\footnote{<s> and </s> encode the beginning and end of the sentence}. In doing so, the sequence information is partly kept. Also, only n-grams which occour two or more times can be taken into account.
+
+
+
+
+
+
+
 \subsection{Word Embeddings}
 \subsection{Sentence Embeddings}
+
+\section{Dependency Parsing}

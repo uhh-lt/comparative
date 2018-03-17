@@ -78,8 +78,10 @@ Two observations are true for all features. First, the F1 score increases by at 
 Most of the time, the F1 score for the different versions differ - if at all - in the third decimal place. In exceptional cases, using the fourth option increases the F1 score by X points. If not stated differently, all features used the unchanged middle part of the original sentence.
 
 
-\subsection{N-Gram Models}
-Uni-, bi- and trigram models were used as features. The respective n-grams were computed using \emph{textacy}\footnote{https://github.com/chartbeat-labs/textacy}, a higher level library building upon \emph{spaCy}\footnote{https://github.com/explosion/spaCy}.  The basis for the n-grams were all training instances of the given fold. Each n-gram was modelled as a binary feature. 
+\subsection{Bag-Of-Words Feature}
+Some variants of the BOW model present in section \ref{sec:bow_model} have been used. Binary feature vectors\footnote{the n-grams were computed using \emph{textacy} (https://github.com/chartbeat-labs/textacy)} and their tf-idf weighted\footnote{relying on the scikit-learn implementation} counterparts were tested for uni-, bi- and trigrams. No restrictions were imposed on the n-grams.
+
+Uni- and bigram models bet both baselines.
 
 The idea behind using trigram models despite the short text length was to capture trigrams like \enquote{\emph{is better than}} or \enquote{\emph{is worse because}} which would indicate a comparison. However, the performance of trigram models was not satisfying.
 \label{sec:ngrams}

@@ -4,7 +4,7 @@ import torch
 from bs4 import BeautifulSoup
 
 frame = pd.DataFrame.from_csv(path='../data/train-data.csv')[:10]
-frame['raw_text'] = frame.apply(
+frame['sentence'] = frame.apply(
     lambda row: BeautifulSoup(row['text_html'], "lxml").text.replace(':[OBJECT_A]', '').replace(':[OBJECT_B]', ''),
     axis=1)
 

@@ -60,7 +60,7 @@ class ExtractRawSentence(TransformerMixin, BaseEstimator):
     def transform(self, dataframe):
         results = []
         for index, row in dataframe.iterrows():
-            results.append(process(row['raw_text'], row['a'], row['b'], self.processing))
+            results.append(process(row['sentence'], row['object_a'], row['object_b'], self.processing))
 
         return results
 
@@ -80,7 +80,7 @@ class ExtractFirstPart(TransformerMixin, BaseEstimator):
     def transform(self, dataframe):
         results = []
         for index, row in dataframe.iterrows():
-            a, b, text = row['a'], row['b'], row['raw_text']
+            a, b, text = row['object_a'], row['object_b'], row['sentence']
             a_index, b_index = text.index(a), text.index(b)
             if a_index < b_index:
                 begin, end = a_index + len(a), b_index
@@ -106,7 +106,7 @@ class ExtractLastPart(TransformerMixin, BaseEstimator):
     def transform(self, dataframe):
         results = []
         for index, row in dataframe.iterrows():
-            a, b, text = row['a'], row['b'], row['raw_text']
+            a, b, text = row['object_a'], row['object_b'], row['sentence']
             if text.index(a) > text.index(b):
                 res = a + text.split(a)[-1]
             else:
@@ -130,7 +130,7 @@ class ExtractMiddlePart(TransformerMixin, BaseEstimator):
     def transform(self, dataframe):
         results = []
         for index, row in dataframe.iterrows():
-            a, b, text = row['a'], row['b'], row['raw_text']
+            a, b, text = row['object_a'], row['object_b'], row['sentence']
             a_index, b_index = text.index(a), text.index(b)
             if a_index < b_index:
                 begin, end = a_index, b_index + len(b)

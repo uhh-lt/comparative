@@ -13,18 +13,15 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
 
 
 def load_data(file_name, min_ratio=0.6, binary=False, source=None):
-    print('### Minimum Ratio {}'.format(min_ratio))
+    print('### Minimum Percentage {}'.format(min_ratio))
     frame = df.from_csv(path='data/' + file_name)
-    frame = frame[frame['ratio'] >= min_ratio]
-    frame['raw_text'] = frame.apply(
-        lambda row: BeautifulSoup(row['text_html'], "lxml").text.replace(':[OBJECT_A]', '').replace(':[OBJECT_B]', ''),
-        axis=1)
+    frame = frame[frame['most_frequent_percentage'] >= min_ratio]
     if binary:
         frame['label'] = frame.apply(lambda row: row['label'] if row['label'] == 'NONE' else 'ARG', axis=1)
     if source is not None:
         frame = frame[frame['type'] == source]
     print('Loaded {} training examples'.format(len(frame)))
-    print(frame['label'].value_counts())
+    print(frame['most_frequent_label'].value_counts())
     return shuffle(frame)
 
 
@@ -32,12 +29,12 @@ def k_folds(splits, data, random_state=1337):
     """create splits for k fold validation"""
     k_fold = StratifiedKFold(n_splits=splits, random_state=random_state)
     for train_index, test_index in k_fold.split(data,
-                                                data['label']):
+                                                data['most_frequent_label']):
         yield data.iloc[train_index], data.iloc[test_index]
 
 
 def get_misclassified(predictions, test):
     for idx, row in enumerate(test.iterrows()):
-        gold = row[1]['label']
+        gold = row[1]['most_frequent_label']
         if predictions[idx] != gold:
-            print('{}\tGold: {}\t Pred: {}'.format(row[1]['raw_text'], gold, predictions[idx]))
+            print('{}\tGold: {}\t Pred: {}'.format(row[1]['sentence'], gold, predictions[idx]))

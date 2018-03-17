@@ -8,7 +8,7 @@ class PositionOfObjects(BaseFeature):
     def transform(self, dataframe):
         result = []
         for index, row in dataframe.iterrows():
-            pos = row['raw_text']
+            pos = row['sentence']
             result.append(sorted([pos.index(row['a']), pos.index(row['b'])]))
         return result
 
