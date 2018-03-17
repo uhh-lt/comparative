@@ -145,6 +145,19 @@ average	 & 0.55	 & 0.55	 & 0.55	 &0.56	 & 0.56	 & \textbf{0.56}	 &0.57	 & 0.58	 
 For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 \subsection{Results}
 
+%==== result table     
+\begin{table}[h]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabularx}{\textwidth}{Xrrrr}
+\toprule
+Feature & Worst Fold (F1) & Average Fold (F1) & Best Fold (F1) & Mean F1 \\ \midrule
+
+TF-IDF (middle part, unigrams) &	 0.84 &	 0.85&	 0.89&	0.86 \\ 
+\bottomrule\end{tabularx}
+\end{table}
+
 \section{Binary classification}
 \subsection{Baseline}
 

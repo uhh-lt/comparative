@@ -80,6 +80,26 @@ def latex_table_bin(res, cap=''):
     """)
 
 
+def res_table(res, logger):
+    logger.info("""\\begin{table}[h]
+\centering
+\caption{My caption}
+\label{my-label}
+\\begin{tabularx}{\\textwidth}{Xrrrr}
+\\toprule
+Feature & Worst (F1) & Average (F1) & Best (F1) & Mean F1 \\\ \midrule
+""")
+    for data in res:
+        logger.info(
+            '{} ({}) &\t {:04.2f} &\t {:04.2f}&\t {:04.2f}&\t{:04.2f} \\\ '.format(data['name'], data['comment'],
+                                                                                   data['worst'], data['avg'],
+                                                                                   data['best'],
+                                                                                   (data['worst'] + data['avg'] +
+                                                                                    data['best']) / 3))
+    logger.info("""\\bottomrule\end{tabularx}
+\end{table}""")
+
+
 def get_logger(name):
     now = datetime.now()
     s = '{}-{}-({}_{})'.format(name, now.day, now.hour, now.minute)

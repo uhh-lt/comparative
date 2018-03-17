@@ -2,7 +2,7 @@ import datetime
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report, f1_score
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import make_pipeline, FeatureUnion
 from xgboost import XGBClassifier
 
 from features.contains_features import ContainsPos
@@ -14,7 +14,7 @@ from infersent.infersent_feature import initialize_infersent, InfersentFeature
 from transformers.data_extraction import ExtractMiddlePart, ExtractRawSentence
 from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
-from util.misc_utils import latex_table, get_logger
+from util.misc_utils import latex_table, get_logger, res_table
 from util.ngram_utils import get_all_ngrams
 from pprint import pprint, pformat
 
@@ -62,58 +62,49 @@ def infersent_pipeline(extractor, processing=None):
 
 feature_builder = [
 
-    ('TF-IDF MP', lambda train: [ExtractMiddlePart(), TfidfVectorizer()]),
-    ('TF-IDF WS', lambda train: [ExtractRawSentence(), TfidfVectorizer()]),
+    ('TF-IDF', lambda train: [ExtractMiddlePart(), TfidfVectorizer()], 'middle part, unigrams'),
+    ('TF-IDF', lambda train: [ExtractRawSentence(), TfidfVectorizer()], 'whole sentence, unigrams'),
+    ('TF-IDF', lambda train: [ExtractMiddlePart(), TfidfVectorizer(ngram_range=(2, 2))], 'middle part, bigrams'),
+    ('TF-IDF', lambda train: [ExtractRawSentence(), TfidfVectorizer(ngram_range=(2, 2))], 'whole sentence, bigrams'),
+    ('TF-IDF', lambda train: [ExtractMiddlePart(), TfidfVectorizer(ngram_range=(3, 3))], 'middle part, trigrams'),
+    ('TF-IDF', lambda train: [ExtractRawSentence(), TfidfVectorizer(ngram_range=(3, 3))], 'whole sentence, trigrams'),
 
-    # ('TF-IDF MP 1-2', lambda train: [ExtractMiddlePart(), TfidfVectorizer(ngram_range=(1, 2))]),
-    # ('TF-IDF WS 1-2', lambda train: [ExtractRawSentence(), TfidfVectorizer(ngram_range=(1, 2))]),
-    #
-    # ('TF-IDF MP 1-3', lambda train: [ExtractMiddlePart(), TfidfVectorizer(ngram_range=(1, 3))]),
-    # ('TF-IDF WS 1-3', lambda train: [ExtractRawSentence(), TfidfVectorizer(ngram_range=(1, 3))]),
-    #
-    # ('Sentence Embedding MP', infersent_pipeline(ExtractMiddlePart)),
-    # ('Sentence Embedding WS', infersent_pipeline(ExtractRawSentence)),
-    #
-    # ('Mean Word Embedding WS', lambda train: [ExtractRawSentence(), MeanWordEmbedding()]),
-    # ('Mean Word Embedding MP', lambda train: [ExtractMiddlePart(), MeanWordEmbedding()]),
-    #
-    # ('Unigram WS', n_gram_pipeline(1, ExtractRawSentence)),
-    # ('Unigram MP', n_gram_pipeline(1, ExtractMiddlePart)),
-    #
-    # ('Bigram WS', n_gram_pipeline(2, ExtractRawSentence)),
-    # ('Bigram MP', n_gram_pipeline(2, ExtractMiddlePart)),
-    #
-    # ('Trigram WS', n_gram_pipeline(3, ExtractRawSentence)),
-    # ('Trigram MP', n_gram_pipeline(3, ExtractMiddlePart)),
-    #
-    # ('Contains JJR WS', lambda train: [ExtractRawSentence(), ContainsPos('JJR')]),
-    # ('Contains JJR MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')]),
-    #
-    # ('Contains JJS WS', lambda train: [ExtractRawSentence(), ContainsPos('JJS')]),
-    # ('Contains JJS MP', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')]),
-    #
-    # ('Contains RBR WS', lambda train: [ExtractRawSentence(), ContainsPos('RBR')]),
-    # ('Contains RBR MP', lambda train: [ExtractMiddlePart(), ContainsPos('RBR')]),
-    #
-    # ('NE Count WS', lambda train: [ExtractRawSentence(), NamedEntitiesByCategory()]),
-    # ('NE Count MP', lambda train: [ExtractMiddlePart(), NamedEntitiesByCategory()]),
-    #
-    # ('Noun Chunk Count WS', lambda train: [ExtractRawSentence(), NounChunkCount()]),
-    # ('Noun Chunk Count MP', lambda train: [ExtractMiddlePart(), NounChunkCount()]),
-    #
-    # ('Position of Objects WS', lambda train: [PositionOfObjects()]),
-    #
-    # ('Punctuation Count WS', lambda train: [ExtractRawSentence(), PunctuationCount()]),
-    # ('Punctuation Count MP', lambda train: [ExtractMiddlePart(), PunctuationCount()]),
+    ('Sentence Embedding', infersent_pipeline(ExtractMiddlePart), 'middle part'),
+    ('Sentence Embedding', infersent_pipeline(ExtractRawSentence), 'whole sentence'),
+
+    ('Mean Word Embedding', lambda train: [ExtractRawSentence(), MeanWordEmbedding()], 'whole sentence'),
+    ('Mean Word Embedding', lambda train: [ExtractMiddlePart(), MeanWordEmbedding()], 'middle part'),
+
+    ('Unigrams', n_gram_pipeline(1, ExtractRawSentence), 'whole sentence, binary'),
+    ('Unigrams', n_gram_pipeline(1, ExtractMiddlePart), 'middle part, binary'),
+
+    ('Bigrams', n_gram_pipeline(2, ExtractRawSentence), 'whole sentence, binary'),
+    ('Bigrams', n_gram_pipeline(2, ExtractMiddlePart), 'middle part, binary'),
+
+    ('Trigrams', n_gram_pipeline(3, ExtractRawSentence), 'whole sentence, binary'),
+    ('Trigrams', n_gram_pipeline(3, ExtractMiddlePart), 'middle part, binary'),
+
+    ('Contains JJR', lambda train: [ExtractRawSentence(), ContainsPos('JJR')], 'whole sentence'),
+    ('Contains JJR', lambda train: [ExtractMiddlePart(), ContainsPos('JJR')], 'middle part'),
+
+    ('Contains JJS', lambda train: [ExtractRawSentence(), ContainsPos('JJS')], 'whole sentence'),
+    ('Contains JJS', lambda train: [ExtractMiddlePart(), ContainsPos('JJS')], 'middle part'),
+
+    ('Contains RBR', lambda train: [ExtractRawSentence(), ContainsPos('RBR')], 'whole sentence'),
+    ('Contains RBR', lambda train: [ExtractMiddlePart(), ContainsPos('RBR')], 'middle part'),
+
+    ('Contains RBS', lambda train: [ExtractRawSentence(), ContainsPos('RBS')], 'whole sentence'),
+    ('Contains RBS', lambda train: [ExtractMiddlePart(), ContainsPos('RBS')], 'middle part'),
 
 ]
 
 
 def run_classification(data, labels):
     by_score = []
+    res_list = []
     for _builder in feature_builder:
-        name, builder = _builder
-        logger.info(feature_name_pattern.format(name.upper()))
+        name, builder, comment = _builder
+        logger.info(feature_name_pattern.format(name.upper() + " " + comment))
         for classifier in classifiers:
 
             logger.info(classifier_pattern.format(classifier))
@@ -130,7 +121,6 @@ def run_classification(data, labels):
                     f1 = f1_score(test[LABEL].values, predicted, average='weighted',
                                   labels=labels)
                     f1_overall += f1
-                    print(steps)
 
                     res.append((f1_score(test[LABEL].values, predicted, average='weighted',
                                          labels=labels), (test[LABEL].values, predicted)))
@@ -140,20 +130,22 @@ def run_classification(data, labels):
                     logger.info(e)
                     logger.info('Fail for {}'.format(type(classifier)).upper())
             res = sorted(res, key=lambda x: x[0])
-            a = (res[0][0] + res[2][0] + res[-1][0]) / 3.0
-            logger.info('Worst {} Avg {} Best {} | Mean {}'.format(res[0][0], res[2][0], res[-1][0], a))
+            res_d = {'name': name, 'comment': comment, 'worst': res[0][0], 'avg': res[2][0], 'best': res[-1][0]}
+            res_list.append(res_d)
             logger.info('OVERALL F1 {}'.format(f1_overall / 5.0))
             by_score.append((f1_overall / 5.0, '{} {}'.format(type(classifier), name)))
             try:
                 logger.info(latex_table([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap'))
             except Exception as e:
                 logger.info("No table")
+    res_table(res_list, logger)
     logger.info(pformat(sorted(by_score, key=lambda x: x[0], reverse=True)))
 
 
 logger.info('# THREE CLASSES')
 _data = load_data('data.csv', binary=False)
-run_classification(_data, ['BETTER', 'WORSE', 'NONE'])[:50]
+run_classification(_data, ['BETTER', 'WORSE', 'NONE'])
+
 # logger.info('\n\nx--------------------------------------------\n\n')
 # logger.info('# BINARY CLASSES')
 # _data_bin = load_data('data.csv', min_confidence=0, binary=True)
