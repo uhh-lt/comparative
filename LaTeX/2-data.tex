@@ -38,7 +38,7 @@ The sentences for the crowdsourcing task should have a high probability of being
 
 \begin{table}[h]
 \centering
-\caption{Objects of the Annotation Prestudy}
+\caption{Objects pairs for the annotation prestudy. The pairs are used to extract sentences from the ElasticSearch index.}
 \label{tbl:prestudy-objects}
 \begin{tabular}{@{}llrrr@{}}
 \toprule
@@ -62,7 +62,7 @@ However, not all comparisons will contain one of the cue words mentioned above. 
 
 
 
-\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query A]
+\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=First query used to extract the sentences for the prestudy from the ElasticSearch index. OBJECT\_A and OBJECT\_B are placeholders for the first and second object from the pairs.]
 {
   "query":{
     "bool":{
@@ -79,7 +79,7 @@ However, not all comparisons will contain one of the cue words mentioned above. 
 }
 \end{lstlisting}
 
-\begin{lstlisting}[label=lst:es-query-b,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Prestudy Sentence Selection Query B (shortened)]
+\begin{lstlisting}[label=lst:es-query-b,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=Second query for the prestudy (shortened). This query does not search for the cue words.]
 [...]
           "query_string":{
             "default_field":"text",
@@ -91,7 +91,7 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 \begin{table}[h]
 \centering
-\caption{Extracted Sentences}
+\caption{Sample sentences extracted with the queries from listings \ref{lst:es-query-a} and \ref{lst:es-query-b}.}
 \label{tbl:example_sentences}
 \begin{tabular}{@{}llr@{}}
 \toprule
@@ -120,12 +120,12 @@ For each sentence, the annotators should decide to which class a sentence belong
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/1_question}
 \label{img:1_question}
-\caption{Annotator view (Prestudy A)}
+\caption{The images shows the annotator's view for each sentence.}
 \end{figure}
 
 \begin{table}[h]
 \centering
-\caption{Classes for Prestudy A and B}
+\caption{The classes for the first prestudy. The correspond to the answers the annotator could select in figure \ref{img:1_question}}
 \label{tbl:prestudyclasses-a}
 \begin{tabular}{@{}ll@{}}
 \toprule
@@ -146,7 +146,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 
 \begin{figure}[h]
 \centering
-\caption{Class Distribution (Prestudy A)}
+\caption{The results for prestudy A.}
 \label{fig:dist_pre_a}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
@@ -176,7 +176,7 @@ Distinct classes & Sentences & Percentage \\
 
 \begin{table}[h]
 \centering
-\caption{Uncertain Sentences (Prestudy A)}
+\caption{Examples of uncertain sentences for prestudy A. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_1_res}
 \begin{tabularx}{\textwidth}{lXrrr}
 \toprule
@@ -214,7 +214,7 @@ The sentence preprocessing was altered as well. Instead of replacing the object,
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/2_question}
 \label{img:2_question}
-\caption{Annotator view (Prestudy B)}
+\caption{The new annotator view for prestudy B. The objects are now highlighted by colour.}
 \end{figure}
 
 The class distribution for the 200 sentences is presentend in figure \ref{fig:dist_pre_b}. 
@@ -251,7 +251,7 @@ Distinct classes & Sentences & Percentage \\
 
 \begin{table}[h]
 \centering
-\caption{Uncertain Sentences (Prestudy B)}
+\caption{Examples of uncertain sentences for prestudy B. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_2_res}
 \begin{tabularx}{\textwidth}{lXrrr}
 \toprule
@@ -309,7 +309,7 @@ The sentence selection process was similar to the prestudy. The pairs and the cu
 
 \begin{figure}[h]
 \centering
-\caption{\textbf{Cue Words:} }
+\caption{Cue words. It is expected that those words appear frequently in comparative sentences.}
 \label{fig:cue_words}
 \begin{multicols}{4}
 better
@@ -366,7 +366,7 @@ The last domain is not restricted to any topic. For each one of twenty-four rand
 
 \begin{figure}[h]
 \centering
-\caption{The \textbf{seed words} were used to create random object pairs for the \emph{Random} domain.}
+\caption{Seed words. The words were used to create pseudo-random pairs for the \emph{Random} domain. }
 \label{fig:seed}
 \begin{multicols}{5}
 book%23NN
@@ -424,7 +424,7 @@ yale%23NP
 
 \begin{minipage}{\linewidth}
 
-\begin{lstlisting}[language=json,label=lst:jbtres,caption=Similar words to "Yale"]
+\begin{lstlisting}[language=json,label=lst:jbtres,caption=JoBimTexts response. Shows similar words to \emph{\enquote{Yale}}. Those objects can be compared meaningful.]
 [...]
    "results":
       [{"score":701.0,"key":"yale#NP"},
@@ -442,7 +442,7 @@ yale%23NP
 In the following, this domain is called \emph{Random}. Some example pairs for all domains are shown in table \ref{tbl:exp_pairs}.
 \begin{table}[h]
 \centering
-\caption{\textbf{Example pairs:} sentences containing both objects of the pairs were retrieved from the index to create the data set.}
+\caption{Objects pairs for the main study. The pairs are used to extract sentences from the ElasticSearch index.}
 \label{tbl:exp_pairs}
 
 \begin{tabularx}{\textwidth}{XXX}
@@ -477,7 +477,7 @@ The label distribution of the 742 sentences is presented in the figure \ref{fig:
 
 \begin{figure}[h]
 \centering
-\caption{\textbf{Data precheck:} Result of 742 manually labelled sentences. The labelling was done to see what result can be expected from the crowdsourcing task.}
+\caption{Result of 742 manually labelled sentences. The labelling was done to see what result can be expected from the crowdsourcing task.}
 \label{fig:sample}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred, cblue}]
@@ -621,7 +621,7 @@ This shows that the task at hand is difficult even for humans. For instance, sen
 
 \begin{table}[h]
 \centering
-\caption{\textbf{Uncertain sentences}: examples of uncertain sentences from all domains}
+\caption{Examples of uncertain sentences of the main study. The annotators could not agree on one class for this sentences.}
 \label{tbl:all_res}
 \begin{tabularx}{\textwidth}{lXrrr}
 \toprule
