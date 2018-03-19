@@ -152,9 +152,32 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 \label{my-label}
 \begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
-Feature & Worst Fold (F1) & Average Fold (F1) & Best Fold (F1) & Mean F1 \\ \midrule
+Feature & Worst (F1) & Average (F1) & Best (F1) & Mean F1 \\ \midrule
 
-TF-IDF (middle part, unigrams) &	 0.84 &	 0.85&	 0.89&	0.86 \\ 
+TF-IDF (middle part, unigrams) &         0.84 &  0.85&   0.89&  0.86 \\ 
+TF-IDF (whole sentence, unigrams) &      0.77 &  0.78&   0.79&  0.78 \\ 
+TF-IDF (middle part, bigrams) &  0.77 &  0.80&   0.82&  0.80 \\ 
+TF-IDF (whole sentence, bigrams) &       0.71 &  0.72&   0.75&  0.72 \\ 
+TF-IDF (middle part, trigrams) &         0.68 &  0.69&   0.71&  0.69 \\ 
+TF-IDF (whole sentence, trigrams) &      0.65 &  0.66&   0.69&  0.67 \\ 
+Sentence Embedding (middle part) &       0.85 &  0.85&   0.88&  0.86 \\ 
+Sentence Embedding (whole sentence) &    0.77 &  0.79&   0.82&  0.79 \\ 
+Mean Word Embedding (whole sentence) &   0.74 &  0.75&   0.78&  0.76 \\ 
+Mean Word Embedding (middle part) &      0.81 &  0.83&   0.83&  0.82 \\ 
+Unigrams (whole sentence, binary) &      0.76 &  0.78&   0.79&  0.77 \\ 
+Unigrams (middle part, binary) &         0.85 &  0.85&   0.87&  0.86 \\ 
+Bigrams (whole sentence, binary) &       0.69 &  0.70&   0.74&  0.71 \\ 
+Bigrams (middle part, binary) &  0.78 &  0.81&   0.83&  0.80 \\ 
+Trigrams (whole sentence, binary) &      0.66 &  0.67&   0.68&  0.67 \\ 
+Trigrams (middle part, binary) &         0.69 &  0.70&   0.71&  0.70 \\ 
+Contains JJR (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
+Contains JJR (middle part) &     0.76 &  0.76&   0.77&  0.76 \\ 
+Contains JJS (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
+Contains JJS (middle part) &     0.62 &  0.62&   0.63&  0.63 \\ 
+Contains RBR (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
+Contains RBR (middle part) &     0.68 &  0.69&   0.70&  0.69 \\ 
+Contains RBS (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
+Contains RBS (middle part) &     0.62 &  0.62&   0.62&  0.62 \\ 
 \bottomrule\end{tabularx}
 \end{table}
 
