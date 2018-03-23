@@ -19,15 +19,6 @@ from util.data_utils import load_data, k_folds
 from util.misc_utils import get_logger
 from util.ngram_utils import get_all_ngrams
 
-ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
-                  ('full sentence replace', ExtractRawSentence(processing='replace')),
-                  ('full sentence remove', ExtractRawSentence(processing='remove')),
-                  ('full sentence remove dist', ExtractRawSentence(processing='remove_dist')),
-                  ('middle part', ExtractMiddlePart()),
-                  ('middle part replace', ExtractMiddlePart(processing='replace')),
-                  ('middle part remove', ExtractMiddlePart(processing='remove')),
-                  ('middle part remove dist', ExtractMiddlePart(processing='remove_dist')), ]
-
 
 class WordVector(BaseEstimator, TransformerMixin):
 
@@ -59,12 +50,28 @@ class POSTransformer(BaseEstimator, TransformerMixin):
 
 
 def all_extractor_combis(feature_class, name, *args):
+    ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
+                      ('full sentence replace', ExtractRawSentence(processing='replace')),
+                      ('full sentence remove', ExtractRawSentence(processing='remove')),
+                      ('full sentence remove dist', ExtractRawSentence(processing='remove_dist')),
+                      ('middle part', ExtractMiddlePart()),
+                      ('middle part replace', ExtractMiddlePart(processing='replace')),
+                      ('middle part remove', ExtractMiddlePart(processing='remove')),
+                      ('middle part remove dist', ExtractMiddlePart(processing='remove_dist'))]
     return [('{} - {}'.format(name, e[0]), FeatureUnion([(name, Pipeline([e, (name, feature_class(*args))]))])) for e
             in
             ALL_EXTRACTORS]
 
 
 def all_extractor_ngram(n, base_ngrams, min_freq=1, filter_punct=True):
+    ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
+                      ('full sentence replace', ExtractRawSentence(processing='replace')),
+                      ('full sentence remove', ExtractRawSentence(processing='remove')),
+                      ('full sentence remove dist', ExtractRawSentence(processing='remove_dist')),
+                      ('middle part', ExtractMiddlePart()),
+                      ('middle part replace', ExtractMiddlePart(processing='replace')),
+                      ('middle part remove', ExtractMiddlePart(processing='remove')),
+                      ('middle part remove dist', ExtractMiddlePart(processing='remove_dist'))]
     unions = [('n-grams (n={}, min freq={}, filter punct={}) - {}'.format(n, min_freq, filter_punct, e[0]),
                FeatureUnion([(str(n), Pipeline(
                    [e, ('transformer', NGramTransformer(n=n, min_freq=min_freq, filter_punct=filter_punct)),
@@ -118,12 +125,14 @@ feature_unions = [
                                      make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
                                                    NGramFeature(pos_trigrams_mf_5, n=3)))])),
 
-                     ('infersent + pos bigrams', FeatureUnion[
-                         ('embedding', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))), (
-                             'pos bigram', make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=2),
-                                                         NGramFeature(pos_bigrams, n=2)))])
                  ] \
-                 + all_extractor_ngram(1, unigrams) \
+                 + all_extractor_combis(MeanWordEmbedding, 'Mean WordEmbedding') \
+                 + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR') \
+                 + all_extractor_combis(ContainsPos, 'Contains JJS', 'JJS') \
+                 + all_extractor_combis(ContainsPos, 'Contains RBR', 'RBR') \
+                 + all_extractor_combis(ContainsPos, 'Contains RBS', 'RBS') + all_extractor_ngram(1, unigrams) \
+                 + all_extractor_combis(TfidfVectorizer, 'tfidf') \
+                 + all_extractor_combis(InfersentFeature, 'Infersent', infersent_model) \
                  + all_extractor_ngram(1, unigrams, filter_punct=False) \
                  + all_extractor_ngram(1, unigrams, min_freq=2) \
                  + all_extractor_ngram(1, unigrams, min_freq=10) \
@@ -135,14 +144,7 @@ feature_unions = [
                  + all_extractor_ngram(3, trigrams) \
                  + all_extractor_ngram(3, trigrams, filter_punct=False) \
                  + all_extractor_ngram(3, trigrams, min_freq=2) \
-                 + all_extractor_ngram(3, trigrams, filter_punct=False, min_freq=2) \
-                 + all_extractor_combis(TfidfVectorizer, 'tfidf') \
-                 + all_extractor_combis(InfersentFeature, 'Infersent', infersent_model) \
-                 + all_extractor_combis(MeanWordEmbedding, 'Mean WordEmbedding') \
-                 + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR') \
-                 + all_extractor_combis(ContainsPos, 'Contains JJS', 'JJS') \
-                 + all_extractor_combis(ContainsPos, 'Contains RBR', 'RBR') \
-                 + all_extractor_combis(ContainsPos, 'Contains RBS', 'RBS')
+                 + all_extractor_ngram(3, trigrams, filter_punct=False, min_freq=2)
 
 best_per_feat = []
 for caption, feature_union in feature_unions:
@@ -163,8 +165,8 @@ for caption, feature_union in feature_unions:
         pprint(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
         logger.info(latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
                                                 caption=caption))
-    except Exception as e:
-        logger.error(e)
+    except Exception as ex:
+        logger.error(ex)
     logger.info("\n\n=================\n\n")
 
 logger.info(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
