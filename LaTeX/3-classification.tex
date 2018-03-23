@@ -6,6 +6,21 @@ The data collected from the crowdsourcing task was used as training data for cla
 The data was split into a training set (5937 examples; 4270 \texttt{NONE}, 1158 \texttt{BETTER} and 509 \texttt{WORSE}) and a held-out set. The held-out set stayed untouched until the final evaluation presented in section \ref{sec:final}. During the development, the experiments were evaluated using stratified k-fold cross-validation where k equals five. The evaluation was done with the scikit-learn implementation. As the evalutation metric, the weighted mean\footnote{weighted by number of examples per class} of the F1 scores of all classes is used. 
 
 \section{Choice of Algorithms}
+
+\begin{table}[h] 
+ \centering 
+ \caption{ tfidf - middle part remove dist } 
+ \label{  }\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+BETTER	&	 0.86 (0.15) &	 1.00 (0.18) &	 0.92 (0.12)  \\ 
+WORSE	&	 0.00 (0.00) &	 0.00 (0.00) &	 0.00 (0.00)  \\ 
+NONE	&	 1.00 (0.05) &	 0.95 (0.06) &	 0.98 (0.05)  \\ 
+average	&	 0.97 (0.08) &	 0.96 (0.07) &	 0.97 (0.07)  \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
 To find the best performing classification algorithms, eleven (see table \ref{tbl:algo}) were selected and compared. For all algorithms under test, the unigrams of the whole sentence were used as binary features (the implementation is described in section \ref{sec:ngrams}). Unigrams are a simple yet efficient feature for text classification (\cite{cavnar1994n}) which makes them suitable as a baseline feature for comparisons. Stratified k-fold with k equals five was used to assess the quality of the algorithm. The unweighted average of the five F1 scores was used to make the different algorithms more comparable.
 
 \begin{table}[h]
@@ -108,7 +123,7 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 
     \begin{table}[h]
 \centering
-\caption{ Majority Class Baseline (three classes)}
+\caption{Majority class baseline for the three-class classification task.}
 \label{tbl:majority_class_baseline}
 \begin{tabular}{@{}lccccccccc@{}}
 \toprule
@@ -128,7 +143,7 @@ The second baseline is created by assigning classes to the data at random, respe
 
  \begin{table}[h]
                 \centering
-\caption{ Random Baseline (stratified, three classes) }
+\caption{Random baseline for the three-class classification task. The classes are assigned at random, but the distribution in the original data set is kept.}
 \label{tbl:random_baseline}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule
@@ -148,7 +163,7 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 %==== result table     
 \begin{table}[h]
 \centering
-\caption{My caption}
+\caption{F1 scores for the three-class classification task. The table shows the result of the best, worst and average fold and the mean of the three folds.}
 \label{my-label}
 \begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
@@ -188,7 +203,7 @@ Table \ref{tbl:bin_maj}; Table \ref{tbl:bin_strat}
 
  \begin{table}[h]
                 \centering
-\caption{Random Baseline (stratified, binary)}
+\caption{Random baseline for the binary classification task. The classes are assigned at random, but the distribution in the original data set is kept.}
 \label{tbl:bin_strat}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule
@@ -203,7 +218,7 @@ average	 & 0.58	 & 0.58	 & 0.58	 &0.60	 & 0.60	 & 0.60	 &0.61	 & 0.60	 & 0.60	 \
 
  \begin{table}[h]
                 \centering
-\caption{Majority Class Baseline}
+\caption{Majority class baseline for the binar classification task.}
 \label{tbl:bin_maj}
  \begin{tabular}{@{}lccccccccc@{}}
               \toprule

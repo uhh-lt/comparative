@@ -102,10 +102,10 @@ Feature & Worst (F1) & Average (F1) & Best (F1) & Mean F1 \\\ \midrule
 
 def get_logger(name):
     now = datetime.now()
-    s = '{}-{}-({}_{})'.format(name, now.day, now.hour, now.minute)
+    s = '{}-{} {} {}'.format(now.day, now.hour, name, now.minute)
     logger = logging.getLogger(s)
     logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler(s + '.log')
+    fh = logging.FileHandler('logs/' + s + '.log')
     ch = logging.StreamHandler()
     logger.addHandler(fh)
     logger.addHandler(ch)
