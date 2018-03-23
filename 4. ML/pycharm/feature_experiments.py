@@ -65,13 +65,12 @@ def all_extractor_combis(feature_class, name, *args):
 
 
 def all_extractor_ngram(n, base_ngrams, min_freq=1, filter_punct=True):
-    return [('n-grams (n={}, min freq={}, filter punct={}) - {}'.format(n, min_freq, filter_punct, e[0]),
-             FeatureUnion([(str(n), Pipeline(
-                 [e, ('transformer', NGramTransformer(n=n, min_freq=min_freq, filter_punct=filter_punct)),
-                  ('feat', NGramFeature(base_ngrams, n=n))]))])) for
-            e
-            in
-            ALL_EXTRACTORS]
+    unions = [('n-grams (n={}, min freq={}, filter punct={}) - {}'.format(n, min_freq, filter_punct, e[0]),
+               FeatureUnion([(str(n), Pipeline(
+                   [e, ('transformer', NGramTransformer(n=n, min_freq=min_freq, filter_punct=filter_punct)),
+                    ('feat', NGramFeature(base_ngrams, n=n))]))])) for e in ALL_EXTRACTORS]
+
+    return unions
 
 
 nlp = spacy.load('en')
@@ -79,17 +78,50 @@ nlp = spacy.load('en')
 logger = get_logger('feature_tests')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
-data = load_data('data.csv')[:150]
+data = load_data('data.csv')
 
 infersent_model = initialize_infersent(data.sentence.values)
 unigrams = get_all_ngrams(data.sentence.values, 1)
 bigrams = get_all_ngrams(data.sentence.values, 2)
 trigrams = get_all_ngrams(data.sentence.values, 3)
 
+pos_bigrams = get_all_ngrams(POSTransformer().transform(data.sentence.values), 2)
+
+pos_trigrams = get_all_ngrams(POSTransformer().transform(data.sentence.values), 3)
+pos_trigrams_mf_5 = get_all_ngrams(POSTransformer().transform(data.sentence.values), n=3, min_freq=5)
+
 folds = list(k_folds(5, data))
 
 feature_unions = [
+                     ('pos bigrams full sentence',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=2),
+                                                   NGramFeature(pos_bigrams, n=2)))])),
+                     ('pos bigrams middle part',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractMiddlePart(), POSTransformer(), NGramTransformer(n=2),
+                                                   NGramFeature(pos_bigrams, n=2)))])),
+                     ('pos trigrams full sentence',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
+                                                   NGramFeature(pos_bigrams, n=3)))])),
+                     ('pos trigrams middle part',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractMiddlePart(), POSTransformer(), NGramTransformer(n=3),
+                                                   NGramFeature(pos_trigrams, n=3)))])),
+                     ('pos trigrams full sentence',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
+                                                   NGramFeature(pos_trigrams, n=3)))])),
+                     ('pos trigrams full sentence min freq 5',
+                      FeatureUnion([('feat',
+                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
+                                                   NGramFeature(pos_trigrams_mf_5, n=3)))])),
 
+                     ('infersent + pos bigrams', FeatureUnion[
+                         ('embedding', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))), (
+                             'pos bigram', make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=2),
+                                                         NGramFeature(pos_bigrams, n=2)))])
                  ] \
                  + all_extractor_ngram(1, unigrams) \
                  + all_extractor_ngram(1, unigrams, filter_punct=False) \
@@ -116,19 +148,23 @@ best_per_feat = []
 for caption, feature_union in feature_unions:
     logger.info(caption)
     folds_results = []
-    for train, test in folds:
-        pipeline = make_pipeline(feature_union, classifier)
+    try:
+        for train, test in folds:
+            pipeline = make_pipeline(feature_union, classifier)
 
-        fitted = pipeline.fit(train, train[LABEL].values)
-        predicted = fitted.predict(test)
-        folds_results.append((test[LABEL].values, predicted))
-        logger.info(classification_report(test[LABEL].values, predicted, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
-    der = get_std_derivations(folds_results, ['BETTER', 'WORSE', 'NONE'])
-    best = get_best_fold(folds_results)
-    best_per_feat.append((f1_score(best[0], best[1], average='weighted'), caption))
-    pprint(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
-    logger.info(latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
-                                            caption=caption))
+            fitted = pipeline.fit(train, train[LABEL].values)
+            predicted = fitted.predict(test)
+            folds_results.append((test[LABEL].values, predicted))
+            logger.info(
+                classification_report(test[LABEL].values, predicted, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
+        der = get_std_derivations(folds_results, ['BETTER', 'WORSE', 'NONE'])
+        best = get_best_fold(folds_results)
+        best_per_feat.append((f1_score(best[0], best[1], average='weighted'), caption))
+        pprint(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
+        logger.info(latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
+                                                caption=caption))
+    except Exception as e:
+        logger.error(e)
     logger.info("\n\n=================\n\n")
 
 logger.info(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
