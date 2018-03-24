@@ -105,30 +105,34 @@ A couple of features did not contribute to the classification at all, be it alon
 \label{sec:baseline}
 As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{foo}, assigns all sentences to the class \texttt{NONE}.
 
-
+% 24.3
 \begin{table}[!htb]
     \begin{minipage}{.5\linewidth}
-      \caption{Random baseline for the binary classification task.}
+      \caption{Random (stratified) baseline for the classification task.}
       \label{foo}
       \centering
+      
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-ARG	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-NONE	&	 0.80 \scriptsize{(0.03)} &	 1.00 \scriptsize{(0.00)} &	 0.89 \scriptsize{(0.02)}  \\ 
-average	&	 0.64 \scriptsize{(0.04)} &	 0.80 \scriptsize{(0.03)} &	 0.71 \scriptsize{(0.04)}  \\ 
+\texttt{BETTER}	&	 0.22 \scriptsize{(0.02)} &	 0.23 \scriptsize{(0.02)} &	 0.22 \scriptsize{(0.02)}  \\ 
+\texttt{WORSE}	&	 0.10 \scriptsize{(0.02)} &	 0.08 \scriptsize{(0.02)} &	 0.09 \scriptsize{(0.02)}  \\ 
+\texttt{NONE}	&	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)}  \\ 
+average	&	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)}  \\ 
 \bottomrule
-\end{tabular}
-    \end{minipage}%
+\end{tabular} 
+
+  \end{minipage}%
     \begin{minipage}{.5\linewidth}
       \centering
-        \caption{Majority class baseline for the binar classification task.}
+        \caption{Majority class baseline for the classification task.}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-ARG	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-NONE	&	 0.80 \scriptsize{(0.03)} &	 1.00 \scriptsize{(0.00)} &	 0.89 \scriptsize{(0.02)}  \\ 
-average	&	 0.64 \scriptsize{(0.04)} &	 0.80 \scriptsize{(0.03)} &	 0.71 \scriptsize{(0.04)}  \\ 
+\texttt{BETTER}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+\texttt{WORSE}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{(0.00)} &	 0.84 \scriptsize{(0.00)}  \\ 
+average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 \textbf{0.61} \scriptsize{(0.00)}  \\ 
 \bottomrule
 \end{tabular}
     \end{minipage} 
@@ -144,73 +148,50 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 \subsection{Results}
 
-\begin{table}[!htb]
-    \caption{Global caption}
-    \begin{minipage}{.52\linewidth}
-      \caption{Bla blubb}
-      \centering
- \begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.63 \scriptsize{(0.06)} &	 0.34 \scriptsize{(0.03)} & 0.45 \scriptsize{(0.03)}  \\ 
-\texttt{WORSE}	&	 0.33 \scriptsize{(0.16)} &	 0.01 \scriptsize{(0.01)} & 0.02 \scriptsize{(0.01)}  \\ 
-\texttt{NONE}	&	 0.79 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} & 0.87 \scriptsize{(0.00)}  \\ \midrule
-average	&	 0.72 \scriptsize{(0.02)} &	 0.77 \scriptsize{(0.01)} & 0.72 \scriptsize{(0.01)}  \\ 
-\bottomrule
-\end{tabular}
-    \end{minipage}%
-    \begin{minipage}{.5\linewidth}
-      \centering
-        \caption{Blubb}
- \begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.63 \scriptsize{(0.06)} &	 0.34 \scriptsize{(0.03)} & 0.45 \scriptsize{(0.03)}  \\ 
-\texttt{WORSE}	&	 0.33 \scriptsize{(0.16)} &	 0.01 \scriptsize{(0.01)} & 0.02 \scriptsize{(0.01)}  \\ 
-\texttt{NONE}	&	 0.79 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} & 0.87 \scriptsize{(0.00)}  \\ \midrule
-average	&	 0.72 \scriptsize{(0.02)} &	 0.77 \scriptsize{(0.01)} & 0.72 \scriptsize{(0.01)}  \\ 
-\bottomrule
-\end{tabular}
-    \end{minipage} 
-\end{table}
+
 
 %==== result table     
 
 
 \section{Binary classification}
 \subsection{Baseline}
-
+% 24.3
 Table \ref{tbl:bin_maj}; Table \ref{tbl:bin_strat}
 
- \begin{table}[h]
-                \centering
-\caption{Random baseline for the binary classification task. The classes are assigned at random, but the distribution in the original data set is kept.}
-\label{tbl:bin_strat}
- \begin{tabular}{@{}lccccccccc@{}}
-              \toprule
-               & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
-               & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
-\texttt{ARG}	 & 0.25	 & 0.26	 & 0.25	 &0.29	 & 0.29	 & 0.29	 &0.30	 & 0.30	 & 0.30	 \\ 
-\texttt{NONE}	 & 0.71	 & 0.70	 & 0.71	 &0.72	 & 0.72	 & 0.72	 &0.73	 & 0.72	 & 0.72	 \\ \midrule 
-average	 & 0.58	 & 0.58	 & 0.58	 &0.60	 & 0.60	 & 0.60	 &0.61	 & 0.60	 & 0.60	 \\ \bottomrule
 
-    \end{tabular}
+\begin{table}[!htb]
+    \begin{minipage}{.5\linewidth}
+      \caption{Random (stratified) baseline for the binary classification task.}
+      \label{foo}
+      \centering
+      
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{ARG}	&	 0.31 \scriptsize{(0.02)} &	 0.31 \scriptsize{(0.02)} &	 0.31 \scriptsize{(0.02)}  \\ 
+\texttt{NONE}	&	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)}  \\ 
+average	&	 0.62 \scriptsize{(0.01)} &	 0.62 \scriptsize{(0.01)} &	 \textbf{0.62} \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+
+  \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Majority class baseline for the binary classification task.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{ARG}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{(0.00)} &	 0.84 \scriptsize{(0.00)}  \\ 
+average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scriptsize{(0.00)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage} 
 \end{table}
 
- \begin{table}[h]
-                \centering
-\caption{Majority class baseline for the binar classification task.}
-\label{tbl:bin_maj}
- \begin{tabular}{@{}lccccccccc@{}}
-              \toprule
-               & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
-               & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
-\texttt{ARG}	 & 0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 \\ 
-\texttt{NONE}	 & 0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 \\ \midrule 
-average	 & 0.52	 & 0.72	 & 0.60	 &0.52	 & 0.72	 & 0.60	 &0.52	 & 0.72	 & 0.60	 \\ \bottomrule
 
-    \end{tabular}
-\end{table}
+
+
 
 \subsection{Results}
 
