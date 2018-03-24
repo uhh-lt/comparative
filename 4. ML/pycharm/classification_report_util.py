@@ -20,13 +20,14 @@ def latex_classification_report(y_true, y_pred, average='weighted', labels=None,
                          'precision_der': derivations['precision']['avg'], 'recall_der': derivations['recall']['avg'],
                          'f1_der': derivations['f1']['avg']}
 
-    table_str = '\\begin{{table}}[h] \n \centering \n \caption{{ {} }} \n \label{{ {} }}'.format(caption, tbl_label)
+    table_str = '\\begin{{table}}[h] \n \centering \n \caption{{ {} }} \n \label{{ {} }}\n'.format(caption, tbl_label)
     table_str += '\\begin{tabular}{@{}lrrrr@{}}\n\\toprule\n' if style is 'booktabs' else '\\begin{tabular}{lrrrr}\n'
     table_str += ' \t&\t precision &\t recall &\t f1 score  \\\ \midrule \n' if style is 'booktabs' else ' \t&\t precision &\t recall &\t f1 score  \\\ \hline \n'
 
-    for k, v in values.items():
-        table_str += '{}\t&\t {:04.2f} ({:04.2f}) &\t {:04.2f} ({:04.2f}) &\t {:04.2f} ({:04.2f})  \\\ \n'.format(k, v[
-            'precision'], v['precision_der'], v['recall'], v['recall_der'], v['f1'], v['f1_der'])
+    for  k, v in values.items():
+        table_str += '{}\t&\t {:04.2f} \scriptsize{{({:04.2f})}} &\t {:04.2f} \scriptsize{{({:04.2f})}} &\t {:04.2f} \scriptsize{{({:04.2f})}}  \\\ \n'.format(
+            k, v[
+                'precision'], v['precision_der'], v['recall'], v['recall_der'], v['f1'], v['f1_der'])
 
     table_str += '\\bottomrule\n' if style is 'booktabs' else '\hline\n'
     table_str += '\end{tabular}\n\end{table}'

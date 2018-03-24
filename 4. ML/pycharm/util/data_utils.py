@@ -17,7 +17,7 @@ def load_data(file_name, min_ratio=0.0, binary=False, source=None):
     frame = df.from_csv(path='data/' + file_name)
     frame = frame[frame['most_frequent_percentage'] >= min_ratio]
     if binary:
-        frame['label'] = frame.apply(lambda row: row['label'] if row['label'] == 'NONE' else 'ARG', axis=1)
+        frame['most_frequent_label'] = frame.apply(lambda row: row['most_frequent_label'] if row['most_frequent_label'] == 'NONE' else 'ARG', axis=1)
     if source is not None:
         frame = frame[frame['type'] == source]
     print('Loaded {} training examples'.format(len(frame)))

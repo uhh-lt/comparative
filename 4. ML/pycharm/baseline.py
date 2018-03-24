@@ -3,6 +3,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, f1_score
 from sklearn.pipeline import make_pipeline
 
+from classification_report_util import get_best_fold, latex_classification_report, get_std_derivations
 from features.ngram_feature import NGramFeature
 from transformers.data_extraction import ExtractRawSentence
 from transformers.n_gram_transformers import NGramTransformer
@@ -12,7 +13,7 @@ from util.ngram_utils import get_all_ngrams
 
 import datetime
 
-LABEL = 'most_frequent_class'
+LABEL = 'most_frequent_label'
 
 now = datetime.datetime.now()
 logger = get_logger('baseline')
@@ -36,18 +37,18 @@ def create_baseline(data, labels, table_fkt):
             print(f1_score(test[LABEL].values, predicted, average='weighted',
                            labels=labels))
 
-            res.append((f1_score(test[LABEL].values, predicted, average='weighted',
-                                 labels=labels), (test[LABEL].values, predicted)))
+            res.append((test[LABEL].values, predicted))
 
             logger.info("===========")
-        res = sorted(res, key=lambda x: x[0])
-        table_fkt([res[0][1]] + [res[2][1]] + [res[4][1]], 'cap')
+        best = get_best_fold(res)
+        der = get_std_derivations(res, labels)
+        logger.info(latex_classification_report(best[0], best[1], labels=labels,derivations=der))
 
 
 logger.info('# BINARY CLASSES BASELINE')
 _data_bin = load_data('data.csv', binary=True)
-create_baseline(_data_bin, ['ARG', 'NONE'], latex_table_bin)[:50]
+create_baseline(_data_bin, ['ARG', 'NONE'], latex_table_bin)
 
 logger.info('# THREE CLASSES BASELINE')
 _data = load_data('data.csv', binary=False)
-create_baseline(_data, ['BETTER', 'WORSE', 'NONE'], latex_table)[:50]
+create_baseline(_data, ['BETTER', 'WORSE', 'NONE'], latex_table)

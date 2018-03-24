@@ -6,7 +6,8 @@ This data set was designed to answer two questions: if a given sentence compares
 
 The data set was created using the crowdsourcing platform CrowdFlower\footnote{https://www.crowdflower.com (23.02.2018)}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest are highlighted.
 
-The final data set contains 7421 sentences, each containing one of 273 object pairs. Each sentence was at least annotated by three different annotators.
+% zahlen 24.03
+The final data set contains 7199 sentences, each containing one of 271 object pairs. Each sentence was at least annotated by three different annotators.
 
 \section{Common Crawl Text Corpus}
 The sentences for the crowdsourcing task were obtained from a CommonCrawl\footnote{https://commoncrawl.org (23.02.2018)} data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
@@ -299,9 +300,9 @@ All in all, the prestudy was successful. There are only few cases where no agree
 \label{sec:designchanges}
 The insights from the prestudy influcenced the design of the main study.
 
-The class \texttt{UNCLEAR} was renamed to \texttt{OTHER}, \texttt{NO\_COMP} to \texttt{NONE}. Those names are a better description for the classes. Eventually, after the first 1500 sentences were finished the class \texttt{OTHER} was dropped completly (see section \ref{sec:brands}). The change was reflected in the annotation guidelines as well. 
+The class \texttt{UNCLEAR} was renamed to \texttt{OTHER}, \texttt{NO\_COMP} to \texttt{NONE}. Those names are a better description for the classes. Eventually, after the first 2250 sentences were finished the class \texttt{OTHER} was dropped completly (see section \ref{sec:brands}). The change was reflected in the annotation guidelines as well. 
 
-Instead of one big task, one task per domain was created. All tasks used the same annotation guidelines.
+Instead of one big task, one task per domain was created. All tasks used the same annotation guidelines. Each sentence was at least annotated by five annotators.
 
 
 \subsection{Sentence Selection}
@@ -442,7 +443,7 @@ yale%23NP
 In the following, this domain is called \emph{Random}. Some example pairs for all domains are shown in table \ref{tbl:exp_pairs}.
 \begin{table}[h]
 \centering
-\caption{Objects pairs for the main study. The pairs are used to extract sentences from the ElasticSearch index.}
+\caption{Examples of objects pairs for the main study. Those pairs are used to extract sentences from the ElasticSearch index.}
 \label{tbl:exp_pairs}
 
 \begin{tabularx}{\textwidth}{XXX}
@@ -490,40 +491,47 @@ The label distribution of the 742 sentences is presented in the figure \ref{fig:
 
 \subsection{Brands}
 \label{sec:brands}
-For the Brands domain, 2493 sentences were annotated. The sentences contained objects of sixty-three pairs. As shown in table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
 
+% zahlen 23.3
+For the Brands domain, 2335 sentences were annotated. The sentences contained objects of sixty-three pairs. As shown in table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
+
+
+% zahlen 23.3
 \begin{table}[h]
-\caption{Annotator agreement for sentence of the domain \emph{Brands}}
+\caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
 \label{fig:brand_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 1791 & 71.84\%\\
-2 & 645 & 25.87\%\\
-3 & 57 & 2.29\%\\
+100\%	&	1719	&	71.30\%	 \\ 
+80-99\%	&	360	&	14.93\%	 \\ 
+60-79\%	&	275	&	11.41\%	 \\ 
+0-50\%	&	57	&	2.36\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
 
 
-The class distribution is presented in figure \ref{fig:brands_fin}. The amount of comparative sentences is lower (26.1\%) than in the prestudy. The reason for this is the abandonment of the \texttt{OTHER} (\texttt{UNCLEAR}) class. 
+The class distribution is presented in figure \ref{fig:brands_fin}. The amount of comparative sentences is lower (24.45\%) than in the prestudy. The reason for this is the abandonment of the \texttt{OTHER} (\texttt{UNCLEAR}) class. 
 
+% zahlen 23.3
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Brands}}
 \label{fig:brands_fin}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {73.9 /NONE (1843),
-    18.36  /BETTER (458),
-    7.74 /WORSE (193)}
+    {75.55 /NONE (1764),
+    17.30  /BETTER (404),
+    7.15 /WORSE (167)}
 \end{tikzpicture}
 \end{figure}
 
 
 
+% zahlen alt
 Even with the rephrasing of that class, it was too confusing for the annotators. The class was not different enough from \texttt{NONE} (\texttt{NO\_COMP}). Eventually, all sentences labelled as \texttt{OTHER} (124 sentences for brands) were merged into \texttt{NONE}. This decision was made after 750 sentences were labelled for each domain. First machine learning experiments also showed that \texttt{OTHER} is not distinguishable from \texttt{NONE} for all tested features and algorithms.
 
 For the first 750 sentences, 398 passed the quiz while 357 failed. During the annotation process, fifty-two were removed as they answered to many test questions wrong. The overall satisfaction was 3.4 out of 5. In detail, the acceptance of the task was okay (instructions: 3.9, test question fairness: 3.4, ease of job: 3.4, payment: 3.8).\footnote{The 750 sentences were, due to a mistake, divided into two tasks, one with one-hundred (twenty-six participants in the survey) and one with 650 (fourty-one participants). The presented satisfaction values are the averages weighted by number of participants}
@@ -532,106 +540,118 @@ For the rest of the sentences, fifty-one participants took the exit survey. The 
 
 
 \subsection{Computer Science}
-
-For the Computer Science domain, 2465 sentences (containing one of fourty-three pairs) were annotated. As with brands, the agreement of the annotators (table \ref{fig:compsci_agg}) is satisfactory. The class distribution (figure \ref{fig:compsci_fin}) is better, as more sentences are comparative.
+% zahlen 23.3
+For the Computer Science domain, 2425 sentences (containing one of fourty-two pairs) were annotated. As with brands, the confidence of the annotations (table \ref{fig:compsci_agg}) is satisfactory. The class distribution (figure \ref{fig:compsci_fin}) is better, as more sentences are comparative.
 
 \begin{table}[h]
-\caption{Annotator agreement for sentence of the domain \emph{Computer Science}}
+\caption{Annotation confidence for the domain \emph{Computer Science}. The confidence is calculated as \emph{judgments for majority class / total judgments}. }
 \label{fig:compsci_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 1757 & 71.28\%\\
-2 & 643 & 26.09\%\\
-3 & 65 & 2.64\%\\
+100\%	&	1698	&	70.02\%	 \\ 
+80-99\%	&	391	&	16.12\%	 \\ 
+60-79\%	&	267	&	11.01\%	 \\ 
+0-50\%	&	69	&	2.85\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
-
-
+% zahlen 23.3
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Computer Science}}
 \label{fig:compsci_fin}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {65.64 /NONE (1618),
-    23.94  /BETTER (590),
-    10.43 /WORSE (257)}
+    {65.81 /NONE (1596),
+    23.96  /BETTER (581),
+    10.24 /WORSE (248)}
 \end{tikzpicture}
 \end{figure}
 
+% zahlen alt
 Again, many people failed the quiz (121 failed, 132 passed) for the first 750 sentences. Thirty-five people dropped out during the annotation process because they missed to many test questions. The twenty-seven participants who took the exit survey rated the overall satisfaction with 3.5 (instructions: 3.5, test question fairness: 3, ease of job: 3.2, payment: 3.6).
 
 The numbers improved for the rest of the sentences (after the removal of \texttt{OTHER}). Only sixty-four failed the quiz (379 passed); twenty-six were removed during the annotation process. Fourty-seven participants took the exit survey on the second part. The overall satisfaction was rated with 3.9 (instructions: 4.2, test question fairness: 4, ease of job: 3.8, payment: 3.9).
 
 \subsection{Random}
-The random domain has 2463 sentences and 167 pairs. The agreement (table \ref{fig:random_agg}) and class distribution (figure \ref{fig:random_fin}) are satisfactory as well.
-    
+The random domain has 2439 sentences and 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (figure \ref{fig:random_fin}) are satisfactory as well.
+   % zahlen 23.3 
 \begin{table}[h]
-\caption{Annotator agreement for sentence of the domain \emph{Random}}
+\caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}}.
 \label{fig:random_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 1766 & 71.70\%\\
-2 & 627 & 25.46\%\\
-3 & 70 & 2.84\%\\
+100\%	&	1753	&	71.87\%	 \\ 
+80-99\%	&	378	&	15.50\%	 \\ 
+60-79\%	&	259	&	10.62\%	 \\ 
+0-50\%	&	49	&	2.01\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
-
+% zahlen 23.3
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Random}}
 \label{fig:random_fin}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {76.21 /NONE (1877),
-    16.24  /BETTER (400),
-    7.55 /WORSE (186)}
+    {77.16 /NONE (1882),
+    15.54  /BETTER (379),
+    7.30 /WORSE (178)}
 \end{tikzpicture}
 \end{figure}
 
-As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest, as 128 annotators failed the quiz (164 passed) and twenty-seven annotators were removed during the task due to bad performance on the test questions. The Random domain got the worst satisfaction rating (twenty-nine participants) of all domains. The overall satisfaction was rated with 3.1 out of 5 (instructions: 3.6, test question fairness: 3.4, ease of job: 3, payment: 3.4). Once more, the numbers improve after \texttt{OTHER} was removed. Only seventy-five failed the quiz (423 passed). The ratings (thirty-seven participants) increased as well. The overall satisfaction was now rated with 4.0 (instructions: 4.1, test question fairness: 3.9, ease of job: 4, payment: 3.7).
+As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest, as 128 annotators failed the quiz (164 passed) and twenty-seven annotators were removed during the task due to bad performance on the test questions. The Random domain got the worst satisfaction rating (twenty-nine participants) of all domains. The overall satisfaction was rated with 3.1 out of 5 (instructions: 3.6, test question fairness: 3.4, ease of job: 3, payment: 3.4).
+
+Once more, the numbers improve after \texttt{OTHER} was removed. Only seventy-five failed the quiz (423 passed). The ratings (thirty-seven participants) increased as well. The overall satisfaction was now rated with 4.0 (instructions: 4.1, test question fairness: 3.9, ease of job: 4, payment: 3.7).
 
 
 \subsection{Validation of results}
-
-Table \ref{fig:all_agg} summarises the agreement of the annotators on all three domains. The annotators could agree on one class for the majority of the sentences. However, for 28.92\% of the sentences, no clear decision could be made. For 2.67\%, all annotators choose a different class. 
+% zahlen 23.3
+Table \ref{fig:all_agg} summarises the confidence of the annotations on all three domains. The annotators could agree on one class for the majority of the sentences. However, 13.32\% of the sentences have a confidence below 80\%. For 2.67\%, no class got the majority of votes. 
 
 \begin{table}[h]
-\caption{Annotator agreement for all sentences}
+\caption{Annotation confidence for all domains. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:all_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 5275 & 71.08\%\\
-2 & 1948 & 26.25\%\\
-3 & 198 & 2.67\%\\
+100\%	&	5111	&	71.00\%	 \\ 
+80-99\%	&	1129	&	15.68\%	 \\ 
+60-79\%	&	790	&	10.97\%	 \\ 
+0-50\%	&	169	&	2.35\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
-This shows that the task at hand is difficult even for humans. For instance, sentence one in table \ref{tbl:all_res} requires knowledge on mobile phones to be classified correctly. It also lacks a cue word. Sentence five includes a cue word (\emph{harder}) and \emph{than} which make it look like a comparison. However, the sentence is not a comparison in a way that one object wins against the other. In sentence two, the annotators overlooked the negation (\enquote{\emph{wouldn't}}).
+This shows that the task at hand is difficult even for humans. Table \ref{tbl:all_res} shows some examples on uncertain sentences. The first two sentences are comparative. Because the context is missing, a decision for one class is hard. For instance, it depends on the use case if the hardness of stone is better or worse than the hardness of metal.
 
+It is unclear if \emph{Groovy} and \emph{Java} are compared in sentence three. On one hand, one can understand this sentence in a way \emph{Groovy} is easier than \emph{Java}. On the other hand, it can be understood in a way that \emph{Groovy} supports Java programmers.
+
+The fourth sentence does not explicitly states that one is better than the other.
+% zahlen 23.3
 \begin{table}[h]
 \centering
 \caption{Examples of uncertain sentences of the main study. The annotators could not agree on one class for this sentences.}
 \label{tbl:all_res}
 \begin{tabularx}{\textwidth}{lXrrr}
 \toprule
-\# & Sentence        & Ann. 1  & Ann. 2 & Ann. 3             \\ \midrule
-1 & \textbf{{\color[HTML]{9A14B2}Samsung:{[}OBJECT\_A{]}}} voids warranty for rooting, \textbf{{\color[HTML]{6CB219}Motorola:{[}OBJECT\_B{]}}} doesn't. & NONE & WORSE & BETTER\\
-2 & I wouldn't say \textbf{{\color[HTML]{9A14B2}Microsoft:{[}OBJECT\_A{]}}} is worse then \textbf{{\color[HTML]{6CB219}Apple:{[}OBJECT\_B{]}}}. & NONE & WORSE & WORSE\\
+\# & Sentence        & \# BETTER  & \# WORSE & \# NONE            \\ \midrule
+1 & Goodnight \textbf{{\color[HTML]{9A14B2}NetBeans:{[}OBJECT\_A{]}}}, Hello \textbf{{\color[HTML]{6CB219}Eclipse:{[}OBJECT\_B{]}}} & 2&2&1\\
 
-3 & If you use \textbf{{\color[HTML]{9A14B2}NetBeans:{[}OBJECT\_A{]}}} instead of \textbf{{\color[HTML]{6CB219}Eclipse:{[}OBJECT\_B{]}}} & OTHER & BETTER & NONE \\
-4 & Visibly faster than \textbf{{\color[HTML]{9A14B2}Python:{[}OBJECT\_A{]}}} ... faster than \textbf{{\color[HTML]{6CB219}Java:{[}OBJECT\_B{]}}} I'd bet. & NONE & BETTER & BETTER \\
-5 & It's light as \textbf{{\color[HTML]{9A14B2}aluminum:{[}OBJECT\_A{]}}}, but harder than \textbf{{\color[HTML]{6CB219}steel:{[}OBJECT\_B{]}}}, he said. & NONE & OTHER & BETTER\\
+2 & \textbf{{\color[HTML]{9A14B2}stone:{[}OBJECT\_A{]}}} is harder than \textbf{{\color[HTML]{6CB219}metal:{[}OBJECT\_B{]}}}. & 1 & 2 & 2 \\
+
+3 & The new version of the \textbf{{\color[HTML]{9A14B2}Groovy:{[}OBJECT\_A{]}}} programming language aims to make life easier for programmers who work with \textbf{{\color[HTML]{6CB219}Java:{[}OBJECT\_B{]}}} and SQL, the language's developers note & 3 & 0 & 3 \\
+
+4 & Even if this \textbf{{\color[HTML]{9A14B2}juice:{[}OBJECT\_A{]}}} isn't your typical \textbf{{\color[HTML]{6CB219}cider:{[}OBJECT\_B{]}}}, it's just as good if not better in our opinion! & 2 & 1 & 2 \\
+
+5 & Only Nevada (14.4 percent), \textbf{{\color[HTML]{9A14B2}michigan:{[}OBJECT\_A{]}}}  (13 percent) and  \textbf{{\color[HTML]{6CB219}california:{[}OBJECT\_B{]}}} (12.4 percent) were worse. & 2 & 1 & 2\\
 \bottomrule                              
 \end{tabularx}
 \end{table}
@@ -639,16 +659,18 @@ This shows that the task at hand is difficult even for humans. For instance, sen
 
 The class distribution (figure \ref{fig:all_fin}) is similar to the prestudy. As expected, the majority of sentences is not comparative. 
 The class \texttt{BETTER} is more than twice as big as the class \texttt{WORSE}, which will complicate the classification.
+% zahlen 23.3
 \begin{figure}[h]
 \centering
 \caption{Distribution of classes in the final crowdsourcing data set.}
 \label{fig:all_fin}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {71.92 /NONE (5338),
-    19.51  /BETTER (1448),
-    8.57 /WORSE (636)}
+    {72.82 /NONE (5242),
+    18.95  /BETTER (1364),
+    8.24 /WORSE (593)}
 \end{tikzpicture}
 \end{figure}
 
-In the end, the crowdsourcing task was successful. For the majority of sentences (71.08\%) the annotators could agree on one class, while the amount of totally unclear sentences is small (2.67\%).
+% zahlen 23.3
+In the end, the crowdsourcing task was successful. For the majority of sentences (71.00\%) the annotators could agree on one class, while the amount of totally unclear sentences is small (2.35\%).

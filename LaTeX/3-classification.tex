@@ -7,20 +7,6 @@ The data was split into a training set (5937 examples; 4270 \texttt{NONE}, 1158 
 
 \section{Choice of Algorithms}
 
-\begin{table}[h] 
- \centering 
- \caption{ tfidf - middle part remove dist } 
- \label{  }\begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-BETTER	&	 0.86 (0.15) &	 1.00 (0.18) &	 0.92 (0.12)  \\ 
-WORSE	&	 0.00 (0.00) &	 0.00 (0.00) &	 0.00 (0.00)  \\ 
-NONE	&	 1.00 (0.05) &	 0.95 (0.06) &	 0.98 (0.05)  \\ 
-average	&	 0.97 (0.08) &	 0.96 (0.07) &	 0.97 (0.07)  \\ 
-\bottomrule
-\end{tabular}
-\end{table}
-
 To find the best performing classification algorithms, eleven (see table \ref{tbl:algo}) were selected and compared. For all algorithms under test, the unigrams of the whole sentence were used as binary features (the implementation is described in section \ref{sec:ngrams}). Unigrams are a simple yet efficient feature for text classification (\cite{cavnar1994n}) which makes them suitable as a baseline feature for comparisons. Stratified k-fold with k equals five was used to assess the quality of the algorithm. The unweighted average of the five F1 scores was used to make the different algorithms more comparable.
 
 \begin{table}[h]
@@ -117,84 +103,79 @@ A couple of features did not contribute to the classification at all, be it alon
 \section{Classification with three classes}
 \subsection{Baseline}
 \label{sec:baseline}
-As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:majority_class_baseline}, assigns all sentences to the class \texttt{NONE}.
+As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{foo}, assigns all sentences to the class \texttt{NONE}.
 
 
-
-    \begin{table}[h]
-\centering
-\caption{Majority class baseline for the three-class classification task.}
-\label{tbl:majority_class_baseline}
-\begin{tabular}{@{}lccccccccc@{}}
+\begin{table}[!htb]
+    \begin{minipage}{.5\linewidth}
+      \caption{Random baseline for the binary classification task.}
+      \label{foo}
+      \centering
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-      & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
-                 & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
-
-    
-\texttt{BETTER}	 & 0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 \\ 
-\texttt{WORSE}	 & 0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 &0.00	 & 0.00	 & 0.00	 \\ 
-\texttt{NONE}	 & 0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 &0.72	 & 1.00	 & 0.84	 \\ \midrule 
-average	 & 0.52	 & 0.72	 & 0.60	 &0.52	 & 0.72	 & \textbf{0.60}	 &0.52	 & 0.72	 & 0.60	 \\ \bottomrule
-
-    \end{tabular}
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+ARG	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+NONE	&	 0.80 \scriptsize{(0.03)} &	 1.00 \scriptsize{(0.00)} &	 0.89 \scriptsize{(0.02)}  \\ 
+average	&	 0.64 \scriptsize{(0.04)} &	 0.80 \scriptsize{(0.03)} &	 0.71 \scriptsize{(0.04)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Majority class baseline for the binar classification task.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+ARG	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+NONE	&	 0.80 \scriptsize{(0.03)} &	 1.00 \scriptsize{(0.00)} &	 0.89 \scriptsize{(0.02)}  \\ 
+average	&	 0.64 \scriptsize{(0.04)} &	 0.80 \scriptsize{(0.03)} &	 0.71 \scriptsize{(0.04)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage} 
 \end{table}
 
-The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:random_baseline}.
 
- \begin{table}[h]
-                \centering
-\caption{Random baseline for the three-class classification task. The classes are assigned at random, but the distribution in the original data set is kept.}
-\label{tbl:random_baseline}
- \begin{tabular}{@{}lccccccccc@{}}
-              \toprule
-               & \multicolumn{3}{c}{Worst} & \multicolumn{3}{c}{Average} & \multicolumn{3}{c}{Best}  \\ \midrule
-               & Precision  & Recall & F1   & Precision  & Recall  & F1    & Precision & Recall & F1   \\ \toprule
-\texttt{BETTER}	 & 0.17	 & 0.17	 & 0.17	 &0.21	 & 0.23	 & 0.22	 &0.18	 & 0.18	 & 0.18	 \\ 
-\texttt{WORSE}	 & 0.10	 & 0.09	 & 0.09	 &0.05	 & 0.04	 & 0.04	 &0.15	 & 0.14	 & 0.15	 \\ 
-\texttt{NONE}	 & 0.71	 & 0.71	 & 0.71	 &0.72	 & 0.71	 & 0.72	 &0.73	 & 0.74	 & 0.74	 \\ \midrule 
-average	 & 0.55	 & 0.55	 & 0.55	 &0.56	 & 0.56	 & \textbf{0.56}	 &0.57	 & 0.58	 & 0.58	 \\ \bottomrule
 
-    \end{tabular}
-\end{table}
+The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:a}.
 
 For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
+
+
+
 \subsection{Results}
 
-%==== result table     
-\begin{table}[h]
-\centering
-\caption{F1 scores for the three-class classification task. The table shows the result of the best, worst and average fold and the mean of the three folds.}
-\label{my-label}
-\begin{tabularx}{\textwidth}{Xrrrr}
+\begin{table}[!htb]
+    \caption{Global caption}
+    \begin{minipage}{.52\linewidth}
+      \caption{Bla blubb}
+      \centering
+ \begin{tabular}{@{}lrrrr@{}}
 \toprule
-Feature & Worst (F1) & Average (F1) & Best (F1) & Mean F1 \\ \midrule
-
-TF-IDF (middle part, unigrams) &         0.84 &  0.85&   0.89&  0.86 \\ 
-TF-IDF (whole sentence, unigrams) &      0.77 &  0.78&   0.79&  0.78 \\ 
-TF-IDF (middle part, bigrams) &  0.77 &  0.80&   0.82&  0.80 \\ 
-TF-IDF (whole sentence, bigrams) &       0.71 &  0.72&   0.75&  0.72 \\ 
-TF-IDF (middle part, trigrams) &         0.68 &  0.69&   0.71&  0.69 \\ 
-TF-IDF (whole sentence, trigrams) &      0.65 &  0.66&   0.69&  0.67 \\ 
-Sentence Embedding (middle part) &       0.85 &  0.85&   0.88&  0.86 \\ 
-Sentence Embedding (whole sentence) &    0.77 &  0.79&   0.82&  0.79 \\ 
-Mean Word Embedding (whole sentence) &   0.74 &  0.75&   0.78&  0.76 \\ 
-Mean Word Embedding (middle part) &      0.81 &  0.83&   0.83&  0.82 \\ 
-Unigrams (whole sentence, binary) &      0.76 &  0.78&   0.79&  0.77 \\ 
-Unigrams (middle part, binary) &         0.85 &  0.85&   0.87&  0.86 \\ 
-Bigrams (whole sentence, binary) &       0.69 &  0.70&   0.74&  0.71 \\ 
-Bigrams (middle part, binary) &  0.78 &  0.81&   0.83&  0.80 \\ 
-Trigrams (whole sentence, binary) &      0.66 &  0.67&   0.68&  0.67 \\ 
-Trigrams (middle part, binary) &         0.69 &  0.70&   0.71&  0.70 \\ 
-Contains JJR (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
-Contains JJR (middle part) &     0.76 &  0.76&   0.77&  0.76 \\ 
-Contains JJS (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
-Contains JJS (middle part) &     0.62 &  0.62&   0.63&  0.63 \\ 
-Contains RBR (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
-Contains RBR (middle part) &     0.68 &  0.69&   0.70&  0.69 \\ 
-Contains RBS (whole sentence) &  0.62 &  0.62&   0.62&  0.62 \\ 
-Contains RBS (middle part) &     0.62 &  0.62&   0.62&  0.62 \\ 
-\bottomrule\end{tabularx}
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.63 \scriptsize{(0.06)} &	 0.34 \scriptsize{(0.03)} & 0.45 \scriptsize{(0.03)}  \\ 
+\texttt{WORSE}	&	 0.33 \scriptsize{(0.16)} &	 0.01 \scriptsize{(0.01)} & 0.02 \scriptsize{(0.01)}  \\ 
+\texttt{NONE}	&	 0.79 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} & 0.87 \scriptsize{(0.00)}  \\ \midrule
+average	&	 0.72 \scriptsize{(0.02)} &	 0.77 \scriptsize{(0.01)} & 0.72 \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Blubb}
+ \begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.63 \scriptsize{(0.06)} &	 0.34 \scriptsize{(0.03)} & 0.45 \scriptsize{(0.03)}  \\ 
+\texttt{WORSE}	&	 0.33 \scriptsize{(0.16)} &	 0.01 \scriptsize{(0.01)} & 0.02 \scriptsize{(0.01)}  \\ 
+\texttt{NONE}	&	 0.79 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} & 0.87 \scriptsize{(0.00)}  \\ \midrule
+average	&	 0.72 \scriptsize{(0.02)} &	 0.77 \scriptsize{(0.01)} & 0.72 \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage} 
 \end{table}
+
+%==== result table     
+
 
 \section{Binary classification}
 \subsection{Baseline}
