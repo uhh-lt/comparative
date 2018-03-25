@@ -13,7 +13,7 @@ from features.contains_features import ContainsPos
 from features.mean_embedding_feature import MeanWordEmbedding
 from features.ngram_feature import NGramFeature
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
-from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
+from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart, ExtractFirstPart, ExtractLastPart
 from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
 from util.misc_utils import get_logger
@@ -100,51 +100,47 @@ pos_trigrams_mf_5 = get_all_ngrams(POSTransformer().transform(data.sentence.valu
 folds = list(k_folds(5, data))
 
 feature_unions = [
-                     ('pos bigrams full sentence',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=2),
-                                                   NGramFeature(pos_bigrams, n=2)))])),
-                     ('pos bigrams middle part',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractMiddlePart(), POSTransformer(), NGramTransformer(n=2),
-                                                   NGramFeature(pos_bigrams, n=2)))])),
-                     ('pos trigrams full sentence',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
-                                                   NGramFeature(pos_bigrams, n=3)))])),
-                     ('pos trigrams middle part',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractMiddlePart(), POSTransformer(), NGramTransformer(n=3),
-                                                   NGramFeature(pos_trigrams, n=3)))])),
-                     ('pos trigrams full sentence',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
-                                                   NGramFeature(pos_trigrams, n=3)))])),
-                     ('pos trigrams full sentence min freq 5',
-                      FeatureUnion([('feat',
-                                     make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=3),
-                                                   NGramFeature(pos_trigrams_mf_5, n=3)))])),
+    ('pos bigrams full sentence + infersent middle',
+     FeatureUnion([
+         ('pos bigram',
+          make_pipeline(ExtractRawSentence(), POSTransformer(), NGramTransformer(n=2),
+                        NGramFeature(pos_bigrams, n=2))),
+         ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))
+     ])),
 
-                 ] \
-                 + all_extractor_combis(MeanWordEmbedding, 'Mean WordEmbedding') \
-                 + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR') \
-                 + all_extractor_combis(ContainsPos, 'Contains JJS', 'JJS') \
-                 + all_extractor_combis(ContainsPos, 'Contains RBR', 'RBR') \
-                 + all_extractor_combis(ContainsPos, 'Contains RBS', 'RBS') + all_extractor_ngram(1, unigrams) \
-                 + all_extractor_combis(TfidfVectorizer, 'tfidf') \
-                 + all_extractor_combis(InfersentFeature, 'Infersent', infersent_model) \
-                 + all_extractor_ngram(1, unigrams, filter_punct=False) \
-                 + all_extractor_ngram(1, unigrams, min_freq=2) \
-                 + all_extractor_ngram(1, unigrams, min_freq=10) \
-                 + all_extractor_ngram(1, unigrams, filter_punct=False, min_freq=2) \
-                 + all_extractor_ngram(2, bigrams) \
-                 + all_extractor_ngram(2, bigrams, filter_punct=False) \
-                 + all_extractor_ngram(2, bigrams, min_freq=2) \
-                 + all_extractor_ngram(2, bigrams, filter_punct=False, min_freq=2) \
-                 + all_extractor_ngram(3, trigrams) \
-                 + all_extractor_ngram(3, trigrams, filter_punct=False) \
-                 + all_extractor_ngram(3, trigrams, min_freq=2) \
-                 + all_extractor_ngram(3, trigrams, filter_punct=False, min_freq=2)
+    ('unigram first + infersent middle + unigram last',
+     FeatureUnion([
+         ('unigram first',
+          make_pipeline(ExtractFirstPart(), NGramTransformer(n=1),
+                        NGramFeature(unigrams, n=1))),
+         ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
+         ('unigram last',
+          make_pipeline(ExtractLastPart(), NGramTransformer(n=1),
+                        NGramFeature(unigrams, n=1)))
+     ])),
+
+    ('unigrams min freq 2 full + infersent middle',
+     FeatureUnion([
+         ('unigrams',
+          make_pipeline(ExtractRawSentence(), NGramTransformer(n=1, min_freq=2),
+                        NGramFeature(get_all_ngrams(data.sentence.values, n=1, min_freq=2), n=1))),
+         ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))
+     ])),
+
+    ('infersent first + infersent middle + inferset last',
+     FeatureUnion([
+         ('infersent first', make_pipeline(ExtractFirstPart(), InfersentFeature(infersent_model))),
+         ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
+         ('infersent last', make_pipeline(ExtractLastPart(), InfersentFeature(infersent_model)))
+     ])),
+
+    ('tfidf middle + infersent middle',
+     FeatureUnion([
+         ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
+         ('tfidf middle', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),
+     ])),
+
+]
 
 best_per_feat = []
 for caption, feature_union in feature_unions:
@@ -162,7 +158,7 @@ for caption, feature_union in feature_unions:
         der = get_std_derivations(folds_results, ['BETTER', 'WORSE', 'NONE'])
         best = get_best_fold(folds_results)
         best_per_feat.append((f1_score(best[0], best[1], average='weighted'), caption))
-        pprint(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
+        logger.info(sorted(best_per_feat, key=lambda k: k[0], reverse=True))
         logger.info(latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
                                                 caption=caption))
     except Exception as ex:
