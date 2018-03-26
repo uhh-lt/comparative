@@ -99,7 +99,7 @@ nlp = spacy.load('en')
 logger = get_logger('feature_tests')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
-data = load_data('data.csv')[:100]
+data = load_data('data.csv')
 
 infersent_model = initialize_infersent(data.sentence.values)
 # unigrams = get_all_ngrams(data.sentence.values, 1)
