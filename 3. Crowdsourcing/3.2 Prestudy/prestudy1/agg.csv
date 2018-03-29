@@ -1,0 +1,101 @@
+_unit_id,_golden,_unit_state,_trusted_judgments,_last_judgment_at,please_select_how_object_a_and_object_b_compare_in_the_sentence_above,please_select_how_object_a_and_object_b_compare_in_the_sentence_above:confidence,label,please_select_how_object_a_and_object_b_compare_in_the_sentence_above_gold,sentence
+1444891677,false,finalized,3,11/9/2017 15:45:12,UNCLEAR,0.64,NO_COMP,,"OBJECT_A, and OBJECT_B, too) undoubtedly influenced people's votes when it"
+1444891678,false,finalized,3,11/9/2017 15:46:05,NO_COMP,0.6857,NO_COMP,,I'd go with OBJECT_A or OBJECT_B.
+1444891679,false,finalized,3,11/9/2017 16:14:53,NO_COMP,0.6901,NO_COMP,,"This is potentially useful for OBJECT_A, PHP, JS and OBJECT_B."
+1444891680,false,finalized,3,11/9/2017 16:12:16,NO_COMP,0.6772,NO_COMP,,"And your other server languages like OBJECT_A, PHP, OBJECT_B, etc."
+1444891681,false,finalized,3,11/9/2017 15:43:13,NO_COMP,1.0,NO_COMP,,"Java learned a lot from OBJECT_A, OBJECT_B and even C#."
+1444891682,false,finalized,3,11/9/2017 15:45:30,NO_COMP,1.0,NO_COMP,,OBJECT_A/OBJECT_B/Groovy/Perl is:
+1444891683,false,finalized,3,11/9/2017 16:16:42,NO_COMP,0.6814,NO_COMP,,"Java, OBJECT_A, OBJECT_B, Perl, also all work."
+1444891684,false,finalized,4,11/9/2017 15:46:35,NO_COMP,0.7636,NO_COMP,,"highlighting mzscheme, perl, OBJECT_A, and OBJECT_B by default."
+1444891685,false,finalized,3,11/9/2017 15:45:12,NO_COMP,1.0,NO_COMP,,"Highly skilled in Perl, PHP, OBJECT_A, OBJECT_B programming languages."
+1444891686,false,finalized,3,11/9/2017 15:45:39,NO_COMP,1.0,NO_COMP,,"OBJECT_A, java, OBJECT_B, php, javascript"
+1444891687,false,finalized,3,11/9/2017 15:45:12,NO_COMP,0.72,NO_COMP,,So it comes down to OBJECT_A and OBJECT_B.
+1444891688,false,finalized,3,11/9/2017 15:46:05,NO_COMP,1.0,NO_COMP,,"OBJECT_A, OBJECT_B Compiled languages - e.g."
+1444891689,false,finalized,3,11/9/2017 15:44:27,NO_COMP,0.6897,NO_COMP,,"However, there is OBJECT_A and OBJECT_B Rails to consider."
+1444891690,false,finalized,3,11/9/2017 16:15:39,NO_COMP,1.0,NO_COMP,,"Perl, OBJECT_A, OBJECT_B, and Unix shell scripts are also used."
+1444891691,false,finalized,3,11/9/2017 15:47:38,NO_COMP,0.6283,NO_COMP,,Possibly OBJECT_A or OBJECT_B.
+1444891692,false,finalized,4,11/9/2017 15:38:44,NO_COMP,0.7571,NO_COMP,,"Groovy, Perl, OBJECT_A, OBJECT_B, Bash)."
+1444891693,false,finalized,3,11/9/2017 15:47:38,UNCLEAR,0.6814,NO_COMP,,"Speed: similar to Perl, OBJECT_A, OBJECT_B."
+1444891694,false,finalized,3,11/9/2017 16:16:42,NO_COMP,0.6814,NO_COMP,,"Drop it immediately and start learning PHP, OBJECT_A, or OBJECT_B."
+1444891695,false,finalized,3,11/9/2017 15:37:11,NO_COMP,0.6875,NO_COMP,,"language such as JavaScript, OBJECT_A, OBJECT_B, Groovy, etc.)."
+1444891696,false,finalized,3,11/9/2017 15:43:13,UNCLEAR,0.6957,NO_COMP,,"PHP, OBJECT_A, or OBJECT_B?"
+1444891697,false,finalized,3,11/9/2017 15:45:39,BETTER,1.0,BETTER,,I prefer OBJECT_A over OBJECT_B on windows.
+1444891698,false,finalized,3,11/9/2017 15:44:16,NO_COMP,1.0,NO_COMP,,"Perl, OBJECT_A, PHP, OBJECT_B), forking isn't a problem."
+1444891699,false,finalized,3,11/9/2017 16:15:39,NO_COMP,0.6814,NO_COMP,,"Perl, OBJECT_A, OBJECT_B and C# are good ones."
+1444891700,false,finalized,3,11/9/2017 15:37:11,NO_COMP,1.0,NO_COMP,,I have a extrange problem compiling OBJECT_A/OBJECT_B extension.
+1444891701,false,finalized,3,11/9/2017 15:45:39,NO_COMP,1.0,NO_COMP,,"Scripting- OBJECT_A, OBJECT_B, Perl, PowerShell."
+1444891702,false,finalized,3,11/9/2017 15:45:28,WORSE,0.3473,UNCLEAR,,"While OBJECT_A is slightly faster, OBJECT_B utilises memory better."
+1444891703,false,finalized,3,11/9/2017 15:46:06,UNCLEAR,1.0,NO_COMP,,A OBJECT_A/OBJECT_B script might work better for this....
+1444891704,false,finalized,3,11/9/2017 15:47:50,NO_COMP,0.6897,NO_COMP,,"That's because a lot of those applications may not even be written in D or have anything to do with D, like the mass of stuff written in dynamic languages like perl, OBJECT_A, OBJECT_B, etc."
+1444891705,false,finalized,3,11/9/2017 16:12:16,NO_COMP,0.6772,NO_COMP,,"The script uses SQLite3 as a backend, because bash is not good with arrays, and because I'm not good with Perl/OBJECT_A/OBJECT_B."
+1444891706,false,finalized,3,11/9/2017 15:44:16,NO_COMP,0.6774,NO_COMP,,"Immutability fits into this complex because in OBJECT_A/Perl/OBJECT_B/other languages I often solve this with some form of monkeypatching, which is a form of mutability."
+1444891707,false,finalized,3,11/9/2017 15:48:33,NO_COMP,1.0,NO_COMP,,"There are much better alternatives (OBJECT_A, OBJECT_B)."
+1444891708,false,finalized,4,11/9/2017 15:47:28,NO_COMP,0.5121,NO_COMP,,Your C# and VB devs can suddenly easily write web apps and your OBJECT_A and OBJECT_B devs can too - with the added bonus of much better performance.
+1444891709,false,finalized,3,11/9/2017 15:46:20,UNCLEAR,0.6602,NO_COMP,,"Maybe we should stop using languages like OBJECT_A, OBJECT_B and Perl because they're ""slow""."
+1444891710,false,finalized,3,11/9/2017 16:15:39,NO_COMP,0.6814,NO_COMP,,He raises the point that runtime libraries for OBJECT_A / OBJECT_B etc have a unique set of issues because they tend to have their own packaging systems.
+1444891711,false,finalized,3,11/9/2017 15:48:33,UNCLEAR,0.6382,NO_COMP,,"But maybe that's just because I'm not used to seeing OBJECT_A, just as you're not used to seeing OBJECT_B code."
+1444891712,false,finalized,3,11/9/2017 15:47:50,BETTER,1.0,BETTER,,I guess that's fair because the implementation might be done better in OBJECT_A than it was in OBJECT_B.
+1444891713,false,finalized,3,11/9/2017 16:12:16,BETTER,0.6576,BETTER,,"I'm not totally convinced the debugging tools for Perl, OBJECT_A or PHP are substantially better than OBJECT_B, even if they are slightly better."
+1444891714,false,finalized,4,11/9/2017 15:38:44,UNCLEAR,0.5101,NO_COMP,,Agile development is the most popular model at the moment because of architectures like OBJECT_A on Rails and Django (for OBJECT_B).
+1444891715,false,finalized,3,11/9/2017 15:46:06,WORSE,1.0,WORSE,,In addition the comparison on multi-core machines is also flawed because OBJECT_A code uses only one CPU whereas OBJECT_B uses all four due to use of multiprocessing library.
+1444891716,false,finalized,3,11/9/2017 15:44:16,WORSE,1.0,WORSE,,OBJECT_A is even worse than OBJECT_B.
+1444891717,false,finalized,3,11/9/2017 15:48:56,NO_COMP,0.7143,NO_COMP,,"Perl, OBJECT_A, and OBJECT_B were successful because their creators were good coders with clear goals, who shipped useful programs."
+1444891718,false,finalized,3,11/9/2017 16:11:50,NO_COMP,0.7,NO_COMP,,"OBJECT_A and OBJECT_B were much more recently the ""hot new thing"" and have gotten a lot more attention in the last decade or so because of that."
+1444891719,false,finalized,3,11/9/2017 16:16:42,WORSE,1.0,WORSE,,"I've tried OBJECT_A, and can see why people like it, but OBJECT_B suits my style better."
+1444891720,false,finalized,3,11/9/2017 15:46:06,UNCLEAR,1.0,NO_COMP,,"OBJECT_A and OBJECT_B are languages competing for a similar bracket, so they will always appear to be ""converging,"" because smart people are finding the key features."
+1444891721,false,finalized,3,11/9/2017 15:45:12,UNCLEAR,0.64,NO_COMP,,"I started with OO languages (OBJECT_A & OBJECT_B) because people recommend them, and they seem to be relatively easy to get started with."
+1444891722,false,finalized,3,11/9/2017 15:44:27,NO_COMP,0.6897,NO_COMP,,"Unfortunately, when it comes to potential projects OBJECT_A suffers because it's similarity to OBJECT_B."
+1444891723,false,finalized,4,11/9/2017 15:46:48,UNCLEAR,0.5018,NO_COMP,,"It is worth noting that because the APIs use the standard HTTP protocol you can easily work with them from any programming language including C#, Java, OBJECT_A, OBJECT_B, Perl, PHP and others."
+1444891724,false,finalized,4,11/9/2017 15:46:48,NO_COMP,0.5085,NO_COMP,,"With dynamically typed languages, like PHP, OBJECT_A, OBJECT_B, your development will be much faster, but you will have to test your code much better."
+1444891725,false,finalized,3,11/9/2017 16:11:50,WORSE,0.35,BETTER,,"The only reason OBJECT_A is used over OBJECT_B, is because of libraries..."
+1444891726,false,finalized,3,11/9/2017 16:14:53,UNCLEAR,0.6514,NO_COMP,,"And now that MS has support for OBJECT_A and OBJECT_B, they are as evil as before but also stupid, because that means they don't have any direction to give to the community."
+1444891727,false,finalized,3,11/9/2017 15:37:11,BETTER,1.0,BETTER,,a sequence reserve can be simply: s.reverse etc. if you use databases: OBJECT_A database binding API is arguably better than OBJECT_B.
+1444891728,false,finalized,3,11/9/2017 15:45:30,NO_COMP,0.6875,NO_COMP,,"It comes with an updated XML stack and lets dynamic languages like OBJECT_A, Groovy, OBJECT_B and JavaScript get better performance running on JVMs."
+1444891729,false,finalized,3,11/9/2017 15:48:03,UNCLEAR,0.712,NO_COMP,,"We will just be a little more conscious,"" because I don't see OBJECT_A or OBJECT_B as being inevitably slower."
+1444891730,false,finalized,3,11/9/2017 15:49:55,NO_COMP,1.0,NO_COMP,,The problem is OBJECT_A and OBJECT_B are not seen as enterprise ready or fit for anything better than simple applications.
+1444891731,false,finalized,4,11/9/2017 15:46:35,NO_COMP,0.7636,NO_COMP,,OBJECT_A and OBJECT_B perform significantly better.
+1444891732,false,finalized,3,11/9/2017 15:47:50,NO_COMP,0.6897,NO_COMP,,"Yes, I keep on bitchin' on collectors because I should probably spend my free time learning OBJECT_A or OBJECT_B or something."
+1444891733,false,finalized,3,11/9/2017 16:11:50,NO_COMP,1.0,NO_COMP,,"The even better news is that it is actually possible to use a variety of tools: OBJECT_A, OBJECT_B, shell scripts and R to perform distributed fault tolerant processing of your data on a Hadoop cluster...."
+1444891734,false,finalized,3,11/9/2017 15:49:55,NO_COMP,1.0,NO_COMP,,"That hurts because for a company to want a telecommuter bad enough, they'd better bring some serious talent to the table which usually consists of front-end, backend, OBJECT_A and OBJECT_B experience."
+1444891735,false,finalized,3,11/9/2017 15:45:30,BETTER,1.0,NO_COMP,,"So in OBJECT_A, a good programmer will want to take a different route to solving the problem than he would in OBJECT_B, just because it actually is the better way to do it."
+1444891736,false,finalized,3,11/9/2017 15:48:33,UNCLEAR,0.6784,NO_COMP,,"He also thinks that ""SOAP never caught on because many popular languages were left out such as OBJECT_A and OBJECT_B."""
+1444891737,false,finalized,3,11/9/2017 15:47:38,BETTER,1.0,BETTER,,I mention all that because I think you've missed an important way in which OBJECT_A blocks are more powerful than anything in OBJECT_B: a block executes fully within the defining context.
+1444891738,false,finalized,3,11/9/2017 15:49:55,NO_COMP,0.6714,NO_COMP,,"For better or worse, OBJECT_A, OBJECT_B, JavaScript and so on have changed how people see programming."
+1444891739,false,finalized,3,11/9/2017 15:46:05,BETTER,0.6857,NO_COMP,,"People fight over principles like ""OBJECT_A is better than OBJECT_B"" or ""you shouldn't write unit test,"" all of which are absolutely absurd."
+1444891740,false,finalized,3,11/9/2017 15:46:06,UNCLEAR,1.0,NO_COMP,,"Node is a good fit for CouchDB because Couch encourages asynchronous background processes, but people also use OBJECT_A / OBJECT_B / Java for the same purposes."
+1444891741,false,finalized,3,11/9/2017 15:48:33,NO_COMP,0.6834,UNCLEAR,,It is a lot easier to do text parsing in Perl/OBJECT_A/OBJECT_B than it is in Java or C# (partially because it is a lot easier to use regular expressions).
+1444891742,false,finalized,3,11/9/2017 15:47:38,NO_COMP,0.6471,NO_COMP,,"Wanting to learn more about Google Wave, I ported the Wave Robot OBJECT_A Client library to OBJECT_B, mainly because I wanted to understand the protocol."
+1444891743,false,finalized,3,11/9/2017 15:47:50,NO_COMP,0.3879,NO_COMP,,"for json: i also think its better to just use OBJECT_A, OBJECT_B, perl and transform it."
+1444891744,false,finalized,3,11/9/2017 15:43:13,NO_COMP,0.3478,NO_COMP,,"Sitting down with another programming language for a while can open your mind up to other ways of solving problems, and I think I became a better OBJECT_A programmer after spending time in OBJECT_B land."
+1444891745,false,finalized,3,11/9/2017 16:14:53,UNCLEAR,0.6514,NO_COMP,,"I think this is very accurate because I see most people that complain against PHP, they are usually somebody that has an agenda to favor some other language... can be OBJECT_A or OBJECT_B."
+1444891746,false,finalized,3,11/9/2017 15:41:52,WORSE,0.6774,NO_COMP,,"OBJECT_A is like perl and OBJECT_B, only better, and it is required to run this software."
+1444891747,false,finalized,4,11/9/2017 15:47:28,NO_COMP,0.761,UNCLEAR,,OBJECT_A and OBJECT_B are even worse than Java performance wise.
+1444891748,false,finalized,3,11/9/2017 15:41:52,UNCLEAR,1.0,NO_COMP,,I wonder if they didn't compare themselves to OBJECT_A or OBJECT_B because they couldn't contrive examples that produce huge LOC differences?
+1444891749,false,finalized,3,11/9/2017 15:46:05,BETTER,1.0,BETTER,,"For this reason alone, OBJECT_A is clearly better than OBJECT_B or Perl."
+1444891750,false,finalized,3,11/9/2017 15:41:52,UNCLEAR,0.6774,NO_COMP,,"Anyway, for this book, geany has been used, mainly because it handles both OBJECT_A and OBJECT_B (amongst many others), and is rather lightweight."
+1444891751,false,finalized,3,11/9/2017 15:45:39,BETTER,1.0,BETTER,,I love the language but I'm considering getting better at OBJECT_A just because OBJECT_B is so slow I feel bad using it for anything serious.
+1444891752,false,finalized,3,11/9/2017 15:45:30,UNCLEAR,0.6562,NO_COMP,,"Modern languages like scala, OBJECT_A and maybe OBJECT_B are much better at this."
+1444891753,false,finalized,3,11/9/2017 16:12:16,BETTER,1.0,WORSE,,"I usually recommend OBJECT_A over OBJECT_B, as I prefer it, but in this case it may be better, due to everything inherently being an object."
+1444891754,false,finalized,3,11/9/2017 15:48:56,NO_COMP,0.6962,NO_COMP,,"It's why I mention OBJECT_A and OBJECT_B, because they've at least heard of them."
+1444891755,false,finalized,3,11/9/2017 16:14:53,NO_COMP,0.6901,NO_COMP,,And so you have many programmers choosing to use OBJECT_A or OBJECT_B because good libraries exist there for solving modern problems.
+1444891756,false,finalized,3,11/9/2017 15:48:56,NO_COMP,0.7143,UNCLEAR,,"OBJECT_A or OBJECT_B may actually help promote better programming practices, but they aren't as accessible as PHP in terms of examples, online docs and tutorials, and hosting is not as easy."
+1444891757,false,finalized,4,11/9/2017 15:38:44,WORSE,1.0,WORSE,,OBJECT_A would have also been a good choice but IMO it is an inferior language compared to OBJECT_B.
+1444891758,false,finalized,3,11/9/2017 15:48:03,NO_COMP,0.6545,NO_COMP,,"Got a good job writing C++? Hopefully you also know some Java, or better yet some OBJECT_A, OBJECT_B or some other higher level scripting language."
+1444891759,false,finalized,4,11/9/2017 15:46:35,WORSE,1.0,WORSE,,I'd been kind of hoping Apple would dump AppleScript and switch over to OBJECT_A or (even better) OBJECT_B as the official AppleEvent scripting language [1].
+1444891760,false,finalized,3,11/9/2017 15:48:03,UNCLEAR,0.656,NO_COMP,,"I'd go so far as to say OBJECT_A and OBJECT_B aren't either, though both are very powerful and are better suited to some tasks than Java."
+1444891761,false,finalized,3,11/9/2017 16:11:50,NO_COMP,1.0,NO_COMP,,"Proves Superior to OBJECT_A, OBJECT_B, Perl and Other Dynamic Programming Languages"
+1444891762,false,finalized,3,11/9/2017 15:41:52,UNCLEAR,0.6774,NO_COMP,,"I'm a huge OBJECT_A/Django & OBJECT_B/Rails fan, but I will never stop using PHP because it is so broadly accepted and supported."
+1444891763,false,finalized,3,11/9/2017 15:43:13,NO_COMP,1.0,NO_COMP,,"OBJECT_A and OBJECT_B support features of orthogonality, maintainability, etc. even better, in many respects."
+1444891764,false,finalized,3,11/9/2017 15:49:55,NO_COMP,1.0,UNCLEAR,,"Your argument of awk being the ""underlanguage"" and not suitable for the job because you think that only Perl/OBJECT_A/OBJECT_B can do the job is flawed and weak."
+1444891765,false,finalized,4,11/9/2017 15:38:44,BETTER,1.0,BETTER,,"OBJECT_A has RDoc , and it looks better than anything I've seen in OBJECT_B."
+1444891766,false,finalized,3,11/9/2017 15:48:56,NO_COMP,0.6962,NO_COMP,,"You might be better served learning a language like Objective-C, OBJECT_A, OBJECT_B or even Unix shell-scripting, which are more useful for creating useful code on modern computer systems."
+1444891767,false,finalized,3,11/9/2017 15:48:03,BETTER,0.6545,UNCLEAR,,Any sources that discuss the pros and cons of each or why it would be better to do X in OBJECT_A rather than OBJECT_B?
+1444891768,false,finalized,3,11/9/2017 15:44:16,NO_COMP,0.6774,NO_COMP,,"Perl isn't dying because the competition, namely OBJECT_A and OBJECT_B, is itself idiosyncratic, Hyperlogos blogger Martin Espinoza opined."
+1444891769,false,finalized,4,11/9/2017 15:46:35,UNCLEAR,0.7901,NO_COMP,,Today? You'll build a better app in less time and with fewer people using OBJECT_A with Django or OBJECT_B on Rails.
+1444891770,false,finalized,3,11/9/2017 15:45:28,BETTER,1.0,BETTER,,One of them ( Jan rather than Andrzej ) was of the opinion that OBJECT_A was more object oriented than OBJECT_B because you are able tack methods onto the built-in classes.
+1444891771,false,finalized,3,11/9/2017 15:45:28,NO_COMP,0.648,NO_COMP,,"OBJECT_A, OBJECT_B, WordPress, and the old standard OpenOffice (in a freshly minted version 4) are better and stronger than ever."
+1444891772,false,finalized,3,11/9/2017 15:44:27,BETTER,0.6121,BETTER,,OBJECT_A has better support for such declarative styles and I am glad the core OBJECT_B language is not going down that route.
+1444891773,false,finalized,3,11/9/2017 15:37:11,BETTER,1.0,BETTER,,"Mainly because OBJECT_A is used in considerably more non-web applications than OBJECT_B, which makes your skills more portable (and you more employable)."
+1444891774,false,finalized,3,11/9/2017 16:15:39,NO_COMP,0.6903,NO_COMP,,"This is one area where MySQL Cookbook really shines, because it contains a large amount of sample code in Perl, PHP, OBJECT_A, Java, and even OBJECT_B."
+1444891775,false,finalized,3,11/9/2017 15:44:27,NO_COMP,0.6897,NO_COMP,,I use OBJECT_A and OBJECT_B heavily because it's easy for other people to understand and I can quickly do a task in them.
+1444891776,false,finalized,3,11/9/2017 16:16:42,UNCLEAR,1.0,NO_COMP,,I take your word that Perl/OBJECT_A/OBJECT_B/LISP/whatever is much superior.

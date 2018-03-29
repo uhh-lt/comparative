@@ -1,0 +1,19 @@
+_id,_pct_missed,_judgments,_hidden,_contention,_pct_contested,_gold_pool,_review_state,_please_select_how_object_a_and_object_b_compare_in_the_sentence_above,please_select_how_object_a_and_object_b_compare_in_the_sentence_above_gold,please_select_how_object_a_and_object_b_compare_in_the_sentence_above_gold_reason,sentence,label
+1444901056,0.58,43,false,"",0.0,,,"",UNCLEAR,"Because ""scooter rides"" are compared to OBJECT_A and OBJECT_B.","Scooter rides are a great way to take in the Emerald Coast's natural beauty because they are more intimate than a OBJECT_A, but require far less effort than a OBJECT_B.",BETTER
+1444901259,0.14,42,false,"",0.0,,,"",UNCLEAR,Because one can not say if OBJECT_A is better or worse than OBJECT_B.,I don't know what is worse the OBJECT_A w/ the pool or the OBJECT_B with the heat on.,NO_COMP
+1444901878,0.29,41,false,"",0.0244,,,"BETTER
+NO_COMP
+WORSE
+UNCLEAR","BETTER
+UNCLEAR",No clear comparison between OBJECT_A and OBJECT_B.,"If you shy away from saltimbocca because you don't eat veal, then do yourself a favor and try this twist on the classic Roman dish, which uses OBJECT_A in place of OBJECT_B.",NO_COMP
+1444906054,0.12,40,false,"",0.0,,,"",NO_COMP,"","OBJECT_A, OBJECT_B, and Mts.",NO_COMP
+1444906904,0.26,42,false,"",0.0238,,,"","UNCLEAR
+NO_COMP",Audi is compared to OBJECT_A and OBJECT_B.,"Also, Audi is selling better than OBJECT_A and OBJECT_B-Benz in Germany, which is the companies' home market, obviously.",UNCLEAR
+1444907407,0.13,39,false,"",0.0,,,"","WORSE
+UNCLEAR",OBJECT_A is worse becauses it's to big to get coffee with it.,"Is it true that you had the OBJECT_A X5, but that you bought an additional OBJECT_B because you thought the X5 was too big to go get coffee with?",NO_COMP
+1444908447,0.30,43,false,"",0.0,,,"",WORSE,"","Along with the dish soap the 3 different things we used were OBJECT_A (they love it), OBJECT_B (they love that better!) and some ruby red grapefruit juice.",WORSE
+1444908581,0.04,47,false,"",0.0,,,"",BETTER,"",I mention all that because I think you've missed an important way in which OBJECT_A blocks are more powerful than anything in OBJECT_B: a block executes fully within the defining context.,BETTER
+1444908839,0.00,44,false,"",0.0,,,"",BETTER,"","Also engineering goes to the OBJECT_A with always having the edge, better brakes, better suspension... they just make the speed and handling way more efficient than OBJECT_B does.",BETTER
+1444908976,0.11,45,false,"",0.0,,,"",BETTER,"",a sequence reserve can be simply: s.reverse etc. if you use databases: OBJECT_A database binding API is arguably better than OBJECT_B.,BETTER
+1444909160,0.39,41,false,"",0.0,,,"",WORSE,"",In addition the comparison on multi-core machines is also flawed because OBJECT_A code uses only one CPU whereas OBJECT_B uses all four due to use of multiprocessing library.,WORSE
+1444909358,0.13,39,false,"",0.0,,,"",NO_COMP,"",OBJECT_A / OBJECT_B Exams $20.00,NO_COMP

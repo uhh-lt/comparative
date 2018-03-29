@@ -151,25 +151,25 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 \label{fig:dist_pre_a}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {55/NO\_COMP (55),
-    15/BETTER (15),
-    8/WORSE (8),
-    22/UNCLEAR (22)}
+    {55.00/NO\_COMP (55),
+    15.00/BETTER (15),
+    8.00/WORSE (8),
+    22.00/UNCLEAR (22)}
 \end{tikzpicture}
 \end{figure}
 
 The agreement of the annotators was acceptable (see table \ref{fig:pre_a_agg}).
 
 \begin{table}[h]
-\caption{Agreement (Prestudy A)}
-\label{fig:pre_a_agg}
+\caption{Annotation confidence for the \emph{first prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
+\label{fig:pre_b_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 37 & 37.00\%\\
-2 & 58 & 58.00\%\\
-3 & 5 & 5.00\%\\
+100\%	&	37	&	37.00\%	 \\ 
+60-79\%	&	55	&	55.00\%	 \\ 
+0-50\%	&	8	&	8.00\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -179,15 +179,17 @@ Distinct classes & Sentences & Percentage \\
 \centering
 \caption{Examples of uncertain sentences for prestudy A. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_1_res}
-\begin{tabularx}{\textwidth}{lXrrr}
+\begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
-\# & Sentence        & Ann. 1  & Ann. 2 & Ann. 3             \\ \midrule
-1 & The only reason OBJECT\_A is used over OBJECT\_B, is because of libraries... & WORSE & UNCLEAR & NO\_COMP\\
-2 & Agile development is the most popular model at the moment because of architectures like OBJECT\_A on Rails and Django (for OBJECT\_B) & NO\_COMP & NO\_COMP & UNCLEAR\\
-3 & Your C# and VB devs can suddenly easily write web apps and your OBJECT\_A and OBJECT\_B devs can too - with the added bonus of much better performance &  NO\_COMP & NO\_COMP & UNCLEAR \\
-4 & I'm a huge OBJECT\_A/Django \& OBJECT\_B/Rails fan, but I will never stop using PHP because it is so broadly accepted and supported & NO\_COMP & UNCLEAR & UNCLEAR \\
-5 & It's why I mention OBJECT\_A and OBJECT\_B, because they've at least heard of them. & NO\_COMP & NO\_COMP & UNCLEAR \\
+ Sentence        & \texttt{BETTER} & \texttt{WORSE} & \texttt{UNCLEAR} & \texttt{NO\_COMP}          \\ \midrule
 
+While \emph{OBJECT\_A} is slightly faster, \emph{OBJECT\_B} utilises memory better & 1 & 1 & 1 & 0 \\
+
+Your C\# and VB devs can suddenly easily write web apps and your \emph{OBJECT\_A} and \emph{OBJECT\_B} devs can too - with the added bonus of much better performance. & 0 & 0 & 2 & 2 \\
+
+The only reason \emph{OBJECT\_A} is used over \emph{OBJECT\_B}, is because of libraries.. & 0 & 1 & 1 & 1 \\
+
+for json: i also think its better to just use \emph{OBJECT\_A}, \emph{OBJECT\_B}, perl and transform it & 1 & 0 & 1 & 1 \\
 
 \bottomrule                              
 \end{tabularx}
@@ -220,51 +222,59 @@ The sentence preprocessing was altered as well. Instead of replacing the object,
 
 The class distribution for the 200 sentences is presentend in figure \ref{fig:dist_pre_b}. 
 
+
 \begin{figure}[h]
+% aktuelle zahlen 29.3; neue methode
 \centering
 \caption{Class Distribution (Prestudy B)}
 \label{fig:dist_pre_b}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {48/NO\_COMP (96),
-    27/BETTER (54),
-    11.5/WORSE (23),
-    13.5/UNCLEAR (27)}
+    {47.50/NO\_COMP (95),
+    27.50/BETTER (56),
+    11.00/WORSE (22),
+    14.00/UNCLEAR (28)}
 \end{tikzpicture}
 \end{figure}
 
 As in the first prestudy, nearly half of the sentences are comparative. The agreement (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem for the sentences where only two annotators could agree. However, in the second prestudy this confusion only makes up fourty-five out of the seventy-two cases (62.5\% instead of 87.9\% in the first prestudy). Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62.5\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
 \begin{table}[h]
-\caption{Agreement (Prestudy B)}
+% aktuelle zahlen 29.3; neue methode
+\caption{Annotation confidence for the \emph{second prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:pre_b_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 125 & 62.50\%\\
-2 & 71 & 35.50\%\\
-3 & 4 & 2.00\%\\
+100\%	&	124	&	62.00\%	 \\ 
+60-79\%	&	62	&	31.00\%	 \\ 
+0-50\%	&	10	&	5.00\%	 \\ 
+80-99\%	&	4	&	2.00\%	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
 
+
 \begin{table}[h]
+% aktuelle zahlen 29.3; neue methode
 \centering
 \caption{Examples of uncertain sentences for prestudy B. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_2_res}
-\begin{tabularx}{\textwidth}{lXrrr}
+\begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
-\# & Sentence        & Ann. 1  & Ann. 2 & Ann. 3             \\ \midrule
-6 & Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{9A14B2}iphone:{[}OBJECT\_A{]}}} (as opposed to \textbf{{\color[HTML]{6CB219}android:{[}OBJECT\_B{]}}}). & BETTER & WORSE & NO\_COMP \\
-7 & (See \textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} Dethrones the \textbf{{\color[HTML]{6CB219} iphone:{[}OBJECT\_B{]}}}.) & BETTER & NO\_COMP & NO\_COMP \\
+ Sentence        & \texttt{BETTER} & \texttt{WORSE} & \texttt{UNCLEAR} & \texttt{NO\_COMP}          \\ \midrule
+\textbf{{\color[HTML]{9A14B2}Ruby:{[}OBJECT\_A{]}}} and \textbf{{\color[HTML]{6CB219} Python:{[}OBJECT\_B{]}}} perform significantly better. & 0 & 0 & 2 & 2 \\
 
-8 & \textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} didn't out pace the \textbf{{\color[HTML]{6CB219} iphone:{[}OBJECT\_B{]}}} this year, it just sold slightly better in America & WORSE & NO\_COMP & WORSE\\
+Unfortunately, when it comes to potential projects \textbf{{\color[HTML]{9A14B2}Ruby:{[}OBJECT\_A{]}}} suffers because it's similarity to \textbf{{\color[HTML]{6CB219} Python:{[}OBJECT\_B{]}}} & 1 & 2 & 1 & 0 \\
 
-9 & To me it is much better than \textbf{{\color[HTML]{9A14B2}iphone:{[}OBJECT\_A{]}}} \mbox{and \textbf{{\color[HTML]{6CB219}android:{[}OBJECT\_B{]}}}}. & NO\_COMP & UNCLEAR & UNCLEAR \\
 
-10 & (\textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} , Crush , iPad , \mbox{\textbf{{\color[HTML]{6CB219}iphone:{[}OBJECT\_B{]}}}} )& NO\_COMP & BETTER & NO\_COMP \\
+Not to mention that the \textbf{{\color[HTML]{9A14B2}iPhone:{[}OBJECT\_A{]}}} and \textbf{{\color[HTML]{6CB219} Android:{[}OBJECT\_B{]}}} phones deliver a far superior user experience overall & 1 & 0 & 1 & 1 \\
+
+Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{9A14B2}iPhone:{[}OBJECT\_A{]}}} (as opposed to \textbf{{\color[HTML]{6CB219} Android:{[}OBJECT\_B{]}}}). & 1 & 1 & 0 & 1 \\
+
+
 
 \bottomrule                              
 \end{tabularx}
@@ -498,7 +508,7 @@ For the Brands domain, 2335 sentences were annotated. The sentences contained ob
 
 % zahlen 23.3
 \begin{table}[h]
-\caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
+\caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:brand_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
@@ -579,7 +589,7 @@ The numbers improved for the rest of the sentences (after the removal of \texttt
 The random domain has 2439 sentences and 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (figure \ref{fig:random_fin}) are satisfactory as well.
    % zahlen 23.3 
 \begin{table}[h]
-\caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}}.
+\caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:random_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
