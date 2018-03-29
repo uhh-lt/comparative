@@ -111,22 +111,22 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 
 \subsection{Prestudy A}
-The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below should be checked. On that account, a crowdsourcing task with one hundred of the 1000 sentences was started.
+The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below should be checked. On that account, a crowdsourcing task with one hundred of the 1000 sentences was started. 
 
 
 
-For each sentence, the annotators should decide to which class a sentence belongs. The classes are described in table \ref{tbl:prestudyclasses-a}. The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are in a way comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
+For each sentence, the annotators should decide to which class a sentence belongs. The classes are described in table \ref{tbl:prestudyclasses-a}. The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/1_question}
-\label{img:1_question}
+\label{img:1question}
 \caption{The images shows the annotator's view for each sentence.}
 \end{figure}
 
 \begin{table}[h]
 \centering
-\caption{The classes for the first prestudy. The correspond to the answers the annotator could select in figure \ref{img:1_question}}
+\caption{The classes for the first prestudy. They correspond to the answers the annotator could select in figure \ref{img:1_question}}
 \label{tbl:prestudyclasses-a}
 \begin{tabular}{@{}ll@{}}
 \toprule
@@ -139,7 +139,7 @@ Class & Description \\ \midrule
 \end{tabular}
 \end{table}
 
-In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B}. Table \ref{tbl:pre_1_res} shows examples of processed sentences. The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. For example, in sentence three of table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C}} and \enquote{\emph{VB}}. The view of the annotator (for a single sentence) is shown in figure \ref{img:1_question}.
+In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B} (see table \ref{tbl:pre_1_res}). The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. For example, in sentence two of table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C}} and \enquote{\emph{VB}}. The view of the annotator (for a single sentence) is shown in figure \ref{img:1_question}.
 
 Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz (eight test questions) before the actual annotation process. One of the five sentences on the page was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
 
@@ -167,9 +167,13 @@ The agreement of the annotators was acceptable (see table \ref{fig:pre_a_agg}).
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	37	&	37.00\%	 \\ 
-60-79\%	&	55	&	55.00\%	 \\ 
-0-50\%	&	8	&	8.00\%	 \\ 
+100\%	&	37	&	37.00	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	0	&	0.00	 \\ 
+71-80\%	&	5	&	5.00	 \\ 
+61-70\%	&	50	&	50.00	 \\ 
+51-60\%	&	0	&	0.00	 \\ 
+0-50\%	&	8	&	8.00	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -195,7 +199,7 @@ for json: i also think its better to just use \emph{OBJECT\_A}, \emph{OBJECT\_B}
 \end{tabularx}
 \end{table}
 
-Some uncertain sentences are shown in table \ref{tbl:pre_1_res}, which displays the sentence and the decision of each annotator. As one can see in sentence two to five, annotators frequently were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true in fifty-one of the fifty-eight cases (87\%) were two different classes were assigned.\newline
+Some uncertain sentences are shown in table \ref{tbl:pre_1_res}, which displays the sentence and the decision of each annotator. As one can see in sentence two, annotators were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true in fifty-two of the sixty-three cases were more than one classes was assigned.\newline
 
 Fourteen out of fifty-five participants took part in an exit survey to rate the task. The overall satisfaction was rated with 3.2 out of 5. While the instructions (4.5), difficulty (4.4) and payment (3.8) got acceptable to good ratings, the test questions (2.9) were critizied. Also, 32 potential annotators failed the quiz. A second prestudy was conducted to adress the discovered problems.
 
@@ -247,10 +251,13 @@ As in the first prestudy, nearly half of the sentences are comparative. The agre
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	124	&	62.00\%	 \\ 
-60-79\%	&	62	&	31.00\%	 \\ 
-0-50\%	&	10	&	5.00\%	 \\ 
-80-99\%	&	4	&	2.00\%	 \\ 
+100\%	&	124	&	62.00	 \\ 
+91-99\%	&	2	&	1.00	 \\ 
+81-90\%	&	2	&	1.00	 \\ 
+71-80\%	&	5	&	2.50	 \\ 
+61-70\%	&	57	&	28.50	 \\ 
+51-60\%	&	2	&	1.00	 \\ 
+0-50\%	&	8	&	4.00	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -506,7 +513,7 @@ The label distribution of the 742 sentences is presented in the figure \ref{fig:
 For the Brands domain, 2335 sentences were annotated. The sentences contained objects of sixty-three pairs. As shown in table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
 
 
-% zahlen 23.3
+% zahlen 29.3
 \begin{table}[h]
 \caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:brand_agg}
@@ -514,10 +521,13 @@ For the Brands domain, 2335 sentences were annotated. The sentences contained ob
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1719	&	71.30\%	 \\ 
-80-99\%	&	360	&	14.93\%	 \\ 
-60-79\%	&	275	&	11.41\%	 \\ 
-0-50\%	&	57	&	2.36\%	 \\ 
+100\%	&	1719	&	71.30	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	34	&	1.41	 \\ 
+71-80\%	&	337	&	13.98	 \\ 
+61-70\%	&	8	&	0.33	 \\ 
+51-60\%	&	256	&	10.62	 \\ 
+0-50\%	&	57	&	2.36	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -526,7 +536,7 @@ Confidence & Sentences & \% of data set \\
 
 The class distribution is presented in figure \ref{fig:brands_fin}. The amount of comparative sentences is lower (24.45\%) than in the prestudy. The reason for this is the abandonment of the \texttt{OTHER} (\texttt{UNCLEAR}) class. 
 
-% zahlen 23.3
+% zahlen 29.3
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Brands}}
@@ -560,10 +570,13 @@ For the Computer Science domain, 2425 sentences (containing one of fourty-two pa
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1698	&	70.02\%	 \\ 
-80-99\%	&	391	&	16.12\%	 \\ 
-60-79\%	&	267	&	11.01\%	 \\ 
-0-50\%	&	69	&	2.85\%	 \\ 
+100\%	&	1698	&	70.02	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	25	&	1.03	 \\ 
+71-80\%	&	369	&	15.22	 \\ 
+61-70\%	&	18	&	0.74	 \\ 
+51-60\%	&	246	&	10.14	 \\ 
+0-50\%	&	69	&	2.85	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -595,10 +608,13 @@ The random domain has 2439 sentences and 167 pairs. The confidence values (table
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1753	&	71.87\%	 \\ 
-80-99\%	&	378	&	15.50\%	 \\ 
-60-79\%	&	259	&	10.62\%	 \\ 
-0-50\%	&	49	&	2.01\%	 \\ 
+100\%	&	1753	&	71.87	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	16	&	0.66	 \\ 
+71-80\%	&	362	&	14.84	 \\ 
+61-70\%	&	7	&	0.29	 \\ 
+51-60\%	&	252	&	10.33	 \\ 
+0-50\%	&	49	&	2.01	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -632,10 +648,13 @@ Table \ref{fig:all_agg} summarises the confidence of the annotations on all thre
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	5111	&	71.00\%	 \\ 
-80-99\%	&	1129	&	15.68\%	 \\ 
-60-79\%	&	790	&	10.97\%	 \\ 
-0-50\%	&	169	&	2.35\%	 \\ 
+100\%	&	5111	&	71.00	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	75	&	1.04	 \\ 
+71-80\%	&	1057	&	14.68	 \\ 
+61-70\%	&	33	&	0.46	 \\ 
+51-60\%	&	754	&	10.47	 \\ 
+0-50\%	&	169	&	2.35	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
