@@ -84,18 +84,15 @@ def n_gram(vectorizer, name_add='', **kwargs):
 
 nlp = spacy.load('en')
 
-logger = get_logger('feature_tests_pos_gram')
+logger = get_logger('feat_tests_1')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
 data = load_data('data.csv')
 
 infersent_model = initialize_infersent(data.sentence.values)
 
-folds = k_folds(5,data,random_state=1337)
-
-
-
 features = [
+    ('word vector', make_pipeline(WordVector())),
     ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
     ('mean word embedding middle', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding())),
     ('unigram counts binary top 100',
@@ -112,23 +109,24 @@ features = [
     ('2 pos all', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2)))),
     ('2 pos 100',
      make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2), max_features=100))),
-    ('word vector', make_pipeline(WordVector()))
+
 ]
 
 feature_unions = []
-combis = list(itertools.combinations(features,1)) + list(itertools.combinations(features,2)) + list(itertools.combinations(features,3))
+combis = list(itertools.combinations(features,1)) + list(itertools.combinations(features,2)) #+ list(itertools.combinations(features,3))
 for c in combis:
     n = ' | '.join([a[0] for a in c])
     feature_unions.append((n, FeatureUnion(transformer_list=list(c))))
 
 
 best_per_feat = []
-for caption, feature_union in feature_unions:
-    logger.info(caption)
+for i, f in enumerate(feature_unions):
+    caption, feature_union = f
+    logger.info('{}/{} {}'.format(i, len(feature_unions), caption))
     logger.info(feature_union)
     folds_results = []
     try:
-        for train, test in folds:
+        for train, test in k_folds(5, data, random_state=1337):
             pipeline = make_pipeline(feature_union, classifier)
 
             fitted = pipeline.fit(train, train[LABEL].values)
@@ -144,6 +142,7 @@ for caption, feature_union in feature_unions:
                                                 caption=caption))
     except Exception as ex:
         logger.error(ex)
+        raise ex
     logger.info("\n\n=================\n\n")
 
 logger.info(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
