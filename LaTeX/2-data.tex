@@ -22,7 +22,7 @@ Those numbers show that there are enough sentences in the index to create a data
 
 
 \section{Prestudies}
-Before the main crowdsourcing task could start, several questions had to be answered:
+In preparation to the main crowdsourcing task, several questions had to be answered:
 \begin{enumerate}
 \item How to extract sentences from the index? (How should the query look like?)
 \item How to preprocress those sentences? (How to highlight the objects of interest?)
@@ -110,23 +110,23 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 
 
-\subsection{Prestudy A}
-The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below should be checked. On that account, a crowdsourcing task with one hundred of the 1000 sentences was started.
+\subsection{First Prestudy}
+The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below must be validated. On that account, a crowdsourcing task with one-hundred of the 1000 sentences was started. 
 
 
 
-For each sentence, the annotators should decide to which class a sentence belongs. The classes are described in table \ref{tbl:prestudyclasses-a}. The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are in a way comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
+For each sentence, the annotators were asked which of the classes describes the sentence best (see figure \ref{1question} and table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
 
 \begin{figure}[h]
 \centering
+\label{1question}
 \includegraphics[width=1\textwidth]{images/prestudy/1_question}
-\label{img:1_question}
-\caption{The images shows the annotator's view for each sentence.}
+\caption{This question was presented to the annotators.}
 \end{figure}
 
 \begin{table}[h]
 \centering
-\caption{The classes for the first prestudy. The correspond to the answers the annotator could select in figure \ref{img:1_question}}
+\caption{The classes for the first prestudy. They correspond to the answers the annotator could select in figure \ref{img:1_question}}
 \label{tbl:prestudyclasses-a}
 \begin{tabular}{@{}ll@{}}
 \toprule
@@ -139,9 +139,9 @@ Class & Description \\ \midrule
 \end{tabular}
 \end{table}
 
-In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B}. Table \ref{tbl:pre_1_res} shows examples of processed sentences. The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. For example, in sentence three of table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C}} and \enquote{\emph{VB}}. The view of the annotator (for a single sentence) is shown in figure \ref{img:1_question}.
+In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B} (see table \ref{tbl:pre_1_res}). The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. For example, in sentence two of table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C}} and \enquote{\emph{VB}}. 
 
-Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz (eight test questions) before the actual annotation process. One of the five sentences on the page was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
+Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz (eight test questions) before the actual annotation process. The annotator saw five sentences per page. One of the five sentences was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
 
 Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation results. The numbers after the class names show the absolute members of that class. As 45\% of the sentences are comparative, the selection procedure works satisfying.
 
@@ -151,55 +151,62 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 \label{fig:dist_pre_a}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {55/NO\_COMP (55),
-    15/BETTER (15),
-    8/WORSE (8),
-    22/UNCLEAR (22)}
+    {55.00/NO\_COMP (55),
+    15.00/BETTER (15),
+    8.00/WORSE (8),
+    22.00/UNCLEAR (22)}
 \end{tikzpicture}
 \end{figure}
 
-The agreement of the annotators was acceptable (see table \ref{fig:pre_a_agg}).
-
+The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only thirty-seven sentences got a unanimous result.
 \begin{table}[h]
-\caption{Agreement (Prestudy A)}
-\label{fig:pre_a_agg}
+\caption{Annotation confidence for the \emph{first prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
+\label{fig:pre_b_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 37 & 37.00\%\\
-2 & 58 & 58.00\%\\
-3 & 5 & 5.00\%\\
+100\%	&	37	&	37.00	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	0	&	0.00	 \\ 
+71-80\%	&	5	&	5.00	 \\ 
+61-70\%	&	50	&	50.00	 \\ 
+51-60\%	&	0	&	0.00	 \\ 
+0-50\%	&	8	&	8.00	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
-
-\begin{table}[h]
+\begin{table}[!h]
 \centering
-\caption{Examples of uncertain sentences for prestudy A. The annotators could not agree on one class for this sentences. }
+\caption{Examples of uncertain sentences for the \emph{first prestudy}. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_1_res}
-\begin{tabularx}{\textwidth}{lXrrr}
+\begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
-\# & Sentence        & Ann. 1  & Ann. 2 & Ann. 3             \\ \midrule
-1 & The only reason OBJECT\_A is used over OBJECT\_B, is because of libraries... & WORSE & UNCLEAR & NO\_COMP\\
-2 & Agile development is the most popular model at the moment because of architectures like OBJECT\_A on Rails and Django (for OBJECT\_B) & NO\_COMP & NO\_COMP & UNCLEAR\\
-3 & Your C# and VB devs can suddenly easily write web apps and your OBJECT\_A and OBJECT\_B devs can too - with the added bonus of much better performance &  NO\_COMP & NO\_COMP & UNCLEAR \\
-4 & I'm a huge OBJECT\_A/Django \& OBJECT\_B/Rails fan, but I will never stop using PHP because it is so broadly accepted and supported & NO\_COMP & UNCLEAR & UNCLEAR \\
-5 & It's why I mention OBJECT\_A and OBJECT\_B, because they've at least heard of them. & NO\_COMP & NO\_COMP & UNCLEAR \\
+ Sentence        & \texttt{BETTER} & \texttt{WORSE} & \texttt{UNCLEAR} & \texttt{NO\_COMP}          \\ \midrule
 
+While \emph{OBJECT\_A} is slightly faster, \emph{OBJECT\_B} utilises memory better & 1 & 1 & 1 & 0 \\
+
+Your C\# and VB devs can suddenly easily write web apps and your \emph{OBJECT\_A} and \emph{OBJECT\_B} devs can too - with the added bonus of much better performance. & 0 & 0 & 2 & 2 \\
+
+The only reason \emph{OBJECT\_A} is used over \emph{OBJECT\_B}, is because of libraries.. & 0 & 1 & 1 & 1 \\
+
+for json: i also think its better to just use \emph{OBJECT\_A}, \emph{OBJECT\_B}, perl and transform it & 1 & 0 & 1 & 1 \\
 
 \bottomrule                              
 \end{tabularx}
 \end{table}
 
-Some uncertain sentences are shown in table \ref{tbl:pre_1_res}, which displays the sentence and the decision of each annotator. As one can see in sentence two to five, annotators frequently were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true in fifty-one of the fifty-eight cases (87\%) were two different classes were assigned.\newline
 
-Fourteen out of fifty-five participants took part in an exit survey to rate the task. The overall satisfaction was rated with 3.2 out of 5. While the instructions (4.5), difficulty (4.4) and payment (3.8) got acceptable to good ratings, the test questions (2.9) were critizied. Also, 32 potential annotators failed the quiz. A second prestudy was conducted to adress the discovered problems.
-
+Some uncertain sentences are shown in table \ref{tbl:pre_1_res}, which displays the sentence and the decision of each annotator. As one can see in sentence two, annotators were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true in fifty-two of the sixty-three cases were more than one classes was assigned.
 
 
-\subsection{Prestudy B}
+
+Fourteen out of fifty-five participants took part in an exit survey to rate the task. The overall satisfaction was rated with 3.2 out of 5. While the instructions (4.5), difficulty (4.4) and payment (3.8) got acceptable to good ratings, the test questions (2.9) were critizied. Also, thirty-two of eighty-five potential annotators failed the quiz. A second prestudy was conducted to adress the discovered problems.
+
+
+
+\subsection{Second Prestudy}
 Two-hundred sentences were annotated in the second prestudy. To address the shortcomings mentioned above, the task design was changed in several aspects.
 
 However, some aspects were identical to the first study. As the sentence selection process worked fine, the same 1000 base sentences were used in the second prestudy.  Each sentence was annotated by three annotators. The annotators saw five sentences per batch, one being a test question. They had to pass a quiz of eight test questions and had to keep an accuracy of 70\% on the test questions during the annotation procedure. The classes were the same as in the first prestudy (see table \ref{tbl:prestudyclasses-a}).
@@ -207,9 +214,7 @@ However, some aspects were identical to the first study. As the sentence selecti
 As the pair \enquote{\emph{Ruby vs. Python}} requires knowledge in computer science, this need was expressed in the title of the task.
 To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP}, the wording on this classes in the annotator's view was changed. The new view is displayed in figure \ref{img:2_question}. 
 
-In the first prestudy, some annotators complained that the test questions were not fair. In fact, they contained some special cases in a way that they did not represent the whole data set appropriatly. In the second prestudy, more test questions (fifty-one instead of twelve) test questions were used. Those test questions covered easy and harder cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
-
-The sentence preprocessing was altered as well. Instead of replacing the object, \mbox{\textbf{{\color[HTML]{9A14B2}:{[}OBJECT\_A{]}}}} or \textbf{{\color[HTML]{6CB219}:{[}OBJECT\_B{]}}} was appended. The colon and square brackets emphasize where the object of interest ends and the suffix begins. The idea behind this was that the removal of the objects also removed some context from the sentences, which might be useful to classify them correctly. In addition, the objects were shown in a different colour than the rest of the text.\newline
+In the first prestudy, some annotators complained that the test questions were not fair. In fact, they contained some special cases in a way that they did not represent the whole data set appropriatly. In the second prestudy, more test questions (fifty-one instead of twelve) test questions were used. Those test questions covered easy and hard cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
 
 \begin{figure}[h]
 \centering
@@ -218,53 +223,68 @@ The sentence preprocessing was altered as well. Instead of replacing the object,
 \caption{The new annotator view for prestudy B. The objects are now highlighted by colour.}
 \end{figure}
 
-The class distribution for the 200 sentences is presentend in figure \ref{fig:dist_pre_b}. 
+The sentence preprocessing was altered as well. Instead of replacing the object, \mbox{\textbf{{\color[HTML]{9A14B2}:{[}OBJECT\_A{]}}}} or \textbf{{\color[HTML]{6CB219}:{[}OBJECT\_B{]}}} was appended. The colon and square brackets emphasize where the object of interest ends and the suffix begins. The idea behind this was that the removal of the objects also removed some context from the sentences, which might be useful to classify them correctly. In addition, the objects were shown in a different colour than the rest of the text.\newline
+
+
+
+The class distribution for the two-hundred sentences is presentend in figure \ref{fig:dist_pre_b}. 
+
 
 \begin{figure}[h]
+% aktuelle zahlen 29.3; neue methode
 \centering
 \caption{Class Distribution (Prestudy B)}
 \label{fig:dist_pre_b}
 \begin{tikzpicture}
 \pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {48/NO\_COMP (96),
-    27/BETTER (54),
-    11.5/WORSE (23),
-    13.5/UNCLEAR (27)}
+    {47.50/NO\_COMP (95),
+    27.50/BETTER (56),
+    11.00/WORSE (22),
+    14.00/UNCLEAR (28)}
 \end{tikzpicture}
 \end{figure}
 
-As in the first prestudy, nearly half of the sentences are comparative. The agreement (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem for the sentences where only two annotators could agree. However, in the second prestudy this confusion only makes up fourty-five out of the seventy-two cases (62.5\% instead of 87.9\% in the first prestudy). Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62.5\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
+As in the first prestudy, nearly half of the sentences are comparative. The confidence of the annotations (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
 \begin{table}[h]
-\caption{Agreement (Prestudy B)}
-\label{fig:pre_b_agg}
+% aktuelle zahlen 29.3; neue methode
+\caption{Annotation confidence for the \emph{second prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
+\label{tbl:pre_b_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
-Distinct classes & Sentences & Percentage \\
+Confidence & Sentences & \% of data set \\
 \midrule
-1 & 125 & 62.50\%\\
-2 & 71 & 35.50\%\\
-3 & 4 & 2.00\%\\
+100\%	&	124	&	62.00	 \\ 
+91-99\%	&	2	&	1.00	 \\ 
+81-90\%	&	2	&	1.00	 \\ 
+71-80\%	&	5	&	2.50	 \\ 
+61-70\%	&	57	&	28.50	 \\ 
+51-60\%	&	2	&	1.00	 \\ 
+0-50\%	&	8	&	4.00	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
 
 
+
 \begin{table}[h]
+% aktuelle zahlen 29.3; neue methode
 \centering
 \caption{Examples of uncertain sentences for prestudy B. The annotators could not agree on one class for this sentences. }
 \label{tbl:pre_2_res}
-\begin{tabularx}{\textwidth}{lXrrr}
+\begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
-\# & Sentence        & Ann. 1  & Ann. 2 & Ann. 3             \\ \midrule
-6 & Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{9A14B2}iphone:{[}OBJECT\_A{]}}} (as opposed to \textbf{{\color[HTML]{6CB219}android:{[}OBJECT\_B{]}}}). & BETTER & WORSE & NO\_COMP \\
-7 & (See \textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} Dethrones the \textbf{{\color[HTML]{6CB219} iphone:{[}OBJECT\_B{]}}}.) & BETTER & NO\_COMP & NO\_COMP \\
+ Sentence        & \texttt{BETTER} & \texttt{WORSE} & \texttt{UNCLEAR} & \texttt{NO\_COMP}          \\ \midrule
+\textbf{{\color[HTML]{9A14B2}Ruby:{[}OBJECT\_A{]}}} and \textbf{{\color[HTML]{6CB219} Python:{[}OBJECT\_B{]}}} perform significantly better. & 0 & 0 & 2 & 2 \\
 
-8 & \textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} didn't out pace the \textbf{{\color[HTML]{6CB219} iphone:{[}OBJECT\_B{]}}} this year, it just sold slightly better in America & WORSE & NO\_COMP & WORSE\\
+Unfortunately, when it comes to potential projects \textbf{{\color[HTML]{9A14B2}Ruby:{[}OBJECT\_A{]}}} suffers because it's similarity to \textbf{{\color[HTML]{6CB219} Python:{[}OBJECT\_B{]}}} & 1 & 2 & 1 & 0 \\
 
-9 & To me it is much better than \textbf{{\color[HTML]{9A14B2}iphone:{[}OBJECT\_A{]}}} \mbox{and \textbf{{\color[HTML]{6CB219}android:{[}OBJECT\_B{]}}}}. & NO\_COMP & UNCLEAR & UNCLEAR \\
 
-10 & (\textbf{{\color[HTML]{9A14B2}android:{[}OBJECT\_A{]}}} , Crush , iPad , \mbox{\textbf{{\color[HTML]{6CB219}iphone:{[}OBJECT\_B{]}}}} )& NO\_COMP & BETTER & NO\_COMP \\
+Not to mention that the \textbf{{\color[HTML]{9A14B2}iPhone:{[}OBJECT\_A{]}}} and \textbf{{\color[HTML]{6CB219} Android:{[}OBJECT\_B{]}}} phones deliver a far superior user experience overall & 1 & 0 & 1 & 1 \\
+
+Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{9A14B2}iPhone:{[}OBJECT\_A{]}}} (as opposed to \textbf{{\color[HTML]{6CB219} Android:{[}OBJECT\_B{]}}}). & 1 & 1 & 0 & 1 \\
+
+
 
 \bottomrule                              
 \end{tabularx}
@@ -277,13 +297,12 @@ Twenty-two annotators took the exit survey. The overall satisfaction increased t
 The change in numbers is explained by the increased amount of sentences, which introduce new cases which are not directly reflected in the annotation guidelines.
  
 \subsection{Validation of results}
-Only a small fraction of the annotators took the exit surveys in both prestudies which reduces their explanatory power. However, it gave valuable hints to improve the study design. Yet, the agreement of the annotators is the more important signal.
+Only a small fraction of the annotators took the exit surveys in both prestudies which reduces their explanatory power. However, it gave valuable hints to improve the study design. Yet, the increased confidence of the annotations is the more important signal.
+
+Using two comparable objects and cue words to query the index returns a satisfiying amount of comparative sentences. The changes in the second prestudy were well recieved by the annotators. In the end, they improved the quality of results as there are more cases where all three annotators agreed on one class.
 
 
-Using two comparable objects and cue words to query the index returns a satisfiying amount of comparative sentences. Sentence seven (table \ref{tbl:pre_2_res}) shows that it is also benefitial to query the index without cue words. The changes in the second prestudy were well recieved by the annotators. In the end, they improved the quality of results as there are more cases where all three annotators agreed on one class.
-
-
-The distinction between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still a problem. This illustrates that the choice of a class is subjective to some degree. For instance, sentence five (table \ref{tbl:pre_1_res}) can be understood in two ways. First, one can read it as \emph{PHP is better than OBJECT\_A and OBJECT\_B} because \enquote{\emph{[...] it is so broadly accepted and supported}}. Since those qualities are not mentioned for \texttt{OBJECT\_A} and \texttt{OBJECT\_B}, they can be seen as absent for those objects which makes them worse than PHP. Then, \texttt{UNCLEAR} would be the correct label, because the sentence is comparative but does not compare the objects of interest against each other.
+The distinction between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still a problem. This illustrates that the choice of a class is subjective to some degree. 
 
 Second, one can read that PHP is an alternative, but there is no expression that it is better, since the sentence does not say it is \emph{more accepted} or \emph{more supported} than \texttt{OBJECT\_A} or \texttt{OBJECT\_B}. In this case, \texttt{NO\_COMP} is the correct class.
 \hfill\newline
@@ -496,18 +515,21 @@ The label distribution of the 742 sentences is presented in the figure \ref{fig:
 For the Brands domain, 2335 sentences were annotated. The sentences contained objects of sixty-three pairs. As shown in table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
 
 
-% zahlen 23.3
+% zahlen 29.3
 \begin{table}[h]
-\caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
+\caption{Annotation confidence for the domain \emph{Brands}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:brand_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1719	&	71.30\%	 \\ 
-80-99\%	&	360	&	14.93\%	 \\ 
-60-79\%	&	275	&	11.41\%	 \\ 
-0-50\%	&	57	&	2.36\%	 \\ 
+100\%	&	1719	&	71.30	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	34	&	1.41	 \\ 
+71-80\%	&	337	&	13.98	 \\ 
+61-70\%	&	8	&	0.33	 \\ 
+51-60\%	&	256	&	10.62	 \\ 
+0-50\%	&	57	&	2.36	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -516,7 +538,7 @@ Confidence & Sentences & \% of data set \\
 
 The class distribution is presented in figure \ref{fig:brands_fin}. The amount of comparative sentences is lower (24.45\%) than in the prestudy. The reason for this is the abandonment of the \texttt{OTHER} (\texttt{UNCLEAR}) class. 
 
-% zahlen 23.3
+% zahlen 29.3
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Brands}}
@@ -550,10 +572,13 @@ For the Computer Science domain, 2425 sentences (containing one of fourty-two pa
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1698	&	70.02\%	 \\ 
-80-99\%	&	391	&	16.12\%	 \\ 
-60-79\%	&	267	&	11.01\%	 \\ 
-0-50\%	&	69	&	2.85\%	 \\ 
+100\%	&	1698	&	70.02	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	25	&	1.03	 \\ 
+71-80\%	&	369	&	15.22	 \\ 
+61-70\%	&	18	&	0.74	 \\ 
+51-60\%	&	246	&	10.14	 \\ 
+0-50\%	&	69	&	2.85	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -579,16 +604,19 @@ The numbers improved for the rest of the sentences (after the removal of \texttt
 The random domain has 2439 sentences and 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (figure \ref{fig:random_fin}) are satisfactory as well.
    % zahlen 23.3 
 \begin{table}[h]
-\caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}}.
+\caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:random_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	1753	&	71.87\%	 \\ 
-80-99\%	&	378	&	15.50\%	 \\ 
-60-79\%	&	259	&	10.62\%	 \\ 
-0-50\%	&	49	&	2.01\%	 \\ 
+100\%	&	1753	&	71.87	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	16	&	0.66	 \\ 
+71-80\%	&	362	&	14.84	 \\ 
+61-70\%	&	7	&	0.29	 \\ 
+51-60\%	&	252	&	10.33	 \\ 
+0-50\%	&	49	&	2.01	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -622,10 +650,13 @@ Table \ref{fig:all_agg} summarises the confidence of the annotations on all thre
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	5111	&	71.00\%	 \\ 
-80-99\%	&	1129	&	15.68\%	 \\ 
-60-79\%	&	790	&	10.97\%	 \\ 
-0-50\%	&	169	&	2.35\%	 \\ 
+100\%	&	5111	&	71.00	 \\ 
+91-99\%	&	0	&	0.00	 \\ 
+81-90\%	&	75	&	1.04	 \\ 
+71-80\%	&	1057	&	14.68	 \\ 
+61-70\%	&	33	&	0.46	 \\ 
+51-60\%	&	754	&	10.47	 \\ 
+0-50\%	&	169	&	2.35	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}

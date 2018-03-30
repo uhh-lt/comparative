@@ -5,11 +5,13 @@ import spacy
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import classification_report, f1_score
+from sklearn.model_selection import LeaveOneOut
 from sklearn.pipeline import make_pipeline, FeatureUnion, Pipeline
 from xgboost import XGBClassifier
 
 from classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
 from features.contains_features import ContainsPos
+from features.mean_embedding_feature import MeanWordEmbedding
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
 from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart, ExtractFirstPart, ExtractLastPart
 from util.data_utils import load_data, k_folds
@@ -63,103 +65,62 @@ def all_extractor_combis(feature_class, name, *args):
 
 
 def n_gram(vectorizer, name_add='', **kwargs):
-    ranges = [(1, 1), (2, 2), (3, 3), (1, 3)]
+    ranges = [(2, 2), (3, 3), (4, 4), (2, 4)]
     binary = [True, False]
-    top_k = [None, 100, 2500]
+    top_k = [None, 100]
     feat = []
     for c in itertools.product(ranges, binary, top_k):
-        feat += ([('{} Range {} Binary {} Top {} ({})'.format(e[0], c[0], c[1], c[2], name_add), FeatureUnion([(
-            '{} {}'.format(
-                e,
-                c),
-            Pipeline(
-                [e, (
-                    '{} {}'.format(
-                        e,
-                        c),
-                    vectorizer(
-                        ngram_range=
-                        c[
-                            0],
-                        binary=
-                        c[
-                            1],
-                        max_features=
-                        c[
-                            2],
-                        **kwargs))]))]))
-                  for e
-                  in
-                  ALL_EXTRACTORS])
+        feat += ([('{} Range {} Binary {} Top {} ({} {})'.format(e[0], c[0], c[1], c[2], type(vectorizer()), name_add),
+                   FeatureUnion([(
+                       '{} {}'.format(
+                           e, c),
+                       Pipeline(
+                           [e, ('{} {}'.format(e, c),
+                                vectorizer(
+                                    ngram_range=c[0], binary=c[1], max_features=c[2], **kwargs))]))]))
+                  for e in ALL_EXTRACTORS])
     return feat
 
 
 nlp = spacy.load('en')
 
-logger = get_logger('feature_tests')
+logger = get_logger('feature_tests_pos_gram')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
 data = load_data('data.csv')
 
 infersent_model = initialize_infersent(data.sentence.values)
-# unigrams = get_all_ngrams(data.sentence.values, 1)
-# bigrams = get_all_ngrams(data.sentence.values, 2)
-# trigrams = get_all_ngrams(data.sentence.values, 3)
 
-# pos_bigrams = get_all_ngrams(POSTransformer().transform(data.sentence.values), 2)
+folds = k_folds(5,data,random_state=1337)
 
-# pos_trigrams = get_all_ngrams(POSTransformer().transform(data.sentence.values), 3)
-# pos_trigrams_mf_5 = get_all_ngrams(POSTransformer().transform(data.sentence.values), n=3, min_freq=5)
 
-folds = list(k_folds(5, data))
 
-feature_unions = [
+features = [
+    ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
+    ('mean word embedding middle', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding())),
+    ('unigram counts binary top 100',
+     make_pipeline(ExtractMiddlePart(), CountVectorizer(binary=True, max_features=100))),
+    ('unigram counts binary all', make_pipeline(ExtractMiddlePart(), CountVectorizer(binary=True))),
+    ('unigram tfidf all', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),
+    ('unigram tfidf top 100', make_pipeline(ExtractMiddlePart(), TfidfVectorizer(max_features=100))),
+    ('contains jjr', make_pipeline(ExtractMiddlePart(), ContainsPos("JJR"))),
+    ('2-4 pos 100',
+     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=100, ngram_range=(2, 4)))),
+    ('2-4 pos 500',
+     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))),
+    ('2-4 pos all', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 4)))),
+    ('2 pos all', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2)))),
+    ('2 pos 100',
+     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2), max_features=100))),
+    ('word vector', make_pipeline(WordVector()))
+]
 
-                     ('pos bigrams middle + contains jrr middle ', FeatureUnion([
-                         ('pos bigrams middle',
-                          make_pipeline(ExtractMiddlePart(), CountVectorizer(ngram_range=(2, 2), binary=True))),
-                         ('contains jrr middle', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))
-                     ])),
+feature_unions = []
+combis = list(itertools.combinations(features,1)) + list(itertools.combinations(features,2)) + list(itertools.combinations(features,3))
+for c in combis:
+    n = ' | '.join([a[0] for a in c])
+    feature_unions.append((n, FeatureUnion(transformer_list=list(c))))
 
-                     ('pos bigrams full sentence + infersent middle',
-                      FeatureUnion([
-                          ('pos bigram',
-                           make_pipeline(ExtractRawSentence(), POSTransformer(),
-                                         CountVectorizer(ngram_range=(2, 2), binary=True))),
-                          ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))
-                      ])),
-
-                     ('unigram first + infersent middle + unigram last',
-                      FeatureUnion([
-                          ('unigram first',
-                           make_pipeline(ExtractFirstPart(), CountVectorizer(binary=True))),
-                          ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
-                          ('unigram last',
-                           make_pipeline(ExtractLastPart(), CountVectorizer(binary=True)))
-                      ])),
-
-                     ('unigrams min freq 2 full + infersent middle',
-                      FeatureUnion([
-                          ('unigrams',
-                           make_pipeline(ExtractRawSentence(), CountVectorizer(min_df=2))),
-                          ('infersent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))
-                      ])),
-
-                     ('infersent first + infersent middle + inferset last',
-                      FeatureUnion([
-                          ('infersent first', make_pipeline(ExtractFirstPart(), InfersentFeature(infersent_model))),
-                          ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
-                          ('infersent last', make_pipeline(ExtractLastPart(), InfersentFeature(infersent_model)))
-                      ])),
-
-                     ('tfidf middle + infersent middle',
-                      FeatureUnion([
-                          ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
-                          ('tfidf middle', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),
-                      ])),
-
-                 ] + n_gram(CountVectorizer) + n_gram(TfidfVectorizer) + n_gram(TfidfVectorizer, name_add='smoothed',
-                                                                                smooth_idf=True)
 
 best_per_feat = []
 for caption, feature_union in feature_unions:
