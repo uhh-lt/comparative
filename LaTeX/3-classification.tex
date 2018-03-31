@@ -1,104 +1,135 @@
 \chapter{Classification of Comparative Sentences}
-\section{Experiments}
-The data collected from the crowdsourcing task was used as training data for classification problems. In the first problem, the machine learning algorithms were trained so that they were able to assign one of the three original classes (see section \ref{sec:designchanges}) to the data. The second problem is a simplification of the first one as it is designed as a binary classification problem. The classes \texttt{BETTER} and \texttt{WORSE} were merged into the class \texttt{ARG}.
+The data collected from the crowdsourcing task was used as training data for two classification problems. In the first problem, a machine learning algorithm was trained to predict one of the three classes per sentence (see table \ref{tbl:mainstudy-classes}). The second problem is a simplification of the first one as it is designed as a binary classification problem. The classes \texttt{BETTER} and \texttt{WORSE} were merged into the class \texttt{ARG}.
 
+The data was split into a training set (5820 sentences; 4240 \texttt{NONE}, 1102 \texttt{BETTER} and 478 \texttt{WORSE}) and a held-out set.
+The experiments were conducted on the training set only. During the development, the experiments were evaluated using stratified k-fold cross-validation where k equals five. 
 
-The data was split into a training set (5937 examples; 4270 \texttt{NONE}, 1158 \texttt{BETTER} and 509 \texttt{WORSE}) and a held-out set. The held-out set stayed untouched until the final evaluation presented in section \ref{sec:final}. During the development, the experiments were evaluated using stratified k-fold cross-validation where k equals five. The evaluation was done with the scikit-learn implementation. As the evalutation metric, the weighted mean\footnote{weighted by number of examples per class} of the F1 scores of all classes is used. 
+The held-out set stayed untouched until the final evaluation presented in section \ref{sec:final}.
+
+If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform feature processing, the classification and evaluation.
 
 \section{Choice of Algorithms}
+\begin{table}[!h]
+\centering
+\label{tbl:algo}
+\caption{Tested classification algorithms. Precision, recall and f1 score are calculated as weighted macro-average across classes (as in scikit-learn's \texttt{classification\_report}). The best out of five folds with standard derivation in brackets is presented.}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Algorithm & Precison & Recall & F1 Score \\ \midrule
+\textbf{XGBClassifier} 	&	 \textbf{0.79} \scriptsize{(0.01)} &  \textbf{0.81} \scriptsize{(0.01)} &  \textbf{0.78} \scriptsize{(0.01)}  \\
 
-To find the best performing classification algorithms, eleven (see table \ref{tbl:algo}) were selected and compared. For all algorithms under test, the unigrams of the whole sentence were used as binary features (the implementation is described in section \ref{sec:ngrams}). Unigrams are a simple yet efficient feature for text classification (\cite{cavnar1994n}) which makes them suitable as a baseline feature for comparisons. Stratified k-fold with k equals five was used to assess the quality of the algorithm. The unweighted average of the five F1 scores was used to make the different algorithms more comparable.
+Logistic Regression 	&	 0.77 \scriptsize{(0.01)} &	 0.79 \scriptsize{(0.01)} &	 0.78 \scriptsize{(0.01)}  \\ 
+
+
+Stochastic Gradient Descent 	&	 0.76 \scriptsize{(0.01)} &	 0.77 \scriptsize{(0.01)} &	 0.77 \scriptsize{(0.01)}  \\ 
+
+Ada Boost (Decision Trees) 	&	 0.75 \scriptsize{(0.01)} &	 0.78 \scriptsize{(0.00)} &	 0.75 \scriptsize{(0.01)}  \\ 
+
+Support Vector Machine (Linear Kernel) &	 0.76 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.01)}  \\ 
+
+
+K Neighbors (k = 5) &	 0.77 \scriptsize{(0.03)} &	 0.78 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.01)}  \\ 
+
+
+Random Forest &	 0.76 \scriptsize{(0.01)} &	 0.78 \scriptsize{(0.00)} &	 0.75 \scriptsize{(0.01)}  \\ 
+
+Decision Tree &	 0.74 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)}  \\ 
+
+Extra Trees 	&	 0.74 \scriptsize{(0.01)} &	 0.78 \scriptsize{(0.00)} &	 0.74 \scriptsize{(0.00)}  \\ 
+
+Multinomial Gaussian Bayes &	 0.69 \scriptsize{(0.04)} &	 0.77 \scriptsize{(0.01)} &	 0.71 \scriptsize{(0.01)}  \\ 
+
+
+Support Vector Machine (RBF Kernel) 	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scriptsize{(0.00)}  \\ 
+
+Support Vector Machine (Polynomial Kernel) 	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scriptsize{(0.00)}  \\
+
+Support Vector Machine (Sigmoid Kernel) &	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scriptsize{(0.00)}  \\ 
+
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+To find the best performing classification algorithms, thirten (see table \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. The binary unigram vector computed on the whole sentence was used as the only feature. Stratified k-fold with k equals five was used to assess the quality of the algorithm.
+
+
+
+
+
+%\begin{table}[h]
+%\centering
+%\label{tbl:algo}
+%\caption{All evaluated classification algorithms. The F1 score shows the classification performance with the unigram feature.}
+%\begin{tabularx}{\textwidth}{XlX}
+%\toprule
+%Algorithm & F1 Score & Used in\\ \midrule
+%
+%XGBoost & 0.76 & -\\ 
+%
+%Logistic Regression & 0.75 &  \cite{Dusmanu2017Argument-Mining,Daxenberger2017What-is-the-EssAker2017What-works-and-,Lippi2016Argumentation-M}\\ 
+%
+%AdaBoost & 0.74 &  \cite{Aker2017What-works-and-}\\  
+%
+%Linear SVC & 0.73 & \cite{Aker2017What-works-and-}\\  
+%
+%Decision Tree & 0.72 &  \cite{Stab2014Identifying-Arg,Lippi2016Argumentation-M}\\ 
+%
+%Stochastic Gradient Descent & 0.72 & -\\ 
+%
+%
+%Random Forest & 0.72 &  \cite{Dusmanu2017Argument-Mining,Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Lippi2016Argumentation-M}\\  
+%
+%Extra Trees Classifier & 0.72 & - \\
+%
+%K Neighbors & 0.72 &  \cite{Aker2017What-works-and-}\\ 
+%
+%
+%Support Vector Machine (non-linear kernel) & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M,Habernal2016Argumentation-M}\\ 
+%
+%
+%Naive Bayes & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M}\\  
+%
+%
+% \bottomrule 
+%\end{tabularx}
+%
+%\end{table}
+
+
+Tree-based methods and linear models work good. Support Vector Machines with non-linear kernels assigne \texttt{NONE} to all sentences.
+
+As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms were done. A set of hyper-parameters for XGBoost were tested using exhaustive grid search and randomized search. However, no significant increase in the F1 score could be achieved.
+
+In the following sections, all experiments were done using XGBoost.
+
+
+\section{Preprocessing}
+In addition to the full sentence, preprocessed versions of it were used in the feature calculation.
+
+Different parts of the sentence were used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
+
+Another processing step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). Some examples are shown in table \ref{preprocessing_example}.
 
 \begin{table}[h]
 \centering
-\label{tbl:algo}
-\caption{All evaluated classification algorithms. The F1 score shows the classification performance with the unigram feature.}
-\begin{tabularx}{\textwidth}{XlX}
+\label{preprocessing_example}
+\caption{Preprocessing examples for the sentence \enquote{\emph{In my mind, Python is better than Ruby}}}
+\begin{tabularx}{\linewidth}{lX}
 \toprule
-Algorithm & F1 Score & Used in\\ \midrule
-
-XGBoost & 0.76 & -\\ 
-
-Logistic Regression & 0.75 &  \cite{Dusmanu2017Argument-Mining,Daxenberger2017What-is-the-EssAker2017What-works-and-,Lippi2016Argumentation-M}\\ 
-
-AdaBoost & 0.74 &  \cite{Aker2017What-works-and-}\\  
-
-Linear SVC & 0.73 & \cite{Aker2017What-works-and-}\\  
-
-Decision Tree & 0.72 &  \cite{Stab2014Identifying-Arg,Lippi2016Argumentation-M}\\ 
-
-Stochastic Gradient Descent & 0.72 & -\\ 
-
-
-Random Forest & 0.72 &  \cite{Dusmanu2017Argument-Mining,Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Lippi2016Argumentation-M}\\  
-
-Extra Trees Classifier & 0.72 & - \\
-
-K Neighbors & 0.72 &  \cite{Aker2017What-works-and-}\\ 
-
-
-Support Vector Machine (non-linear kernel) & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M,Habernal2016Argumentation-M}\\ 
-
-
-Naive Bayes & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M}\\  
-
-
- \bottomrule 
+Preprocessing & Result \\ \midrule
+Middle part & Python is better than Ruby \\
+Middle part, removal & is better than \\
+Full sentence, distinct replacement &In my mind, OBJECT\_A is better than OBJECT\_B \\
+First part, removal & In my mind, \\
+\bottomrule
 \end{tabularx}
 
 \end{table}
 
 
-For all algorithms except XGBoost, the implementation available from scikit-learn (\cite{scikit-learn} ) was used. Tree-based methods and simple linear models work good. The \emph{Support Vector Machine} without a linear kernel was not able to classify the examples at all as it assigns \texttt{NONE} to all training examples. This is true for all non-linear kernel functions available in scikit-learn (RBF, polynomial and Sigmoid).
-
-Naive Bayes classifies examples correctly into all classes, yet the performance is still same as the baseline shown in section \ref{sec:baseline}.
-
-As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of the \emph{Support Vector Machine} and \emph{Naive Bayes} were done. In the following sections, all experiments were done using XGBoost.
-
-A set of hyper-parameters for XGBoost were tested using exhaustive grid search and randomized search. However, no significant increase in the F1 score could be achieved.
-
-
-
-
-
-
-
-
 \section{Features}
-The following section briefly describes each feature used for both classification tasks. 
 
-Two observations are true for all features. First, the F1 score increases by at least five points if only the part of the sentence between both objects of interest is used (from now on called \enquote{\emph{middle part}}).
-
- Second, the objects do not make any significant difference. All features were tested with four versions of the sentence (eventually with the middle part only). 
-\begin{enumerate}
-\item the sentence stayed unchanged
-\item the objects of interest removed completely from the sentence
-\item both objects replaced with \emph{OBJECT}
-\item the first object replaced with \emph{OBJECT\_A}, the second object replaced with \emph{OBJECT\_B}
-\end{enumerate}
-Most of the time, the F1 score for the different versions differ - if at all - in the third decimal place. In exceptional cases, using the fourth option increases the F1 score by X points. If not stated differently, all features used the unchanged middle part of the original sentence.
-
-
-\subsection{Bag-Of-Words Feature}
-Some variants of the BOW model present in section \ref{sec:bow_model} have been used. Binary feature vectors\footnote{the n-grams were computed using \emph{textacy} (https://github.com/chartbeat-labs/textacy)} and their tf-idf weighted\footnote{relying on the scikit-learn implementation} counterparts were tested for uni-, bi- and trigrams. No restrictions were imposed on the n-grams.
-
-Uni- and bigram models bet both baselines.
-
-The idea behind using trigram models despite the short text length was to capture trigrams like \enquote{\emph{is better than}} or \enquote{\emph{is worse because}} which would indicate a comparison. However, the performance of trigram models was not satisfying.
-\label{sec:ngrams}
-
-\subsection{Part of Speech}
-Several boolean features were used to model the apperance of parts-of-speech in the sentence. The part-of-speech tagging was done with \emph{spaCy}. The feature capturing the apperance of the part-of-speeches \emph{comparative adverb (RBR)} and \emph{comparative adjective (JJR)}\footnote{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html} had an equal performance to the unigram model. Other part-of-speech tags did not get a result above the baseline (for instance \emph{superlative adjective (RBS)} However, using this feature in isolation, no training example is assigned to the class ?
-
-\subsection{Mean Word Embeddings}
-
-\subsection{Sentence Embeddings}
-\subsection{Dependency Features}
-\subsection{Other Features}
-A couple of features did not contribute to the classification at all, be it alone or in combination with other features. This includes the length of the sentence or its parts, statistics over punctuation or named entities.
-% n-grams
-% sentence embeddings
-% POS JJR
 
 \section{Classification with three classes}
 \subsection{Baseline}
@@ -147,6 +178,70 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 
 \subsection{Results}
+The classification results are presented in the tables below. Every table shows the best out of five folds. The standard derivation is stated in brackets. Top results are printed in bold.
+
+
+\begin{table}[!htb]
+    \begin{minipage}{.5\linewidth}
+        \caption{\emph{Sentence embeddings on the middle part of the sentence}. (Standard derivation)} 
+        \begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.81 \scriptsize{(0.04)} &	 0.79 \scriptsize{(0.02)} &	 0.80 \scriptsize{(0.03)}  \\ 
+\texttt{WORSE}	&	 0.57 \scriptsize{(0.04)} &	 0.33 \scriptsize{(0.05)} &	 0.42 \scriptsize{(0.04)}  \\ 
+\texttt{NONE}	&	 0.91 \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
+average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
+\bottomrule
+        \end{tabular} 
+  \end{minipage} \hfill
+    \begin{minipage}{.5\linewidth}
+    \caption{ \emph{Binary unigram vector} for all unigrams in the middle part of the sentence. } 
+          \begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 \textbf{0.82} \scriptsize{(0.03)} &	 0.79 \scriptsize{(0.04)} &	 0.81 \scriptsize{(0.03)}  \\ 
+\texttt{WORSE}	&	 0.71 \scriptsize{(0.06)} &	 0.23 \scriptsize{(0.02)} &	 0.35 \scriptsize{(0.02)}  \\ 
+\texttt{NONE}	&	 0.89 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
+average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
+\bottomrule
+            \end{tabular}
+    \end{minipage} 
+\end{table}
+
+
+
+
+
+\begin{table}[!htb]
+    \begin{minipage}{.5\linewidth}
+   \caption{ \emph{Mean Word Embeddings} for the middle part of the sentence. } 
+
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.70 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.04)} &	 0.72 \scriptsize{(0.02)}  \\ 
+\texttt{WORSE}	&	 0.44 \scriptsize{(0.16)} &	 0.04 \scriptsize{(0.04)} &	 0.08 \scriptsize{(0.07)}  \\ 
+\texttt{NONE}	&	 0.88 \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.92 \scriptsize{(0.00)}  \\ 
+average	&	 0.81 \scriptsize{(0.01)} &	 0.84 \scriptsize{(0.01)} &	 0.81 \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+  \end{minipage} \hfill
+    \begin{minipage}{.5\linewidth}
+     \caption{500 most frequent \emph{part-of-speech bi-, tri- and four-grams}; weighted by tf-idf.} 
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.63 \scriptsize{(0.04)} &	 0.67 \scriptsize{(0.05)} &	 0.65 \scriptsize{(0.04)}  \\ 
+\texttt{WORSE}	&	 0.64 \scriptsize{(0.19)} &	 0.07 \scriptsize{(0.02)} &	 0.13 \scriptsize{(0.04)}  \\ 
+\texttt{NONE}	&	 0.87 \scriptsize{(0.01)} &	 0.94 \scriptsize{(0.01)} &	 0.90 \scriptsize{(0.01)}  \\ 
+average	&	 0.80 \scriptsize{(0.03)} &	 0.82 \scriptsize{(0.01)} &	 0.79 \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+    \end{minipage} 
+\end{table}
+
+
+
 
 
 
@@ -188,6 +283,8 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scripts
 \end{tabular}
     \end{minipage} 
 \end{table}
+
+
 
 
 

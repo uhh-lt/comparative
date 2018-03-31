@@ -77,15 +77,15 @@ As an example, Check24 can compare a wide variety of different objects like seve
 For instance, to compare different DSL providers, the user has to enter her address, how fast the internet should be and if she wants telephone and television as well. She can then select price, speed, and grade (rating) to sort the resulting list.
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth]{images/ds-sys/check24_1}
-\label{img:check24_1}
-\caption{Check24.de asks for some data before the comparison of DSL contracts}
+	\includegraphics[width=1\textwidth]{images/ds-sys/check24_1}
+	\label{img:check24_1}
+	\caption{Check24.de asks for some data before the comparison of DSL contracts}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth,scale=0.8]{images/ds-sys/check24_2}
-\label{img:check24_2}
-\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criterias.}
+	\includegraphics[width=1\textwidth,scale=0.8]{images/ds-sys/check24_2}
+	\label{img:check24_2}
+	\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criterias.}
 \end{figure}
 
 The other mentioned sites work similarly. They provide more of a ranking than a comparison.\newline
@@ -102,15 +102,15 @@ Versus aggregates freely available data sources like Wikipedia and official stat
 Similar to Versus, Diffen aggregates different data sources (see figures \ref{img:diffen} and \ref{img:versus}). All in all, the aggregated information is similar to Versus. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Diffen does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth]{images/ds-sys/diffen}
-\label{img:diffen}
-\caption{The comparison of \enquote{Hamburg vs. Berlin} on Diffen.com}
+	\includegraphics[width=1\textwidth]{images/ds-sys/diffen}
+	\label{img:diffen}
+	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Diffen.com}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=1\textwidth]{images/ds-sys/versus}
-\label{img:versus}
-\caption{The comparison of \enquote{Hamburg vs. Berlin} on Versus.com}
+	\includegraphics[width=1\textwidth]{images/ds-sys/versus}
+	\label{img:versus}
+	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Versus.com}
 \end{figure}
 
 Neither Versus nor Diffen provides a comprehensible reason why an object is better than another one. They merely aggregate facts and bring them face to face. Despite the aggregation approach of both systems, many meaningful comparisons are not possible or not helpful (like \enquote{Hamburg vs. Darmstadt}, \enquote{Java vs. C\#}, \enquote{Dr Pepper vs. Orange Juice}).
@@ -121,32 +121,42 @@ To summarize, a lot of different comparison portals exist and are widely used. E
 
 Adding information like comments and product reviews can enrich the comparison with reasons and opinions, such as \enquote{Ruby is easier to learn than C} or \enquote{Python is more suitable for scientific applications than Erlang as many libraries exist}.
 
+
 \section{Vector Representations for Documents}
-In order to use most machine learning algorithm with text, the text must be transformed into a fixed-length vector. The vector is either sparse or dense. Sparse vectors have a high dimensionalty, were most components are zero. This introduces a lot parameters to learn for the machine learning algorithm. Dense vectors only have hundreds or less components, which are almost never zero.
+The following sections presents methods to transform a document of arbitrary size into a fixed length numeric vector. This vector can than be used as a feature for machine learning. This section is based on \cite{martin2009speech}.
 
-\subsection{Sparse Vectors}
-\label{sec:bow_model}
-A simple yet efficient method to create fixed-length vectors of documents is the \emph{bag-of-words}-model (BOW). In the first step, a vocabulary of all words in all documents is created.
+\subsection{Similarity of vectors}
 
-Next, feature vectors of the size of the vocabulary can be generated. The i-th component of the vector corresponds to the i-th word in the vocabulary. If the i-th word is present in the document, the component is set to one or to the frequency of the word in the sentence.
+\subsection{n-gram vectors}
+An n-gram is a sequence of n words. For instance, all bigrams (n=2) of the previous sentence are: \emph{An n-gram}, \emph{n-gram is}, \emph{is a}, \emph{a sequence}, \emph{sequence of}, \emph{of n}, \emph{n words}. N-grams can be used to generate a fixed-sized vector for every document in a corpus.
 
-Another option is to use weighted values instead of word frequencies, as many words (like \emph{the}, \emph{an} or \emph{end}) occur in almost every document. Those words hardly contribute to the meaning of the sentence.  Commonly, \emph{term frequency} \emph{inverse document frequency} (TF-IDF) is used. The TF-IDF value for a word \emph{w} in a document \emph{d} is calculated as:
+For that, all n-grams present in the corpus are extracted into a list. The vector for each document has the size of the n-gram list. The first component of the vector represents the first n-gram in the list and so on. If the document contains the k-th n-gram from the list, the k-th component of the vector is set to one (or to the number of occurence of that n-gram in the document). Otherwise, it is set to zero.
 
-\[\text{TF-IDF}(w,d) = tf(w,d) \times \log{\frac{N}{n}} \]
+If unigrams (n=1) are used, all sequence information contained in the sentence is lost. This is also called \emph{bag-of-words}.
 
-where $tf(w,d)$ is the frequency of word w in document d, \emph{N} is the total number of documents and \emph{n} is the number of documents containg the word \emph{w}. Words appearing in almost every document will get a TF-IDF score near zero, while words which appear seldomly will get a high score.\\
+Instead of using the words of the documents, their \emph{part of speech} can be used to generate n-grams. Parts of speech are for example \emph{nouns}, \emph{verbs} or \emph{personal pronouns}. This can be useful to introduce another layer of abstraction.
 
-The main drawback of BOW is that all sequence information is lost. On one hand, the two words \enquote{Steve} and \enquote{Jobs} refer to a person if they are \enquote{Steve} is directly followed by \enquote{Jobs}. On the other hand, if there are ten words between \enquote{Steve} and \enquote{Jobs}, they might mean something totally different. Another drawback is that the document vector size is equal to the vocabulary size. Even for short documents like sentences, the vectors will have thousands of components, while many components will be zero.\\
+\subsection{Term frequency, inverse document frequency}
+N-gram vectors as described above ignore the fact that not all words (or n-grams) in a document are equally important. For example, articles or the word \enquote{\emph{to}} are present in almost every English document. In general, they only contribute little to the meaning of the sentence.\footnote{Extremly frequent words (called \emph{stopwords}) are often removed from the documents as a preprocessing step.}
 
-The BOW model can be further extended by using n-grams instead of words. An n-gram is any subsequence of n words. For example, the uni- and bigrams of the sentence \emph{I like cats} are \emph{(I, like, cats)} and \emph{(<s> I, I like, like cats, cats </s>})\footnote{<s> and </s> encode the beginning and end of the sentence}. In doing so, the sequence information is partly kept. Also, only n-grams which occour two or more times can be taken into account.
+To support the importance of a n-gram, weighted values can be used instead of the number of occurences of n-grams as the vector's components. Frequent n-grams in the corpus get a value near zero, while seldom n-grams get a value near one. A common weighting factor is \emph{term frequency, inverse document frequency (tf-idf)}.
+
+\begin{equation*}
+\begin{multlined}
+\text{tf}(t) = \frac{\text{number of times t appears the document}}{\text{total number of terms in the document}} \\
+\hfill\\
+\text{idf}(t) = \frac{\text{total number of documents in the corpus}}{\text{number of documents containing t}} \\
+\hfill\\
+\text{tf-idf(t)} = \text{tf}(t) \times \log (\text{idf}(t)) \\
+\end{multlined}
+\end{equation*}
 
 
 
+\subsection{Mean Word Embeddings}
+The vector representations presented above produce \emph{sparse} and long vectors. For example, a corpus of short messages might contain six-thousand n-grams, but every message only contains about sixty n-grams. This will create vectors with 99\% zeros. However, a machine learning algorithm has to learn six-thousand parameters. Short and \emph{dense vectors} (for example, 300 components) reduce the number of learnable parameters.
+
+A popular method for creating dense vectors for \emph{words} (called \emph{word embeddings}) is \emph{word2vec} (\cite{NIPS2013_5021}). Word2Vec learns a word embedding for the word \emph{w} by training a neural network to predict words preceding \emph{w}.
 
 
-
-
-\subsection{Word Embeddings}
 \subsection{Sentence Embeddings}
-
-\section{Dependency Parsing}
