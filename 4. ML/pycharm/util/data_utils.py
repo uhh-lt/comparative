@@ -37,4 +37,4 @@ def get_misclassified(predictions, test):
     for idx, row in enumerate(test.iterrows()):
         gold = row[1]['most_frequent_label']
         if predictions[idx] != gold:
-            print('{}\tGold: {}\t Pred: {}'.format(row[1]['sentence'], gold, predictions[idx]))
+            yield (row[1]['sentence'], row[1]['object_a'], row[1]['object_b'], predictions[idx], gold)
