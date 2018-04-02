@@ -115,13 +115,14 @@ The first prestudy had two goals. First, it should assess if the sentence select
 
 
 
-For each sentence, the annotators were asked which of the classes describes the sentence best (see figure \ref{1question} and table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
+For each sentence, the annotators were asked which of the classes describes the sentence best (see figure \ref{img:1_question} and table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}.
 
 \begin{figure}[h]
 \centering
-\label{1question}
-\includegraphics[width=1\textwidth]{images/prestudy/1_question}
 \caption{This question was presented to the annotators.}
+\label{img:1_question}
+\includegraphics[width=1\textwidth]{images/prestudy/1_question}
+
 \end{figure}
 
 \begin{table}[h]
@@ -161,7 +162,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only thirty-seven sentences got a unanimous result.
 \begin{table}[h]
 \caption{Annotation confidence for the \emph{first prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
-\label{fig:pre_b_agg}
+\label{fig:pre_a_agg}
 \begin{tabularx}{\textwidth}{XXX}
 \toprule
 Confidence & Sentences & \% of data set \\
@@ -219,8 +220,9 @@ In the first prestudy, some annotators complained that the test questions were n
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/2_question}
-\label{img:2_question}
+
 \caption{The new annotator view for prestudy B. The objects are now highlighted by colour.}
+\label{img:2_question}
 \end{figure}
 
 The sentence preprocessing was altered as well. Instead of replacing the object, \mbox{\textbf{{\color[HTML]{9A14B2}:{[}OBJECT\_A{]}}}} or \textbf{{\color[HTML]{6CB219}:{[}OBJECT\_B{]}}} was appended. The colon and square brackets emphasize where the object of interest ends and the suffix begins. The idea behind this was that the removal of the objects also removed some context from the sentences, which might be useful to classify them correctly. In addition, the objects were shown in a different colour than the rest of the text.\newline

@@ -11,8 +11,9 @@ If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform 
 \section{Choice of Algorithms}
 \begin{table}[!h]
 \centering
-\label{tbl:algo}
+
 \caption{Tested classification algorithms. Precision, recall and f1 score are calculated as weighted macro-average across classes (as in scikit-learn's \texttt{classification\_report}). The best out of five folds with standard derivation in brackets is presented.}
+\label{tbl:algo}
 \begin{tabularx}{\textwidth}{Xrrr}
 \toprule
 Algorithm & Precison & Recall & F1 Score \\ \midrule
@@ -113,8 +114,9 @@ Another processing step was done to assess how important the objects are for the
 
 \begin{table}[h]
 \centering
-\label{preprocessing_example}
+
 \caption{Preprocessing examples for the sentence \enquote{\emph{In my mind, Python is better than Ruby}}}
+\label{preprocessing_example}
 \begin{tabularx}{\linewidth}{lX}
 \toprule
 Preprocessing & Result \\ \midrule
@@ -134,13 +136,13 @@ First part, removal & In my mind, \\
 \section{Classification with three classes}
 \subsection{Baseline}
 \label{sec:baseline}
-As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{foo}, assigns all sentences to the class \texttt{NONE}.
+As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline}, assigns all sentences to the class \texttt{NONE}.
 
 % 24.3
 \begin{table}[!htb]
     \begin{minipage}{.5\linewidth}
       \caption{Random (stratified) baseline for the classification task.}
-      \label{foo}
+      \label{tbl:3stratifiedbaseline}
       \centering
       
 \begin{tabular}{@{}lrrrr@{}}
@@ -157,6 +159,7 @@ average	&	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)} &	 0.59 \scripts
     \begin{minipage}{.5\linewidth}
       \centering
         \caption{Majority class baseline for the classification task.}
+        \label{tbl:3majoritybaseline}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
@@ -171,7 +174,7 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 \textbf{0.61}
 
 
 
-The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:a}.
+The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:3majoritybaseline}.
 
 For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
@@ -180,10 +183,14 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 \subsection{Results}
 The classification results are presented in the tables below. Every table shows the best out of five folds. The standard derivation is stated in brackets. Top results are printed in bold.
 
+Tables \ref{tbl:se3} to \ref{tbl:ngram_3} show the results of different vector representations of the sentence. 
+
 
 \begin{table}[!htb]
     \begin{minipage}{.5\linewidth}
+    
         \caption{\emph{Sentence embeddings on the middle part of the sentence}. (Standard derivation)} 
+        \label{tbl:se3}
         \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
@@ -227,7 +234,9 @@ average	&	 0.81 \scriptsize{(0.01)} &	 0.84 \scriptsize{(0.01)} &	 0.81 \scripts
 \end{tabular}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
+  
      \caption{500 most frequent \emph{part-of-speech bi-, tri- and four-grams}; weighted by tf-idf.} 
+       \label{tbl:ngram_3}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
@@ -251,13 +260,13 @@ average	&	 0.80 \scriptsize{(0.03)} &	 0.82 \scriptsize{(0.01)} &	 0.79 \scripts
 \section{Binary classification}
 \subsection{Baseline}
 % 24.3
-Table \ref{tbl:bin_maj}; Table \ref{tbl:bin_strat}
+Table \ref{tbl:binmaj}; Table \ref{tbl:binstrat}
 
 
 \begin{table}[!htb]
     \begin{minipage}{.5\linewidth}
       \caption{Random (stratified) baseline for the binary classification task.}
-      \label{foo}
+      \label{tbl:binmaj}
       \centering
       
 \begin{tabular}{@{}lrrrr@{}}
@@ -273,6 +282,7 @@ average	&	 0.62 \scriptsize{(0.01)} &	 0.62 \scriptsize{(0.01)} &	 \textbf{0.62}
     \begin{minipage}{.5\linewidth}
       \centering
         \caption{Majority class baseline for the binary classification task.}
+        \label{tbl:binstrat}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
