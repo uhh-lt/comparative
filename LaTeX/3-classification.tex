@@ -135,7 +135,7 @@ First part, removal & In my mind, \\
 
 \section{Classification with three classes}
 \subsection{Baseline}
-\label{sec:baseline}
+\label{sec:3_baseline}
 As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline}, assigns all sentences to the class \texttt{NONE}.
 
 % 24.3
@@ -181,12 +181,12 @@ For both baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 
 \subsection{Results}
-The classification results are presented in the tables below. Every table shows the best out of five folds. The standard derivation is stated in brackets. Top results are printed in bold.
+The classification results are presented in the tables below. Every table shows the best out of five folds. The standard derivation is stated in brackets. Top results are printed in bold. Only the best feature configurations are shown.
 
-Tables \ref{tbl:se3} to \ref{tbl:ngram_3} show the results of different vector representations of the sentence. 
+Tables \ref{tbl:se3} to \ref{tbl:ngram_3} show the results of different vector representations of the sentence. Simple unigrams and the more complex sentence embeddings yield almost the same performance. The main difference is with the class \texttt{WORSE}.
 
 
-\begin{table}[!htb]
+\begin{table}[h]
     \begin{minipage}{.5\linewidth}
     
         \caption{\emph{Sentence embeddings on the middle part of the sentence}. (Standard derivation)} 
@@ -195,9 +195,9 @@ Tables \ref{tbl:se3} to \ref{tbl:ngram_3} show the results of different vector r
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
 \texttt{BETTER}	&	 0.81 \scriptsize{(0.04)} &	 0.79 \scriptsize{(0.02)} &	 0.80 \scriptsize{(0.03)}  \\ 
-\texttt{WORSE}	&	 0.57 \scriptsize{(0.04)} &	 0.33 \scriptsize{(0.05)} &	 0.42 \scriptsize{(0.04)}  \\ 
-\texttt{NONE}	&	 0.91 \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
-average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
+\texttt{WORSE}	&	 0.57 \scriptsize{(0.04)} &	 \textbf{0.33} \scriptsize{(0.05)} &	 \textbf{0.42} \scriptsize{(0.04)}  \\ 
+\texttt{NONE}	&	 \textbf{0.91} \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
+average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 \textbf{0.86} \scriptsize{(0.01)}  \\ 
 \bottomrule
         \end{tabular} 
   \end{minipage} \hfill
@@ -206,23 +206,21 @@ average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scripts
           \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 \textbf{0.82} \scriptsize{(0.03)} &	 0.79 \scriptsize{(0.04)} &	 0.81 \scriptsize{(0.03)}  \\ 
-\texttt{WORSE}	&	 0.71 \scriptsize{(0.06)} &	 0.23 \scriptsize{(0.02)} &	 0.35 \scriptsize{(0.02)}  \\ 
-\texttt{NONE}	&	 0.89 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
-average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
+\texttt{BETTER}	&	 \textbf{0.82} \scriptsize{(0.03)} &	 0.79 \scriptsize{(0.04)} &	 \textbf{0.81} \scriptsize{(0.03)}  \\ 
+\texttt{WORSE}	&	 \textbf{0.71} \scriptsize{(0.06)} &	 0.23 \scriptsize{(0.02)} &	 0.35 \scriptsize{(0.02)}  \\ 
+\texttt{NONE}	&	 0.89 \scriptsize{(0.01)} &	 \textbf{0.97} \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
+average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 \textbf{0.86} \scriptsize{(0.01)}  \\ 
 \bottomrule
             \end{tabular}
     \end{minipage} 
 \end{table}
 
+Mean Word Embeddings (table \ref{tbl:3_mwe}) and POS n-grams (table \ref{tbl:ngram_3}) are barely able to recognize \texttt{WORSE} at all.
 
-
-
-
-\begin{table}[!htb]
+\begin{table}[h]
     \begin{minipage}{.5\linewidth}
    \caption{ \emph{Mean Word Embeddings} for the middle part of the sentence. } 
-
+    \label{tbl:3_mwe}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
@@ -250,17 +248,35 @@ average	&	 0.80 \scriptsize{(0.03)} &	 0.82 \scriptsize{(0.01)} &	 0.79 \scripts
 \end{table}
 
 
+Surprisingly, a single boolean feature (table \ref{tbl:3jjr}) can yield an f1 score fiften points higher than the majority class baseline. However, it does not recognize any sentences of the class \texttt{WORSE}.
+
+\begin{table}[h] 
+ \centering 
+ \caption{Boolean feature, capturing the appearance of the part-of-speech JJR in the middle part of the sentence.} 
+ \label{tbl:3jjr}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ 	&	 precision &	 recall &	 f1 score  \\ \midrule 
+\texttt{BETTER}	&	 0.60 \scriptsize{(0.02)} &	 0.58 \scriptsize{(0.02)} &	 0.59 \scriptsize{(0.02)}  \\ 
+\texttt{WORSE}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
+\texttt{NONE}	&	 0.84 \scriptsize{(0.01)} &	 0.94 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)}  \\ 
+average	&	 0.73 \scriptsize{(0.01)} &	 0.80 \scriptsize{(0.01)} &	 0.76 \scriptsize{(0.01)}  \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+Using only the middle part of the sentence increased the f1 score by five to seven points every time. The removal or replacement of the object only altered the f1 score by about 0.01 points, which is equal to the standard derivation.
 
 
 
-
-%==== result table     
+\subsection{Error analyis}
 
 
 \section{Binary classification}
 \subsection{Baseline}
 % 24.3
-Table \ref{tbl:binmaj}; Table \ref{tbl:binstrat}
+The baselines for the binary classification task are shown in tables \ref{tbl:binmaj} and \ref{tbl:binstrat}.
 
 
 \begin{table}[!htb]
@@ -293,16 +309,19 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scripts
 \end{tabular}
     \end{minipage} 
 \end{table}
-
-
+They were generated the same way as in section \ref{sec:3_baseline}.
 
 
 
 
 
 \subsection{Results}
+\subsection{Error analyis}
+\section{Discussion}
+The results show that the part between the two objects of interest is most valuable. Also, the objects are not important at all for the classification. Removing or replacing the objects from the sentence did not decrease any score significantally.
 
-\section{Final results}
+Simple features, like the bag-of-words model yielding results similar to the more complexe sentence embeddings.
+
+\section{Evaluation with the held-out data}
 \label{sec:final}
 
-\section{Discussion}

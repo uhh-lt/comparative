@@ -127,7 +127,7 @@ The following sections presents methods to transform a document of arbitrary siz
 
 \subsection{Similarity of vectors}
 
-\subsection{n-gram vectors}
+\subsection{n-grams}
 An n-gram is a sequence of n words. For instance, all bigrams (n=2) of the previous sentence are: \emph{An n-gram}, \emph{n-gram is}, \emph{is a}, \emph{a sequence}, \emph{sequence of}, \emph{of n}, \emph{n words}. N-grams can be used to generate a fixed-sized vector for every document in a corpus.
 
 For that, all n-grams present in the corpus are extracted into a list. The vector for each document has the size of the n-gram list. The first component of the vector represents the first n-gram in the list and so on. If the document contains the k-th n-gram from the list, the k-th component of the vector is set to one (or to the number of occurence of that n-gram in the document). Otherwise, it is set to zero.
