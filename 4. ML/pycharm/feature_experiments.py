@@ -59,6 +59,7 @@ def all_extractor_combis(feature_class, name, *args):
     return [FeatureUnion([('{} {}'.format(name,e), Pipeline([e, (name, feature_class(*args))]))]) for e in ALL_EXTRACTORS]
 
 
+
 nlp = spacy.load('en')
 
 logger = get_logger('final_1')
@@ -68,6 +69,7 @@ data = load_data('data.csv')[:150]
 data_bin = load_data('data.csv', binary=True)
 
 infersent_model = initialize_infersent(data.sentence.values)
+
 
 feature_unions = [
                      FeatureUnion([('2-4 pos 500 full sentence', make_pipeline(ExtractRawSentence(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
@@ -94,7 +96,6 @@ def perform_classificiation(data, labels):
         try:
             for train, test in k_folds(5, data, random_state=1337):
                 pipeline = make_pipeline(f, classifier)
-
                 fitted = pipeline.fit(train, train[LABEL].values)
                 predicted = fitted.predict(test)
                 folds_results.append((test[LABEL].values, predicted))
