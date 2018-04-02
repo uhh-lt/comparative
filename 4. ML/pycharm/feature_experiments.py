@@ -1,11 +1,12 @@
 import itertools
+from pprint import pformat
 
 import numpy as np
+import pandas as pd
 import spacy
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-from sklearn.metrics import classification_report, f1_score
-from sklearn.model_selection import LeaveOneOut
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import classification_report, f1_score, confusion_matrix
 from sklearn.pipeline import make_pipeline, FeatureUnion, Pipeline
 from xgboost import XGBClassifier
 
@@ -13,10 +14,9 @@ from classification_report_util import get_std_derivations, get_best_fold, latex
 from features.contains_features import ContainsPos
 from features.mean_embedding_feature import MeanWordEmbedding
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
-from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart, ExtractFirstPart, ExtractLastPart
-from util.data_utils import load_data, k_folds
+from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
+from util.data_utils import load_data, k_folds, get_misclassified
 from util.misc_utils import get_logger
-from pprint import pformat
 
 
 class WordVector(BaseEstimator, TransformerMixin):
@@ -49,9 +49,6 @@ class POSTransformer(BaseEstimator, TransformerMixin):
 
 
 ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
-                  ('full sentence replace', ExtractRawSentence(processing='replace')),
-                  ('full sentence remove', ExtractRawSentence(processing='remove')),
-                  ('full sentence remove dist', ExtractRawSentence(processing='remove_dist')),
                   ('middle part', ExtractMiddlePart()),
                   ('middle part replace', ExtractMiddlePart(processing='replace')),
                   ('middle part remove', ExtractMiddlePart(processing='remove')),
@@ -59,90 +56,72 @@ ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
 
 
 def all_extractor_combis(feature_class, name, *args):
-    return [('{} - {}'.format(name, e[0]), FeatureUnion([(name, Pipeline([e, (name, feature_class(*args))]))])) for e
-            in
-            ALL_EXTRACTORS]
-
-
-def n_gram(vectorizer, name_add='', **kwargs):
-    ranges = [(2, 2), (3, 3), (4, 4), (2, 4)]
-    binary = [True, False]
-    top_k = [None, 100]
-    feat = []
-    for c in itertools.product(ranges, binary, top_k):
-        feat += ([('{} Range {} Binary {} Top {} ({} {})'.format(e[0], c[0], c[1], c[2], type(vectorizer()), name_add),
-                   FeatureUnion([(
-                       '{} {}'.format(
-                           e, c),
-                       Pipeline(
-                           [e, ('{} {}'.format(e, c),
-                                vectorizer(
-                                    ngram_range=c[0], binary=c[1], max_features=c[2], **kwargs))]))]))
-                  for e in ALL_EXTRACTORS])
-    return feat
+    return [FeatureUnion([('{} {}'.format(name,e), Pipeline([e, (name, feature_class(*args))]))]) for e in ALL_EXTRACTORS]
 
 
 nlp = spacy.load('en')
 
-logger = get_logger('feat_tests_1')
+logger = get_logger('final_1')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
-data = load_data('data.csv')
+data = load_data('data.csv')[:150]
+data_bin = load_data('data.csv', binary=True)
 
 infersent_model = initialize_infersent(data.sentence.values)
 
-features = [
-    ('word vector', make_pipeline(WordVector())),
-    ('infersent middle', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model))),
-    ('mean word embedding middle', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding())),
-    ('unigram counts binary top 100',
-     make_pipeline(ExtractMiddlePart(), CountVectorizer(binary=True, max_features=100))),
-    ('unigram counts binary all', make_pipeline(ExtractMiddlePart(), CountVectorizer(binary=True))),
-    ('unigram tfidf all', make_pipeline(ExtractMiddlePart(), TfidfVectorizer())),
-    ('unigram tfidf top 100', make_pipeline(ExtractMiddlePart(), TfidfVectorizer(max_features=100))),
-    ('contains jjr', make_pipeline(ExtractMiddlePart(), ContainsPos("JJR"))),
-    ('2-4 pos 100',
-     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=100, ngram_range=(2, 4)))),
-    ('2-4 pos 500',
-     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))),
-    ('2-4 pos all', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 4)))),
-    ('2 pos all', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2)))),
-    ('2 pos 100',
-     make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(ngram_range=(2, 2), max_features=100))),
+feature_unions = [
+                     FeatureUnion([('2-4 pos 500 full sentence', make_pipeline(ExtractRawSentence(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+                     FeatureUnion([('2-4 pos 500 middle part', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+                     FeatureUnion([('2-4 pos 500 middle part replace', make_pipeline(ExtractMiddlePart(processing='replace'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+                     FeatureUnion([('2-4 pos 500 middle part remove', make_pipeline(ExtractMiddlePart(processing='remove'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+                     FeatureUnion([('2-4 pos 500 middle part replace_dist', make_pipeline(ExtractMiddlePart(processing='replace_dist'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
 
-]
-
-feature_unions = []
-combis = list(itertools.combinations(features,1)) + list(itertools.combinations(features,2)) #+ list(itertools.combinations(features,3))
-for c in combis:
-    n = ' | '.join([a[0] for a in c])
-    feature_unions.append((n, FeatureUnion(transformer_list=list(c))))
-
+                 ] + all_extractor_combis(InfersentFeature, 'infersent', infersent_model) + all_extractor_combis(MeanWordEmbedding, 'Mean Word Embedding') + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR')
 
 best_per_feat = []
-for i, f in enumerate(feature_unions):
-    caption, feature_union = f
-    logger.info('{}/{} {}'.format(i, len(feature_unions), caption))
-    logger.info(feature_union)
-    folds_results = []
-    try:
-        for train, test in k_folds(5, data, random_state=1337):
-            pipeline = make_pipeline(feature_union, classifier)
 
-            fitted = pipeline.fit(train, train[LABEL].values)
-            predicted = fitted.predict(test)
-            folds_results.append((test[LABEL].values, predicted))
+
+def perform_classificiation(data, labels):
+    miss = pd.DataFrame(columns=['caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
+    binary = labels == ['ARG', 'NONE']
+    idx = 1
+    logger.info("====== {} =====".format(labels))
+    for i, f in enumerate(feature_unions):
+        caption = f.transformer_list[0][0]
+        logger.info('{}/{} {}'.format(i, len(feature_unions), caption))
+        logger.info(f)
+        folds_results = []
+        try:
+            for train, test in k_folds(5, data, random_state=1337):
+                pipeline = make_pipeline(f, classifier)
+
+                fitted = pipeline.fit(train, train[LABEL].values)
+                predicted = fitted.predict(test)
+                folds_results.append((test[LABEL].values, predicted))
+                logger.info(
+                    classification_report(test[LABEL].values, predicted, labels=labels, digits=2))
+
+                logger.info(confusion_matrix(test[LABEL].values, predicted, labels=labels))
+
+                for sentence, a, b, predicted, gold in get_misclassified(predicted, test):
+                    miss.loc[idx] = [caption, sentence, a, b, predicted, gold]
+                    idx += 1
+
+            der = get_std_derivations(folds_results, labels=labels)
+            best = get_best_fold(folds_results)
+            best_per_feat.append((f1_score(best[0], best[1], average='weighted'), caption))
+            print(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
             logger.info(
-                classification_report(test[LABEL].values, predicted, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
-        der = get_std_derivations(folds_results, ['BETTER', 'WORSE', 'NONE'])
-        best = get_best_fold(folds_results)
-        best_per_feat.append((f1_score(best[0], best[1], average='weighted'), caption))
-        print(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
-        logger.info(latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
-                                                caption=caption))
-    except Exception as ex:
-        logger.error(ex)
-        raise ex
-    logger.info("\n\n=================\n\n")
+                latex_classification_report(best[0], best[1], derivations=der, labels=labels,
+                                            caption=caption))
 
-logger.info(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
+        except Exception as ex:
+            logger.error(ex)
+            raise ex
+        logger.info("\n\n=================\n\n")
+    logger.info(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
+    miss.to_csv('missclassified/binary_{}.csv'.format(binary), index=False)
+
+
+perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
+perform_classificiation(data_bin, ['ARG', 'NONE'])
