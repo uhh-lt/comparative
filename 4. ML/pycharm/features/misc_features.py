@@ -55,6 +55,8 @@ class MeanPathVector(BaseFeature):
 
         return result
 
+
+
 class PositionOfWord(BaseFeature):
 
     def __init__(self, word, lowercase=True):
@@ -69,7 +71,10 @@ class PositionOfWord(BaseFeature):
                 result.append(doc.index(self.process(self.word)))
             except ValueError as e:
                 result.append(-1)
-        return np.reshape(result, -1, 1)
+
+        array = np.array(result)
+        reshape = array.reshape(-1, 1)
+        return reshape
 
     def process(self, word):
         return word.lower() if self.lowercase else word

@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import spacy
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import classification_report, f1_score, confusion_matrix
 from sklearn.pipeline import make_pipeline, FeatureUnion, Pipeline
 from xgboost import XGBClassifier
@@ -13,9 +13,11 @@ from xgboost import XGBClassifier
 from classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
 from features.contains_features import ContainsPos
 from features.mean_embedding_feature import MeanWordEmbedding
+from features.misc_features import PositionOfWord
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
 from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart
-from util.data_utils import load_data, k_folds, get_misclassified
+from transformers.misc_transformer import Lemmatizer, Joiner, ReplaceCueWord
+from util.data_utils import load_data, k_folds, get_misclassified, CUE_WORDS_WORSE, CUE_WORDS_BETTER
 from util.misc_utils import get_logger
 
 
@@ -48,42 +50,48 @@ class POSTransformer(BaseEstimator, TransformerMixin):
         return feat
 
 
-ALL_EXTRACTORS = [('full sentence', ExtractRawSentence()),
-                  ('middle part', ExtractMiddlePart()),
-                  ('middle part replace', ExtractMiddlePart(processing='replace')),
-                  ('middle part remove', ExtractMiddlePart(processing='remove')),
-                  ('middle part remove dist', ExtractMiddlePart(processing='remove_dist'))]
+ALL_EXTRACTORS = [  # ('full sentence', ExtractRawSentence()),
+    ('middle part', ExtractMiddlePart())
+    # ('middle part replace', ExtractMiddlePart(processing='replace')),
+    # ('middle part remove', ExtractMiddlePart(processing='remove')),
+    # ('middle part remove dist', ExtractMiddlePart(processing='remove_dist'))
+]
 
 
 def all_extractor_combis(feature_class, name, *args):
-    return [FeatureUnion([('{} {}'.format(name,e), Pipeline([e, (name, feature_class(*args))]))]) for e in ALL_EXTRACTORS]
-
+    return [FeatureUnion([('{} {}'.format(name, e), Pipeline([e, ('lemma', Lemmatizer()), ('j', Joiner()), (name, feature_class(binary=True))]))]) for e in ALL_EXTRACTORS]
 
 
 nlp = spacy.load('en')
 
-logger = get_logger('final_1')
+logger = get_logger('bin')
 classifier = XGBClassifier(n_jobs=8, n_estimators=100)
 LABEL = 'most_frequent_label'
-data = load_data('data.csv')[:150]
+data = load_data('data.csv')
 data_bin = load_data('data.csv', binary=True)
 
 infersent_model = initialize_infersent(data.sentence.values)
-
-
-feature_unions = [
-                     FeatureUnion([('2-4 pos 500 full sentence', make_pipeline(ExtractRawSentence(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-                     FeatureUnion([('2-4 pos 500 middle part', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-                     FeatureUnion([('2-4 pos 500 middle part replace', make_pipeline(ExtractMiddlePart(processing='replace'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-                     FeatureUnion([('2-4 pos 500 middle part remove', make_pipeline(ExtractMiddlePart(processing='remove'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-                     FeatureUnion([('2-4 pos 500 middle part replace_dist', make_pipeline(ExtractMiddlePart(processing='replace_dist'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-
-                 ] + all_extractor_combis(InfersentFeature, 'infersent', infersent_model) + all_extractor_combis(MeanWordEmbedding, 'Mean Word Embedding') + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR')
 
 best_per_feat = []
 
 
 def perform_classificiation(data, labels):
+    #   feature_unions = all_extractor_combis(CountVectorizer, 'unigrams')
+    #          FeatureUnion([('2-4 pos 500 full sentence', make_pipeline(ExtractRawSentence(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+    #         FeatureUnion([('2-4 pos 500 middle part', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+    #        FeatureUnion([('2-4 pos 500 middle part replace', make_pipeline(ExtractMiddlePart(processing='replace'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+    #       FeatureUnion([('2-4 pos 500 middle part remove', make_pipeline(ExtractMiddlePart(processing='remove'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+    #      FeatureUnion([('2-4 pos 500 middle part replace_dist', make_pipeline(ExtractMiddlePart(processing='replace_dist'), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+    #
+    #                    ] + all_extractor_combis(InfersentFeature, 'infersent', infersent_model) + all_extractor_combis(MeanWordEmbedding, 'Mean Word Embedding') + all_extractor_combis(ContainsPos, 'Contains JJR', 'JJR')
+
+    feature_unions = [
+        FeatureUnion([('a', make_pipeline(ExtractMiddlePart(), CountVectorizer())),
+                      ('cue-word-w', make_pipeline(ExtractRawSentence(), ReplaceCueWord(CUE_WORDS_WORSE, 'WORSE_CUE'), PositionOfWord('WORSE_CUE'))),
+                      ('cue-word-b', make_pipeline(ExtractRawSentence(), ReplaceCueWord(CUE_WORDS_BETTER, 'BETTER_CUE'), PositionOfWord('BETTER_CUE'))),
+                      ]),
+
+    ]
     miss = pd.DataFrame(columns=['caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
     binary = labels == ['ARG', 'NONE']
     idx = 1
@@ -125,4 +133,4 @@ def perform_classificiation(data, labels):
 
 
 perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-perform_classificiation(data_bin, ['ARG', 'NONE'])
+# perform_classificiation(data_bin, ['ARG', 'NONE'])
