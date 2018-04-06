@@ -136,8 +136,7 @@ If unigrams (n=1) are used, all sequence information contained in the sentence i
 
 Instead of using the words of the documents, their \emph{part of speech} can be used to generate n-grams. Parts of speech are for example \emph{nouns}, \emph{verbs} or \emph{personal pronouns}. This can be useful to introduce another layer of abstraction.
 
-\subsection{Term frequency, inverse document frequency}
-N-gram vectors as described above ignore the fact that not all words (or n-grams) in a document are equally important. For example, articles or the word \enquote{\emph{to}} are present in almost every English document. In general, they only contribute little to the meaning of the sentence.\footnote{Extremly frequent words (called \emph{stopwords}) are often removed from the documents as a preprocessing step.}
+N-gram vectors ignore the fact that not all words (or n-grams) in a document are equally important. For example, articles or the word \enquote{\emph{to}} are present in almost every English document. In general, they only contribute little to the meaning of the sentence.\footnote{Extremly frequent words (called \emph{stopwords}) are often removed from the documents as a preprocessing step.}
 
 To support the importance of a n-gram, weighted values can be used instead of the number of occurences of n-grams as the vector's components. Frequent n-grams in the corpus get a value near zero, while seldom n-grams get a value near one. A common weighting factor is \emph{term frequency, inverse document frequency (tf-idf)}.
 
@@ -153,10 +152,18 @@ To support the importance of a n-gram, weighted values can be used instead of th
 
 
 
-\subsection{Mean Word Embeddings}
-The vector representations presented above produce \emph{sparse} and long vectors. For example, a corpus of short messages might contain six-thousand n-grams, but every message only contains about sixty n-grams. This will create vectors with 99\% zeros. However, a machine learning algorithm has to learn six-thousand parameters. Short and \emph{dense vectors} (for example, 300 components) reduce the number of learnable parameters.
+\subsection{Average Word Embeddings}
+Word Embeddings are dense, low-dimension vector representations for words. A first method to learn this vectors using a feed-forward neural network was presented in \cite{bengio2003neural}. The basic idea is to train a neural network to predict the most likely word following a given sequence. It takes a number of words from a vocabulary $\mathcal{V}$ as the input and outputs a vector $\vec{r}$ of length $|\mathcal{V}|$, where $\vec{t}_i$ is the probability of $\mathcal{V}_i$ to follow the input words.
 
-A popular method for creating dense vectors for \emph{words} (called \emph{word embeddings}) is \emph{word2vec} (\cite{NIPS2013_5021}). Word2Vec learns a word embedding for the word \emph{w} by training a neural network to predict words preceding \emph{w}.
+After the network is trained, the embeddings can be extracted for the weight matrix of the first layer, where each row represents one word.
 
+In this way, words which appear in similar contexts will get similar vectors. Following the \emph{distributational hypothesis} (QUELLE), those words will have similar meanings. Despite the low dimensionaltiy, this is a key advantage to bag-of-word models, where similar words are likely to get different vectors.
+
+Two popular methods to obtain word embeddings (based on the basic idea described above) are \emph{word2vec} (\cite{NIPS2013_5021}) and \emph{GloVe} (\cite{pennington2014glove})
+
+The word embeddings can be used to create a dense, low-dimension vector representation for a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
 
 \subsection{Sentence Embeddings}
+All presented vector representations lose sequence information. However, the sequence of words in a sentence is important. For example, the sentences \enquote{\emph{I like cats, not dogs}} will get the same average word embedding as \enquote{\emph{I like dogs, not cats}}.
+
+Sentence embeddings aim to learn embeddings for a whole sentence, instead of single words. In this way, the sequence information is taken into account.
