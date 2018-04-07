@@ -103,14 +103,14 @@ Similar to Versus, Diffen aggregates different data sources (see figures \ref{im
 
 \begin{figure}[h]
 	\includegraphics[width=1\textwidth]{images/ds-sys/diffen}
-	\label{img:diffen}
 	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Diffen.com}
+		\label{img:diffen}
 \end{figure}
 
 \begin{figure}[h]
 	\includegraphics[width=1\textwidth]{images/ds-sys/versus}
-	\label{img:versus}
 	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Versus.com}
+		\label{img:versus}
 \end{figure}
 
 Neither Versus nor Diffen provides a comprehensible reason why an object is better than another one. They merely aggregate facts and bring them face to face. Despite the aggregation approach of both systems, many meaningful comparisons are not possible or not helpful (like \enquote{Hamburg vs. Darmstadt}, \enquote{Java vs. C\#}, \enquote{Dr Pepper vs. Orange Juice}).
@@ -123,36 +123,26 @@ Adding information like comments and product reviews can enrich the comparison w
 
 
 \section{Vector Representations for Documents}
+% cosine similarity
 
-\subsection{Bag-of-words and bag-of-n-grams}
-An n-gram is a sequence of n words. For instance, all bigrams (n=2) of the previous sentence are: \emph{An n-gram}, \emph{n-gram is}, \emph{is a}, \emph{a sequence}, \emph{sequence of}, \emph{of n}, \emph{n words}. N-grams can be used to generate a fixed-sized vector for every document in a corpus.
+\subsection{Bag-of-words and bag-of-ngrams}
+The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document j is then representend by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document (the \emph{term frequency} $\text{tf}(i,j)$).
 
-For that, all n-grams present in the corpus are extracted into a list. The vector for each document has the size of the n-gram list. The first component of the vector represents the first n-gram in the list and so on. If the document contains the k-th n-gram from the list, the k-th component of the vector is set to one (or to the number of occurence of that n-gram in the document). Otherwise, it is set to zero.
+The model is simple to calculate but does not take any sequence or grammar information into account and also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} will get at least the same value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
 
-If unigrams (n=1) are used, all sequence information contained in the sentence is lost. This is also called \emph{bag-of-words}.
+The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will then contain all sequences n consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removing all very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stopwords) and using a weighting function for the remaining words, most commonly \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
 
-Instead of using the words of the documents, their \emph{part of speech} can be used to generate n-grams. Parts of speech are for example \emph{nouns}, \emph{verbs} or \emph{personal pronouns}. This can be useful to introduce another layer of abstraction.
+\[\vec{d_{j,i}} = \text{tf}_{i,j} \times \log{ \frac{N}{n_i} } \]
 
-N-gram vectors ignore the fact that not all words (or n-grams) in a document are equally important. For example, articles or the word \enquote{\emph{to}} are present in almost every English document. In general, they only contribute little to the meaning of the sentence.\footnote{Extremly frequent words (called \emph{stopwords}) are often removed from the documents as a preprocessing step.}
+where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) i appears in.
 
-To support the importance of a n-gram, weighted values can be used instead of the number of occurences of n-grams as the vector's components. Frequent n-grams in the corpus get a value near zero, while seldom n-grams get a value near one. A common weighting factor is \emph{term frequency, inverse document frequency (tf-idf)}.
-
-\begin{equation*}
-\begin{multlined}
-\text{tf}(t) = \frac{\text{number of times t appears the document}}{\text{total number of terms in the document}} \\
-\hfill\\
-\text{idf}(t) = \frac{\text{total number of documents in the corpus}}{\text{number of documents containing t}} \\
-\hfill\\
-\text{tf-idf(t)} = \text{tf}(t) \times \log (\text{idf}(t)) \\
-\end{multlined}
-\end{equation*}
-
+The other problems, sparsity and length, remain. They are solved in other vector representations.
 
 
 \subsection{Averaged Word Embeddings}
-Word Embeddings are dense, low-dimension vector representations of words. These vectors can be learned with neural networks. The basic idea is to train the weights of a hidden layer (the \emph{embedding matrix}) to find good vector representations of a word. The embedding matrix has the size of $(\text{number of words in the vocabulary } \mathcal{V} \times\allowbreak \text{number of neurons }\allowbreak \text{in the hidden layer})$, so that each column represents one word in $\mathcal{V}$ and each embedding vector has the size of neurons in the hidden layer. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
+Word Embeddings are dense, low-dimension vector representations of words. These vectors can be learned with neural networks. The basic idea is to train an neural network on a suitable task and then use the columns of the weight matrix of a hidden layer (called \emph{embedding matrix}) as word embeddings. The embedding matrix has the size of $(\text{number of words in the vocabulary } \mathcal{V} \times\allowbreak \text{number of neurons }\allowbreak \text{in the hidden layer})$, so that each column represents one word in $\mathcal{V}$ and each embedding has as many components as the hidden layer has neurons. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
 
-A first method to learn word embeddings using a feed-forward neural network was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the distance between the learned vectors of similar words (like cat and dog) is much less than the distance between dissimiliar words (like cat and chair).
+A method to learn word embeddings using a feed-forward neural network was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the cosine similarity between the learned vectors of related words (like cat and dog) is much higher than the cosine similarity between unrelated words (like cat and chair).
 
 Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (\cite{NIPS2013_5021}) and \emph{GloVe} (\cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors are used.
 
