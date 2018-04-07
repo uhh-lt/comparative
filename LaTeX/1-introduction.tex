@@ -123,11 +123,8 @@ Adding information like comments and product reviews can enrich the comparison w
 
 
 \section{Vector Representations for Documents}
-The following sections presents methods to transform a document of arbitrary size into a fixed length numeric vector. This vector can than be used as a feature for machine learning. This section is based on \cite{martin2009speech}.
 
-\subsection{Similarity of vectors}
-
-\subsection{n-grams}
+\subsection{Bag-of-words and bag-of-n-grams}
 An n-gram is a sequence of n words. For instance, all bigrams (n=2) of the previous sentence are: \emph{An n-gram}, \emph{n-gram is}, \emph{is a}, \emph{a sequence}, \emph{sequence of}, \emph{of n}, \emph{n words}. N-grams can be used to generate a fixed-sized vector for every document in a corpus.
 
 For that, all n-grams present in the corpus are extracted into a list. The vector for each document has the size of the n-gram list. The first component of the vector represents the first n-gram in the list and so on. If the document contains the k-th n-gram from the list, the k-th component of the vector is set to one (or to the number of occurence of that n-gram in the document). Otherwise, it is set to zero.
@@ -152,18 +149,16 @@ To support the importance of a n-gram, weighted values can be used instead of th
 
 
 
-\subsection{Average Word Embeddings}
-Word Embeddings are dense, low-dimension vector representations for words. A first method to learn this vectors using a feed-forward neural network was presented in \cite{bengio2003neural}. The basic idea is to train a neural network to predict the most likely word following a given sequence. It takes a number of words from a vocabulary $\mathcal{V}$ as the input and outputs a vector $\vec{r}$ of length $|\mathcal{V}|$, where $\vec{t}_i$ is the probability of $\mathcal{V}_i$ to follow the input words.
+\subsection{Averaged Word Embeddings}
+Word Embeddings are dense, low-dimension vector representations of words. These vectors can be learned with neural networks. The basic idea is to train the weights of a hidden layer (the \emph{embedding matrix}) to find good vector representations of a word. The embedding matrix has the size of $(\text{number of words in the vocabulary } \mathcal{V} \times\allowbreak \text{number of neurons }\allowbreak \text{in the hidden layer})$, so that each column represents one word in $\mathcal{V}$ and each embedding vector has the size of neurons in the hidden layer. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
 
-After the network is trained, the embeddings can be extracted for the weight matrix of the first layer, where each row represents one word.
+A first method to learn word embeddings using a feed-forward neural network was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the distance between the learned vectors of similar words (like cat and dog) is much less than the distance between dissimiliar words (like cat and chair).
 
-In this way, words which appear in similar contexts will get similar vectors. Following the \emph{distributational hypothesis} (QUELLE), those words will have similar meanings. Despite the low dimensionaltiy, this is a key advantage to bag-of-word models, where similar words are likely to get different vectors.
-
-Two popular methods to obtain word embeddings (based on the basic idea described above) are \emph{word2vec} (\cite{NIPS2013_5021}) and \emph{GloVe} (\cite{pennington2014glove})
+Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (\cite{NIPS2013_5021}) and \emph{GloVe} (\cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors are used.
 
 The word embeddings can be used to create a dense, low-dimension vector representation for a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
 
-\subsection{Sentence Embeddings}
-All presented vector representations lose sequence information. However, the sequence of words in a sentence is important. For example, the sentences \enquote{\emph{I like cats, not dogs}} will get the same average word embedding as \enquote{\emph{I like dogs, not cats}}.
+\subsection{Sentence Embeddings and InferSent}
+All presented vector representations lose sequence information. However, the sequence of words in a sentence is important. For example, the sentence \enquote{\emph{I like cats, not dogs}} will get the same average word embedding as \enquote{\emph{I like dogs, not cats}}.
 
-Sentence embeddings aim to learn embeddings for a whole sentence, instead of single words. In this way, the sequence information is taken into account.
+Sentence embeddings aim to learn embeddings for pieces of text, instead of single words. In this way, the sequence information is taken into account. Several methods have been proposed to create sentence embeddings (for instance, \cite{Le:2014aa}, \cite{NIPS2015_5950}). In this thesis \emph{InferSent} (as presented in \cite{Conneau:2017aa}) is used.
