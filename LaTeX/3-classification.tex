@@ -182,242 +182,65 @@ For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 \subsection{Results}
 \label{sec:3_results}
-The classification results are presented in the tables below. Every table shows the best out of five folds. The standard derivation is stated in brackets. Top results are printed in bold. Only the best feature configurations are shown.
+The classification results for the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall).
 
-Tables \ref{tbl:se3} to \ref{tbl:ngram_3} show the results of different vector representations of the sentence. Simple unigrams and the more complex sentence embeddings yield almost the same performance. The main difference is with the class \texttt{WORSE}.
-
-
-\begin{figure}[h]
+\begin{figure}[ht]
       \caption{F1 score for the three-class scenario.} 
-    \label{tbl:3_conf_inf}
+    \label{fig:3_f1}
  \centering
-	\includegraphics[width=0.8\textwidth]{images/experiments/f1-False}
+	\includegraphics[width=1\textwidth]{images/experiments/f1-False}
 
 \end{figure}
 
-%\begin{table}[h]
-%    \begin{minipage}{.5\linewidth}
-%    
-%        \caption{\emph{Sentence embeddings on the middle part of the sentence}. (Standard derivation)} 
-%        \label{tbl:se3}
-% 4.4
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%BETTER	&	 0.81 \scriptsize{(0.04)} &	 0.79 \scriptsize{(0.02)} &	 0.80 \scriptsize{(0.03)}  \\ 
-%WORSE	&	 0.57 \scriptsize{(0.04)} &	 0.33 \scriptsize{(0.05)} &	 0.42 \scriptsize{(0.04)}  \\ 
-%NONE	&	 0.91 \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
-%average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%  \end{minipage} \hfill
-%    \begin{minipage}{.5\linewidth}
-%    \caption{ \emph{Binary unigram vector} for all unigrams in the middle part of the sentence. } 
-%         % 4.4
-%         \begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%BETTER	&	 0.82 \scriptsize{(0.03)} &	 0.79 \scriptsize{(0.04)} &	 0.81 \scriptsize{(0.03)}  \\ 
-%WORSE	&	 0.71 \scriptsize{(0.06)} &	 0.23 \scriptsize{(0.02)} &	 0.35 \scriptsize{(0.02)}  \\ 
-%NONE	&	 0.89 \scriptsize{(0.01)} &	 0.97 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
-%average	&	 0.86 \scriptsize{(0.01)} &	 0.87 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%    \end{minipage} 
-%\end{table}
+All vector representations yield f1 scores at least fifteen points over the baseline. The main difference is with the class \texttt{WORSE}. The boolean feature that caputes comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{NONE}.
 
-
-
-
-Mean Word Embeddings (table \ref{tbl:3_mwe}) and POS n-grams (table \ref{tbl:ngram_3}) are barely able to recognize \texttt{WORSE} at all.
-
-%\begin{table}[h]
-%    \begin{minipage}{.5\linewidth}
-%   \caption{ \emph{Mean Word Embeddings} for the middle part of the sentence. } 
-%    \label{tbl:3_mwe}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%\texttt{BETTER}	&	 0.70 \scriptsize{(0.01)} &	 0.75 \scriptsize{(0.04)} &	 0.72 \scriptsize{(0.02)}  \\ 
-%\texttt{WORSE}	&	 0.44 \scriptsize{(0.16)} &	 0.04 \scriptsize{(0.04)} &	 0.08 \scriptsize{(0.07)}  \\ 
-%\texttt{NONE}	&	 0.88 \scriptsize{(0.01)} &	 0.96 \scriptsize{(0.01)} &	 0.92 \scriptsize{(0.00)}  \\ 
-%average	&	 0.81 \scriptsize{(0.01)} &	 0.84 \scriptsize{(0.01)} &	 0.81 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%  \end{minipage} \hfill
-%    \begin{minipage}{.5\linewidth}
-%  
-%     \caption{500 most frequent \emph{part-of-speech bi-, tri- and four-grams}; weighted by tf-idf.} 
-%       \label{tbl:ngram_3}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%\texttt{BETTER}	&	 0.63 \scriptsize{(0.04)} &	 0.67 \scriptsize{(0.05)} &	 0.65 \scriptsize{(0.04)}  \\ 
-%\texttt{WORSE}	&	 0.64 \scriptsize{(0.19)} &	 0.07 \scriptsize{(0.02)} &	 0.13 \scriptsize{(0.04)}  \\ 
-%\texttt{NONE}	&	 0.87 \scriptsize{(0.01)} &	 0.94 \scriptsize{(0.01)} &	 0.90 \scriptsize{(0.01)}  \\ 
-%average	&	 0.80 \scriptsize{(0.03)} &	 0.82 \scriptsize{(0.01)} &	 0.79 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%    \end{minipage} 
-%\end{table}
-
-
-The boolean feature (table \ref{tbl:3jjr}) can yield an f1 score fiften points higher than the majority class baseline. However, it does not recognize any sentences of the class \texttt{WORSE}.
-
-%\begin{table}[h] 
-% \centering 
-% \caption{Boolean feature, capturing the appearance of the part-of-speech JJR in the middle part of the sentence.} 
-% \label{tbl:3jjr}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%\texttt{BETTER}	&	 0.60 \scriptsize{(0.02)} &	 0.58 \scriptsize{(0.02)} &	 0.59 \scriptsize{(0.02)}  \\ 
-%\texttt{WORSE}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-%\texttt{NONE}	&	 0.84 \scriptsize{(0.01)} &	 0.94 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)}  \\ 
-%average	&	 0.73 \scriptsize{(0.01)} &	 0.80 \scriptsize{(0.01)} &	 0.76 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%\end{table}
-
-
-
-\begin{figure}[h]
-    \begin{minipage}{.5\textwidth}
+\begin{figure}[ht]
    \caption{Precision for the three-classes scenario.} 
-    \label{tbl:3_conf_inf}
+    \label{fig:3_precision}
  \centering
- \hspace*{-1cm}
-	\includegraphics[width=1.25\textwidth]{images/experiments/precision-False}
-  \end{minipage} \hfill
-    \begin{minipage}{.5\textwidth}
-   \hspace*{+1cm}
-     \caption{Recall for the three-classes scenario.} 
-       \label{tbl:3_conf_uni}
- \centering
-	\includegraphics[width=1.25\textwidth]{images/experiments/recall-False}
-    \end{minipage} 
+	\includegraphics[width=1\textwidth]{images/experiments/precision-False}
 \end{figure}
 
-Using only the middle part of the sentence increased the f1 score by five to seven points every time. The removal or replacement of the object only altered the f1 score by about 0.01 points, which is equal to the standard derivation.
+  \begin{figure}[ht]
+     \caption{Recall for the three-classes scenario.} 
+       \label{fig:3_recall}
+ \centering
+	\includegraphics[width=1\textwidth]{images/experiments/recall-False}
+\end{figure}
 
-
-
+The sentence embeddings and unigram model have almost equal results. 
 
 % === binary 
-Tables \ref{tbl:2_infer} to \ref{tbl:2_jjr} show the results for the binary classification.
+Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
 
-
-
-\begin{figure}[h]
+\begin{figure}[ht]
       \caption{F1 score for the binary scenario.} 
-    \label{tbl:3_conf_inf}
+    \label{fig:2_f1}
  \centering
-	\includegraphics[width=0.8\textwidth]{images/experiments/f1-True}
+	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
 
 \end{figure}
 
-%\begin{table}[!htb]
-%    \begin{minipage}{.5\linewidth}
-%      \caption{infersent}
-%      \label{tbl:2_infer}
-%      \centering
-%      
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule
-%ARG	&	 0.80 \scriptsize{(0.01)} &	 0.82 \scriptsize{(0.04)} &	 0.81 \scriptsize{(0.02)}  \\
-%NONE	&	 0.93 \scriptsize{(0.01)} &	 0.92 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\
-%average	&	 0.90 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)}  \\
-%\bottomrule
-%\end{tabular}
-%
-%  \end{minipage}%
-%    \begin{minipage}{.5\linewidth}
-%      \centering
-%        \caption{unigrams}
-%        \label{tbl:2_uni}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-%ARG	&	 0.84 \scriptsize{(0.02)} &	 0.75 \scriptsize{(0.04)} &	 0.79 \scriptsize{(0.03)}  \\ 
-%NONE	&	 0.91 \scriptsize{(0.01)} &	 0.95 \scriptsize{(0.01)} &	 0.93 \scriptsize{(0.01)}  \\ 
-%average	&	 0.89 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)} &	 0.89 \scriptsize{(0.01)}  \\ 
-%\bottomrule
-%\end{tabular}
-%    \end{minipage} 
-%\end{table}
-%
-%
-%
-%\begin{table}[!htb]
-%    \begin{minipage}{.5\linewidth}
-%      \caption{2 mwe}
-%      \label{tbl:2_mwe}
-%      \centering
-%      
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule
-%ARG	&	 0.77 \scriptsize{(0.01)} &	 0.80 \scriptsize{(0.04)} &	 0.79 \scriptsize{(0.02)}  \\
-%NONE	&	 0.93 \scriptsize{(0.01)} &	 0.91 \scriptsize{(0.01)} &	 0.92 \scriptsize{(0.01)}  \\
-%average	&	 0.88 \scriptsize{(0.01)} &	 0.88 \scriptsize{(0.01)} &	 0.88 \scriptsize{(0.01)}  \\
-%\bottomrule
-%\end{tabular}
-%  \end{minipage}%
-%    \begin{minipage}{.5\linewidth}
-%      \centering
-%        \caption{pos}
-%        \label{tbl:2_uni}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule
-%ARG	&	 0.77 \scriptsize{(0.01)} &	 0.68 \scriptsize{(0.04)} &	 0.72 \scriptsize{(0.03)}  \\
-%NONE	&	 0.89 \scriptsize{(0.01)} &	 0.92 \scriptsize{(0.01)} &	 0.91 \scriptsize{(0.01)}  \\
-%average	&	 0.86 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)} &	 0.86 \scriptsize{(0.01)}  \\
-%\bottomrule
-%\end{tabular}
-%    \end{minipage} 
-%\end{table}
-%
-%\begin{table}[h]
-% \centering
-% \caption{ Contains JJR ('middle part', ExtractMiddlePart(processing=None)) }
-% \label{tbl:2_jjr}
-%\begin{tabular}{@{}lrrrr@{}}
-%\toprule
-% 	&	 precision &	 recall &	 f1 score  \\ \midrule
-%ARG	&	 0.75 \scriptsize{(0.01)} &	 0.54 \scriptsize{(0.01)} &	 0.63 \scriptsize{(0.01)}  \\
-%NONE	&	 0.85 \scriptsize{(0.00)} &	 0.93 \scriptsize{(0.00)} &	 0.89 \scriptsize{(0.00)}  \\
-%average	&	 0.82 \scriptsize{(0.00)} &	 0.83 \scriptsize{(0.00)} &	 0.82 \scriptsize{(0.00)}  \\
-%\bottomrule
-%\end{tabular}
-%\end{table}
+As with the three-class scenario, sentence embedding and the unigram feature performed best and got equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineteen points above the baseline.
 
-As in section \ref{sec:3_results}, sentence embedding and the unigram feature performed best and got equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineten points above the baseline.
+\begin{figure}[ht]
 
-
-
-\begin{figure}[h]
-    \begin{minipage}{.5\linewidth}
    \caption{Precision for the binary scenario.} 
-    \label{tbl:3_conf_inf}
- \centering
+    \label{fig:2_precision}
+    \centering
 	\includegraphics[width=1\linewidth]{images/experiments/precision-True}
-  \end{minipage} 
-    \begin{minipage}{.5\linewidth}
-  
+    \end{figure}
+    
+    \begin{figure}[hb]
      \caption{Recall for the binary scenario.} 
-       \label{tbl:3_conf_uni}
+       \label{fig:2_recall}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/recall-True}
-    \end{minipage} 
+
 \end{figure}
 
-
-
 \subsection{Error analysis}
-
-The tables \ref{tbl:3_conf_inf} and \ref{tbl:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (sentence embeddings and unigrams). The confusion matrices of each fold per feature were added to create these tables.
+The figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (sentence embeddings and unigrams). The confusion matrices of each fold per feature were added to create these tables.
 
 
 
@@ -426,50 +249,18 @@ The tables \ref{tbl:3_conf_inf} and \ref{tbl:3_conf_uni} display the confusion m
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
    \caption{Confusion matrix for the sentence embedding feature} 
-    \label{tbl:3_conf_inf}
+    \label{fig:3_conf_inf}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-InferSent_False}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
      \caption{Confusion matrix for the unigram feature} 
-       \label{tbl:3_conf_uni}
+       \label{fig:3_conf_uni}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-Unigrams_False}
     \end{minipage} 
 \end{figure}
-
-
-%\begin{table}[h]
-%    \begin{minipage}{.5\linewidth}
-%   \caption{Confusion matrix for the sentence embedding feature} 
-%    \label{tbl:3_conf_inf}
-%
-%\begin{tabular}{@{}lrrr@{}}
-%\toprule
-%       & \texttt{BETTER} & \texttt{WORSE} & \texttt{NONE} \\ \midrule
-%\texttt{BETTER} & 832       &  41     &  229    \\
-%\texttt{WORSE}  &    97    &    144   &     237 \\
-%\texttt{NONE}   &    169    &    52   &    4019  \\ \bottomrule
-%\end{tabular}
-%
-%
-%  \end{minipage} \hfill
-%    \begin{minipage}{.5\linewidth}
-%  
-%     \caption{Confusion matrix for the unigram feature} 
-%       \label{tbl:3_conf_uni}
-%
-%\begin{tabular}{@{}lrrr@{}}
-%\toprule
-%       & \texttt{BETTER} & \texttt{WORSE} & \texttt{NONE} \\ \midrule
-%\texttt{BETTER} & 809    &   30    &   263   \\
-%\texttt{WORSE}  & 81     &   114    &    283  \\
-%\texttt{NONE}   & 139       &   39    &  4062    \\ \bottomrule
-%\end{tabular}
-%
-%    \end{minipage} 
-%\end{table}
 
 As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. \texttt{BETTER} and \texttt{WORSE} both represent argumentative sentences and it was expected that the distinction between argumentative and not-argumentative is clearer. 
 
@@ -516,53 +307,24 @@ The majority of the 150 sentences was just hard to classify. Sentence seven does
 
 % === binary
 
-Tables \ref{tbl:2_conf_inf} and \ref{tbl:2_conf_uni} show the confusion matrices for the binary setup. Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
+Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
 
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
    \caption{Confusion matrix for the sentence embedding feature} 
-    \label{tbl:3_conf_inf}
+    \label{fig:2_conf_inf}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/conf-InferSent_True}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
      \caption{Confusion matrix for the unigram feature} 
-       \label{tbl:3_conf_uni}
+       \label{fig:2_conf_uni}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/conf-Unigrams_True}
     \end{minipage} 
 \end{figure}
 
-
-%\begin{table}[h]
-%    \begin{minipage}{.5\linewidth}
-%    \centering
-%   \caption{Confusion matrix for the sentence embedding feature} 
-%    \label{tbl:2_conf_inf}
-%
-%\begin{tabular}{@{}lrrr@{}}
-%\toprule
-%       & \texttt{ARG}  & \texttt{NONE} \\ \midrule
-%\texttt{ARG} & 1185      &   395   \\
-%\texttt{NONE}   & 314          &  3926    \\ \bottomrule
-%\end{tabular}
-%
-%  \end{minipage} \hfill
-%    \begin{minipage}{.5\linewidth}
-%   \centering
-%     \caption{Confusion matrix for the unigram feature} 
-%       \label{tbl:2_conf_uni}
-%
-%\begin{tabular}{@{}lrrr@{}}
-%\toprule
-%       & \texttt{ARG}  & \texttt{NONE} \\ \midrule
-%\texttt{ARG} & 1087      &   493   \\
-%\texttt{NONE}   & 228          &  4012    \\ \bottomrule
-%\end{tabular}
-%
-%    \end{minipage} 
-%\end{table}
 
 The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
 
@@ -588,6 +350,10 @@ The first sentence is an example for the problems with questions and, like the s
 The results show that the part between the two objects of interest is most valuable. Also, the objects are not important at all for the classification. Removing or replacing the objects from the sentence did not decrease any score significantally.
 
 Simple features, like the bag-of-words model yielding results similar to the more complexe sentence embeddings.
+
+
+Using only the middle part of the sentence increased the f1 score by five to seven points every time. The removal or replacement of the object only altered the f1 score by about 0.01 points, which is equal to the standard derivation.
+
 
 \section{Evaluation with the held-out data}
 \label{sec:final}
