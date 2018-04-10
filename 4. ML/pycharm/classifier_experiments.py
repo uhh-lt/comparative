@@ -1,62 +1,67 @@
-import itertools
-
-import numpy as np
+from pprint import pformat
+import pandas as pd
 import spacy
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, ExtraTreesClassifier
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.metrics import classification_report, f1_score
-from sklearn.model_selection import LeaveOneOut
+from sklearn.metrics import classification_report, f1_score, recall_score, precision_score
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
-from sklearn.pipeline import make_pipeline, FeatureUnion, Pipeline
+from sklearn.pipeline import make_pipeline, FeatureUnion
 from sklearn.svm import LinearSVC, SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-from classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
-from features.contains_features import ContainsPos
-from features.mean_embedding_feature import MeanWordEmbedding
-from infersent.infersent_feature import InfersentFeature, initialize_infersent
-from transformers.data_extraction import ExtractRawSentence, ExtractMiddlePart, ExtractFirstPart, ExtractLastPart
+from classification_report_util import get_std_derivations, latex_classification_report, get_avg_fold
+from transformers.data_extraction import ExtractRawSentence
 from util.data_utils import load_data, k_folds
 from util.misc_utils import get_logger
-from pprint import pformat
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
-logger = get_logger('feat_tests_1')
+logger = get_logger('feat_tests_1_neu')
 
 LABEL = 'most_frequent_label'
 data = load_data('data.csv')
 
 best_per_feat = []
 
-classifiers = [XGBClassifier(n_jobs=8, n_estimators=100), LogisticRegression(), AdaBoostClassifier(), LinearSVC(),
-               DecisionTreeClassifier(),
-               SGDClassifier(), RandomForestClassifier(), ExtraTreesClassifier(), KNeighborsClassifier(),
-               RadiusNeighborsClassifier(), SVC(class_weight='balanced'),
-               SVC(kernel='rbf'), SVC(kernel='poly'), SVC(kernel='sigmoid'), GaussianNB(), MultinomialNB()]
+class_result = pd.DataFrame(columns=['classifier', 'f1', 'precision', 'recall'])
 
-for classifier in classifiers:
+classifiers = [('XGBoost', XGBClassifier(n_jobs=8, n_estimators=1000)), ('Logistic Regression', LogisticRegression()),
+               ('AdaBoost', AdaBoostClassifier()), ('SVM (linear)', LinearSVC()),
+               ('Decision Tree', DecisionTreeClassifier()),
+               ('SGD Classifier', SGDClassifier()), ('Random Forest', RandomForestClassifier()), ('Extra Trees', ExtraTreesClassifier()), ('k-Neighbors', KNeighborsClassifier()),
+               ('SVM (radial basis function)', SVC(kernel='rbf')), ('SVM (polynomial)', SVC(kernel='poly')), ('SVM (sigmoid)', SVC(kernel='sigmoid')),
+               ('Multinomial NB', MultinomialNB()),('Majority Class Baseline', DummyClassifier(strategy='most_frequent'))
+               ]
+
+idx = 0
+for name, classifier in classifiers:
     logger.info(classifier)
     folds_results = []
+
     try:
-        for train, test in k_folds(5, data, random_state=1337):
+        for train, test in k_folds(5, data, random_state=42):
             pipeline = make_pipeline(FeatureUnion(
                 [('unigram counts binary all', make_pipeline(ExtractRawSentence(), CountVectorizer(binary=True)))]),
-                                     classifier)
+                classifier)
 
             fitted = pipeline.fit(train, train[LABEL].values)
             predicted = fitted.predict(test)
+
+            class_result.loc[idx] = [name, f1_score(test[LABEL].values, predicted, average='weighted'), precision_score(test[LABEL].values, predicted, average='weighted'),
+                                     recall_score(test[LABEL].values, predicted, average='weighted')]
+            idx += 1
+
             folds_results.append((test[LABEL].values, predicted))
             logger.info(
                 classification_report(test[LABEL].values, predicted, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
         der = get_std_derivations(folds_results, ['BETTER', 'WORSE', 'NONE'])
-        best = get_best_fold(folds_results)
+        best = get_avg_fold(folds_results)
         best_per_feat.append((f1_score(best[0], best[1], average='weighted'), classifier))
-     #   print(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
+        #   print(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
         logger.info(
             latex_classification_report(best[0], best[1], derivations=der, labels=['BETTER', 'WORSE', 'NONE'],
                                         caption=''))
@@ -65,3 +70,4 @@ for classifier in classifiers:
     logger.info("\n\n=================\n\n")
 
 logger.info(pformat(sorted(best_per_feat, key=lambda k: k[0], reverse=True)))
+class_result.to_csv('graphics/data/classifer_test.csv')

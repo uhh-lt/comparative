@@ -7,7 +7,7 @@ import util.ngram as ngram_helper
 from features import ngram_feature
 from transformers.n_gram_transformers import NGramTransformer
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 documents = ['Python is better than Ruby',
              'Java is worse than Scala',

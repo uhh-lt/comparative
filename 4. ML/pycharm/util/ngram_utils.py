@@ -3,7 +3,7 @@ from textacy.extract import ngrams
 import json
 import datetime
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 
 def get_ngrams(document, n, min_freq=1, filter_punct=True):

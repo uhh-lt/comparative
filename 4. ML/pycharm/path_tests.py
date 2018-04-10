@@ -20,7 +20,7 @@ from infersent.infersent_feature import initialize_infersent, InfersentFeature
 from transformers.data_extraction import ExtractMiddlePart, ExtractRawSentence
 from util.misc_utils import get_logger
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 
 class NegationFeature(BaseEstimator, TransformerMixin):

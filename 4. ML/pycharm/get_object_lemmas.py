@@ -2,7 +2,7 @@ import pandas as pd
 import spacy
 
 if __name__ == '__main__':
-    nlp = spacy.load('en')
+    nlp = spacy.load('en_core_web_lg')
     vocab = set()
     data = pd.read_csv('data/data.csv')
 

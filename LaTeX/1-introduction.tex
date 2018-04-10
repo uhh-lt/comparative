@@ -77,18 +77,20 @@ As an example, Check24 can compare a wide variety of different objects like seve
 For instance, to compare different DSL providers, the user has to enter her address, how fast the internet should be and if she wants telephone and television as well. She can then select price, speed, and grade (rating) to sort the resulting list.
 
 \begin{figure}[h]
-	\includegraphics[width=1\textwidth]{images/ds-sys/check24_1}
+ \centering
+	\includegraphics[width=0.8\textwidth]{images/ds-sys/check24_1}
 	\caption{Check24.de asks for some data before the comparison of DSL contracts}
 		\label{img:check24_1}
 \end{figure}
 
 \begin{figure}[h]
-	\includegraphics[width=1\textwidth,scale=0.8]{images/ds-sys/check24_2}
+ \centering
+	\includegraphics[width=0.8\textwidth,scale=0.8]{images/ds-sys/check24_2}
 	\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criterias.}
 	\label{img:check24_2}
 \end{figure}
 
-The other mentioned sites work similarly. They provide more of a ranking than a comparison.\newline
+The other mentioned sites work similarly. They provide more of a ranking than a comparison.
 
 
 Another interesting type of websites are Question Answering Portals like \emph{Quora} or \emph{GuteFrage}\footnote{https://quora.com, https://gutefrage.net - all last checked: 12.12.2017}. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
@@ -101,14 +103,16 @@ Versus aggregates freely available data sources like Wikipedia and official stat
 
 Similar to Versus, Diffen aggregates different data sources (see figures \ref{img:diffen} and \ref{img:versus}). All in all, the aggregated information is similar to Versus. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen describes itself as \enquote{inspired by Wikipedia}\footnote{https://www.diffen.com/difference/Diffen:About - Last checked: 11.12.2017}. Diffen does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are just empty.
 
-\begin{figure}[h]
-	\includegraphics[width=1\textwidth]{images/ds-sys/diffen}
+\begin{figure}[ht]
+ \centering
+	\includegraphics[width=0.8\textwidth]{images/ds-sys/diffen}
 	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Diffen.com}
 		\label{img:diffen}
 \end{figure}
 
-\begin{figure}[h]
-	\includegraphics[width=1\textwidth]{images/ds-sys/versus}
+\begin{figure}[ht]
+    \centering
+	\includegraphics[width=0.8\textwidth]{images/ds-sys/versus}
 	\caption{The comparison of \enquote{Hamburg vs. Berlin} on Versus.com}
 		\label{img:versus}
 \end{figure}
@@ -140,7 +144,7 @@ The other problems, sparsity and length, remain. They are solved in other vector
 
 
 \subsection{Averaged Word Embeddings}
-Word Embeddings are dense, low-dimension vector representations of words. These vectors can be learned with neural networks. The basic idea is to train an neural network on a suitable task and then use the columns of the weight matrix of a hidden layer (called \emph{embedding matrix}) as word embeddings. The embedding matrix has the size of $(\text{number of words in the vocabulary } \mathcal{V} \times\allowbreak \text{number of neurons }\allowbreak \text{in the hidden layer})$, so that each column represents one word in $\mathcal{V}$ and each embedding has as many components as the hidden layer has neurons. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
+Word Embeddings are dense, low-dimension vector representations of words. These vectors can be learned with neural networks. The basic idea is to train an neural network on a suitable task and then use the columns of the weight matrix of a hidden layer (called \emph{embedding matrix}) as word embeddings. The embedding matrix has the size of $(\text{number of words in the vocabulary } \mathcal{V} \times\allowbreak \text{number of neurons }\allowbreak \text{in the hidden layer})$ and is initialized with random values. After the network was trained, each column represents one word in $\mathcal{V}$ and each embedding has as many components as the hidden layer has neurons. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
 
 A method to learn word embeddings using a feed-forward neural network was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the cosine similarity between the learned vectors of related words (like cat and dog) is much higher than the cosine similarity between unrelated words (like cat and chair).
 
@@ -149,6 +153,15 @@ Two popular methods to learn word embeddings (extending the basic idea) are \emp
 The word embeddings can be used to create a dense, low-dimension vector representation for a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
 
 \subsection{Sentence Embeddings and InferSent}
-All presented vector representations lose sequence information. However, the sequence of words in a sentence is important. For example, the sentence \enquote{\emph{I like cats, not dogs}} will get the same average word embedding as \enquote{\emph{I like dogs, not cats}}.
+Bag-of-words an averaged word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but it will get the same bag-of-words vector and averaged word embedding.
 
 Sentence embeddings aim to learn embeddings for pieces of text, instead of single words. In this way, the sequence information is taken into account. Several methods have been proposed to create sentence embeddings (for instance, \cite{Le:2014aa}, \cite{NIPS2015_5950}). In this thesis \emph{InferSent} (as presented in \cite{Conneau:2017aa}) is used.
+
+
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.5\textwidth,scale=0.5]{images/nli}
+	\caption{Generic training scheme of \emph{InferSent}, adapted from \cite{Conneau:2017aa} }
+		\label{img:versus}
+\end{figure}
+The basic idea is similar to word embeddings. A neural network is trained on a suitable task, and the embeddings are extracted from a weight matrix of a hidden layer.

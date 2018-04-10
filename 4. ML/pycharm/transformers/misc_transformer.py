@@ -4,7 +4,7 @@ import re
 
 from util.data_utils import CUE_WORDS_WORSE, CUE_WORDS_BETTER
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 
 class Joiner(TransformerMixin):

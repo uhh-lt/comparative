@@ -150,13 +150,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 \centering
 \caption{The results for prestudy A.}
 \label{fig:dist_pre_a}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {55.00/NO\_COMP (55),
-    15.00/BETTER (15),
-    8.00/WORSE (8),
-    22.00/UNCLEAR (22)}
-\end{tikzpicture}
+\includegraphics[width=0.8\linewidth]{images/dataset/prea-dist}
 \end{figure}
 
 The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only thirty-seven sentences got a unanimous result.
@@ -237,14 +231,9 @@ The class distribution for the two-hundred sentences is presentend in figure \re
 \centering
 \caption{Class Distribution (Prestudy B)}
 \label{fig:dist_pre_b}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, color= {cgray, cgreen, cred, cblue}]
-    {47.50/NO\_COMP (95),
-    27.50/BETTER (56),
-    11.00/WORSE (22),
-    14.00/UNCLEAR (28)}
-\end{tikzpicture}
+\includegraphics[width=0.8\linewidth]{images/dataset/preb-dist}
 \end{figure}
+
 
 As in the first prestudy, nearly half of the sentences are comparative. The confidence of the annotations (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
@@ -515,13 +504,7 @@ The label distribution of the 742 sentences is presented in the figure \ref{fig:
 \centering
 \caption{Result of 742 manually labelled sentences. The labelling was done to see what result can be expected from the crowdsourcing task.}
 \label{fig:sample}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred, cblue}]
-    {62 /NONE (463),
-    17  /BETTER (126),
-    8 /WORSE (61),
-    13  /OTHER (92)}
-\end{tikzpicture}
+\includegraphics[width=0.8\linewidth]{images/dataset/pre-dist}
 \end{figure}
 
 \subsection{Brands}
@@ -559,13 +542,9 @@ The class distribution is presented in figure \ref{fig:brands_fin}. The amount o
 \centering
 \caption{Class distribution for sentences of the domain \emph{Brands}}
 \label{fig:brands_fin}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {75.55 /NONE (1764),
-    17.30  /BETTER (404),
-    7.15 /WORSE (167)}
-\end{tikzpicture}
+\includegraphics[width=0.8\textwidth]{images/dataset/Brands-dist}
 \end{figure}
+
 
 
 
@@ -599,16 +578,12 @@ Confidence & Sentences & \% of data set \\
 \end{tabularx}
 \end{table}
 % zahlen 23.3
+
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Computer Science}}
 \label{fig:compsci_fin}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {65.81 /NONE (1596),
-    23.96  /BETTER (581),
-    10.24 /WORSE (248)}
-\end{tikzpicture}
+\includegraphics[width=0.8\textwidth]{images/dataset/Compsci-dist}
 \end{figure}
 
 % zahlen alt
@@ -637,18 +612,14 @@ Confidence & Sentences & \% of data set \\
 \end{tabularx}
 \end{table}
 
-% zahlen 23.3
+
 \begin{figure}[h]
 \centering
 \caption{Class distribution for sentences of the domain \emph{Random}}
 \label{fig:random_fin}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {77.16 /NONE (1882),
-    15.54  /BETTER (379),
-    7.30 /WORSE (178)}
-\end{tikzpicture}
+\includegraphics[width=0.8\textwidth]{images/dataset/Random-dist}
 \end{figure}
+
 
 As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest, as 128 annotators failed the quiz (164 passed) and twenty-seven annotators were removed during the task due to bad performance on the test questions. The Random domain got the worst satisfaction rating (twenty-nine participants) of all domains. The overall satisfaction was rated with 3.1 out of 5 (instructions: 3.6, test question fairness: 3.4, ease of job: 3, payment: 3.4).
 
@@ -707,16 +678,13 @@ The fourth sentence does not explicitly states that one is better than the other
 The class distribution (figure \ref{fig:all_fin}) is similar to the prestudy. As expected, the majority of sentences is not comparative. 
 The class \texttt{BETTER} is more than twice as big as the class \texttt{WORSE}, which will complicate the classification.
 % zahlen 23.3
+
+
 \begin{figure}[h]
 \centering
 \caption{Distribution of classes in the final crowdsourcing data set.}
 \label{fig:all_fin}
-\begin{tikzpicture}
-\pie [rotate=180, text = legend, sum=100, color= {cgray, cgreen, cred}]
-    {72.82 /NONE (5242),
-    18.95  /BETTER (1364),
-    8.24 /WORSE (593)}
-\end{tikzpicture}
+\includegraphics[width=0.8\textwidth]{images/dataset/Alldomains-dist}
 \end{figure}
 
 % zahlen 23.3

@@ -3,7 +3,7 @@ from textacy.extract import ngrams as t_ngrams
 import textacy
 import spacy
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 
 class TextacyNgrams(unittest.TestCase):

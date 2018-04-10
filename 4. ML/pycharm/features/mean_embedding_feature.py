@@ -13,9 +13,9 @@ class MeanWordEmbedding(BaseFeature):
         self.length = len(documents)
         result = []
         for doc in documents:
-            mwe = np.array([float(0)] * 384)
+            mwe = np.array([float(0)] * 300)
             if len(doc) == 0:
-                result.append(np.array([float(0)] * 384))
+                result.append(np.array([float(0)] * 300))
             else:
                 pre = MeanWordEmbedding.nlp(doc)
                 for token in pre:

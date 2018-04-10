@@ -4,7 +4,7 @@ import numpy as np
 
 
 class BaseFeature(BaseEstimator, TransformerMixin):
-    nlp = spacy.load('en')
+    nlp =  spacy.load('en_core_web_lg')
 
     def reshape(self, array):
         return np.array(array).reshape(-1, 1)
