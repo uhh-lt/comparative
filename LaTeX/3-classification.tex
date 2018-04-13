@@ -12,65 +12,22 @@ If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform 
 
 \begin{figure}[ht]
 \centering
-\caption{F1 score of all tested classification algorithms.}
+\caption{F1 score of all tested classification algorithms. Each algorithm was trained with five stratified folds of the data. The black bars indicate the standard derivation.}
 \label{tbl:algo}
 \includegraphics[width=0.8\linewidth]{images/classifier}
 \end{figure}
 
-To find the best performing classification algorithms, thirten (see table \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. The binary unigram vector computed on the whole sentence was used as the only feature. Stratified k-fold with k equals five was used to assess the quality of the algorithm.
+To find the most suitable classification algorithms, thirteen (see figure \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. A binary bag-of-words model computed on the whole sentence (see section \ref{sec:features}) was used as the sole feature. The f1 score was used as the metric to compare the algorithms. 
 
+Tree-based methods and linear models work good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
 
+As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms were done. A set of hyper-parameters for XGBoost were tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
 
-
-
-%\begin{table}[h]
-%\centering
-%\label{tbl:algo}
-%\caption{All evaluated classification algorithms. The F1 score shows the classification performance with the unigram feature.}
-%\begin{tabularx}{\textwidth}{XlX}
-%\toprule
-%Algorithm & F1 Score & Used in\\ \midrule
-%
-%XGBoost & 0.76 & -\\ 
-%
-%Logistic Regression & 0.75 &  \cite{Dusmanu2017Argument-Mining,Daxenberger2017What-is-the-EssAker2017What-works-and-,Lippi2016Argumentation-M}\\ 
-%
-%AdaBoost & 0.74 &  \cite{Aker2017What-works-and-}\\  
-%
-%Linear SVC & 0.73 & \cite{Aker2017What-works-and-}\\  
-%
-%Decision Tree & 0.72 &  \cite{Stab2014Identifying-Arg,Lippi2016Argumentation-M}\\ 
-%
-%Stochastic Gradient Descent & 0.72 & -\\ 
-%
-%
-%Random Forest & 0.72 &  \cite{Dusmanu2017Argument-Mining,Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Lippi2016Argumentation-M}\\  
-%
-%Extra Trees Classifier & 0.72 & - \\
-%
-%K Neighbors & 0.72 &  \cite{Aker2017What-works-and-}\\ 
-%
-%
-%Support Vector Machine (non-linear kernel) & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M,Habernal2016Argumentation-M}\\ 
-%
-%
-%Naive Bayes & 0.60 & \cite{Stab2014Identifying-Arg,Eckle-Kohler2015On-the-Role-of-,Aker2017What-works-and-,Park:2012:ICC:2391171.2391173,Lippi2016Argumentation-M}\\  
-%
-%
-% \bottomrule 
-%\end{tabularx}
-%
-%\end{table}
-
-
-Tree-based methods and linear models work good. Support Vector Machines with non-linear kernels assigne \texttt{NONE} to all sentences.
-
-As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms were done. A set of hyper-parameters for XGBoost were tested using exhaustive grid search and randomized search. However, no significant increase in the F1 score could be achieved.
-
-In the following sections, all experiments were done using XGBoost (1000 estimators).
+In the following sections, all experiments were conducted using XGBoost with 1000 estimators.
 
 
 \section{Features}
+\label{sec:features}
 Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{https://spacy.io/models/en\#section-en\_core\_web\_lg} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
 
 A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html)} was tested as well. 
@@ -98,7 +55,7 @@ First part & removal & In my mind, \\
 
 The first preprocessing step decided if the full sentence or a part of it should be used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
 
-The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement).
+The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies).
 
 
 
@@ -107,7 +64,7 @@ The second step was done to assess how important the objects are for the classif
 \section{Experiments}
 \subsection{Baselines}
 \label{sec:3_baseline}
-As described in section \ref{sec:argmine}, there is no task which is similar enough to this one which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline}, assigns all sentences to the class \texttt{NONE}.
+As described in section \ref{sec:argmine}, there is no task which is similar enough the one at hand which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline} and \ref{tbl:binmaj}, assigns all sentences to the class \texttt{NONE}.
 
 % 24.3
 \begin{table}[!htb]
@@ -145,10 +102,8 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 \textbf{0.61}
 
 
 
-The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in table \ref{tbl:3majoritybaseline}.
+The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in tables \ref{tbl:3majoritybaseline} and \ref{tbl:binstrat}.
 
-% 24.3
-The baselines for the binary classification task are shown in tables \ref{tbl:binmaj} and \ref{tbl:binstrat}.
 
 
 \begin{table}[!htb]
@@ -188,48 +143,47 @@ For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 \subsection{Results}
 \label{sec:3_results}
-The classification results for the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall).
+The classification results for best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calulcated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features use the middle part of the sentence and left the objects untouched.
 
-\begin{figure}[ht]
+
+\begin{figure}[h]
       \caption{F1 score for the three-class scenario.} 
-    \label{fig:3_f1}
+    \label{fig:2_f1}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/f1-False}
 
 \end{figure}
 
-All vector representations yield f1 scores at least fifteen points over the baseline. The main difference is with the class \texttt{WORSE}. The boolean feature that caputes comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{NONE}.
+All features yield f1 scores at least fifteen points over the baseline. Bag-of-words (f1 score 0.855) and InferSent (f1 score 0.858) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
 
-\begin{figure}[ht]
+\begin{figure}[p]
    \caption{Precision for the three-classes scenario.} 
     \label{fig:3_precision}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/precision-False}
 \end{figure}
 
-  \begin{figure}[ht]
+  \begin{figure}[p]
      \caption{Recall for the three-classes scenario.} 
        \label{fig:3_recall}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/recall-False}
 \end{figure}
 
-The sentence embeddings and unigram model have almost equal results. 
+
 
 % === binary 
 Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
-
-\begin{figure}[ht]
+\begin{figure}[h]
       \caption{F1 score for the binary scenario.} 
     \label{fig:2_f1}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
 
 \end{figure}
+As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineteen points above the baseline.
 
-As with the three-class scenario, sentence embedding and the unigram feature performed best and got equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineteen points above the baseline.
-
-\begin{figure}[ht]
+\begin{figure}[p]
 
    \caption{Precision for the binary scenario.} 
     \label{fig:2_precision}
@@ -245,8 +199,11 @@ As with the three-class scenario, sentence embedding and the unigram feature per
 
 \end{figure}
 
+\FloatBarrier
+
 \subsection{Error analysis}
-The figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (sentence embeddings and unigrams). The confusion matrices of each fold per feature were added to create these tables.
+\label{sec:error_analysis}
+The figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (InferSent and bag-of-words). The confusion matrices of each fold per feature were summed up to create these tables.
 
 
 
@@ -351,18 +308,24 @@ The binary scenario benefits from the reduced class imbalance, yet the errors ma
 \end{table}
 
 The first sentence is an example for the problems with questions and, like the second, negations. In fourth and fifth sentence, the cue word appears after the objects.
-
+\FloatBarrier
 \section{Discussion}
-The results show that the part between the two objects of interest is most valuable. Also, the objects are not important at all for the classification. Removing or replacing the objects from the sentence did not decrease any score significantally.
+Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
 
-Simple features, like the bag-of-words model yielding results similar to the more complexe sentence embeddings.
+Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
+
+Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification.
+
+This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any vector representation. All in all, no combination of vector representations increased the score in any way.
+
+An interesting observation is that the simple bag-of-words model performs almost equal to the more complex models. Even a single boolean feature which captures if the sentence contains a comparative adjective yields an f1 score way over the baseline.
+
+As expected, the smallest class in the data set caused the biggest problems. The recall for \texttt{WORSE} is about three times below the recall for \texttt{BETTER}. Looking at the confusion matrices in figure \ref{fig:3_conf_uni} and \ref{fig:3_conf_inf}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect two special cases of a class \texttt{ARG}.
+
+Another interesting obersavtion is that the three-class scenario and the binary scenario made mistakes on the same sentences. In fact, the majority of mistakes made by the binary scenario were made by the three-classes scenario as well.
 
 
-Using only the middle part of the sentence increased the f1 score by five to seven points every time. The removal or replacement of the object only altered the f1 score by about 0.01 points, which is equal to the standard derivation.
-
-% Any restrictions on the model, for instance unigram frequency, did not improve the result for this feature. bow
-
-% Other part-of-speech tags did not yield a performance significantly better than the baseline in section \ref{sec:3_baseline}. pos
 \section{Evaluation with the held-out data}
+tbd
 \label{sec:final}
 
