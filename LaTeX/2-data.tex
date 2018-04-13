@@ -153,6 +153,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 \label{fig:dist_pre_a}
 \includegraphics[width=0.8\linewidth]{images/dataset/prea-dist}
 \end{figure}
+\FloatBarrier
 
 The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only thirty-seven sentences got a unanimous result.
 \begin{table}[h]
@@ -210,8 +211,6 @@ However, some aspects were identical to the first study. As the sentence selecti
 As the pair \enquote{\emph{Ruby vs. Python}} requires knowledge in computer science, this need was expressed in the title of the task.
 To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP}, the wording on this classes in the annotator's view was changed. The new view is displayed in figure \ref{img:2_question}. 
 
-In the first prestudy, some annotators complained that the test questions were not fair. In fact, they contained some special cases in a way that they did not represent the whole data set appropriatly. In the second prestudy, more test questions (fifty-one instead of twelve) test questions were used. Those test questions covered easy and hard cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/2_question}
@@ -219,6 +218,10 @@ In the first prestudy, some annotators complained that the test questions were n
 \caption{The new annotator view for prestudy B. The objects are now highlighted by colour.}
 \label{img:2_question}
 \end{figure}
+
+In the first prestudy, some annotators complained that the test questions were not fair. In fact, they contained some special cases in a way that they did not represent the whole data set appropriatly. In the second prestudy, more test questions (fifty-one instead of twelve) test questions were used. Those test questions covered easy and hard cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
+
+
 
 The sentence preprocessing was altered as well. Instead of replacing the object, \mbox{\textbf{{\color[HTML]{9A14B2}:{[}OBJECT\_A{]}}}} or \textbf{{\color[HTML]{6CB219}:{[}OBJECT\_B{]}}} was appended. The colon and square brackets emphasize where the object of interest ends and the suffix begins. The idea behind this was that the removal of the objects also removed some context from the sentences, which might be useful to classify them correctly. In addition, the objects were shown in a different colour than the rest of the text.\newline
 
@@ -238,7 +241,7 @@ The class distribution for the two-hundred sentences is presentend in figure \re
 
 As in the first prestudy, nearly half of the sentences are comparative. The confidence of the annotations (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
-\begin{table}[h]
+\begin{table}[htb]
 % aktuelle zahlen 29.3; neue methode
 \caption{Annotation confidence for the \emph{second prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:pre_b_agg}
@@ -259,7 +262,7 @@ Confidence & Sentences & \% of data set \\
 
 
 
-\begin{table}[h]
+\begin{table}[htb]
 % aktuelle zahlen 29.3; neue methode
 \centering
 \caption{Examples of uncertain sentences for prestudy B. The annotators could not agree on one class for this sentences. }
@@ -282,12 +285,12 @@ Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{
 \end{tabularx}
 \end{table}
 
-
+ \FloatBarrier
 From 125 candidate annotators, thirty-five failed the initial quiz. Twelve annotators were removed during the annotation process as they answered too many test questions wrong.
 
 Twenty-two annotators took the exit survey. The overall satisfaction increased to 3.7 out of 5. The test question fairness was now rated with 3.7  instead of 2.9. The rating for the payment slightly increased to 3.9, yet the payment was not changed. However, the rating for the instructions decreased to 3.9 and for the difficulty to 3.5.
 The change in numbers is explained by the increased amount of sentences, which introduce new cases which are not directly reflected in the annotation guidelines.
- \FloatBarrier
+
 \subsection{Validation of results}
 Only a small fraction of the annotators took the exit surveys in both prestudies which reduces their explanatory power. However, it gave valuable hints to improve the study design. Yet, the increased confidence of the annotations is the more important signal.
 
@@ -449,7 +452,6 @@ yale%23NP
 \end{figure}
 
 \begin{minipage}{\linewidth}
-
 \begin{lstlisting}[language=json,label=lst:jbtres,caption=JoBimTexts response. Shows similar words to \emph{\enquote{Yale}}. Those objects can be compared meaningful.]
 [...]
    "results":
@@ -465,6 +467,7 @@ yale%23NP
       {"score":109.0,"key":"dartmouth#NP"}]
 \end{lstlisting}
 \end{minipage}
+
 In the following, this domain is called \emph{Random}. Some example pairs for all domains are shown in table \ref{tbl:exp_pairs}.
 \begin{table}[h]
 \centering
@@ -630,7 +633,7 @@ As with the other domains, the first 750 sentences (with \texttt{OTHER}) perform
 % zahlen 23.3
 Table \ref{fig:all_agg} summarises the confidence of the annotations on all three domains. The annotators could agree on one class for the majority of the sentences. However, 13.32\% of the sentences have a confidence below 80\%. For 2.67\%, no class got the majority of votes. 
 
-\begin{table}[h]
+\begin{table}[hp]
 \caption{Annotation confidence for all domains. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{fig:all_agg}
 \begin{tabularx}{\textwidth}{XXX}
@@ -654,7 +657,7 @@ It is unclear if \emph{Groovy} and \emph{Java} are compared in sentence three. O
 
 The fourth sentence does not explicitly states that one is better than the other.
 % zahlen 23.3
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \caption{Examples of uncertain sentences of the main study. The annotators could not agree on one class for this sentences.}
 \label{tbl:all_res}
@@ -680,7 +683,7 @@ The class \texttt{BETTER} is more than twice as big as the class \texttt{WORSE},
 % zahlen 23.3
 
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
 \caption{Distribution of classes in the final crowdsourcing data set.}
 \label{fig:all_fin}

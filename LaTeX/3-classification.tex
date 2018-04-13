@@ -10,7 +10,7 @@ If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform 
 
 \section{Choice of Algorithms}
 
-\begin{figure}[ht]
+\begin{figure}[htb]
 \centering
 \caption{F1 score of all tested classification algorithms. Each algorithm was trained with five stratified folds of the data. The black bars indicate the standard derivation.}
 \label{tbl:algo}
@@ -140,7 +140,6 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scripts
 
 For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
-
 \subsection{Results}
 \label{sec:3_results}
 The classification results for best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calulcated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features use the middle part of the sentence and left the objects untouched.
@@ -148,19 +147,34 @@ The classification results for best performing feature configurations in the thr
 
 \begin{figure}[h]
       \caption{F1 score for the three-class scenario.} 
-    \label{fig:2_f1}
+    \label{fig:3_f1}
  \centering
-	\includegraphics[width=1\textwidth]{images/experiments/f1-False}
+	\includegraphics[width=0.9\textwidth]{images/experiments/f1-False}
 
 \end{figure}
 
 All features yield f1 scores at least fifteen points over the baseline. Bag-of-words (f1 score 0.855) and InferSent (f1 score 0.858) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
 
-\begin{figure}[p]
+
+
+% === binary 
+Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
+\begin{figure}[h]
+      \caption{F1 score for the binary scenario.} 
+    \label{fig:2_f1}
+ \centering
+	\includegraphics[width=0.9\textwidth]{images/experiments/f1-True}
+
+\end{figure}
+As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineteen points above the baseline.
+
+
+
+\begin{figure}[tb]
    \caption{Precision for the three-classes scenario.} 
     \label{fig:3_precision}
  \centering
-	\includegraphics[width=1\textwidth]{images/experiments/precision-False}
+	\includegraphics[width=0.9\textwidth]{images/experiments/precision-False}
 \end{figure}
 
   \begin{figure}[p]
@@ -172,35 +186,24 @@ All features yield f1 scores at least fifteen points over the baseline. Bag-of-w
 
 
 
-% === binary 
-Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
-\begin{figure}[h]
-      \caption{F1 score for the binary scenario.} 
-    \label{fig:2_f1}
- \centering
-	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
-
-\end{figure}
-As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature capturing the appearance of comparative adjectives is again the worst, yet the score is nineteen points above the baseline.
-
-\begin{figure}[p]
-
+\begin{figure}[tb]
    \caption{Precision for the binary scenario.} 
     \label{fig:2_precision}
     \centering
-	\includegraphics[width=1\linewidth]{images/experiments/precision-True}
+	\includegraphics[width=0.9\linewidth]{images/experiments/precision-True}
     \end{figure}
     
-    \begin{figure}[hb]
+    \begin{figure}[tb]
      \caption{Recall for the binary scenario.} 
        \label{fig:2_recall}
  \centering
-	\includegraphics[width=1\linewidth]{images/experiments/recall-True}
+	\includegraphics[width=0.9\linewidth]{images/experiments/recall-True}
 
 \end{figure}
 
-\FloatBarrier
 
+
+\FloatBarrier
 \subsection{Error analysis}
 \label{sec:error_analysis}
 The figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (InferSent and bag-of-words). The confusion matrices of each fold per feature were summed up to create these tables.
@@ -265,13 +268,17 @@ Twenty sentences contained at least one negation. Sentence three  is a good exam
 
 Another error source is the position of the cue word. It is more likely that \texttt{NONE} is predicted if the cue word is not between the two objects. This is due to the fact that the features only look at the words in between the two objects. However, adding information on the position of the cue word did not help to increase the result. % check
 
-The majority of the 150 sentences was just hard to classify. Sentence seven does not have a clear winner; even the human annotators did not assign the correct label (\texttt{NONE}). A lot more training data is needed to enable a classifier to learn that sentence eight is comparative. Same is true for sentence nine, which would also need some knowledge to understand that the numbers are important for the comparison.\newline \newline 
+The majority of the 150 sentences was just hard to classify. Sentence seven does not have a clear winner; even the human annotators did not assign the correct label (\texttt{NONE}). A lot more training data is needed to enable a classifier to learn that sentence eight is comparative. Same is true for sentence nine, which would also need some knowledge to understand that the numbers are important for the comparison.\newline
 
 
 % === binary
 
-Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
 
+
+
+
+
+Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. 
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
    \caption{Confusion matrix for the sentence embedding feature} 
@@ -287,6 +294,7 @@ Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrice
 	\includegraphics[width=1\textwidth]{images/experiments/conf-Unigrams_True}
     \end{minipage} 
 \end{figure}
+Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
 
 
 The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
@@ -314,13 +322,11 @@ Section \ref{sec:3_results} only shows the results for the best performing confi
 
 Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
 
-Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification.
-
-This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any vector representation. All in all, no combination of vector representations increased the score in any way.
+Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any vector representation. All in all, no combination of vector representations increased the score in any way.
 
 An interesting observation is that the simple bag-of-words model performs almost equal to the more complex models. Even a single boolean feature which captures if the sentence contains a comparative adjective yields an f1 score way over the baseline.
 
-As expected, the smallest class in the data set caused the biggest problems. The recall for \texttt{WORSE} is about three times below the recall for \texttt{BETTER}. Looking at the confusion matrices in figure \ref{fig:3_conf_uni} and \ref{fig:3_conf_inf}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect two special cases of a class \texttt{ARG}.
+As expected, the smallest class in the data set caused the biggest problems. The recall for \texttt{WORSE} is about three times below the recall for \texttt{BETTER}. Looking at the confusion matrices in figure \ref{fig:3_conf_uni} and \ref{fig:3_conf_inf}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special cases of a class \texttt{ARG}.
 
 Another interesting obersavtion is that the three-class scenario and the binary scenario made mistakes on the same sentences. In fact, the majority of mistakes made by the binary scenario were made by the three-classes scenario as well.
 
