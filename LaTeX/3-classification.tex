@@ -70,32 +70,38 @@ As XGBoost and Logistic Regression already work in a pleasing way, no further in
 In the following sections, all experiments were done using XGBoost (1000 estimators).
 
 
-\section{Preprocessing}
-In addition to the full sentence, preprocessed versions of it were used in the feature calculation.
+\section{Features}
+Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{https://spacy.io/models/en\#section-en\_core\_web\_lg} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
 
-Different parts of the sentence were used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
+A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html)} was tested as well. 
 
-Another processing step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). Some examples are shown in table \ref{preprocessing_example}.
+Part-of-speech tagging was done using spacy.\newline
 
-\begin{table}[h]
+Two preprocessing steps were used to generate the input for the feature calculation. Some examples are shown in table \ref{preprocessing_example}.
+
+\begin{table}[ht]
 \centering
 
 \caption{Preprocessing examples for the sentence \enquote{\emph{In my mind, Python is better than Ruby}}}
 \label{preprocessing_example}
-\begin{tabularx}{\linewidth}{lX}
+\begin{tabularx}{\linewidth}{llX}
 \toprule
-Preprocessing & Result \\ \midrule
-Middle part & Python is better than Ruby \\
-Middle part, removal & is better than \\
-Full sentence, distinct replacement &In my mind, OBJECT\_A is better than OBJECT\_B \\
-First part, removal & In my mind, \\
+Step 1 & Step 2 & Result \\ \midrule
+Middle part & untouched & Python is better than Ruby \\
+Middle part & removal & is better than \\
+Full sentence & distinct replacement &In my mind, OBJECT\_A is better than OBJECT\_B \\
+First part & removal & In my mind, \\
 \bottomrule
 \end{tabularx}
 
 \end{table}
 
+The first preprocessing step decided if the full sentence or a part of it should be used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
 
-\section{Features}
+The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement).
+
+
+
 
 
 \section{Experiments}
@@ -354,7 +360,9 @@ Simple features, like the bag-of-words model yielding results similar to the mor
 
 Using only the middle part of the sentence increased the f1 score by five to seven points every time. The removal or replacement of the object only altered the f1 score by about 0.01 points, which is equal to the standard derivation.
 
+% Any restrictions on the model, for instance unigram frequency, did not improve the result for this feature. bow
 
+% Other part-of-speech tags did not yield a performance significantly better than the baseline in section \ref{sec:3_baseline}. pos
 \section{Evaluation with the held-out data}
 \label{sec:final}
 

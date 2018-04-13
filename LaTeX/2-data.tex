@@ -551,9 +551,9 @@ The class distribution is presented in figure \ref{fig:brands_fin}. The amount o
 % zahlen alt
 Even with the rephrasing of that class, it was too confusing for the annotators. The class was not different enough from \texttt{NONE} (\texttt{NO\_COMP}). Eventually, all sentences labelled as \texttt{OTHER} (124 sentences for brands) were merged into \texttt{NONE}. This decision was made after 750 sentences were labelled for each domain. First machine learning experiments also showed that \texttt{OTHER} is not distinguishable from \texttt{NONE} for all tested features and algorithms.
 
-For the first 750 sentences, 398 passed the quiz while 357 failed. During the annotation process, fifty-two were removed as they answered to many test questions wrong. The overall satisfaction was 3.4 out of 5. In detail, the acceptance of the task was okay (instructions: 3.9, test question fairness: 3.4, ease of job: 3.4, payment: 3.8).\footnote{The 750 sentences were, due to a mistake, divided into two tasks, one with one-hundred (twenty-six participants in the survey) and one with 650 (fourty-one participants). The presented satisfaction values are the averages weighted by number of participants}
+For the first 750 sentences (with four classes), 47\% failed the initial quiz (357 out of 755). During the annotation process, 13\% answered to many test questions wrong. The numbers improved after the class \texttt{OTHER} was removed: only 25\% failed the initial quiz and 8\% were removed during the annotation process.
 
-For the rest of the sentences, fifty-one participants took the exit survey. The removal of \texttt{OTHER} increased the overall satisfaction to 3.8 (instructions: 4, test question fairness: 3.5, ease of job: 3.7, payment: 3.7).
+150 annotators took the exit survey to rate the task on a scala from one to five. Overall, the task was rated with 3.7. The instructions got 4.0, the fairness of test questions 3.5, the difficulty 3.6 and the payment 3.7.\footnote{The numbers are the average of the survey results for each task created on CrowdFlower, weighted by the number of participants. The results for each task can be found in the appendix.} Broken down, the four-class task (67 participants) got a rating of 3.5, the three-class task (83 participants) 3.8.
 
 
 \subsection{Computer Science}
@@ -586,11 +586,10 @@ Confidence & Sentences & \% of data set \\
 \includegraphics[width=0.8\textwidth]{images/dataset/Compsci-dist}
 \end{figure}
 
-% zahlen alt
-Again, many people failed the quiz (121 failed, 132 passed) for the first 750 sentences. Thirty-five people dropped out during the annotation process because they missed to many test questions. The twenty-seven participants who took the exit survey rated the overall satisfaction with 3.5 (instructions: 3.5, test question fairness: 3, ease of job: 3.2, payment: 3.6).
+% zahlen neu
+As with Brands, 48\% failed the initial quiz for the task with four classes. 25\% dropped out during the annotation process. Again, the numbers improved after \texttt{OTHER} was removed. Only 15\% failed the quiz and 7\% were removed during the annotation process.
 
-The numbers improved for the rest of the sentences (after the removal of \texttt{OTHER}). Only sixty-four failed the quiz (379 passed); twenty-six were removed during the annotation process. Fourty-seven participants took the exit survey on the second part. The overall satisfaction was rated with 3.9 (instructions: 4.2, test question fairness: 4, ease of job: 3.8, payment: 3.9).
-
+106 annotators took the exit survey. The task was rated with 3.9. The instructions (the instructions were the same for all tasks) got 4.2, test question fairness 4.1, difficulty 3.9 and payment (all tasks had the same payment) 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
 \subsection{Random}
 The random domain has 2439 sentences and 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (figure \ref{fig:random_fin}) are satisfactory as well.
    % zahlen 23.3 
@@ -621,9 +620,9 @@ Confidence & Sentences & \% of data set \\
 \end{figure}
 
 
-As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest, as 128 annotators failed the quiz (164 passed) and twenty-seven annotators were removed during the task due to bad performance on the test questions. The Random domain got the worst satisfaction rating (twenty-nine participants) of all domains. The overall satisfaction was rated with 3.1 out of 5 (instructions: 3.6, test question fairness: 3.4, ease of job: 3, payment: 3.4).
+As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest: 44\% dropped out during the quiz, 16\% were removed during the annotation process. For the three-class task, the numbers improved to 14\% (quiz) and 7\% (annotation task).
 
-Once more, the numbers improve after \texttt{OTHER} was removed. Only seventy-five failed the quiz (423 passed). The ratings (thirty-seven participants) increased as well. The overall satisfaction was now rated with 4.0 (instructions: 4.1, test question fairness: 3.9, ease of job: 4, payment: 3.7).
+97 participants rated the task with 3.6 (four-classes: 3.1, 29 participants; three-classes: 3.9, 68 participants). The instructions got 4.0, test question fairness 3.8, difficulty of the task 3.8 and payment 3.5.
 
 
 \subsection{Validation of results}
