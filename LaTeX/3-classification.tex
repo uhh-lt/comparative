@@ -219,10 +219,10 @@ Figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matr
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the unigram feature} 
+     \caption{Confusion matrix for the bag-of-words feature} 
        \label{fig:3_conf_uni}
  \centering
-	\includegraphics[width=1\linewidth]{images/experiments/conf-Unigrams_False}
+	\includegraphics[width=1\linewidth]{images/experiments/conf-Bag-Of-Words_False}
     \end{minipage} 
 \end{figure}
 
@@ -286,10 +286,10 @@ Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrice
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the unigram feature} 
+     \caption{Confusion matrix for the bag-of-words feature} 
        \label{fig:2_conf_uni}
  \centering
-	\includegraphics[width=1\textwidth]{images/experiments/conf-Unigrams_True}
+	\includegraphics[width=1\textwidth]{images/experiments/conf-Bag-Of-Words_true}
     \end{minipage} 
 \end{figure}
 Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
