@@ -12,16 +12,16 @@ If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform 
 
 \begin{figure}[htb]
 \centering
-\caption{F1 score of all tested classification algorithms. Each algorithm was trained with five stratified folds of the data. The black bars indicate the standard derivation.}
+\caption{F1 score of all tested classification algorithms. Each algorithm was trained with five stratified folds of the data. The black bars show the standard derivation.}
 \label{tbl:algo}
 \includegraphics[width=0.8\linewidth]{images/classifier}
 \end{figure}
 
 To find the most suitable classification algorithms, thirteen (see figure \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. A binary bag-of-words model computed on the whole sentence (see section \ref{sec:features}) was used as the sole feature. The f1 score was used as the metric to compare the algorithms. 
 
-Tree-based methods and linear models work good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
+Tree-based methods and linear models worked good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
 
-As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms were done. A set of hyper-parameters for XGBoost were tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
+As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
 
 In the following sections, all experiments were conducted using XGBoost with 1000 estimators.
 
@@ -30,11 +30,9 @@ In the following sections, all experiments were conducted using XGBoost with 100
 \label{sec:features}
 Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{https://spacy.io/models/en\#section-en\_core\_web\_lg} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
 
-A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html)} was tested as well. 
+A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html)} was tested as well. Part-of-speech tagging for all features was done using spacy.\newline
 
-Part-of-speech tagging was done using spacy.\newline
-
-Two preprocessing steps were used to generate the input for the feature calculation. Some examples are shown in table \ref{preprocessing_example}.
+Two preprocessing steps were used to generate the input for the feature calculation.
 
 \begin{table}[ht]
 \centering
@@ -55,7 +53,7 @@ First part & removal & In my mind, \\
 
 The first preprocessing step decided if the full sentence or a part of it should be used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
 
-The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies).
+The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}
 
 
 
@@ -76,10 +74,10 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.22 \scriptsize{(0.02)} &	 0.23 \scriptsize{(0.02)} &	 0.22 \scriptsize{(0.02)}  \\ 
-\texttt{WORSE}	&	 0.10 \scriptsize{(0.02)} &	 0.08 \scriptsize{(0.02)} &	 0.09 \scriptsize{(0.02)}  \\ 
-\texttt{NONE}	&	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)}  \\ 
-average	&	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)}  \\ 
+\texttt{BETTER}	&	 0.22 \scriptsize{$\pm$ 0.02} &	 0.23 \scriptsize{$\pm$ 0.02} &	 0.22 \scriptsize{$\pm$ 0.02}  \\ 
+\texttt{WORSE}	&	 0.10 \scriptsize{$\pm$ 0.02} &	 0.08 \scriptsize{$\pm$ 0.02} &	 0.09 \scriptsize{$\pm$ 0.02}  \\ 
+\texttt{NONE}	&	 0.74 \scriptsize{$\pm$ 0.0} &	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01}  \\ 
+average	&	 0.59 \scriptsize{$\pm$ 0.01} &	 0.59 \scriptsize{$\pm$ 0.01} &	 0.59 \scriptsize{$\pm$ 0.01}  \\ 
 \bottomrule
 \end{tabular} 
 
@@ -91,10 +89,10 @@ average	&	 0.59 \scriptsize{(0.01)} &	 0.59 \scriptsize{(0.01)} &	 0.59 \scripts
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-\texttt{WORSE}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{(0.00)} &	 0.84 \scriptsize{(0.00)}  \\ 
-average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 \textbf{0.61} \scriptsize{(0.00)}  \\ 
+\texttt{BETTER}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
+\texttt{WORSE}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
+\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{$\pm$ 0.00} &	 0.84 \scriptsize{$\pm$ 0.0)}  \\ 
+average	&	 0.53 \scriptsize{$\pm$ 0.00} &	 0.73 \scriptsize{$\pm$ 0.00} &	 \textbf{0.61} \scriptsize{$\pm$ 0.00$\pm$ }  \\ 
 \bottomrule
 \end{tabular}
     \end{minipage} 
@@ -102,7 +100,7 @@ average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 \textbf{0.61}
 
 
 
-The second baseline is created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in tables \ref{tbl:3majoritybaseline} and \ref{tbl:binstrat}.
+The second baseline was created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in tables \ref{tbl:3majoritybaseline} and \ref{tbl:binstrat}.
 
 
 
@@ -115,9 +113,9 @@ The second baseline is created by assigning classes to the data at random, respe
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{ARG}	&	 0.31 \scriptsize{(0.02)} &	 0.31 \scriptsize{(0.02)} &	 0.31 \scriptsize{(0.02)}  \\ 
-\texttt{NONE}	&	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)} &	 0.74 \scriptsize{(0.01)}  \\ 
-average	&	 0.62 \scriptsize{(0.01)} &	 0.62 \scriptsize{(0.01)} &	 \textbf{0.62} \scriptsize{(0.01)}  \\ 
+\texttt{ARG}	&	 0.31 \scriptsize{$\pm$ 0.02} &	 0.31 \scriptsize{$\pm$ 0.02} &	 0.31 \scriptsize{$\pm$ 0.02}  \\ 
+\texttt{NONE}	&	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01}  \\ 
+average	&	 0.62 \scriptsize{$\pm$ 0.01} &	 0.62 \scriptsize{$\pm$ 0.01} &	 \textbf{0.62} \scriptsize{$\pm$ 0.01}  \\ 
 \bottomrule
 \end{tabular}
 
@@ -129,9 +127,9 @@ average	&	 0.62 \scriptsize{(0.01)} &	 0.62 \scriptsize{(0.01)} &	 \textbf{0.62}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
  	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{ARG}	&	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)} &	 0.00 \scriptsize{(0.00)}  \\ 
-\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{(0.00)} &	 0.84 \scriptsize{(0.00)}  \\ 
-average	&	 0.53 \scriptsize{(0.00)} &	 0.73 \scriptsize{(0.00)} &	 0.61 \scriptsize{(0.00)}  \\ 
+\texttt{ARG}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
+\texttt{NONE}	&	 0.73 \scriptsize{$\pm$ 0.00} &	 1.00 \scriptsize{$\pm$ 0.00} &	 0.84 \scriptsize{$\pm$ 0.00}  \\ 
+average	&	 0.53 \scriptsize{$\pm$ 0.00} &	 0.73 \scriptsize{$\pm$ 0.00} &	 0.61 \scriptsize{$\pm$ 0.00}  \\ 
 \bottomrule
 \end{tabular}
     \end{minipage} 
@@ -142,7 +140,7 @@ For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 \subsection{Results}
 \label{sec:3_results}
-The classification results for best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calulcated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features use the middle part of the sentence and left the objects untouched.
+The classification results for the best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calulcated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features use the middle part of the sentence and left the objects untouched.
 
 
 \begin{figure}[h]
@@ -206,7 +204,7 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 \FloatBarrier
 \subsection{Error analysis}
 \label{sec:error_analysis}
-The figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (InferSent and bag-of-words). The confusion matrices of each fold per feature were summed up to create these tables.
+Figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (InferSent and bag-of-words). The confusion matrices of each fold per feature were summed up to create these tables.
 
 
 
@@ -263,10 +261,10 @@ Both features made the same errors on 661 sentences. The unigram model made anot
 
 As said in the guidelines, all questions should be labelled as \texttt{NONE}. This restriction was hard even for the annotators. Twenty of the 150 sentences were questions, fourteen with \texttt{NONE} as the gold label. Thus, the annotators did not assign the correct label for the remaining six sentences. The label \texttt{BETTER} was predicted for all fourteen sentences with the gold label \texttt{NONE} (sentence one in two in table  \ref{tbl:3_mistakes}).
 
-Twenty sentences contained at least one negation. Sentence three  is a good example for that case. The negation \enquote{\emph{isn't}} changes the meaning of the sentence. If the negation was removed, the classifier would have predicted correctly.
+Twenty sentences contained at least one negation. Sentence three  is a good example for that case. The negation \enquote{\emph{isn't}} changes the meaning of the sentence. Without the negation, the classifier would have predicted correctly.
 
 
-Another error source is the position of the cue word. It is more likely that \texttt{NONE} is predicted if the cue word is not between the two objects. This is due to the fact that the features only look at the words in between the two objects. However, adding information on the position of the cue word did not help to increase the result. % check
+Another error source is the position of the cue word. It is more likely that \texttt{NONE} is predicted if the cue word is not between the two objects. This might be due to the fact that the features only look at the words in between the two objects. However, adding information on the position of the cue word did not help to increase the result.
 
 The majority of the 150 sentences was just hard to classify. Sentence seven does not have a clear winner; even the human annotators did not assign the correct label (\texttt{NONE}). A lot more training data is needed to enable a classifier to learn that sentence eight is comparative. Same is true for sentence nine, which would also need some knowledge to understand that the numbers are important for the comparison.\newline
 
@@ -319,8 +317,7 @@ The first sentence is an example for the problems with questions and, like the s
 \FloatBarrier
 \section{Discussion}
 Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
-
-Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
+ Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
 
 Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any vector representation. All in all, no combination of vector representations increased the score in any way.
 
