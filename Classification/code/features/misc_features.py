@@ -13,6 +13,19 @@ class PositionOfObjects(BaseFeature):
         return result
 
 
+class SelectDataFrameColumn(BaseFeature):
+
+    def __init__(self, column, value_transform=lambda x: x):
+        self.column = column
+        self.value_transform = value_transform
+
+    def transform(self, dataframe):
+        vectors = dataframe[self.column].values.tolist()
+        tolist = [self.value_transform(x) for x in vectors]
+        reshape = np.array(tolist)
+        return reshape
+
+
 class SelectAllPaths(BaseFeature):
 
     def __init__(self, path_frame):
@@ -26,9 +39,10 @@ class SelectAllPaths(BaseFeature):
             result.append('. '.join(paths))
         return result
 
+
 class MeanPathVector(BaseFeature):
 
-    def __init__(self,w2v,path_frame):
+    def __init__(self, w2v, path_frame):
         self.w2v = w2v
         self.path_frame = path_frame
 
@@ -51,10 +65,7 @@ class MeanPathVector(BaseFeature):
             print(vec)
             result.append(vec)
 
-
-
         return result
-
 
 
 class PositionOfWord(BaseFeature):

@@ -15,10 +15,13 @@ from xgboost import XGBClassifier
 from classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
 from features.contains_features import ContainsPos
 from features.mean_embedding_feature import MeanWordEmbedding
+from features.misc_features import SelectDataFrameColumn
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
 from transformers.data_extraction import ExtractMiddlePart
 from util.data_utils import load_data, k_folds, get_misclassified
+from util.graphic_utils import print_confusion_matrix, plot
 from util.misc_utils import get_logger
+import json
 
 
 class WordVector(BaseEstimator, TransformerMixin):
@@ -51,57 +54,16 @@ class POSTransformer(BaseEstimator, TransformerMixin):
 
 
 nlp = spacy.load('en_core_web_lg')
-sns.set(font_scale=1.5, style="whitegrid")
 logger = get_logger('finale_fassung')
 
 LABEL = 'most_frequent_label'
-data = load_data('data.csv')
-data_bin = load_data('data.csv', binary=True)
+data = load_data('data_if.csv')
+data_bin = load_data('data_if.csv', binary=True)
 
-infersent_model = initialize_infersent(data.sentence.values)
+# infersent_model = initialize_infersent(data.sentence.values)
 
-em = InfersentFeature(infersent_model).transform( ExtractMiddlePart().transform(data))
-data['sentence_embedding'] = data.apply(lambda row: em[row.name] ,axis=1)
-data.to_csv('data_with_embeddings.csv')
+
 best_per_feat = []
-
-
-def print_confusion_matrix(name, confusion_matrix, class_names):
-    df_cm = pd.DataFrame(
-        confusion_matrix, index=class_names, columns=class_names)
-    df_cm.to_csv('graphics/data/conf-{}.csv'.format(name))
-    fig = plt.figure(figsize=(8, 8))
-    try:
-        heatmap = sns.heatmap(df_cm, annot=True, fmt="d", linewidths=1,
-                              cmap="Greens", cbar=False)
-    except ValueError:
-        raise ValueError("Confusion matrix values must be integers.")
-    heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=90, ha='center', fontsize=14)
-    heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=0, ha='center', fontsize=14)
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-    heatmap.yaxis.set_label_coords(-0.1, 0.5)
-    heatmap.xaxis.set_label_coords(0.5, -0.1)
-    fig.savefig('graphics/conf-{}.pdf'.format(name))
-
-
-def plot(d):
-    for p in ['f1','precision','recall']:
-        pal = sns.color_palette("muted")[:2]+[sns.color_palette("muted")[3]] if (len(d['class'].unique()) == 3) else  sns.color_palette("muted")
-        fig, ax = plt.subplots()
-        fig.set_size_inches(11.7, 8.27)
-        sns.barplot(x="feature", y=p, ci="sd",hue="class",palette=pal, data=d,dodge=True)
-        plt.ylim(ymax = 1,ymin=0)
-        plt.legend(ncol=4,loc='upper center', bbox_to_anchor=(0.5, 1.08))
-        #plt.title("recall")
-        ax.set_yticks(np.arange(0.0, 1.1, 0.1))
-        ax.set_yticks(np.arange(0.0, 1.05, 0.05),minor=True)
-        ax.yaxis.grid(which='minor', linestyle='--')
-        ax.yaxis.grid(which='major', linestyle='-')
-        plt.xlabel('')
-        plt.ylabel('')
-        ax.xaxis.set_ticklabels(ax.xaxis.get_ticklabels(), rotation=0, ha='center', fontsize=15)
-        fig.savefig("graphics/{}-{}.pdf".format(p,len(d['class'].unique()) == 3))
 
 
 def perform_classificiation(data, labels):
@@ -109,11 +71,12 @@ def perform_classificiation(data, labels):
     conf_dict = defaultdict(lambda: np.zeros((len(labels), len(labels)), dtype=np.integer))
 
     feature_unions = [
-        FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
-        FeatureUnion([('InferSent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))]),
-        FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
-        FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-        FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
+        #  FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
+        FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part', value_transform=lambda x: json.loads(x))))]),
+        #  FeatureUnion([('InferSent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))]),
+        #  FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
+        #  FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+        #   FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
     ]
     miss = pd.DataFrame(columns=['caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
     binary = labels == ['ARG', 'NONE']
@@ -127,7 +90,7 @@ def perform_classificiation(data, labels):
         folds_results = []
         try:
             for train, test in k_folds(5, data, random_state=42):
-                pipeline = make_pipeline(f, XGBClassifier(n_jobs=8, n_estimators=500))
+                pipeline = make_pipeline(f, XGBClassifier(n_jobs=8, n_estimators=1000))
                 fitted = pipeline.fit(train, train[LABEL].values)
                 predicted = fitted.predict(test)
                 folds_results.append((test[LABEL].values, predicted))
@@ -170,5 +133,5 @@ def perform_classificiation(data, labels):
     plot(result_frame)
 
 
-#perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-#perform_classificiation(data_bin, ['ARG', 'NONE'])
+perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
+perform_classificiation(data_bin, ['ARG', 'NONE'])

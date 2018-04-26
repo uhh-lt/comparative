@@ -1,5 +1,5 @@
+import datetime
 from sklearn.dummy import DummyClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, f1_score
 from sklearn.pipeline import make_pipeline
 
@@ -10,8 +10,6 @@ from transformers.n_gram_transformers import NGramTransformer
 from util.data_utils import load_data, k_folds
 from util.misc_utils import latex_table, latex_table_bin, get_logger
 from util.ngram_utils import get_all_ngrams
-
-import datetime
 
 LABEL = 'most_frequent_label'
 
