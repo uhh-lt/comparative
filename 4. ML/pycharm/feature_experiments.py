@@ -52,7 +52,7 @@ class POSTransformer(BaseEstimator, TransformerMixin):
 
 nlp = spacy.load('en_core_web_lg')
 sns.set(font_scale=1.5, style="whitegrid")
-logger = get_logger('bin')
+logger = get_logger('finale_fassung')
 
 LABEL = 'most_frequent_label'
 data = load_data('data.csv')
@@ -60,6 +60,9 @@ data_bin = load_data('data.csv', binary=True)
 
 infersent_model = initialize_infersent(data.sentence.values)
 
+em = InfersentFeature(infersent_model).transform( ExtractMiddlePart().transform(data))
+data['sentence_embedding'] = data.apply(lambda row: em[row.name] ,axis=1)
+data.to_csv('data_with_embeddings.csv')
 best_per_feat = []
 
 
@@ -106,7 +109,7 @@ def perform_classificiation(data, labels):
     conf_dict = defaultdict(lambda: np.zeros((len(labels), len(labels)), dtype=np.integer))
 
     feature_unions = [
-        FeatureUnion([('Unigrams', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
+        FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
         FeatureUnion([('InferSent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))]),
         FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
         FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
@@ -134,7 +137,7 @@ def perform_classificiation(data, labels):
                 logger.info(matrix)
                 conf_dict[caption] += matrix
 
-                result_frame.loc[idx] = [caption, 'Weighted Average', f1_score(test[LABEL].values, predicted, average='weighted'), precision_score(test[LABEL].values, predicted, average='weighted'),
+                result_frame.loc[idx] = [caption, 'Overall', f1_score(test[LABEL].values, predicted, average='weighted'), precision_score(test[LABEL].values, predicted, average='weighted'),
                                          recall_score(test[LABEL].values, predicted, average='weighted')]
                 idx += 1
                 for label in labels:
@@ -167,5 +170,5 @@ def perform_classificiation(data, labels):
     plot(result_frame)
 
 
-perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-perform_classificiation(data_bin, ['ARG', 'NONE'])
+#perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
+#perform_classificiation(data_bin, ['ARG', 'NONE'])
