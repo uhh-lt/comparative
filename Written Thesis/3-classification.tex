@@ -28,9 +28,9 @@ In the following sections, all experiments were conducted using XGBoost with 100
 
 \section{Features}
 \label{sec:features}
-Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{https://spacy.io/models/en\#section-en\_core\_web\_lg} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
+Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
 
-A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html)} was tested as well. Part-of-speech tagging for all features was done using spacy.\newline
+A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (\url{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html})} was tested as well. Part-of-speech tagging for all features was done using spacy.\newline
 
 Two preprocessing steps were used to generate the input for the feature calculation.
 

@@ -5,13 +5,13 @@ Due to the novelty of Argument Mining (and especially Comparative Argument Minin
 
 The data set was designed to answer two questions. First, does a sentence compare two known objects? And, if it does, is the first-mentioned object better or worse than the second one? Those questions will be translated to several classification tasks in the later chapters.
 
-The data set was created using the crowdsourcing platform CrowdFlower\footnote{https://www.crowdflower.com (23.02.2018), now called xxxxx}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
+The data set was created using the crowdsourcing platform CrowdFlower\footnote{\url{https://www.crowdflower.com} (23.02.2018), now called \emph{Figure Eight}}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
 
 % zahlen 24.03
 The final data set contains 7199 sentences, each containing one of 271 object pairs. Each sentence was annotated by at least five annotators.
 
 \section{Common Crawl Text Corpus}
-The sentences for the crowdsourcing task were obtained from a CommonCrawl\footnote{https://commoncrawl.org (23.02.2018)} data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
+The sentences for the crowdsourcing task were obtained from a CommonCrawl\footnote{\url{https://commoncrawl.org} (23.02.2018)} data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
 
 The data\footnote{Download Link} used in this thesis was already preprocessed (see \cite{Panchenko:2017aa}). First, it contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were then split into sentences.
 
@@ -333,7 +333,7 @@ Instead of one big task, several tasks per domain were created. All tasks used t
 
 
 \subsection{Sentence Selection}
-The sentence selection process was similar to the prestudy. The pairs and the cue words (see figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText, a software package for distributional semantics. JoBimText\footnote{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ (28.02.2018)} was queried for the nine words most similar to \emph{better} and \emph{worse}, so that more, different comparisons are captured by the selection process.
+The sentence selection process was similar to the prestudy. The pairs and the cue words (see figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText, a software package for distributional semantics. JoBimText\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (28.02.2018)} was queried for the nine words most similar to \emph{better} and \emph{worse}, so that more, different comparisons are captured by the selection process.
 
 \begin{figure}[hb]
 \centering
@@ -390,7 +390,7 @@ The most specific domain was \enquote{\emph{Computer Science Concepts}}. It cont
 
 The second, broader domain was \enquote{\emph{Brands}}. It contains objects of different types (e.g. car brands, electronics brands, and food brands). As brands are present in everyday life of people, it is expected that anyone can label the majority of sentences containing well known brands such as \enquote{\emph{Coca-Cola}} or \enquote{\emph{Mercedes}}. As with computer science, the objects for this domain were extracted from \enquote{\emph{List of ...}} articles from Wikipedia\footnote{ADD TO APPENDIX}.
 
-The last domain is not restricted to any topic. For each one of twenty-four randomly selected seed words, ten similar words were extracted using JoBimText. The seed words (see figure \ref{fig:seed}) were created using randomlists.com\footnote{https://randomlists.com  (checked: 25.01.2018)}. Listing \ref{lst:jbtres} shows the result\footnote{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/similar/harvard\%23NP?numberOfEntries=10&format=json (25.01.2018); Some uninteresting fields were removed for brevity} for the seed word \enquote{\emph{Yale}}. Duplicates or too broad terms (like \emph{university}) were removed by manually.
+The last domain is not restricted to any topic. For each one of twenty-four randomly selected seed words, ten similar words were extracted using JoBimText. The seed words (see figure \ref{fig:seed}) were created using randomlists.com\footnote{\url{https://randomlists.com}  (checked: 25.01.2018)}. Listing \ref{lst:jbtres} shows the result\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/similar/harvard\%23NP?numberOfEntries=10&format=json} (25.01.2018); Some uninteresting fields were removed for brevity} for the seed word \enquote{\emph{Yale}}. Duplicates or too broad terms (like \emph{university}) were removed by manually.
 
 \begin{figure}[bth]
 \centering
