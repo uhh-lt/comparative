@@ -6,7 +6,7 @@ The experiments were conducted on the training set only. During the development,
 
 The held-out set stayed untouched until the final evaluation presented in section \ref{sec:final}.
 
-If not stated otherwise, scikit-learn (\cite{scikit-learn}) was used to perform feature processing, the classification and evaluation.
+If not stated otherwise, scikit-learn (\cite{scikit-learn} was used to perform feature processing, the classification and evaluation.
 
 \section{Choice of Algorithms}
 
@@ -66,38 +66,37 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 
 % 24.3
 \begin{table}[!htb]
-    \begin{minipage}{.5\linewidth}
-      \caption{Random (stratified) baseline for the classification task.}
-      \label{tbl:3stratifiedbaseline}
-      \centering
-      
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.22 \scriptsize{$\pm$ 0.02} &	 0.23 \scriptsize{$\pm$ 0.02} &	 0.22 \scriptsize{$\pm$ 0.02}  \\ 
-\texttt{WORSE}	&	 0.10 \scriptsize{$\pm$ 0.02} &	 0.08 \scriptsize{$\pm$ 0.02} &	 0.09 \scriptsize{$\pm$ 0.02}  \\ 
-\texttt{NONE}	&	 0.74 \scriptsize{$\pm$ 0.0} &	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01}  \\ 
-average	&	 0.59 \scriptsize{$\pm$ 0.01} &	 0.59 \scriptsize{$\pm$ 0.01} &	 0.59 \scriptsize{$\pm$ 0.01}  \\ 
-\bottomrule
-\end{tabular} 
-
-  \end{minipage}%
-    \begin{minipage}{.5\linewidth}
-      \centering
-        \caption{Majority class baseline for the classification task.}
-        \label{tbl:3majoritybaseline}
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{BETTER}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
-\texttt{WORSE}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
-\texttt{NONE}	&	 0.73 \scriptsize{(0.00)} &	 1.00 \scriptsize{$\pm$ 0.00} &	 0.84 \scriptsize{$\pm$ 0.0)}  \\ 
-average	&	 0.53 \scriptsize{$\pm$ 0.00} &	 0.73 \scriptsize{$\pm$ 0.00} &	 \textbf{0.61} \scriptsize{$\pm$ 0.00$\pm$ }  \\ 
-\bottomrule
-\end{tabular}
-    \end{minipage} 
+	\begin{minipage}{.5\linewidth}
+		\caption{Random (stratified) baseline for the classification task.}
+		\label{tbl:3stratifiedbaseline}
+		\centering
+		      
+		\begin{tabularx}{0.97\linewidth}{Xrrrr}
+			\toprule
+			                & precision                    & recall                       & f1 score                     \\ \midrule 
+			\texttt{BETTER} & 0.22 \scriptsize{$\pm$0.02} & 0.23 \scriptsize{$\pm$0.02} & 0.22 \scriptsize{$\pm$0.02} \\ 
+			\texttt{WORSE}  & 0.10 \scriptsize{$\pm$0.02} & 0.08 \scriptsize{$\pm$0.02} & 0.09 \scriptsize{$\pm$0.02} \\ 
+			\texttt{NONE}   & 0.74 \scriptsize{$\pm$0.00}  & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01} \\ 
+			avg.         & 0.59 \scriptsize{$\pm$0.01} & 0.59 \scriptsize{$\pm$0.01} & 0.59 \scriptsize{$\pm$0.01} \\ 
+			\bottomrule
+		\end{tabularx} 
+		
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Majority class baseline for the classification task.}
+		\label{tbl:3majoritybaseline}
+		\begin{tabularx}{0.97\linewidth}{Xrrrr}
+			\toprule
+			                & precision                    & recall                       & f1 score                                    \\ \midrule 
+			\texttt{BETTER} & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00}                \\ 
+			\texttt{WORSE}  & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00}                \\ 
+			\texttt{NONE}   & 0.73 \scriptsize{$\pm$0.00}     & 1.00 \scriptsize{$\pm$0.00} & 0.84 \scriptsize{$\pm$0.00}                \\ 
+			avg.         & 0.53 \scriptsize{$\pm$0.00} & 0.73 \scriptsize{$\pm$0.00} & \textbf{0.61} \scriptsize{$\pm$0.00} \\ 
+			\bottomrule
+		\end{tabularx}
+	\end{minipage} 
 \end{table}
-
 
 
 The second baseline was created by assigning classes to the data at random, respecting the distribution of classes in the original data. The results are shown in tables \ref{tbl:3majoritybaseline} and \ref{tbl:binstrat}.
@@ -105,37 +104,35 @@ The second baseline was created by assigning classes to the data at random, resp
 
 
 \begin{table}[!htb]
-    \begin{minipage}{.5\linewidth}
-      \caption{Random (stratified) baseline for the binary classification task.}
-      \label{tbl:binmaj}
-      \centering
-      
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{ARG}	&	 0.31 \scriptsize{$\pm$ 0.02} &	 0.31 \scriptsize{$\pm$ 0.02} &	 0.31 \scriptsize{$\pm$ 0.02}  \\ 
-\texttt{NONE}	&	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01} &	 0.74 \scriptsize{$\pm$ 0.01}  \\ 
-average	&	 0.62 \scriptsize{$\pm$ 0.01} &	 0.62 \scriptsize{$\pm$ 0.01} &	 \textbf{0.62} \scriptsize{$\pm$ 0.01}  \\ 
-\bottomrule
-\end{tabular}
-
-  \end{minipage}%
-    \begin{minipage}{.5\linewidth}
-      \centering
-        \caption{Majority class baseline for the binary classification task.}
-        \label{tbl:binstrat}
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
- 	&	 precision &	 recall &	 f1 score  \\ \midrule 
-\texttt{ARG}	&	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00} &	 0.00 \scriptsize{$\pm$ 0.00}  \\ 
-\texttt{NONE}	&	 0.73 \scriptsize{$\pm$ 0.00} &	 1.00 \scriptsize{$\pm$ 0.00} &	 0.84 \scriptsize{$\pm$ 0.00}  \\ 
-average	&	 0.53 \scriptsize{$\pm$ 0.00} &	 0.73 \scriptsize{$\pm$ 0.00} &	 0.61 \scriptsize{$\pm$ 0.00}  \\ 
-\bottomrule
-\end{tabular}
-    \end{minipage} 
+	\begin{minipage}{.5\linewidth}
+		\caption{Random (stratified) baseline for the binary classification task.}
+		\label{tbl:binmaj}
+		\centering
+		      
+		\begin{tabularx}{0.97\linewidth}{Xrrrr}
+			\toprule
+			              & precision                    & recall                       & f1 score                              \\ \midrule 
+			\texttt{ARG}  & 0.31 \scriptsize{$\pm$0.02} & 0.31 \scriptsize{$\pm$0.02} & 0.31 \scriptsize{$\pm$0.02}          \\ 
+			\texttt{NONE} & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01}          \\ 
+			avg.       & 0.62 \scriptsize{$\pm$0.01} & 0.62 \scriptsize{$\pm$0.01} & \textbf{0.62} \scriptsize{$\pm$0.01} \\ 
+			\bottomrule
+		\end{tabularx}
+		
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Majority class baseline for the binary classification task.}
+		\label{tbl:binstrat}
+		\begin{tabularx}{0.97\linewidth}{Xrrrr}
+			\toprule
+			              & precision                    & recall                       & f1 score                     \\ \midrule 
+			\texttt{ARG}  & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} \\ 
+			\texttt{NONE} & 0.73 \scriptsize{$\pm$0.00} & 1.00 \scriptsize{$\pm$0.00} & 0.84 \scriptsize{$\pm$0.00} \\ 
+			avg.       & 0.53 \scriptsize{$\pm$0.00} & 0.73 \scriptsize{$\pm$0.00} & 0.61 \scriptsize{$\pm$0.00} \\ 
+			\bottomrule
+		\end{tabularx}
+	\end{minipage} 
 \end{table}
-
-
 For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
 
 \subsection{Results}
@@ -251,7 +248,7 @@ Both features made the same errors on 661 sentences. The unigram model made anot
 
 9 & A \emph{5-2-1} \textbf{california} team went down, \emph{27-7}, then \emph{5-1-1} \textbf{oregon} fell harder, \emph{33-0}. & \texttt{NONE} & \texttt{BETTER} \\
 
-10 & Remember, you're the one that said the \ textbf{wii} was the \emph{better} Mercedez and the \textbf{ps3} was the \emph{worse} KIA. & \texttt{NONE} & \texttt{BETTER} \\
+10 & Remember, you're the one that said the \textbf{wii} was the \emph{better} Mercedez and the \textbf{ps3} was the \emph{worse} KIA. & \texttt{NONE} & \texttt{BETTER} \\
 
 
 \bottomrule
@@ -298,7 +295,7 @@ Similar to the three-classes scenario, both feature setups made the same mistake
 The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
 
 \begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}.}
+\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification.}
 \label{tbl:2_mistakes}
 \begin{tabularx}{\linewidth}{lXrr}
 \toprule
