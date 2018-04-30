@@ -12,7 +12,7 @@ If not stated otherwise, scikit-learn (\cite{scikit-learn} was used to perform f
 
 \begin{figure}[htb]
 \centering
-\caption{F1 score of all tested classification algorithms. Each algorithm was trained with five stratified folds of the data. The black bars show the standard derivation.}
+\caption{F1 score of all tested classification algorithms. A binary bag-of-words feature was used as the baseline feature. Each algorithm was trained with five stratified folds of the data. The black bars show the standard derivation.}
 \label{tbl:algo}
 \includegraphics[width=0.8\linewidth]{images/classifier}
 \end{figure}
@@ -57,7 +57,19 @@ The first preprocessing step decided if the full sentence or a part of it should
 The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}
 
 \subsection{Dependency}
-\cite{chollet2015keras}
+A feature based on LexNet was created to encode dependency information. The original code of LexNet was used to create the textual paths. It had to be modified, as the original code was to restrictive\footnote{The modified version is available at \url{https://github.com/ablx/LexNET}}. First, it allowed only paths up to a length of four edges. Second, it must be possible to reach the first object by following only left edges from the root, and the second object by following only right edges. The restrictions make sense for the original purpose of LexNet. However, XXXX sentences from the comparative argument mining data set do not get a path representation with those restrictions applied.
+
+
+
+The neural network to encode the textual representations was implemented using Keras\footnote{\url{https://keras.io (Checked: 30.04.2018)}}, as presented in \cite{chollet2015keras}. The textual path representations were used to create target labels. The architecture is shown in figure \ref{fig:lexnetnn}.
+
+\begin{figure}[h]
+\centering
+\caption{Architecture of the neural network used to encode textual dependency paths to vectors.}
+\label{fig:lexnetnn}
+\end{figure}
+
+
 
 
 
@@ -69,7 +81,7 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 % 24.3
 \begin{table}[!htb]
 	\begin{minipage}{.5\linewidth}
-		\caption{Random (stratified) baseline for the classification task.}
+		\caption{Random (stratified) baseline for the three-label scenario.}
 		\label{tbl:3stratifiedbaseline}
 		\centering
 		      
@@ -86,7 +98,7 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 	\end{minipage}%
 	\begin{minipage}{.5\linewidth}
 		\centering
-		\caption{Majority class baseline for the classification task.}
+		\caption{Majority class baseline for the  for the three-label scenario.}
 		\label{tbl:3majoritybaseline}
 		\begin{tabularx}{0.97\linewidth}{Xrrrr}
 			\toprule
@@ -107,7 +119,7 @@ The second baseline was created by assigning classes to the data at random, resp
 
 \begin{table}[!htb]
 	\begin{minipage}{.5\linewidth}
-		\caption{Random (stratified) baseline for the binary classification task.}
+		\caption{Random (stratified) baseline for the binary scenario.}
 		\label{tbl:binmaj}
 		\centering
 		      
@@ -123,7 +135,7 @@ The second baseline was created by assigning classes to the data at random, resp
 	\end{minipage}%
 	\begin{minipage}{.5\linewidth}
 		\centering
-		\caption{Majority class baseline for the binary classification task.}
+		\caption{Majority class baseline for the binary scenario.}
 		\label{tbl:binstrat}
 		\begin{tabularx}{0.97\linewidth}{Xrrrr}
 			\toprule
@@ -143,7 +155,7 @@ The classification results for the best performing feature configurations in the
 
 
 \begin{figure}[h]
-      \caption{F1 score for the three-class scenario.} 
+      \caption{\emph{F1 score for the three-class scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_f1}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/f1-False}
@@ -157,7 +169,9 @@ All features yield f1 scores at least fifteen points over the baseline. Bag-of-w
 % === binary 
 Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
 \begin{figure}[h]
-      \caption{F1 score for the binary scenario.} 
+      \caption{\emph{F1 score for the binary scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
+    \label{fig:3_f1}
+
     \label{fig:2_f1}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/f1-True}
@@ -168,14 +182,14 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 
 
 \begin{figure}[tb]
-   \caption{Precision for the three-classes scenario.} 
+         \caption{\emph{Precision for the three-class scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_precision}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/precision-False}
 \end{figure}
 
   \begin{figure}[p]
-     \caption{Recall for the three-classes scenario.} 
+              \caption{\emph{Recall for the three-class scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the recall score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:3_recall}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/recall-False}
@@ -184,14 +198,14 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 
 
 \begin{figure}[tb]
-   \caption{Precision for the binary scenario.} 
+         \caption{\emph{Precision for the binary scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:2_precision}
     \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/precision-True}
     \end{figure}
     
     \begin{figure}[tb]
-     \caption{Recall for the binary scenario.} 
+              \caption{\emph{Precision for the binary scenario using XGBoost}. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:2_recall}
  \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/recall-True}
@@ -211,14 +225,14 @@ Figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matr
 
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
-   \caption{Confusion matrix for the sentence embedding feature} 
+   \caption{Confusion matrix for the InferSent feature using XGBoost} 
     \label{fig:3_conf_inf}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-InferSent_False}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the bag-of-words feature} 
+     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
        \label{fig:3_conf_uni}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-Bag-Of-Words_False}
@@ -230,27 +244,26 @@ As presented above, \texttt{WORSE} was the hardest class to recognize. The matri
 Both features made the same errors on 661 sentences. The unigram model made another 174 errors on sentences which were correctly predicted by the sentence embedding model. The sentence embedding model made 164 unique errors. However, there is no clear pattern which sentences are hard for the unigram or sentence embedding feature. One-hundred-and-fifty wrongly predicted sentences were analysed, examples are shown in table \ref{tbl:3_mistakes}. 
 
 \begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the three-label scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}.}
+\caption{Example sentences for errors made by the classifier in the three-label scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes}
-\begin{tabularx}{\linewidth}{lXrr}
+\begin{tabularx}{\linewidth}{Xrrr}
 \toprule
- & Sentence & Predicted & Gold \\ \midrule
-1 & Is a \textbf{BMW}/Benz 5x better than a \textbf{Honda} Civic\emph{?} & \texttt{BETTER} & \texttt{NONE} \\
-2 & Will \textbf{google} Music Become Bigger and Better than \textbf{itunes}\emph{?}& \texttt{BETTER} & \texttt{NONE} \\
+ Sentence & Predicted & Gold & Confidence \\ \midrule
+ Is a \textbf{BMW}/Benz 5x better than a \textbf{Honda} Civic\emph{?} & \texttt{BETTER} & \texttt{NONE} & 0.6 \\
+ Will \textbf{google} Music Become Bigger and Better than \textbf{itunes}\emph{?}& \texttt{BETTER} & \texttt{NONE} & 0.5 \\
 
-3 & Apparently the \textbf{wii} \emph{isn't} superior to the \textbf{ds} for Square-enix. & \texttt{BETTER} & \texttt{WORSE} \\
-4 & We usually \emph{don't} like \textbf{Microsoft}, but I \emph{don't} think they are worse than \textbf{Google}. & \texttt{WORSE} & \texttt{BETTER} \\
+Apparently the \textbf{wii} \emph{isn't} superior to the \textbf{ds} for Square-enix. & \texttt{BETTER} & \texttt{WORSE} & 0.8 \\
+ We usually \emph{don't} like \textbf{Microsoft}, but I \emph{don't} think they are worse than \textbf{Google}. & \texttt{WORSE} & \texttt{BETTER} & 0.6 \\
 
-5 & \emph{Worse} than \textbf{coffee}, the effect \textbf{beer} has on my bladder. & \texttt{NONE} & \texttt{BETTER} \\
-6 & We obviously linked to \textbf{youtube} above even though \textbf{hulu} has \emph{superior} quality and content.  & \texttt{NONE} & \texttt{WORSE} \\
+ \emph{Worse} than \textbf{coffee}, the effect \textbf{beer} has on my bladder. & \texttt{NONE} & \texttt{BETTER} & 0.6 \\
+ We obviously linked to \textbf{youtube} above even though \textbf{hulu} has \emph{superior} quality and content.  & \texttt{NONE} & \texttt{WORSE} & 1 \\
 
-7 & \textbf{Perl} is \emph{slower} and \emph{faster} than \textbf{Java} & \texttt{WORSE} & \texttt{BETTER} \\
+ \textbf{Perl} is \emph{slower} and \emph{faster} than \textbf{Java} & \texttt{WORSE} & \texttt{BETTER} & 0.4 \\
 
-8 & \emph{Goodnight} \textbf{NetBeans}, \emph{Hello} \textbf{Eclipse} & \texttt{NONE} & \texttt{WORSE} \\
+\emph{Goodnight} \textbf{NetBeans}, \emph{Hello} \textbf{Eclipse} & \texttt{NONE} & \texttt{WORSE} & 0.4 \\
 
-9 & A \emph{5-2-1} \textbf{california} team went down, \emph{27-7}, then \emph{5-1-1} \textbf{oregon} fell harder, \emph{33-0}. & \texttt{NONE} & \texttt{BETTER} \\
+ A \emph{5-2-1} \textbf{california} team went down, \emph{27-7}, then \emph{5-1-1} \textbf{oregon} fell harder, \emph{33-0}. & \texttt{NONE} & \texttt{BETTER} & 0.6 \\
 
-10 & Remember, you're the one that said the \textbf{wii} was the \emph{better} Mercedez and the \textbf{ps3} was the \emph{worse} KIA. & \texttt{NONE} & \texttt{BETTER} \\
 
 
 \bottomrule
@@ -278,14 +291,14 @@ The majority of the 150 sentences was just hard to classify. Sentence seven does
 Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. 
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
-   \caption{Confusion matrix for the sentence embedding feature} 
+   \caption{Confusion matrix for the InferSent feature using XGBoost} 
     \label{fig:2_conf_inf}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/conf-InferSent_True}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the bag-of-words feature} 
+     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
        \label{fig:2_conf_uni}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/conf-Bag-Of-Words_true}
@@ -297,16 +310,19 @@ Similar to the three-classes scenario, both feature setups made the same mistake
 The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
 
 \begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification.}
+\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:2_mistakes}
-\begin{tabularx}{\linewidth}{lXrr}
+\begin{tabularx}{\linewidth}{Xrrr}
 \toprule
- & Sentence & Predicted & Gold \\ \midrule
-1 & Why \emph{can't} \textbf{Ford} puts better handling into the FWD Fusion if \textbf{Honda} can do it 10 years ago\emph{?} & \texttt{ARG} & \texttt{NONE}\\
-2 & \textbf{Java} \emph{isn't} too bad of a first language, but \textbf{Python} is a little easier to pick up. & \texttt{NONE} & \texttt{ARG} \\
-3 & My minestrone \textbf{soup} is always better \emph{with} homemade \textbf{pasta}. & \texttt{ARG} & \texttt{NONE} \\
-4 & \textbf{Scala} probably embraces \textbf{Java} \emph{better} than any other language in the book. & \texttt{ARG} & \texttt{NONE} \\
-5 & \textbf{Windows 8} has efficiency improvements over \textbf{Windows 7}, making it about \emph{10\% faster} overall. & \texttt{NONE} & \texttt{ARG} \\
+ Sentence & Predicted & Gold & Confidence\\ \midrule
+ Why \emph{can't} \textbf{Ford} puts better handling into the FWD Fusion if \textbf{Honda} can do it 10 years ago\emph{?} & \texttt{ARG} & \texttt{NONE} & 0.5\\
+ 
+ \textbf{Java} \emph{isn't} too bad of a first language, but \textbf{Python} is a little easier to pick up. & \texttt{NONE} & \texttt{ARG} & 1 \\
+ My minestrone \textbf{soup} is always better \emph{with} homemade \textbf{pasta}. & \texttt{ARG} & \texttt{NONE} & 0.8\\
+ 
+ \textbf{Scala} probably embraces \textbf{Java} \emph{better} than any other language in the book. & \texttt{ARG} & \texttt{NONE} & 0.8 \\
+ 
+ \textbf{Windows 8} has efficiency improvements over \textbf{Windows 7}, making it about \emph{10\% faster} overall. & \texttt{NONE} & \texttt{ARG} & 1 \\
 \bottomrule
 \end{tabularx}
 
