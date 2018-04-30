@@ -28,6 +28,7 @@ In the following sections, all experiments were conducted using XGBoost with 100
 
 \section{Features}
 \label{sec:features}
+\subsection{Ähm}
 Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
 
 A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (\url{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html})} was tested as well. Part-of-speech tagging for all features was done using spacy.\newline
@@ -55,7 +56,8 @@ The first preprocessing step decided if the full sentence or a part of it should
 
 The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}
 
-
+\subsection{Dependency}
+\cite{chollet2015keras}
 
 
 
