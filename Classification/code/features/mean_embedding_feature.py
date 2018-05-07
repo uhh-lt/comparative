@@ -4,7 +4,7 @@ import numpy as np
 
 
 class MeanWordEmbedding(BaseFeature):
-    """Mean Word Embeddings with the Spacy Standard Model"""
+    """Mean Word Embeddings with the Spacy Standard Model (glove vectors)"""
 
     def __init__(self):
         self.length = 0

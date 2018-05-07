@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 sns.set(font_scale=1.5, style="whitegrid")
 
 def print_confusion_matrix(name, confusion_matrix, class_names):
+    """Draws a nice confusion matrix"""
     df_cm = pd.DataFrame(
         confusion_matrix, index=class_names, columns=class_names)
     df_cm.to_csv('graphics/data/conf-{}.csv'.format(name))
@@ -25,6 +26,7 @@ def print_confusion_matrix(name, confusion_matrix, class_names):
 
 
 def plot(d):
+    """creates plots for f1 score, precision and recall"""
     for p in ['f1','precision','recall']:
         pal = sns.color_palette("muted")[:2]+[sns.color_palette("muted")[3]] if (len(d['class'].unique()) == 3) else  sns.color_palette("muted")
         fig, ax = plt.subplots()

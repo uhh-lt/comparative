@@ -1,57 +1,31 @@
 from collections import defaultdict
-from pprint import pformat
 
-import matplotlib.pyplot as plt
+import json
 import numpy as np
 import pandas as pd
-import seaborn as sns
 import spacy
-from sklearn.base import BaseEstimator, TransformerMixin
+from pprint import pformat
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import classification_report, f1_score, confusion_matrix, precision_score, recall_score
 from sklearn.pipeline import make_pipeline, FeatureUnion
 from xgboost import XGBClassifier
 
-from classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
+from util.classification_report_util import get_std_derivations, get_best_fold, latex_classification_report
 from features.contains_features import ContainsPos
 from features.mean_embedding_feature import MeanWordEmbedding
-from features.misc_features import SelectDataFrameColumn
-from infersent.infersent_feature import InfersentFeature, initialize_infersent
+from features.misc_features import SelectDataFrameColumn, PathEmbeddingFeature, POSTransformer
 from transformers.data_extraction import ExtractMiddlePart
 from util.data_utils import load_data, k_folds, get_misclassified
 from util.graphic_utils import print_confusion_matrix, plot
 from util.misc_utils import get_logger
-import json
 
+"""
+This script was used to test the different features.
+"""
 
-class WordVector(BaseEstimator, TransformerMixin):
-
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self, df):
-        feat = []
-        for i, row in df.iterrows():
-            a = list(nlp(row['object_a']).sents)[0][0].vector
-            b = list(nlp(row['object_b']).sents)[0][0].vector
-            feat.append(np.concatenate((a, b)))
-
-        return feat
-
-
-class POSTransformer(BaseEstimator, TransformerMixin):
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self, sentence):
-        feat = []
-        for s in sentence:
-            a = list(nlp(s).sents)[0]
-            p = ' '.join([t.pos_ for t in a])
-            feat.append(p)
-
-        return feat
-
+# train on all with got paths from original setting
+# rebalance by remove some NONE if 90/10
+# future work: hypenet bootstrap
 
 nlp = spacy.load('en_core_web_lg')
 logger = get_logger('finale_fassung')
@@ -71,12 +45,14 @@ def perform_classificiation(data, labels):
     conf_dict = defaultdict(lambda: np.zeros((len(labels), len(labels)), dtype=np.integer))
 
     feature_unions = [
-        #  FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
+
+        FeatureUnion([('full_paths_original_4_aip', make_pipeline(PathEmbeddingFeature('./data/path_embeddings/full_paths_original_4.csv')))]),
+        FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(PathEmbeddingFeature('./data/path_embeddings/middle_paths_unrestricted_16.csv')))]),
+        FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
         FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part', value_transform=lambda x: json.loads(x))))]),
-        #  FeatureUnion([('InferSent', make_pipeline(ExtractMiddlePart(), InfersentFeature(infersent_model)))]),
-        #  FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
-        #  FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-        #   FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
+        FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
+        FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+        FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
     ]
     miss = pd.DataFrame(columns=['caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
     binary = labels == ['ARG', 'NONE']
@@ -123,7 +99,6 @@ def perform_classificiation(data, labels):
 
         except Exception as ex:
             logger.error(ex)
-            raise ex
         logger.info(conf_dict[caption])
         print_confusion_matrix('{}_{}'.format(caption, binary), conf_dict[caption], labels)
         logger.info("\n\n=================\n\n")
@@ -134,4 +109,4 @@ def perform_classificiation(data, labels):
 
 
 perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-perform_classificiation(data_bin, ['ARG', 'NONE'])
+# perform_classificiation(data_bin, ['ARG', 'NONE'])

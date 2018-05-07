@@ -17,25 +17,3 @@ class ContainsPos(BaseFeature):
 
     def get_feature_names(self):
         return ['contains_pos_{}'.format(self.pos)]
-
-
-
-class ContainsWord(BaseFeature):
-    """boolean feature if the string contains this word"""
-
-    def __init__(self, words):
-        self.words = words
-
-    def transform(self, documents):
-        result = []
-        for doc in documents:
-            pre = ContainsPos.nlp(doc)
-            words = [t.text for t in pre]
-            tmp = []
-            for w in self.words:
-                tmp.append(w in words)
-            result.append(tmp)
-        return result
-
-    def get_feature_names(self):
-        return ['cue_{}'.format(w) for w in self.words]

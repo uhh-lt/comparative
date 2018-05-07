@@ -6,18 +6,21 @@ from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, ExtraTr
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.metrics import classification_report, f1_score, recall_score, precision_score
-from sklearn.naive_bayes import GaussianNB, MultinomialNB
-from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline, FeatureUnion
 from sklearn.svm import LinearSVC, SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-from classification_report_util import get_std_derivations, latex_classification_report, get_avg_fold
+from util.classification_report_util import get_std_derivations, latex_classification_report, get_avg_fold
 from transformers.data_extraction import ExtractRawSentence
 from util.data_utils import load_data, k_folds
 from util.misc_utils import get_logger
 
+"""
+This script was used to check the performance of different classifiers on the task using a Bag-Of-Words feature.
+"""
 nlp = spacy.load('en_core_web_lg')
 
 logger = get_logger('feat_tests_1_neu')
@@ -34,7 +37,7 @@ classifiers = [('XGBoost', XGBClassifier(n_jobs=8, n_estimators=1000)), ('Logist
                ('Decision Tree', DecisionTreeClassifier()),
                ('SGD Classifier', SGDClassifier()), ('Random Forest', RandomForestClassifier()), ('Extra Trees', ExtraTreesClassifier()), ('k-Neighbors', KNeighborsClassifier()),
                ('SVM (radial basis function)', SVC(kernel='rbf')), ('SVM (polynomial)', SVC(kernel='poly')), ('SVM (sigmoid)', SVC(kernel='sigmoid')),
-               ('Multinomial NB', MultinomialNB()),('Majority Class Baseline', DummyClassifier(strategy='most_frequent'))
+               ('Multinomial NB', MultinomialNB()), ('Majority Class Baseline', DummyClassifier(strategy='most_frequent'))
                ]
 
 idx = 0

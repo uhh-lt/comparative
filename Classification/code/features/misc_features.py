@@ -1,21 +1,17 @@
-from .base_feature import BaseFeature
-from collections import defaultdict
+import json
 import numpy as np
+import pandas as pd
+import spacy
 
+from .base_feature import BaseFeature
 
-class PositionOfObjects(BaseFeature):
-
-    def transform(self, dataframe):
-        result = []
-        for index, row in dataframe.iterrows():
-            pos = row['sentence']
-            result.append(sorted([pos.index(row['a']), pos.index(row['b'])]))
-        return result
+nlp = spacy.load('en_core_web_lg')
 
 
 class SelectDataFrameColumn(BaseFeature):
 
     def __init__(self, column, value_transform=lambda x: x):
+        """Selects one column from a dataframe. Optionally applies a function on the selected column"""
         self.column = column
         self.value_transform = value_transform
 
@@ -26,66 +22,47 @@ class SelectDataFrameColumn(BaseFeature):
         return reshape
 
 
-class SelectAllPaths(BaseFeature):
+class PathEmbeddingFeature(BaseFeature):
 
-    def __init__(self, path_frame):
-        self.path_frame = path_frame
-
-    def transform(self, dataframe):
-        result = []
-        for index, row in dataframe.iterrows():
-            id_ = self.path_frame[self.path_frame['id'] == row['id']]
-            paths = id_.path.values.tolist()
-            result.append('. '.join(paths))
-        return result
-
-
-class MeanPathVector(BaseFeature):
-
-    def __init__(self, w2v, path_frame):
-        self.w2v = w2v
-        self.path_frame = path_frame
+    def __init__(self, path_file, only_with_path=False):
+        """Searches the path embeddings for all sentences in the data frame"""
+        self.path_file = path_file
 
     def transform(self, dataframe):
-        result = []
-        for index, row in dataframe.iterrows():
-            id_ = self.path_frame[self.path_frame['id'] == row['id']]
-            paths = id_.path.values.tolist()
-            vec = np.zeros(300)
-            for path in paths[:1]:
-                s_vec = np.zeros(300)
-                tokens = path.split(' ')
-                for token in tokens:
-                    try:
-                        s_vec += self.w2v.wv[token]
-                    except KeyError as e:
-                        print(e)
-                s_vec /= len(token)
-                vec += s_vec
-            print(vec)
-            result.append(vec)
-
-        return result
+        paths = pd.read_csv(self.path_file)
+        feat = []
+        for i, row in dataframe.iterrows():
+            embedding = paths[paths.id == i].embedding
+            tolist_ = json.loads(embedding.values.tolist()[0])
+            feat.append(tolist_)
+        assert len(feat) == len(dataframe)
+        return feat
 
 
-class PositionOfWord(BaseFeature):
+class WordVector(BaseFeature):
 
-    def __init__(self, word, lowercase=True):
-        self.lowercase = lowercase
-        self.word = word
+    def fit(self, x, y=None):
+        return self
 
-    def transform(self, documents):
-        result = []
-        for doc_ in documents:
-            doc = [self.process(t.text.lower()) for t in PositionOfWord.nlp(doc_)]
-            try:
-                result.append(doc.index(self.process(self.word)))
-            except ValueError as e:
-                result.append(-1)
+    def transform(self, df):
+        feat = []
+        for i, row in df.iterrows():
+            a = list(nlp(row['object_a']).sents)[0][0].vector
+            b = list(nlp(row['object_b']).sents)[0][0].vector
+            feat.append(np.concatenate((a, b)))
 
-        array = np.array(result)
-        reshape = array.reshape(-1, 1)
-        return reshape
+        return feat
 
-    def process(self, word):
-        return word.lower() if self.lowercase else word
+
+class POSTransformer(BaseFeature):
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, sentence):
+        feat = []
+        for s in sentence:
+            a = list(nlp(s).sents)[0]
+            p = ' '.join([t.pos_ for t in a])
+            feat.append(p)
+
+        return feat

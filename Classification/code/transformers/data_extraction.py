@@ -3,7 +3,7 @@ import re
 import numpy as np
 
 
-def process(text, a, b, mode=None):
+def process(text, a, b, mode=None, rep_a='OBJECT_A', rep_b='OBJECT_B'):
     if mode == 'remove':
         _a = re.sub(a, '', text, flags=re.IGNORECASE)
         _b = re.sub(b, '', _a, flags=re.IGNORECASE)
@@ -25,8 +25,8 @@ def process(text, a, b, mode=None):
         else:
             first = b
             second = a
-        _a = re.sub(first, 'OBJECT_A', text, flags=re.IGNORECASE)
-        _b = re.sub(second, 'OBJECT_B', _a, flags=re.IGNORECASE)
+        _a = re.sub(first, rep_a, text, flags=re.IGNORECASE)
+        _b = re.sub(second, rep_b, _a, flags=re.IGNORECASE)
         return re.sub('  ', ' ', _b)
     return text
 
@@ -51,16 +51,15 @@ class ExtractAnyField(TransformerMixin, BaseEstimator):
 
 class ExtractRawSentence(TransformerMixin, BaseEstimator):
 
-    def __init__(self, processing=None):
-        """
-        :param processing: None, 'remove' - remove the objects; 'replace' replace the objects with OBJECT, 'replace_dist' replaces the objects with OBJECT_A and OBJECT_B
-        """
+    def __init__(self, processing=None,rep_a='OBJECT_A', rep_b='OBJECT_B'):
         self.processing = processing
+        self.rep_a = rep_a
+        self.rep_b = rep_b
 
     def transform(self, dataframe):
         results = []
         for index, row in dataframe.iterrows():
-            results.append(process(row['sentence'], row['object_a'], row['object_b'], self.processing))
+            results.append(process(row['sentence'], row['object_a'], row['object_b'], self.processing,rep_a=self.rep_a, rep_b=self.rep_b))
 
         return results
 
@@ -124,8 +123,10 @@ class ExtractLastPart(TransformerMixin, BaseEstimator):
 class ExtractMiddlePart(TransformerMixin, BaseEstimator):
     """returns all words between the first and the second object"""
 
-    def __init__(self, processing=None):
+    def __init__(self, processing=None,rep_a='OBJECT_A', rep_b='OBJECT_B'):
         self.processing = processing
+        self.rep_a = rep_a
+        self.rep_b = rep_b
 
     def transform(self, dataframe):
         results = []
@@ -136,7 +137,7 @@ class ExtractMiddlePart(TransformerMixin, BaseEstimator):
                 begin, end = a_index, b_index + len(b)
             else:
                 begin, end = b_index, a_index + len(a)
-            res = process(text[begin:end], a, b, self.processing)
+            res = process(text[begin:end], a, b, self.processing,rep_a=self.rep_a,rep_b=self.rep_b)
 
             results.append(res)
 

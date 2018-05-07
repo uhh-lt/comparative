@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 def latex_table(res, cap=''):
+    """Creates a LaTeX table for classification results; used for the baseline tables"""
     try:
         b_row = '\\texttt{BETTER}\t & '
         w_row = '\\texttt{WORSE}\t & '
@@ -47,6 +48,7 @@ def latex_table(res, cap=''):
 
 
 def latex_table_bin(res, cap=''):
+    """Creates a LaTeX table for binary classification results; used for the baseline tables"""
     b_row = '\\texttt{ARG}\t & '
     n_row = '\\texttt{NONE}\t & '
     a_row = 'average\t & '
@@ -81,6 +83,7 @@ def latex_table_bin(res, cap=''):
 
 
 def res_table(res, logger):
+    """Creates a LaTeX table for classification results; used for the baseline tables"""
     logger.info("""\\begin{table}[h]
 \centering
 \caption{My caption}

@@ -49,7 +49,7 @@ def get_best_fold(true_pred_list, average='weighted', metric=f1_score):
     for y_true, y_pred in true_pred_list:
         lst.append((metric(y_true, y_pred, average=average), (y_true, y_pred)))
     lst = sorted(lst, key=lambda x: x[0], reverse=True)
-    return lst[0][1]
+    return lst[2][1]
 
 def get_avg_fold(true_pred_list, average='weighted', metric=f1_score):
     lst = []

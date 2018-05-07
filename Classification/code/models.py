@@ -14,7 +14,7 @@ import torch.nn as nn
 
 
 """
-InferSent encoder
+InferSent encoder;
 """
 
 

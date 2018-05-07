@@ -3,7 +3,7 @@ from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report, f1_score
 from sklearn.pipeline import make_pipeline
 
-from classification_report_util import get_best_fold, latex_classification_report, get_std_derivations
+from util.classification_report_util import get_best_fold, latex_classification_report, get_std_derivations
 from features.ngram_feature import NGramFeature
 from transformers.data_extraction import ExtractRawSentence
 from transformers.n_gram_transformers import NGramTransformer
