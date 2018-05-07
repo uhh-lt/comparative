@@ -27,6 +27,7 @@ class PathEmbeddingFeature(BaseFeature):
     def __init__(self, path_file, only_with_path=False):
         """Searches the path embeddings for all sentences in the data frame"""
         self.path_file = path_file
+        self.only_with_path = only_with_path
 
     def transform(self, dataframe):
         paths = pd.read_csv(self.path_file)
