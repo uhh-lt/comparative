@@ -54,7 +54,7 @@ def perform_classificiation(data, labels):
         FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
         FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
     ]
-    miss = pd.DataFrame(columns=['caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
+    miss = pd.DataFrame(columns=['id', 'caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
     binary = labels == ['ARG', 'NONE']
     idx_mc = 1
     idx = 1
@@ -85,8 +85,8 @@ def perform_classificiation(data, labels):
                                              recall_score(test[LABEL].values, predicted, average='weighted', labels=[label])]
                     idx += 1
 
-                for sentence, a, b, predicted, gold in get_misclassified(predicted, test):
-                    miss.loc[idx_mc] = [caption, sentence, a, b, predicted, gold]
+                for _id, sentence, a, b, predicted, gold in get_misclassified(predicted, test):
+                    miss.loc[idx_mc] = [_id, caption, sentence, a, b, predicted, gold]
                     idx_mc += 1
 
             der = get_std_derivations(folds_results, labels=labels)
