@@ -253,17 +253,17 @@ Examples on errors made solely by the InferSent feature are given in table \ref{
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
  & Sentence & Predicted & Gold & Confidence \\ \midrule
-1& Is \textbf{football} better than \textbf{baseball}? & BETTER & NONE & 1.0\\
-2& Is \textbf{Microsoft} better because of \textbf{Apple}? & BETTER & NONE & 1.0\\
+1& Is \textbf{football} better than \textbf{baseball}? & \texttt{BETTER} & \texttt{NONE} & 1.0\\
+2& Is \textbf{Microsoft} better because of \textbf{Apple}? & \texttt{BETTER} & \texttt{NONE} & 1.0\\
  
-3& The \textbf{Buick} is a far better driver but doesn't have the wretched excess appeal of the \textbf{Cadillac}. & BETTER & NONE & 1.0\\
-4&They know that \textbf{Lexus} has better residual, and that \textbf{Audi} has better tech. & BETTER & NONE & 1.0\\
+3& The \textbf{Buick} is a far better driver but doesn't have the wretched excess appeal of the \textbf{Cadillac}. & \texttt{BETTER} & \texttt{NONE} & 1.0\\
+4&They know that \textbf{Lexus} has better residual, and that \textbf{Audi} has better tech. & \texttt{BETTER} & \texttt{NONE} & 1.0\\
  
-5& Its Azure PaaS/IaaS platform hasn't overtaken \textbf{Amazon} yet in market share, but \textbf{Microsoft} has enjoyed nine straight quarters of growth at 10 percent or better & NONE & WORSE & 1.0\\
+5& Its Azure PaaS/IaaS platform hasn't overtaken \textbf{Amazon} yet in market share, but \textbf{Microsoft} has enjoyed nine straight quarters of growth at 10 percent or better & \texttt{NONE} & \texttt{WORSE} & 1.0\\
  
- 6& I think I found a better \textbf{sandwich} than a cheese \textbf{steak}. & NONE & BETTER & 1.0\\
+ 6& I think I found a better \textbf{sandwich} than a cheese \textbf{steak}. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
  
-7&  \textbf{harvard} College accepted just 6.9 percent, its lowest rate ever, and the numbers were not much better elsewhere: 7.2 percent at Stanford,8.2 percent at Princeton, 11.5 percent at \textbf{dartmouth}, and 23 percent at Northwestern-all record lows. & WORSE & NONE & 0.4\\
+7&  \textbf{harvard} College accepted just 6.9 percent, its lowest rate ever, and the numbers were not much better elsewhere: 7.2 percent at Stanford,8.2 percent at Princeton, 11.5 percent at \textbf{dartmouth}, and 23 percent at Northwestern-all record lows. & \texttt{WORSE} & \texttt{NONE} & 0.4\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -278,12 +278,12 @@ Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by t
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
  & Sentence & Predicted & Gold & Confidence \\ \midrule
-1 & Right now \textbf{Apple} is worse then \textbf{Microsoft} ever was. & BETTER & WORSE & 1.0 \\
-2 & I think \textbf{Bash} scripting is harder than \textbf{Python} though. & BETTER & WORSE & 1.0\\
-3 & In my opinion \textbf{Windows 8} is worlds better then \textbf{Windows 7} & NONE & BETTER & 1.0\\
+1 & Right now \textbf{Apple} is worse then \textbf{Microsoft} ever was. & \texttt{BETTER} & \texttt{WORSE} & 1.0 \\
+2 & I think \textbf{Bash} scripting is harder than \textbf{Python} though. & \texttt{BETTER} & \texttt{WORSE} & 1.0\\
+3 & In my opinion \textbf{Windows 8} is worlds better then \textbf{Windows 7} & \texttt{NONE} & \texttt{BETTER} & 1.0\\
 4 & In FPGAs, \textbf{Integer} or fixed-point math can often run 10 to 100 times faster than \textbf{Floating-point} 
-computations. & NONE & BETTER & 1.0\\
-5 & Congratulations to \textbf{Apple}; you continue to prove you are worse than \textbf{Microsoft} ever was. & BETTER & WORSE & 0.6\\
+computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
+5 & Congratulations to \textbf{Apple}; you continue to prove you are worse than \textbf{Microsoft} ever was. & \texttt{BETTER} & \texttt{WORSE} & 0.6\\
  \bottomrule
 \end{tabularx}
 \end{table}
@@ -300,66 +300,22 @@ Sentences which were wrongly classified by both features are presented in table 
 \begin{tabularx}{\linewidth}{lXrrrr}
 \toprule
  & Sentence & Pred. IF & Pred. LexNet & Gold & Conf. \\ \midrule
-1 & Is a \textbf{BMW} 3 series \$15,000 better than a \textbf{Ford} Focus? & BETTER & BETTER & NONE & 1.0\\
-2 & \textbf{Google} is the main player now, \textbf{Microsoft} are just plain inferior in Mobile & NONE & NONE & BETTER & 1.0\\
-3 & Yeah, Nvidia's \textbf{OpenCL} is not good and \textbf{CUDA} is way better. & NONE & BETTER & WORSE & 1.0\\
-4 & \textbf{Python} has a better standard library, but \textbf{Perl} has a better nonstandard library & BETTER & WORSE & NONE & 0.8\\
-5 & \textbf{Groovy} code often looks and feels like \textbf{Java} code, but is almost always simpler and easier to use. & NONE & NONE & BETTER & 0.4\\
+1 & Is a \textbf{BMW} 3 series \$15,000 better than a \textbf{Ford} Focus? & \texttt{BETTER} & \texttt{BETTER} & \texttt{NONE} & 1.0\\
+2 & \textbf{Google} is the main player now, \textbf{Microsoft} are just plain inferior in Mobile & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 1.0\\
+3 & Yeah, Nvidia's \textbf{OpenCL} is not good and \textbf{CUDA} is way better. & \texttt{NONE} & \texttt{BETTER} & \texttt{WORSE} & 1.0\\
+4 & \textbf{Python} has a better standard library, but \textbf{Perl} has a better nonstandard library & \texttt{BETTER} & \texttt{WORSE} & \texttt{NONE} & 0.8\\
+5 & \textbf{Groovy} code often looks and feels like \textbf{Java} code, but is almost always simpler and easier to use. & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 0.4\\
 
  \bottomrule
 \end{tabularx}
 \end{table}
 
-The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four). 
+The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
 
-% === binary
+In the binary scenario, 1144 errors were made. Both features made the same errors on 394 sentences. LexNet made 496 unique errors, while InferSent made 254. However, 671 errors were already made in the three-class scenario, so that only 473 errors are new. All in all, the analysis of the errors made in the binary scenario does not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences).
 
+It was expected that union of \texttt{BETTER} and \texttt{WORSE} into one class will improve the result significantally, as the class imbalance is reduced this way. However, this does not appear to be the case. The classifier made almost as many mistakes as in the three-class scenario.
 
-
-
-
-
-%Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. 
-%\begin{figure}[h]
-%    \begin{minipage}{.5\linewidth}
-%   \caption{Confusion matrix for the InferSent feature using XGBoost} 
-%    \label{fig:2_conf_inf}
-% \centering
-%	\includegraphics[width=1\textwidth]{images/experiments/conf-InferSent_True}
-%  \end{minipage} \hfill
-%    \begin{minipage}{.5\linewidth}
-%  
-%     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
-%       \label{fig:2_conf_uni}
-% \centering
-%	\includegraphics[width=1\textwidth]{images/experiments/conf-middle_paths_unrestricted_16_False}
-%    \end{minipage} 
-%\end{figure}
-%Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
-%
-%
-%The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
-%
-%\begin{table}[h]
-%\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
-%\label{tbl:2_mistakes}
-%\begin{tabularx}{\linewidth}{Xrrr}
-%\toprule
-% Sentence & Predicted & Gold & Confidence\\ \midrule
-% Why \emph{can't} \textbf{Ford} puts better handling into the FWD Fusion if \textbf{Honda} can do it 10 years ago\emph{?} & \texttt{ARG} & \texttt{NONE} & 0.5\\
-% 
-% \textbf{Java} \emph{isn't} too bad of a first language, but \textbf{Python} is a little easier to pick up. & \texttt{NONE} & \texttt{ARG} & 1 \\
-% My minestrone \textbf{soup} is always better \emph{with} homemade \textbf{pasta}. & \texttt{ARG} & \texttt{NONE} & 0.8\\
-% 
-% \textbf{Scala} probably embraces \textbf{Java} \emph{better} than any other language in the book. & \texttt{ARG} & \texttt{NONE} & 0.8 \\
-% 
-% \textbf{Windows 8} has efficiency improvements over \textbf{Windows 7}, making it about \emph{10\% faster} overall. & \texttt{NONE} & \texttt{ARG} & 1 \\
-%\bottomrule
-%\end{tabularx}
-%
-%\end{table}
-%
-%The first sentence is an example for the problems with questions and, like the second, negations. In fourth and fifth sentence, the cue word appears after the objects.
 \FloatBarrier
 \section{Discussion}
 Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.

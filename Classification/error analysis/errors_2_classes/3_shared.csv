@@ -1,0 +1,571 @@
+,sentence,object_a,object_b,pred_if,pred_lex,gold,most_frequent_percentage,s_len
+A107951124,@9:08 At no time has the softball stadium been superior to baseball.,softball,baseball,BETTER,BETTER,WORSE,0.8,68
+A109112123,95% of the the things I do with my laptop on the road will be accomplished far easier and faster with the iphone.,laptop,iphone,BETTER,NONE,WORSE,1.0,113
+A112691576,"A 5-2-1 california team went down, 27-7, then 5-1-1 oregon fell harder, 33-0.",california,oregon,NONE,NONE,BETTER,0.8333333333333334,77
+A115588256,A better alternative is to substitute light gauge steel Zeds for the timber joists.,steel,timber,NONE,NONE,WORSE,0.8,83
+A129263384,"According to The New York Times, Amazon has an employee stack-ranking system every bit as bad - if not considerably worse - than did Ballmer's Microsoft.",Amazon,Microsoft,BETTER,NONE,WORSE,1.0,153
+A131151979,"Acer Travelmate 8372 and Aspire 3820, Dell Vostro V130, Samsung QX310 all have inferior displays; Sony Vaio S13 and Apple MacBook Air aren't as expensive; Sony Vaio...",Dell,Apple,NONE,NONE,WORSE,1.0,167
+A132707689,"ACME, Mich. - General Motors Co., facing disappointing Chevrolet Volt sales, cut the starting price of the plug-in hybrid sedan by $5,000 to compete against the less- expensive and better-selling Toyota Prius and Nissan Leaf.",Chevrolet,Toyota,NONE,NONE,WORSE,0.8,225
+A137884310,Actually for many Windows XP users it is easier to migrate to Linux Mint than to Windows 8.,Windows XP,Windows 8,BETTER,BETTER,NONE,0.4,91
+A138611811,"Actually scratch my last post, I canceled the Nikon and ordered the Sigma 18-50 mm f2.8 HSM instead, as I think it should be the better lens.",Nikon,Sigma,NONE,NONE,WORSE,1.0,141
+A138645732,"Actually, Sony can be even nastier than Microsoft when it comes to licensing games for their platform.",Sony,Microsoft,BETTER,BETTER,WORSE,1.0,102
+A140050632,"@Adam Smith, any parsing toolchain will be ok - e.g., Antlr with a Java backend, or (much better) any functional language with ADTs (SML, OCaml, Haskell, ...).",Java,Haskell,NONE,NONE,WORSE,1.0,159
+A147727649,Adidas is a German company - therein I understand Nike being American better already.,Adidas,Nike,NONE,BETTER,WORSE,0.6,85
+A15287639,"(10 For NetBeans, -5 for Eclipse)",NetBeans,Eclipse,NONE,NONE,BETTER,0.8,33
+A158005965,"After abandoning Ruby (until they calm down), I started exploring Perl and C/C++ with much better results.",Ruby,Perl,NONE,NONE,WORSE,1.0,106
+A160099612,"After all, who would play the 'wii' when there were much cooler names like playstation 3 and Xbox 360?",wii,playstation,NONE,BETTER,WORSE,1.0,102
+A40116035,1) Laptop or netbook with Bluetooth means that I don't have to plug anything into a USB port in order to use a decent mouse with the computer.,Bluetooth,USB,WORSE,NONE,BETTER,0.4,142
+A59655693,"2. Dennis Dixon, oregon The West Coast's version of Pat White, except he's a better passer than the West virginia star.",oregon,virginia,NONE,NONE,BETTER,1.0,119
+A60598168,"2. Horrible synchronization sotfware (Siemens, but from what I'm told Nokia is no better).",Siemens,Nokia,NONE,NONE,BETTER,1.0,90
+A66286471,30% better in MySQL 5.0.20a and 37% better in PostgreSQL 8.2-dev.,MySQL,PostgreSQL,BETTER,NONE,WORSE,1.0,65
+A93830067,600$ for a phone we can get a decent quad core laptop for that price...pass,phone,laptop,NONE,NONE,WORSE,1.0,75
+B171666302,"after tons of failures from Kingston (i know sandisk is better), i stick to Intel or Samsung only - data loss is worth more than a few hundred to me",Kingston,Intel,NONE,NONE,WORSE,1.0,148
+B175650125,"again, usc lost to oregon fucking state!! notre dame will have 1 quality win and a piss-poor sched, and michigan will have 2 quality wins(bucky, and i reluctanly add notre dame) and a mediocre sched.",oregon,michigan,NONE,NONE,WORSE,0.8,199
+B212062184,"(Also, Bash may not be the best language to do arithmetic-heavy operations in - something like Python might be a better choice)",Bash,Python,NONE,BETTER,WORSE,0.8,127
+B213035157,"Also, Eclipse has more plugins that NetBeans.",Eclipse,NetBeans,NONE,NONE,BETTER,1.0,45
+B216157759,"Also, keep in tmind that two years ago, Dell,HP,Gateway etc, never used AMD chips as Intel produced the better chip.",Dell,Intel,NONE,NONE,WORSE,0.8,116
+B223805654,"Although IBM has extensive retail offerings, that's no excuse for a bumpy shopping site; Dell seems to manage its extensive retail much better.",IBM,Dell,NONE,BETTER,WORSE,1.0,143
+B228110474,"Although this is still roughly 2 times faster than Wi-Fi and 50 times faster than Bluetooth, it fell well short of its wired USB counterpart.",Bluetooth,USB,NONE,NONE,WORSE,1.0,141
+B228476363,"Although we have Mercedes-Benz to thank for the oxymoronic ""4-door coupe"" category, Audi has gone one better with its A7 5-door coupe .",Mercedes-Benz,Audi,NONE,NONE,WORSE,0.8,135
+B231839816,amazon had a similar service for its books but google is much faster and simpler.,amazon,google,NONE,NONE,WORSE,0.6,81
+B231874680,"Amazon is, I think, in a better position (how much better, I don't know) to compete directly with Apple.",Amazon,Apple,NONE,NONE,BETTER,1.0,104
+B231892910,Amazon literally bulldozed upcoming competitors like Microsoft and Google by using its far superior product offerings and extensive networks.,Amazon,Google,NONE,NONE,BETTER,1.0,141
+B231963573,"Amazon unveils faster, pricier Kindle Fires to take on Apple",Amazon,Apple,BETTER,BETTER,NONE,1.0,60
+B232328266,"AMD and Apple are leading the way, and Intel better get in line soon.",Apple,Intel,NONE,NONE,BETTER,0.6,69
+B232349177,"AMD fans should take a look at the Samsung Series 5 510R5E, which is lighter and slimmer, hence offering better mobility.",AMD,Samsung,NONE,NONE,WORSE,1.0,121
+B233499568,American corporations from Lucent Technologies Inc. to Valley legend Hewlett-Packard Co. also are struggling to catch up with faster upstarts such as Cisco and Dell Computer Corp.,Hewlett-Packard,Dell,NONE,NONE,WORSE,1.0,179
+B235228176,A Microsoft product is harder to repair than an Apple product?,Microsoft,Apple,BETTER,BETTER,WORSE,0.6,62
+B239637126,"Amusingly enough, it was released several months after John Carmack and the rest of the gaming industry started bitching Microsoft out for pushing Direct3D over the clearly superior OpenGL.",Direct3D,OpenGL,BETTER,BETTER,WORSE,0.6,189
+B250354288,"and dont even start with the ""Microsoft greed monopoly"" thing, Apple is 10X worse""",Microsoft,Apple,NONE,NONE,BETTER,1.0,82
+B253103724,And from my experience the ticks are much worse in Mid missouri than they are in South georgia which is much warmer year round.,missouri,georgia,BETTER,BETTER,WORSE,0.7142857142857143,127
+B259179520,"And, I have found that using cider vinegar instead of lemon juice is a nice twist, and keeps better.",cider,juice,NONE,NONE,BETTER,0.6,100
+B265369865,"And I work with files from the Nikon 35/1.4G and I know, optically, it's not better than the Sigma.",Nikon,Sigma,BETTER,BETTER,WORSE,0.6,99
+B270616784,"And, one for institutional (soda fountains) use which is, thicker and better for fountain drinks like chocolate egg creams.",soda,chocolate,NONE,NONE,BETTER,0.8,123
+B287409807,"And until Chevrolet can make a better vehicle than Kia or Toyota, I will be driving an inferior vehcile because I buy American when I can.I for one abhor the idea of a global economy and a global government but with the forces pushing us in that direction, I am still looking for ways to fend it off.",Chevrolet,Toyota,BETTER,BETTER,WORSE,1.0,300
+B290991437,"And while some of J.D. Power's top performers with shoppers also scored well with dealers -- Mercedes-Benz, Cadillac, Porsche, Volkswagen -- others NADA faves like Audi, Kia, and Honda fared poorly with consumers.",Mercedes-Benz,Audi,NONE,NONE,BETTER,1.0,213
+B316466652,"Any software company wants as huge a target audience as possible, so for them it's much better to write OpenGL-based apps instead of apps based on Direct3D.",OpenGL,Direct3D,NONE,NONE,BETTER,1.0,156
+B323285800,A plywood boat better than a steel one?,plywood,steel,BETTER,BETTER,NONE,1.0,39
+B326121571,"Apple computers seem to be better, and many (but not all) of the Dell laptops work good.",Apple,Dell,NONE,NONE,BETTER,1.0,88
+B326153916,"Apple does far better, scoring 60 out of 100, but it still places last in the electronics sector, behind leaders Siemens, HP, IBM, Nokia and Sony.",Apple,Sony,NONE,NONE,WORSE,1.0,146
+B326211513,"Apple has also add the ability to connect the Apple TV with a Bluetooth keyboard (?!), which allows users to enter text for search much faster that using the four-way remote control, and likely faster than the Remote app for iOS, once you factor in connection and navigation time.",Apple TV,iOS,NONE,NONE,BETTER,1.0,280
+B326353519,"Apple is like the Microsoft of the 90s, but potentially much, much worse.",Apple,Microsoft,NONE,NONE,WORSE,0.8333333333333334,73
+B326365111,Apple is only 50% better than Dell or HP?,Apple,Dell,BETTER,BETTER,NONE,1.0,41
+B326787562,Apple: Worse for open source than Microsoft?,Apple,Microsoft,NONE,BETTER,WORSE,1.0,44
+B326787789,Apple would be better off competing with Nintendo than Sony and MS.,Apple,Sony,BETTER,BETTER,NONE,1.0,67
+B332338897,"ARCEE changes into a motorcycle and is very quick and acrobatic with her attacks, and BULKHEAD changes into an armoured truck and moves slower, but hits much harder.",motorcycle,truck,NONE,NONE,BETTER,1.0,165
+B333343448,"are all coaches in Texas, georgia, Alabama, Florida, are they all foolish for making their teams practice in triple digit temperatures with WAY worse humidity than california...?",georgia,california,NONE,BETTER,WORSE,1.0,178
+B340093280,"ARM has historically been weak at Floating-point arithmetic, but I'm under the impression that ARM might do better per watt on Integer workloads than x86.",Floating-point,Integer,NONE,NONE,BETTER,1.0,154
+C353336788,"A second generation is planned for the mid-year point with Toshiba flash chips replacing the Samsung ones, and a Marvell controller, possibly a faster 6Gbit/s model.",Toshiba,Samsung,NONE,NONE,BETTER,0.8,165
+C354883223,"As far as benchmark performance is concerned, the Intel Atom Z2760 recorded 3min 36sec in our Blender 3D rendering test, which is over 15sec slower than the Dell Latitude 10 and HP ElitePad 900 tablets, and only a 24sec faster than one of the last netbooks we saw back in 2010, the Acer Aspire Happy.",Intel,Dell,NONE,BETTER,WORSE,1.0,300
+C356868068,"As for parallel mode MySQL retained its performance while PostgreSQL/PostGIS introduced some decrease in performance while still performing faster, now by 27.5% .",MySQL,PostgreSQL,NONE,NONE,BETTER,1.0,162
+C356884269,"As for performance, this primarily comes down to the individual driver implementations of GPU makers, which in NVIDIA's case, we've seen it's possible to achieve OpenGL performance in-line with and, even superior to that, of Direct3D, once the firm had enough incentive to optimise its drivers and remove pesky bugs.",OpenGL,Direct3D,NONE,NONE,BETTER,0.6,316
+C380749887,"As the recommendation, you better use Wi-Fi and USB, not Bluetooth.",USB,Bluetooth,NONE,NONE,BETTER,1.0,67
+C384100440,"As unlikely as it sounds, Amazon is pushing far harder than Microsoft or Apple to get its technology into the hands of other companies.",Amazon,Apple,WORSE,NONE,BETTER,1.0,135
+D393417540,But I'm not convinced it works in JavaScript any better than it works in Perl.,JavaScript,Perl,BETTER,NONE,WORSE,1.0,78
+D393948617,"But in both cases Apple gets poor grades from Greenpeace while Dell gets better grades, despite the inconvenient fact that both are in exactly the same boat: stuck.",Apple,Dell,NONE,BETTER,WORSE,1.0,164
+D394248954,"But in less-than-expert hands or worse, in the hands of those that resent Scala, it's less good than Java.",Scala,Java,BETTER,BETTER,WORSE,1.0,106
+D400007857,"But I would bet that a loaded, $30,000 Honda Accord offers more refinement and an EcoBoost Ford Fusion is faster.",Honda,Ford,NONE,NONE,WORSE,1.0,113
+D402677286,But my biggest worry is that the tech press will continue to do what they always do and ignore a superior product from Microsoft and flog an inferior offering because it's from Google.,Microsoft,Google,WORSE,NONE,BETTER,1.0,184
+D409751362,"But, that Acer does not have a dedicated video card (it's using built in Intel Graphics instead) and it uses a slightly slower Core i7 4770 CPU (versus the slightly faster Core i7 4790 CPU in the Dell config you're looking at).",Intel,Dell,NONE,NONE,WORSE,1.0,227
+D419845334,"But this week PC Magazine columnist John Dvorak speculates that the company could be about to make a switch itself, from Motorola/IBM chips to faster Intel ones.",IBM,Intel,NONE,NONE,WORSE,1.0,161
+D419983092,"But those games are both available for ds and Wii as well, its just simply that we were able to get better deals on the ps2 versions.",ds,ps2,NONE,BETTER,WORSE,1.0,133
+D425903569,"But with the 3.73 rear axle as tested, the Chevrolet Silverado finished in third place pulling the trailer from 0 to 60-mph in 22.6 seconds, 6.5-seconds behind the Toyota Tundra and 1.1-seconds slower than the Dodge Ram.",Chevrolet,Toyota,NONE,NONE,WORSE,1.0,220
+D429085368,"By about a chapter into the PHP book, I was thinking ""holy crap, this language is uglier than Perl"".",PHP,Perl,BETTER,NONE,WORSE,1.0,100
+D436444545,By the time Sony does get a foothold Microsoft will release something better.,Sony,Microsoft,NONE,NONE,WORSE,1.0,77
+D439463576,"caddis: Remember you said this in ten months when a slice of pizza or worse, a cheese steak, starts looking just a little too enticing.",pizza,steak,NONE,NONE,BETTER,1.0,135
+D440782812,california door suppliers better wake up before this Ambiance company from North carolina take away all their business.,california,carolina,NONE,NONE,BETTER,1.0,119
+D443268022,"CAMBRIDGE, Mass - Behind solid pitching and four home runs, dartmouth swept harvard, 8-2 and 9-2, to claim back-to-back Ivy League North Division Championships on Monday afternoon.",dartmouth,harvard,NONE,NONE,BETTER,1.0,180
+D480125590,"Chromatic aberration and distortion are better controlled on the Nikon, while Sigma does well in controlling vignetting.",Nikon,Sigma,NONE,NONE,BETTER,1.0,120
+D505085864,"Common Lisp is a bit less strongly functionally-oriented, but it still supports it better than, say, C or Java, by having first-class functions and closures.",Lisp,Java,WORSE,NONE,BETTER,0.4,157
+D506840209,Compared to Perl - Ruby is much much nicer.,Perl,Ruby,NONE,NONE,WORSE,1.0,43
+D507004933,"Compared with the Mercedes-Benz C class, BMW 3 series and Audi A4, the Lexus ES sedan now offers more power (268 hp) and worse fuel economy (24 mpg combined) from its base engine.",Audi,Lexus,NONE,NONE,WORSE,1.0,179
+D507219353,"Compare the Cloud released new rankings indicating Amazon Web Services, though a perennial cloud services frontrunner, is experiencing slower growth and is losing the ""mind share"" battle with competitors such as IBM and Microsoft.",Amazon,Microsoft,NONE,NONE,WORSE,0.8,230
+D515490408,"Considering AM is alive and well on all other electric cars and hybrids from manufacturers like General Motors, Toyota, Tesla and Nissan, just to name a few, I'd say it has more to do with lousy engineering on the part of BMW.",Toyota,BMW,NONE,NONE,BETTER,0.6,226
+D522866057,Cooler server side scripting languages of the day like Ruby and Python are a lot less like C. Therefore learning PHP and JavaScript is a great place to start.,Python,JavaScript,BETTER,NONE,WORSE,1.0,158
+D528119869,Could the Google-opoly be any worse than the Microsoft Empire?,Google,Microsoft,WORSE,BETTER,NONE,0.6,62
+D538989804,CUDA performance is 2X that of a GTX285 & OpenCL is 3X better.,CUDA,OpenCL,NONE,BETTER,WORSE,0.8,62
+D553481320,"DavidKorn For a few years after the release of Perl in 1987, AWK remained competitive simply because it had a smaller, faster implementation.",Perl,AWK,NONE,NONE,WORSE,0.8,141
+E559239142,"Decent alternatives for you might include the Android-powered Samsung Galaxy 3 , the HTC Wildfire or indeed, if you can afford the step up, the Nokia C7 for a considerably superior Symbian^3 experience.",Samsung,Nokia,NONE,NONE,WORSE,0.8,202
+E559257013,"Decent for gluten free beer, but I think I'd rather have a cider.",beer,cider,NONE,NONE,WORSE,1.0,65
+E571886149,"Despite improved security in Windows 8, McAfee believes targeted malware will be available faster than it was for Windows 7.",Windows 8,Windows 7,BETTER,NONE,WORSE,1.0,124
+E575759708,"Developing ""best practices"" for Scala is going to be _much_ harder than for Java.",Scala,Java,BETTER,BETTER,WORSE,0.8,81
+E590957111,"Docter continued her solid play in Saturday's home defeat of cornell, leading harvard with 13 kills.",cornell,harvard,NONE,NONE,WORSE,1.0,100
+E592447339,Does Apple manage its supply chain better than Amazon manages its own?,Apple,Amazon,BETTER,BETTER,NONE,0.8,70
+E594409476,Does this imply that milk is worse than soda as far as tooth decay is concerned??,milk,soda,WORSE,WORSE,NONE,1.0,81
+E596211407,Do I think google will score better than amazon?,google,amazon,BETTER,BETTER,NONE,1.0,48
+E601231289,"Don't know Perl much, its language-syntax is much harder than PHP .",Perl,PHP,BETTER,BETTER,WORSE,1.0,67
+E610038290,Do you think though in general simple bread bakeries are harder than small woodfired pizza places?,bread,pizza,BETTER,BETTER,NONE,1.0,98
+E617174530,ds beats out psp,ds,psp,NONE,NONE,BETTER,1.0,16
+E661339465,espn gets much better and fox falls apart - how can that be?,espn,fox,NONE,NONE,BETTER,1.0,60
+E663380182,"Ethernet will always be faster, but if your machines are not networked, order the USB cable and use it.",Ethernet,USB,NONE,NONE,BETTER,1.0,103
+E666147078,"Even better alternatives for soda are water, unsweetened iced tea, and low-fat milk, she suggests.",soda,milk,NONE,NONE,WORSE,1.0,98
+E667277125,"Even if Microsoft manages to invent or buy a new idea, Google will come up with a way of making it faster, cheaper, safer and more powerful.",Microsoft,Google,NONE,NONE,WORSE,1.0,140
+E671037294,"Even though Chevrolet models in the mid-1920s () caused the mere demise of Model T due to its superior amenities against the stereotype-driven T form, Henry Ford undoubtedly installed value to his product through price leadership strategy.",Chevrolet,Ford,BETTER,BETTER,WORSE,0.8,239
+E673688725,Even Windows 8 does (in my experience) a decent job of playing games that hark back to the Windows XP era.,Windows 8,Windows XP,NONE,NONE,BETTER,1.0,106
+E675329218,"Everybody - or well, almost everybody - knows that Apple Maps is inferior to Google Maps.",Apple,Google,NONE,BETTER,WORSE,1.0,89
+E682491354,Exactly like Windows XP and 7 and nothing like Windows 8. but with better performance,Windows XP,Windows 8,NONE,NONE,WORSE,0.8,85
+E683050923,"Example, in the midsize sedan market the products offered by American companies like GM and Ford are EVERY BIT as good as the Japanese, European or Korean competition (The jury is out on the Chrysler 200) but people flock to Toyota and Honda dealerships because there's the ""belief"" that it's a better, more dependable product.",Chrysler,Toyota,NONE,NONE,WORSE,0.8,327
+E697374083,faster Samsung SSDs in some units and significantly slower Toshiba SSDs in others).,Samsung,Toshiba,WORSE,NONE,BETTER,1.0,83
+E697379680,"faster than C++, more concise than Perl, more regular than Python, more",Perl,Python,BETTER,BETTER,NONE,1.0,71
+E704044185,Ferrari could not keep up with the Honda/Renault assault.,Ferrari,Renault,NONE,NONE,WORSE,1.0,57
+E716131739,"Finally, the concept was perfected by Apple - and later poorly copied by Microsoft.",Apple,Microsoft,NONE,NONE,BETTER,1.0,83
+E722958970,"First, Motorola, then HTC and Samsung.",Motorola,Samsung,NONE,NONE,BETTER,0.8,38
+E723019506,"First nite enjoyed with grilled porterhouse steak, 2nd nite (it tasted even better) with salad, candied carrots and crusty bread!",steak,bread,NONE,NONE,WORSE,1.0,129
+F735923912,"For a complicated query, MySQL is faster, but for my current projects, SQLite ""wins"" due to admin simplicity (none required!).",MySQL,SQLite,NONE,BETTER,WORSE,0.8,126
+F737750108,"For any lens that Canon or Nikon offers, there is a response from Sigma or Tamron that is as good or sometimes better.",Nikon,Sigma,NONE,NONE,WORSE,1.0,118
+F758754877,"For some reason baseball players think hitting a softball is 'easier.'""",baseball,softball,NONE,NONE,WORSE,1.0,71
+F759937296,"For that reason, I dropped itunes as soon as I could get a decent selection from amazon.",itunes,amazon,NONE,NONE,WORSE,1.0,88
+F766011054,for those who care about such things... i returned my Nikon 4500 10 days ago on 12th day of free 10-day trial and i traded down to a panasonic lumix LC40 with Leica lens because it had a faster shutter response and looked pretty bad ass.,Nikon,Leica,NONE,NONE,WORSE,1.0,237
+F775347795,"Freeman and Pryce describe DSLs and their benefits and how EDSLs are common in lanugages with small syntaxes (Haskell, Lisp, Smalltalk) but are harder to hit into large syntax languages such as Java.",Lisp,Java,NONE,NONE,BETTER,1.0,199
+F793560388,"further, some stuff is a lot easier (one example: standardized vertex buffers in Direct3D versus the VAR/VAO extension mess in OpenGL).",Direct3D,OpenGL,NONE,NONE,BETTER,1.0,135
+F794674342,"(FWIW, Smalltalk (and to a much lesser extent, Java)",Smalltalk,Java,NONE,NONE,BETTER,1.0,52
+F796578344,gamecube doesnt have better realistic graphics than the ps2? RE:4 anyone?,gamecube,ps2,BETTER,BETTER,WORSE,1.0,73
+F801830848,"Generally speaking, in a ""squeeze the brakes as hard as possible and let ABS take over"" kind of stop, the Yamaha and the Honda, with their faster cycling times, will out-stop the BMW by several feet.",Honda,BMW,NONE,NONE,BETTER,0.6,199
+F802055652,"Generally Toyota appears to build well solid if boring cars, but this is a Ford class failure, e.g.",Toyota,Ford,NONE,NONE,BETTER,1.0,99
+F819063073,Going cordless is good and going Bluetooth is even better since it frees up a USB port.,Bluetooth,USB,BETTER,BETTER,NONE,0.8,87
+F821066095,Good better than Google Sony Xperia Z2 phone with Android 4.4.4,Google,Sony,NONE,NONE,WORSE,1.0,63
+F823169552,"Goodnight NetBeans, Hello Eclipse",NetBeans,Eclipse,NONE,NONE,WORSE,0.8,33
+F824204631,"google Analytics for youtube, only better",google,youtube,NONE,NONE,BETTER,0.8333333333333334,41
+F824293615,Google Chrome is even worse on my old IBM ThinkPad.,Google,IBM,WORSE,BETTER,NONE,1.0,51
+F824336823,Google does maps better then Yahoo and Mapquest and Apple.,Google,Apple,NONE,NONE,BETTER,0.8,58
+F824562036,"Google is the main player now, Microsoft are just plain inferior in Mobile.",Google,Microsoft,NONE,NONE,BETTER,1.0,75
+F824912165,google Video was good but youtube was better.,google,youtube,NONE,NONE,WORSE,1.0,45
+F830226616,"Granted, Pentium 4M was a horrible CPU platform to start with but somehow IBM pulled off a decent design based on same processor with the T30 and Dell didn't.",IBM,Dell,NONE,NONE,BETTER,1.0,158
+F832237933,"Great graphics (remember this is a ds not a ps3), sound is better then what one of the review sites suggested, nothing fantastic, but good enough.",ds,ps3,WORSE,NONE,BETTER,1.0,146
+F833863247,"Green car: The official pick for this category was the Toyota Prius , which outscores the Chevrolet Volt , mainly thanks to better practicality.",Toyota,Chevrolet,NONE,NONE,BETTER,1.0,144
+F835980058,"Groovy code often looks and feels like Java code, but is almost always simpler and easier to use.",Groovy,Java,NONE,NONE,BETTER,0.4,97
+F835983233,Groovy makes writing Java programs far easier.,Groovy,Java,NONE,NONE,BETTER,1.0,46
+F845752998,"Handling The Lexus LS 460 has a significantly smaller turning radius than the Audi A6, allowing much better maneuverability in and out of tight spots.",Lexus,Audi,BETTER,BETTER,WORSE,1.0,150
+F845753750,"Handling The Nissan LEAF has a significantly smaller turning radius than the Ford Focus ST, allowing much better maneuverability in and out of tight spots.",Nissan,Ford,WORSE,WORSE,BETTER,0.6,155
+F849873779,harvard is better than Western New England and stanford is better than GGU.,harvard,stanford,BETTER,BETTER,NONE,0.6,75
+F850959316,"Haskell has a decent set of libs, not quite as bit as Python however.",Haskell,Python,WORSE,NONE,BETTER,1.0,69
+G1000253659,I agree with the above mentioned statement of getting a wii if you just want to have fun and look at mediocre graphics or better yet a ps2 which has tons of games with decent graphics and gameplay.,wii,ps2,BETTER,NONE,WORSE,0.8,197
+G1001683508,I also don't find that things like bagels or pizza will spike me any worse than a dinner of steak and green beans.,pizza,steak,NONE,NONE,WORSE,0.8,114
+G1018532288,I am very skeptical that Swift is faster than Objective-C.,Swift,Objective-C,BETTER,BETTER,WORSE,0.8,58
+G1029755582,"I can see why you would prefer Java to Python (speed), and Tcl (better language).",Java,Python,NONE,NONE,BETTER,1.0,81
+G1033818363,"I changed employers once after that in order to get out of california...AFTER getting a solid (and better) offer in oregon, where I stayed until I retired.",california,oregon,NONE,NONE,WORSE,1.0,155
+G1035495918,I consider Windows 7 very efficient and Windows 8 is even better.,Windows 7,Windows 8,BETTER,NONE,WORSE,1.0,65
+G1039183135,I'd avoid Windows 8 myself and buy Windows 7 (you'll find it an easier transition).,Windows 8,Windows 7,NONE,NONE,WORSE,0.8,83
+G1053661711,"I don't know if Sony would be better than Dell, or any other make for that matter.",Sony,Dell,BETTER,BETTER,NONE,1.0,82
+G1056680781,I don't see Apple syncing anything better than Google.,Apple,Google,BETTER,BETTER,WORSE,1.0,54
+G1057693658,"I don't think it could've worked out any better with what happened (at dartmouth) at the end of the game up there, and then obviously our rival (harvard).""",dartmouth,harvard,NONE,NONE,BETTER,0.6,155
+G1058863747,I don't think very many people are going to buy an Sigma SD-10 when the Canon 10D and Nikon D70 are so clearly superior.,Sigma,Nikon,NONE,NONE,WORSE,1.0,120
+G907365167,Here's Why stanford Startups are Better Than mit Startups,stanford,mit,NONE,NONE,BETTER,1.0,57
+G935199426,"Hewlett-Packard regained the lead in worldwide PC shipments in the fourth quarter of 2003, but Dell managed to hold onto its lead for the full year, as the PC industry recorded one of its better years in recent memory, according to preliminary figures from IDC and Gartner.",Hewlett-Packard,Dell,NONE,NONE,WORSE,0.4,273
+G935201907,"Hewlett-Packard swooped in with the better bid to overtake Dell and win 3Par, so now we can all sit back and wait for the next acquisition battle to roll around.",Hewlett-Packard,Dell,NONE,NONE,BETTER,1.0,161
+G941917508,"Hi, I use PHP validation for my sites it is better then Java script validation ?",PHP,Java,NONE,NONE,BETTER,0.8,80
+G959052329,"Honda quality has gone downhill in recent years, Hyundai or Ford is a much better value if shopping for a new 2012.",Honda,Ford,NONE,NONE,WORSE,0.6,115
+G976759861,"However, it is a thing to be aware of if you're writing world class 3D Windoze apps, but not in determining whether OpenGL is better than Direct3D.",OpenGL,Direct3D,BETTER,BETTER,NONE,1.0,147
+G981145717,"However, t he decline seen in the last two years should start to level off, and Stice predicts better prospects for  2014 - including Intel's Bay Trail, which will provide longer battery life and powerful graphics,  the expiration of Windows XP in April , which may encourage consumers to ditch old laptops in favor of new Windows 8 devices.",Windows XP,Windows 8,NONE,NONE,WORSE,1.0,341
+H1073500142,"If Ford wants me to buy American, then make a cheaper car that runs better than a Honda for the same price.",Ford,Honda,BETTER,BETTER,WORSE,1.0,107
+H1078180653,"I find Common Lisp to offer an even more dynamic programming environment, an easier language to use, and the result often has performances characteristics way beyond what I can get with Python.",Lisp,Python,NONE,NONE,BETTER,0.6,193
+H1084032644,"If michigan can't do any better than this, I might just have to think about moving back to california.",michigan,california,NONE,NONE,WORSE,1.0,102
+H1084046451,"If Microsoft wants to get into hardware, they would do better making an Android tablet and adding value, as others like Samsung and Amazon have done.",Microsoft,Amazon,NONE,NONE,WORSE,0.8,149
+H1087015353,"If OSU beats michigan State Saturday and finishes undefeated, there's a better chance for a one-loss Auburn to jump the Buckeyes than a one-loss missouri.",michigan,missouri,BETTER,WORSE,NONE,1.0,154
+H1089127622,"If REAL football turns your stomach, better watch tennis... Oakland vs. Denver: An AFC West pillowfight.",football,tennis,NONE,NONE,WORSE,1.0,104
+H1099630756,"If they are good, they might find it easier to make an impact on the PHP community than, say, in the Java or .NET community.",PHP,Java,NONE,NONE,BETTER,1.0,124
+H1120744954,"If you're familiar with even JavaScript, then OOP in PHP will be easier to pick up.",JavaScript,PHP,NONE,NONE,WORSE,1.0,83
+H1122423199,"If you're talking about CHRP/PREP hardware, IBM and Motorola delivered PowerPC machines with lots of PC legacy, while Apple delivered much better, legacy free PowerPC Macs.",IBM,Apple,NONE,NONE,WORSE,1.0,172
+H1124158975,"If you spend are likely to spend more time with Java, then Scala or Groovy are possibly better options.",Java,Scala,NONE,NONE,WORSE,1.0,103
+H1134900583,"I guess you could say it's like gamecube to wii... it's better, but only just.",gamecube,wii,NONE,NONE,WORSE,1.0,78
+H1141194255,I have a 2012 MBA with a Toshiba SSD which seems to perform on par if not better to the Samsung ssd on other 2012 MBAs.,Toshiba,Samsung,WORSE,NONE,BETTER,1.0,119
+H1142681809,"I have a lot of good smart, caring, compassionate friends in missouri, plus I'm from virginia, where we have far worse.",missouri,virginia,NONE,NONE,BETTER,1.0,119
+H1143026395,"I have also rented many cars, American and Japanese, and with the exception of a very smooth ride in a Cadillac, I always like the Japanese cars better (Nissan and Toyota, vs. Ford, Chrysler and GM).",Toyota,Chrysler,NONE,NONE,BETTER,1.0,199
+H1143360763,"I have always used a canned CGI (in Perl) gleaned from a resources site, but PHP looks soooo much easier.",Perl,PHP,NONE,NONE,WORSE,1.0,105
+H1148077288,I have found that OpenGL games run better on Linux+Intel 3000 and Direct3D games could go either way(PlayOnLinux+Intel vs native+AMD) usually with only a 5-10% difference.,OpenGL,Direct3D,NONE,NONE,BETTER,1.0,171
+H1149352766,I have it installed on my Windows XP system as well as an older (and considerably slower) Windows 98 machine.,Windows XP,Windows 98,WORSE,NONE,BETTER,1.0,109
+H1153089858,I haven't really used my truck anymore since I have a motorcycle (saving gas while getting there faster).,truck,motorcycle,NONE,NONE,WORSE,1.0,105
+H1153851300,I have owned a Ford F150 and I also think that the Toyota is a better driver and better built.,Ford,Toyota,NONE,NONE,WORSE,1.0,94
+H1155299001,I have several web sites where I have migrated from MySQL to SQLite and I couldn't be happier: it's faster with less CPU and memory footprint.,MySQL,SQLite,NONE,NONE,WORSE,1.0,142
+H1158033276,I have tried using Perl (slow) and AWK (faster but still slow) - does anyone have any suggestions or pointers toward alternative approaches?,Perl,AWK,NONE,NONE,WORSE,1.0,140
+H1158795912,"I have written similar mechanisms in Perl, but prefer the PHP solution as it is easier.",Perl,PHP,NONE,NONE,WORSE,1.0,87
+H1171338301,I knew the Sony store had a reputation for being poorly equipped in comparison to Amazon but this is ridiculous !,Sony,Amazon,BETTER,NONE,WORSE,1.0,113
+H1174766283,"I know that there are a lot of commandos out there who will tell me that I just need more practice in drawing my pistol quickly, and, although I have practiced, I am still a little faster with the knife.",pistol,knife,NONE,NONE,WORSE,1.0,203
+H1176316564,"I know, you might expect me to be a PHP-GTK fan, but Perl-GTK just seems nicer.",PHP,Perl,NONE,NONE,WORSE,0.4,79
+H1177038896,"I learned some other languages before, like Perl and C, but so far, I like Java better.",Perl,Java,NONE,NONE,WORSE,1.0,87
+H1178255861,I liked the Toyota over the Ford and it looks better than the Chevy.,Toyota,Ford,NONE,NONE,BETTER,1.0,68
+H1179155668,I like the Bluetooth for use with a mouse and the USB 3 makes transferring data so much faster.,Bluetooth,USB,NONE,NONE,WORSE,1.0,95
+H1179800685,"I like this model since I can start (or even do local dev) on SQLite and if I need better performance/functionality I can switch to a bigger DB system (MySQL, postgres, etc) by changing a line in my configuration file.",SQLite,MySQL,BETTER,NONE,WORSE,1.0,218
+H1181101770,"I live in the home of Coca-Cola, so Pepsi is a little harder to come by vending machine wise.",Coca-Cola,Pepsi,NONE,NONE,BETTER,0.8,93
+H1187070887,"I loved the look of Chevrolet and that's what I really wanted, but if the price was better, a Ford would have suited me just fine.",Chevrolet,Ford,NONE,NONE,BETTER,1.0,130
+H1193400328,"Imagine how hard it will be for Intel to make the case that its chips are somehow worth the price tag when IBM, HP, Dell, and Sun are all selling faster, cheaper, more capable chips.",Intel,IBM,NONE,BETTER,WORSE,1.0,182
+H1199952434,"I mean, when you really analyze it, is the Apple iPod really that much superior to an mp3 player from, for example, Sony?",Apple,Sony,NONE,NONE,BETTER,1.0,121
+H1201025316,I'm finding that amazon 's selection of apps are very limited and mediocre compared to google Play.,amazon,google,BETTER,BETTER,WORSE,1.0,99
+H1201025316,I'm finding that Amazon 's selection of apps are very limited and mediocre compared to Google Play.,Amazon,Google,BETTER,BETTER,WORSE,1.0,99
+H1203579210,"IMHO Lisp is way too heavy on the parenthesis, a Java program is easier to read.",Lisp,Java,NONE,NONE,WORSE,0.8,80
+H1209586139,I'm not saying the ps3 is better or worse than the Xbox360 and wii.,ps3,wii,BETTER,BETTER,NONE,1.0,67
+H1209635104,I'm not saying Windows 8 is worse than Windows 7 - I believe it has better features and so on.,Windows 8,Windows 7,WORSE,WORSE,BETTER,1.0,94
+H1219117644,"I'm thinking about grabbing an Ethernet wireless bridge or even better, a wireless USB network adapter.",Ethernet,USB,NONE,NONE,WORSE,1.0,103
+H1220189772,"I'm using mesa and xserver 9999 _________________ Buy from companies supporting opensource -- IBM, Dell, HP, Hitachi, Google etc... Disfavor companies supporting only Win -- Logitech, Epson, Pioneer, Kingston, WD, Yahoo, MSI, XFX, Huawei My blog",Google,Kingston,NONE,NONE,BETTER,1.0,245
+H1225288979,"in 2000 Microsoft bought ""Femail"" from IBM and instantly made it better.",Microsoft,IBM,NONE,NONE,BETTER,1.0,72
+I1243050773,"In brief, Nokia will never win Motorola.",Nokia,Motorola,NONE,NONE,WORSE,1.0,40
+I1248563780,"In Crysis the Kingston 40GB again takes second place to the Intel in the SSD ranks, making it a pretty decent proposition for gaming.",Kingston,Intel,NONE,NONE,WORSE,0.6,133
+I1250153644,"Indeed, this has nothing in particular to do with Windows XP, however Windows Vista is becoming worse with respect to integrating DRM into the OS.",Windows XP,Windows Vista,NONE,NONE,BETTER,1.0,146
+I1256251013,I never said basketball was easier than baseball.,basketball,baseball,BETTER,BETTER,NONE,1.0,49
+I1257165572,"In fact, amazon did poorly in google overall in general.",amazon,google,WORSE,WORSE,NONE,1.0,56
+I1257165572,"In fact, Amazon did poorly in Google overall in general.",Amazon,Google,NONE,NONE,WORSE,1.0,56
+I1260304340,"In fact, they look even worse than the ps2 visuals, since the psp doesn't have quite as much graphical firepower.",ps2,psp,WORSE,NONE,BETTER,0.6666666666666666,113
+I1262129258,InfoQ : Are there specific features of Groovy that you feel make it better suited to Spring development than Java?,Groovy,Java,BETTER,BETTER,NONE,1.0,114
+I1275196785,I no more defend that Nokia is superior to Samsung as I did all tese days.,Nokia,Samsung,BETTER,BETTER,WORSE,1.0,74
+I1278573372,"In other words, CoffeeScript is an attempt to replace JavaScript syntax with a better one based on experiences from Ruby and Python worlds.",JavaScript,Python,NONE,NONE,WORSE,0.8,139
+I1280016715,"I notice many people say they will buy the ""better quality car"" when they make one well lately Cadillac was second only to Lexus and many here still bought Infinity, or Acura, Benz, etc. or kept their remaining.",Cadillac,Lexus,BETTER,BETTER,WORSE,1.0,211
+I1291076274,"Instead of bottom-fishing with lost causes like General Motors ( NYSE: GM     ) or Ford ( NYSE: F     ) , I think you'd be better served kicking the tires on Nissan.",Ford,Nissan,NONE,NONE,WORSE,1.0,165
+I1291586391,"Instead of pizza, it'll be easier to choose a salad or healthy sandwich .",pizza,sandwich,NONE,BETTER,WORSE,1.0,73
+I1294308631,In summary - a plaigarized technology - a bad cement and a worse concrete.,cement,concrete,NONE,NONE,BETTER,1.0,74
+I1295487504,"Intel PCs can do art and music, but the Apple stuff was better at it.",Intel,Apple,NONE,BETTER,WORSE,1.0,69
+I1297767926,"In terms of revenues, Cisco is growing faster than Intel, about as fast as Juniper, and a bit behind Microsoft.",Intel,Microsoft,NONE,NONE,WORSE,0.8,111
+I1301892343,In the Cafe Promenade the pizza was good but the sandwich selection could have been better compared to Carnival.,pizza,sandwich,WORSE,NONE,BETTER,1.0,112
+I1307312807,In their second meeting of the season Killorn and harvard got the better of Gotovets and cornell.,harvard,cornell,NONE,NONE,BETTER,0.6,97
+I1310886349,"In the past ten years, auto manufacturing jobs have grown at a faster pace in transplant states like georgia, Alabama or Mississippi than they are in michigan.",georgia,michigan,NONE,NONE,BETTER,0.8,159
+I1340683567,"Ironically, our Ferrari, lambo, GTRs, bentley is more then BMW //M and MERC AMG.",Ferrari,BMW,NONE,NONE,BETTER,1.0,80
+I1341638118,"Is a BMW 3 series $15,000 better than a Ford Focus?",BMW,Ford,BETTER,BETTER,NONE,1.0,51
+I1343885079,I say Google is the new Microsoft and in many cases they are even worse.,Google,Microsoft,NONE,NONE,WORSE,1.0,72
+I1346801935,Is Google GDrive any better than Microsoft SkyDrive?,Google,Microsoft,BETTER,BETTER,NONE,1.0,52
+I1348966353,(Is It easier to beat a google than a facebook?),google,facebook,BETTER,BETTER,NONE,1.0,48
+I1350738223,Is murder worse in missouri than michigan?,missouri,michigan,BETTER,BETTER,WORSE,1.0,42
+I1352826147,":) Is Python ""better"" than Perl?",Python,Perl,BETTER,BETTER,NONE,1.0,32
+I1353330891,"Is Ruby truly better than Python (scripting/programming wise), what about speed wise?",Ruby,Python,BETTER,BETTER,NONE,1.0,85
+I1355510312,Is the amazon Prime feed going through Roku better than renting through itunes and Apple TV?,amazon,itunes,BETTER,BETTER,NONE,1.0,92
+I1361562997,I switched from Nikon at the time and feel the camera build quality of the Leica was better.,Nikon,Leica,NONE,NONE,WORSE,1.0,92
+I1365028328,It also results in extra dimensional stability -- plywood doesn't swell or crack like solid sawed lumber.,plywood,lumber,NONE,NONE,BETTER,1.0,105
+I1368119323,It can be very easy to change Perl code quickly but slower in PHP.,Perl,PHP,WORSE,NONE,BETTER,1.0,66
+I1370451449,It could be worse for Microsoft - Apple could be dominating this market.,Microsoft,Apple,NONE,NONE,WORSE,1.0,72
+I1370990630,It'd be a lot easier (for me) in PHP but I have to use JavaScript this time.,PHP,JavaScript,WORSE,NONE,BETTER,1.0,76
+I1377007203,"It gets better-this is cnn, not fox.",cnn,fox,NONE,NONE,BETTER,1.0,36
+I1390329615,I think that Scala probably is not better than Java yet.,Scala,Java,BETTER,BETTER,WORSE,1.0,56
+I1392037045,I think the problem that both Apple and Google have is that Intel is getting better at making low power x86 chips.,Google,Intel,NONE,NONE,WORSE,0.8333333333333334,114
+J1429211763,I traded in a much nicer Samsung cell phone for a lesser (in terms of bells and whistles) Nokia phone because I just like their layout better.,Samsung,Nokia,NONE,NONE,BETTER,0.8,142
+J1432575082,"Its 362 nit brightness level is one of the best we've seen, improving on the MacBook and Samsung, but the Lenovo's 646:1 contrast ratio is mediocre - the Toshiba Kira hit a mighty 2,326:1.",Samsung,Toshiba,WORSE,WORSE,NONE,0.4,188
+J1433056709,"Its a bouncy, poorly riding, poorly handling live axled truck, while the ML has an independent suspension, smooth and solid modern suv.",truck,suv,NONE,BETTER,WORSE,0.6,135
+J1434114386,"It's a decent rival to the Mercedes-Benz CLA45 AMG, though the Mercedes still wins when it comes to power output; let's hope Audi hurries up and brings out a new RS 3.",Mercedes-Benz,Audi,NONE,NONE,BETTER,1.0,167
+J1444398784,It's definitely gotten worse since we moved to North carolina from california.,carolina,california,NONE,NONE,WORSE,1.0,78
+J1448123510,"It's far easier to exploit flaws in Windows XP than in newer editions, such as Windows 7 and Windows 8, noted Moore, because of the additional security measures that Microsoft's baked into the newer operating systems.",Windows XP,Windows 8,NONE,NONE,WORSE,1.0,217
+J1448585060,"It's frustrating when there's very little reason (and if there is a halfway decent reason, I'd like to hear about it---and don't give me that ""ease of use"" crap; any competent programmer can use either API rather well) not to use OpenGL over Direct3D, other than the ""Nobody ever got fired for choosing Microsoft"" mentality.",OpenGL,Direct3D,BETTER,BETTER,NONE,1.0,324
+J1448752061,"It's funny--I love it when doing Smalltalk, not so much when coding Java .",Smalltalk,Java,NONE,NONE,BETTER,1.0,74
+J1449651088,"It's gotten better with youtube, but Kreva's itunes page is bare except for his collaboration with Miyavi.",youtube,itunes,NONE,NONE,BETTER,0.6,106
+J1454866486,It's like giving up my Toyota because somebody promises that the new Ford is better.,Toyota,Ford,NONE,NONE,WORSE,1.0,84
+J1475921268,"It was a little cooler here in michigan that it was in Florida and georgia, but in reality not all that bad for the time of year.",michigan,georgia,NONE,NONE,BETTER,0.8,129
+J1487908989,"I tweeted back that I thought football, even a lousy Pro Bowl game, still would top hockey in Chicago.",football,hockey,NONE,NONE,BETTER,0.8,102
+J1491454868,It would be a virtuous cycle for PHP(things get better because the status quo is better) and a vicious cycle for Java(things get worse because the status quo is worse).,PHP,Java,NONE,NONE,BETTER,1.0,168
+J1491637124,"It would be faster to turn on Windows XP, wait 10 minutes for it to boot, and check email that way."" - TechTarget news director Bridget Botelho's husband, on the non-intuitive nature of Windows 8 on a Samsung Series 7 Slate tablet .",Windows XP,Windows 8,NONE,NONE,BETTER,1.0,232
+J1496069591,"I used to use Perl or white my own CGI's in C, but PHP is so, much easier than either.",Perl,PHP,NONE,NONE,WORSE,0.4,86
+J1499185767,"I've been going through Ruby, enjoy it, like it better then Python, never really dug PHP.",Ruby,Python,NONE,NONE,BETTER,1.0,89
+J1501029538,I've compared Firebird with MySQL (don't know PostgreSQL so well) and it is really better.,MySQL,PostgreSQL,NONE,NONE,BETTER,1.0,90
+J1506591905,I've seen much better from Dell and certainly the Sony XBrite and Toshiba TruBrite screens are better than what the Inspiron 6000 offers up.,Dell,Sony,NONE,NONE,WORSE,0.6,140
+J1513178281,I was also surprised at how robust the query planner and optimizers are compared to Oracle when our performance testing found PostgreSQL to be faster.,Oracle,PostgreSQL,NONE,NONE,WORSE,0.6,150
+J1514393967,"I was decent at baseball, alright at football.",baseball,football,NONE,NONE,WORSE,1.0,46
+J1514394452,"I was deciding between that and the Honda Civic 2.0 and in my opinion, the handling of the Ford was better than the Civic 2.0.",Honda,Ford,NONE,NONE,WORSE,1.0,126
+J1517412012,"I was merely Kidding :) ... As a photographer who does large prints(and needs a MF camera) the hasselblad is visibly superior than a Dx format camera, and as a street photographer the Leica is unnoticeable and often can foil as a Point n shoot but, If you want to go out and just take great pictures (like the ones you have)a Nikon is perfect.",Leica,Nikon,NONE,NONE,WORSE,1.0,343
+J1532949471,"I would have expected Python to be slower than Java, but apparently that is not the case.",Python,Java,WORSE,WORSE,BETTER,0.4,89
+J1533588532,"I would kill to see good games written in Java or better yet, Scala or Clojure.",Java,Scala,NONE,NONE,WORSE,1.0,79
+J1535496541,"I wouldn't be too concerned about using Windows 8, Windows 7 is usually regarded as 'better'.",Windows 8,Windows 7,NONE,NONE,WORSE,1.0,93
+J1535912825,I wouldn't say Microsoft is worse then Apple.,Microsoft,Apple,WORSE,BETTER,NONE,1.0,45
+J1544989266,Java does not support Lambdas like Python or Code Blocks like Smalltalk.,Java,Smalltalk,NONE,NONE,WORSE,0.8,72
+J1545009560,"Java has an impoverished model of abstraction; Groovy is a decent alternative (I find its syntax and a few language features a little weird at times, but when you come from a Lisp/Smalltalk background, languages with extensive syntax always seem a little crude :)",Java,Groovy,NONE,NONE,WORSE,0.8,263
+J1545119870,"JavaScript reminds me of Perl 4 with a slightly better syntax and a couple of additional features (basic lexical scoping, higher order functions, and method dispatch, not to mention competing implementations with a lot of effort spent on optimizing away efficiencies inherent in some of the poorest misfeatures of the language's design).",JavaScript,Perl,NONE,NONE,BETTER,1.0,337
+J1548338444,Jensen Comment:  Actually Microsoft has a better fix to Windows problems created by Sony.,Microsoft,Sony,NONE,NONE,BETTER,0.8,89
+J1562648909,JS is better than GWT? Scala is better for Java in the enterprise?,Scala,Java,BETTER,BETTER,NONE,1.0,66
+J1563981247,"juice"" is ok, but ""cider"" is much better.",juice,cider,NONE,NONE,WORSE,1.0,41
+K1588658642,"Kind of a toss up as to which is easier, depending on how good your PHP coding is compared to your JavaScript coding.",PHP,JavaScript,BETTER,WORSE,NONE,1.0,117
+K1601652077,"Larry Fitzgerald upgraded from Derek Anderson to Kevin Kolb, but so far that's like upgrading from a Honda to an Accura...yeah it's better but you really wanted a BMW.",Honda,BMW,WORSE,NONE,BETTER,1.0,167
+K1604521684,Last time I checked Apple had 3% market share (Personal Computers) Sony does better.,Apple,Sony,NONE,NONE,WORSE,0.8,84
+K1608487142,"Latex paint provides better fade resistance, flexibility, chalk resistance and adhesion.",paint,chalk,NONE,NONE,BETTER,1.0,88
+K1616130741,"Leica makes a very nice low end (about $20K)instrument that compares well in terms of image quality, etc, to all of the others (Nikon is poorer, Olympus is about the same).",Leica,Nikon,NONE,NONE,BETTER,0.8,172
+K1616511483,Lemon juice clabbers milk slower so it works better.,juice,milk,NONE,NONE,WORSE,1.0,52
+K1636290264,"Lisp is about 1.5 to 4 times faster than Java, and about 10 to 50 times faster than Python.",Java,Python,BETTER,BETTER,NONE,0.6,91
+K1640432453,"Lo and behold, the same code runs 280 times slower when compiled as a Groovy class than its Java counterpart.",Groovy,Java,BETTER,BETTER,NONE,0.8,109
+K1667848424,"Making matters worse for the company is the fact that its sales were eclipsed last month by Chrysler Group LLC, an automaker that almost ceased to exist a couple of years ago and one which historically has always trailed far behind Toyota.",Chrysler,Toyota,NONE,NONE,WORSE,1.0,239
+K1691972633,"Maybe it would be better if I played golf, not hockey.",golf,hockey,NONE,NONE,BETTER,1.0,54
+K1693776407,"Maybe things will be better in oregon in 2 to 5 yrs but right now they have the second highest unemployment rate in the country, right behind michigan.",oregon,michigan,WORSE,WORSE,BETTER,1.0,151
+K1695826438,"Mazda 6, Honda Accord Euro and Toyota Camry better watch out for this advanced strategic move from Ford.",Toyota,Ford,BETTER,NONE,WORSE,1.0,104
+K1702651089,"Mediocre TN panels are usually the best we get on laptops (i.e., anything Apple, or some of the higher resolution upgrade options on Dell, etc).",Apple,Dell,NONE,NONE,WORSE,0.6,144
+K1706816148,Men's basketball finds itself somewhere between North carolina (very good) and missouri (decent) when it comes to it's national ranking entering the 2011 season.,carolina,missouri,NONE,NONE,BETTER,1.0,161
+K1707560073,"Mercer leads at 556, one stroke better than georgia Tech with virginia Tech third at 565.",georgia,virginia,NONE,NONE,BETTER,0.8,89
+K1707970969,"Merging SW development effort with Intel did not work out, and outsourcing OS to Microsoft is going even worse.",Intel,Microsoft,WORSE,BETTER,NONE,1.0,111
+K1709061737,"metal ramps are good, but concrete is better.",metal,concrete,NONE,NONE,WORSE,1.0,45
+K1713090704,michigan  ran into one of the nation's better defenses in a 12 point loss at virginia.,michigan,virginia,BETTER,NONE,WORSE,0.8,86
+K1721800388,"missouri is a decent team and I expect them to give Florida, Tennessee, and South carolina all they can handle and win 2 of those games.",missouri,carolina,NONE,NONE,BETTER,1.0,136
+K1722396324,"mit is harder to graduate from (on average probably, at minimum certainly) than HYP or stanford.",mit,stanford,BETTER,NONE,WORSE,1.0,96
+K1730848526,"More challenging yet, the van's designers had only shaped the engine box for a four-cylinder engine, meaning Toyota could not fit the Previa with a V-6 engine to compete with the faster and more powerful Chrysler minivans--or those from Ford and General Motors as well.",Toyota,Chrysler,BETTER,NONE,WORSE,0.8,269
+K1738171240,"Most chargers for Bluetooth headsets (which, from my limited experience, are wall chargers only) charge slower than a USB cable.",Bluetooth,USB,BETTER,BETTER,WORSE,0.8,128
+K1739845699,Mostly that it's almost definitely harder to write maintainable PHP than it is to write maintainable Perl.,PHP,Perl,BETTER,NONE,WORSE,1.0,106
+K1740678343,Most of the applications I see that use Oracle would work fine or better with an OSS database such as PostgreSQL or even SQLite.,Oracle,PostgreSQL,NONE,BETTER,WORSE,0.6,128
+K1744946329,Motorola was king before Nokia came in.,Motorola,Nokia,NONE,BETTER,WORSE,1.0,39
+K1750717112,"MrSeb writes ""In a twist that reinforces Valve's distaste for Windows 8, it turns out that the Source engine - the 3D engine that powers Half Life 2, Left 4 Dead, and Dota 2 - runs faster on Ubuntu 12.04 and OpenGL (315 fps) than Windows 7 and DirectX/Direct3D (270.6 fps); almost a 20% speed-up.",OpenGL,Direct3D,NONE,NONE,BETTER,0.4,296
+L1754050404,Much better than JavaScript e -mails/PHP.,JavaScript,PHP,NONE,NONE,WORSE,1.0,41
+L1759326361,"My 9800GTX+ does 0% Blanked OpenCL AP tasks in a bit under 4 hours (13,600 secs), while my GTX460 does them in just over half an hour (2,100 secs), so my 9800GTX+ is about 6½ times slower than my GTX460, while at CUDA MB the 9800GTX+ is only around twice as slow as the GTX460, for a 0.37 AR the 9800GTX+ does it around 1250 secs, while the GTX460 does it in 565 secs.",OpenCL,CUDA,WORSE,WORSE,NONE,1.0,368
+L1760944919,"My Brit friends Denny and Gillian are continually disgusted by my affection for ""eggy bread"" and maple syrup, or worse-sausage studded with apple and raisins.",bread,sausage,NONE,NONE,BETTER,1.0,158
+L1763230731,"My Dell laptop E1505 works fine, my Intel and AMD destop computers are frozen solid.",Dell,Intel,NONE,NONE,BETTER,0.8,84
+L1765614031,My first choice was Asus then Gigabyte.,Asus,Gigabyte,NONE,NONE,BETTER,0.6,39
+L1766093493,"My Ford Expedition and Honda Accord have way better air conditioning, BMW is a bit noisy and ineffective, you will need to be adjusting temperature because automatic settings don't work effectively",Ford,BMW,NONE,NONE,BETTER,1.0,197
+L1769941943,"My last PC had Windows 7 and I would use it from time to time until I realized Windows 8 was better, faster and had less problems.",Windows 7,Windows 8,NONE,NONE,WORSE,0.8,130
+L1772955680,"My only point is that the presentation of my numbers is off, but there is no case in which OpenGL has ever been faster than Direct3D in all tests I have run on all machines.",OpenGL,Direct3D,BETTER,BETTER,WORSE,1.0,173
+L1773172863,"My original guess was that division might be slower because, for a lot of cases (such as 42/5) the results are non-Integer, so it has to use (mildly slower) Floating-point hardware to find the result.",Integer,Floating-point,WORSE,NONE,BETTER,0.8,200
+L1791578878,"Netflix, amazon and I think the new Genius tool for itunes have much better systems.",amazon,itunes,NONE,NONE,WORSE,0.4,84
+L1804968540,Nike didn't look to the designs of Adidas to make a better sneaker.,Nike,Adidas,NONE,NONE,WORSE,0.8,67
+L1805195115,"Nikon gave to Sigma a first ""wake-up call"" with the cheaper and much better 35mm 1.8DX.",Nikon,Sigma,NONE,NONE,BETTER,1.0,87
+L1805844629,"Nintendo, Microsoft, Sony from best to worse in that exact order.",Microsoft,Sony,NONE,NONE,BETTER,1.0,65
+L1806075900,"Nissan/Infiniti have been the Houdini of the motor industry, not very long ago it did look as though they might go under because of their horrendous debts but with Renault on board and some truly exciting new products the future looks a great deal better.",Nissan,Renault,NONE,NONE,WORSE,0.6,255
+L1809946316,"No car drives nicer and safer than this one, made of a real steel, not plastic or aluminum.",steel,aluminum,NONE,NONE,BETTER,1.0,91
+L1813128167,"No, I've had some very bad experiences with a bad language :-) And having started getting into Groovy, I might say that time spent on something like, say, closures, would be time better spent in the Java world then parametric polymorphism.",Groovy,Java,NONE,NONE,WORSE,1.0,239
+L1813324493,"Nokia is just one of many Windows 8 phones, and not even the best because Samsung is far better!",Nokia,Samsung,BETTER,NONE,WORSE,1.0,96
+L1834721862,"Not only are there reasonable alternatives in languages like Scala, Groovy, and C#, but there is even a better option that has already been explored for Java:",Groovy,Java,NONE,BETTER,WORSE,1.0,158
+L1837290234,"Not sure, but I am sure that Chrysler can not do 25%+ better than GM and Toyota.",Chrysler,Toyota,NONE,BETTER,WORSE,1.0,80
+L1837304663,Not sure Ford is going to be any better than Honda in that regard.,Ford,Honda,BETTER,BETTER,NONE,0.6,66
+L1839693916,"Not to ruin the review, but in our HTPC real world benchmark the Express 6G was 243% faster than the Samsung SSD and an astonishing 361% faster than the Apple stock Toshiba drive; and that's not even the worst drubbing the OWC SSD levied.",Samsung,Toshiba,BETTER,BETTER,NONE,1.0,238
+L1839696258,"Not to say, Canon also have lousy auto ISO system, Sigma quality 24-70 and 70-200, very high read noise (low dynamic range), inferior entry level lenses compared to Nikon, and many more.",Sigma,Nikon,BETTER,NONE,WORSE,1.0,186
+L1842619513,No way is Python or TCL faster than Java.,Python,Java,BETTER,BETTER,WORSE,1.0,41
+L1843135135,Nowdays though it seems that SE is makeing better quality built phones followed closely by Moto and Siemens (love the SL55 BTW - just i need BT) and last and IMO least - Nokia.,Siemens,Nokia,NONE,NONE,BETTER,0.8333333333333334,176
+L1852608729,"Now this last system used only a 1.8GHz Opteron 144 processor as opposed to the 2.0GHz Opteron 246 of the IBM systems, so the Intel compiler is actually faster at 1093/1162.",IBM,Intel,NONE,NONE,WORSE,0.8,173
+L1852967075,"Now, unlike Microsoft, Apple isn't selling an inferior product.",Microsoft,Apple,NONE,NONE,WORSE,0.8,63
+L1853878975,"Now whether or not hockey hits are harder than football, who knows.",hockey,football,WORSE,BETTER,NONE,1.0,67
+L1861225768,Obviously tennis was easier but baseball was a real challenge.,tennis,baseball,NONE,WORSE,BETTER,1.0,62
+L1887405462,"Once I know Java, is jsp easier to learn than PHP?",Java,PHP,BETTER,BETTER,NONE,0.6,50
+L1892630713,"One cannot have communion with beer and steak (both of which, I, for one, think superior to bread and wine), just as one cannot baptise someone with sand rather than water.",steak,bread,NONE,NONE,BETTER,1.0,172
+L1895124577,"one I know who's seen Ruby code argues that Perl is better -- but then,",Ruby,Perl,NONE,NONE,WORSE,1.0,71
+L1903440718,One reviewer felt that Mitt Romney delivered a better performance than John F. kennedy against nixon.,kennedy,nixon,NONE,NONE,BETTER,1.0,101
+L1905912546,One was for pistol barrels and one with a much slower twist was for rifle barrels.,pistol,rifle,WORSE,NONE,BETTER,1.0,82
+L1909328976,"Only 78% of Apple customers were satisfied or very satisfied with their value for money; Lenovo was worse, with only 70% satisfaction and Sony was bottom with 62%.",Apple,Sony,NONE,NONE,BETTER,0.8,163
+L1909870428,"Only california is projected to lose more graduates than michigan, and only Vermont will shrink faster.",california,michigan,BETTER,BETTER,WORSE,1.0,103
+L1910672141,"Only Nevada (14.4 percent), michigan (13 percent) and california (12.4 percent) were worse.",michigan,california,NONE,NONE,BETTER,1.0,91
+L1919016402,"On the other hand, overall turnout grew at a slower pace in georgia than virginia or North Carolina after adjusting for population growth.",georgia,virginia,BETTER,BETTER,WORSE,1.0,138
+L1923137616,OO in Ruby or Smalltalk is very different than OO in C# or Java.,Smalltalk,Java,BETTER,BETTER,NONE,1.0,64
+M1926897745,"Oracle has superior clustering to PostgreSQL, better native XML support, autonomous transactions, procedures that can return multiple result sets, a really solid embedded JVM for procedures, proven scaling to absurdly huge database sizes, etc.",Oracle,PostgreSQL,NONE,NONE,BETTER,1.0,243
+M1929526579,"oregon maybe isn't Notre Dame or michigan, but (it is) certainly better known than George Mason or Gonzaga,"" McEvoy said.",oregon,michigan,NONE,NONE,WORSE,1.0,121
+M1932198337,"Originally, that up there said 'Smalltalk' instead of 'Java'.",Smalltalk,Java,NONE,NONE,BETTER,1.0,61
+M1933738630,Or may be it's related to the inferior CPU/memory management in Windows 98 in comparison with Windows XP?,Windows 98,Windows XP,NONE,NONE,WORSE,0.8,105
+M1936854585,"OS/2 was technically superior, but Microsoft beat IBM through marketing and by tying its Office applications to Windows.""",Microsoft,IBM,NONE,NONE,BETTER,0.6,121
+M1939331226,"Other JVM languages - Java is a solid od workhorse, but the real innovation is happening with the new JVM langauges (Scala, Clojure in particular).",Java,Scala,NONE,NONE,WORSE,1.0,147
+M1943087901,"Otherwise, Microsoft will build hardware that better integrates with the operating software, and companies like Dell will suffer.",Microsoft,Dell,NONE,NONE,BETTER,1.0,129
+M1952681640,Our Sources tell us that Pepsi felt that Lynxxx who spent the better part of 2011 Touring and doing TV/Radio interviews has been career dead for just too long and this is affecting their brand presence in Nigeria which is currently controlled by arch rival Coca-Cola.,Pepsi,Coca-Cola,NONE,BETTER,WORSE,1.0,267
+M1979675884,"pennsylvania is no better, but states such as South carolina and Florida have no estate or inheritance tax.",pennsylvania,carolina,NONE,NONE,WORSE,1.0,107
+M1984940196,"Performance The Ford Fusion Energi has less horsepower than the Toyota Avalon Hybrid, so it will probably be somewhat slower.",Ford,Toyota,BETTER,BETTER,WORSE,1.0,125
+M1988300932,Perl has a large user base but it is still easier to find candidates that already know industrial C++ or Java.,Perl,Java,BETTER,NONE,WORSE,1.0,110
+M1988309240,Perl isn't inherently a better language than Java.,Perl,Java,BETTER,BETTER,WORSE,1.0,50
+M1988309762,Perl is slower and faster than Java,Perl,Java,WORSE,WORSE,BETTER,0.6,35
+M1988332584,"Perl's still at a decent level, on par with PHP and still above Python and...",PHP,Python,NONE,NONE,BETTER,1.0,77
+M1988340193,Perl would have been more better had there been good REPL like Python.,Perl,Python,NONE,BETTER,WORSE,1.0,70
+M1989843760,"Personally, I see all of these major players in the hardware segment of the market all supporting Blu-Ray (Samsung, Panasonic, and LG, in addition to Sony) while only Toshiba has support for their format, as an indication that Blu-Ray is, at least from a technological standpoint, a superior format.",Samsung,Toshiba,NONE,NONE,WORSE,1.0,299
+M1990127364,"(Personally, my users demand OCamL anyway, so it's not an additional build for me; and it's much faster to build than Erlang or Haskell and I think also than Perl; don't know about Python).",Haskell,Python,BETTER,BETTER,NONE,0.6,189
+M1997837740,Pick your beverage for better nutrition - milk for a calcium boost or juice instead of soda.,milk,soda,NONE,NONE,BETTER,1.0,92
+M2000603877,Pity Apple didn't kill the IBM PC much earlier and we'd have the vastly superior Motorola technology.,Apple,IBM,WORSE,BETTER,NONE,1.0,101
+M2000765046,"pizza cooks faster and is more tender, bread crusts as it's never crusted before.",pizza,bread,NONE,NONE,BETTER,1.0,81
+M2003218877,plastic and brass would be much easier on your wood.,plastic,wood,NONE,NONE,BETTER,1.0,52
+M2003247030,plastic frames are far harder to work with than wood.,plastic,wood,BETTER,BETTER,WORSE,0.6,53
+M2003260280,"Plasticky in the way a Samsung Galaxy S II feels solid, although far from finely machined like a Nokia N8 .",Samsung,Nokia,NONE,BETTER,WORSE,1.0,107
+M2004309352,Playing baseball involved different skills than hockey... which one is harder?,baseball,hockey,BETTER,BETTER,NONE,1.0,78
+M2012558937,"Plus, unlike hockey or, worse, soccer, football and baseball allow for a lot of downtime.",hockey,football,NONE,NONE,WORSE,0.8,89
+M2032209894,"Pretty much if we took in a MBZ,BMW or Lexus it was solid gold ( sport car hands down a Porshe, Audi wasn't our first choice to have on the lot.",Lexus,Audi,NONE,NONE,BETTER,1.0,144
+M2034317638,"Primarily Ruby on Rails 3.2, but always wanting to get better at JavaScript too.",Ruby,JavaScript,NONE,NONE,BETTER,1.0,80
+M2037680565,"Probably it's that Windows 98 does not recognize your audio interface, something that Windows XP does better about the drivers.",Windows 98,Windows XP,NONE,NONE,WORSE,0.8,127
+M2047625883,P.S.: I think Pepsi works better in flavored colas than Coke because Cokes trademark acidity (which I enjoy most in its old-relable regular Coca-Cola form) sometimes conflicts with the other flavors.,Pepsi,Coca-Cola,NONE,NONE,BETTER,1.0,199
+M2054175207,"Python/Django/GeoDjango are a mature combination, with a somewhat slower, steadier development pace than Ruby/Rails/RGeo, which ...",Python,Ruby,WORSE,NONE,BETTER,0.6,131
+M2054181256,"Python has a better standard library, but Perl has a better nonstandard library.",Python,Perl,BETTER,WORSE,NONE,0.8,80
+M2054185098,Python is also object oriented and it's faster (as fast as PHP).,Python,PHP,WORSE,BETTER,NONE,0.8571428571428571,64
+M2054186891,"Python is much better suited as a ""glue"" language, while Java is better characterized as a low-level implementation language.",Python,Java,BETTER,BETTER,NONE,0.8333333333333334,125
+M2054187004,"Python is nice and easy to use and learn but it runs like treacle much much slower than C, C++ or Java etc... if you're looking to explore the world of non C style programming try a functional language like Haskell it's a recursive programming language, no for loops and no variables it's quite interesting though.",Python,Haskell,BETTER,BETTER,WORSE,1.0,314
+M2054187295,"Python isn't perfect, but it sure made a lot of things easier when coming from C++/Java/Perl",Python,Java,NONE,NONE,BETTER,1.0,92
+M2054187406,"Python is one of the faster scripting languages I've seen around, but last time I checked it was still 10x slower than Java and 20x slower than C for most stuff.",Python,Java,BETTER,BETTER,WORSE,0.6,161
+M2054203759,"Python skills a plus, but not required, especially if you're solid at JavaScript.",Python,JavaScript,NONE,NONE,BETTER,0.8,81
+M2054206661,"Python , the best language a business can use without risking the lack of programmers ( Common Lisp is better, but I don't know anyone who knows it except for me)",Python,Lisp,NONE,NONE,WORSE,1.0,162
+M2058376611,"- QUICK MOVEMENT The speed of your player is based on the weight of your gun, so when the round starts, switching to the pistol or even better, your knife, will result in much faster movement.",pistol,knife,NONE,NONE,WORSE,1.0,192
+M2068011329,"Rather than take a sporty approach, and build a true rear-wheel drive competitor to the BMW 3-Series and Mercedes-Benz 190E sedans, Lexus took a much softer and safer route, basing their entry-level ES, or ""Executive Sedan,"" on the very un-sporty front-wheel drive Toyota Camry.",BMW,Toyota,NONE,NONE,BETTER,1.0,278
+M2083039731,Regarding this C/C++/D/Java/C#/etc are worse and Python and Go are better.,Java,Python,NONE,NONE,WORSE,1.0,74
+N2102304931,"Reviewed by: Lianne Reitter , send e-mail Published by: Stardock Corporation, go to the web site Requires: Works best with Windows XP, but also works with Windows 98, ME and 2000; Pentium III or faster CPU, 128MB RAM MSRP: $49.95",Windows XP,Windows 98,NONE,NONE,BETTER,1.0,229
+N2120480346,"Ruby 1.9 is about 3x faster, which should put it in the 20x slower than native ballpark that Perl and Python are at today.",Ruby,Python,WORSE,NONE,BETTER,1.0,122
+N2120520018,"Ruby looks pretty easy to learn, and it even looks fun; but I'm skeptical about whether or not I'd be safer going down the more established PHP route.",Ruby,PHP,NONE,NONE,WORSE,0.8,150
+N2124153523,"Ryan, it's called conductivity stone transfers heat at a slower rate than steel.",stone,steel,BETTER,NONE,WORSE,1.0,80
+N2130852735,Samsung got the market jump on Nokia going the faster but less vetted approach of Android.,Samsung,Nokia,NONE,NONE,BETTER,1.0,90
+N2130997766,"Samsung voids warranty for rooting, Motorola doesn't.",Samsung,Motorola,NONE,NONE,WORSE,0.8,53
+N2137844702,Scala enums are inferior to Java enums _and_ are incompatible.,Scala,Java,NONE,BETTER,WORSE,1.0,62
+N2137845767,"Scala is a hell of a lot faster than PLT Scheme, and it plays perfectly with the vast Java ecosystem, while Scheme does not.",Scala,Java,BETTER,BETTER,NONE,1.0,124
+N2164548773,Setting up Python running as FastCGI on either Apache or lighttpd is much harder than creating a page of PHP.,Python,PHP,WORSE,BETTER,NONE,1.0,109
+N2200288249,Should Bluetooth mp3 access be faster than USB memory stick?,Bluetooth,USB,BETTER,BETTER,NONE,1.0,60
+N2200917031,"Shouldn't nixon have surrendered to McGovern in 1972, the better to lay the groundwork for a reagan resurgence in 1976?",nixon,reagan,NONE,NONE,WORSE,1.0,119
+N2204403635,"Sigma makes some decent lenses, but Nikon knows their own exposure system better than anyone.",Sigma,Nikon,NONE,NONE,WORSE,1.0,93
+N2209429179,"Since 2003 I owned about 15 phones, and to be honest, Nokia and SonyEricsson will always stand high, but as I said, Siemens in the end just lost it due to not being smart enough to realise that there were/are better companies, and that you need to develop everything in the phone except for what they've just done, change the design.",Nokia,Siemens,WORSE,NONE,BETTER,1.0,333
+N2223380016,Smalltalk had a nice bytecoded multi-platform virtual machine long before Java.,Smalltalk,Java,NONE,NONE,BETTER,1.0,79
+N2237022505,"So if you've built a TV library around iTunes, you own iOS devices and you rip your DVDs, the Apple TV will probably be a better choice.",iOS,Apple TV,NONE,NONE,WORSE,1.0,136
+N2243612645,Solid beer but not my cup of tea.,beer,tea,NONE,BETTER,WORSE,0.6,33
+N2243691224,Solid pitching efforts earn michigan baseball team a 5-2 win againt Coastal carolina,michigan,carolina,NONE,NONE,BETTER,1.0,84
+N2262482539,Sony behaves like Apple but without the ability to make something better than what it is trying to emulate.,Sony,Apple,NONE,NONE,WORSE,1.0,107
+N2262488509,Sony can now build up from the Cell and just make it more powerful and faster in the way Intel advances their tech.,Sony,Intel,NONE,NONE,BETTER,0.6,115
+N2262543090,"Sony, Grass Valley, Lightworks, even the inferior Apple.",Sony,Apple,NONE,NONE,BETTER,1.0,56
+O2266722675,So Scala is no better off then Java.,Scala,Java,BETTER,BETTER,WORSE,0.6,36
+O2270037495,So the standard (C)Python is not necessarily slower than Java or C#.,Python,Java,WORSE,WORSE,NONE,1.0,68
+O2278291014,So why is Mario golf World Tour superior to Mario tennis Open?,golf,tennis,NONE,NONE,BETTER,1.0,62
+O2288711987,"-SQL Server is significantly superior to MySQL, faster than PostgreSQL, and for most businesses is cheaper than Oracle.",MySQL,PostgreSQL,BETTER,BETTER,NONE,1.0,119
+O2297499894,steel is 3 times harder than aluminum.,steel,aluminum,BETTER,WORSE,NONE,1.0,38
+O2302644844,"Still much better in Java, but the Scala plugin is catching up fast.",Java,Scala,WORSE,WORSE,NONE,0.8,68
+O2305298937,stone is harder than metal.,stone,metal,WORSE,WORSE,NONE,0.6,27
+O2320890850,"Summary: I think Asus can sale a faster computer for that price anyway, it is good but not cheap, the touch screen is the best part, well if the computer have Windows 8, but every body knows that Microsoft Windows XP, vista, 7, 8 are crap, i will install on it Red Hat Enterprise Linux Desktop, Linux is the...",Windows 8,Windows XP,WORSE,NONE,BETTER,0.6,310
+O2325937425,"Surely, I can do no worse suggesting lame ideas for beating Google than Microsoft already has.",Google,Microsoft,BETTER,BETTER,NONE,1.0,94
+O2344171182,tea is steeped in boiling water and is a superior alternative to lobster juice.,tea,juice,NONE,NONE,BETTER,1.0,79
+O2349796846,Terrible football field; worse baseball field.,football,baseball,WORSE,NONE,BETTER,1.0,46
+O2351021185,Tethering over Bluetooth is slower but being wireless is a great advantage over USB.,Bluetooth,USB,WORSE,NONE,BETTER,1.0,84
+O2356291690,Thanks to Apple removing Google maps which is 1000x better.,Apple,Google,NONE,NONE,WORSE,1.0,59
+O2369458727,That makes the 2013 Fusion Energi 8 MPGe better than the Chevrolet Volt and 13 MPGe more fuel efficient than the Toyota Prius Plug-In models.,Chevrolet,Toyota,BETTER,BETTER,NONE,1.0,141
+O2373627341,"That said, the solid metal base provides a 25-degree range of motion, and much more stability than you get from the Samsung Series 7 (DP700A3B-A01US) ($1,099 direct, 3.5 stars) or the Sony VAIO VPC-L231FX/W ($999.99 list, 4.5 stars), if less than you get with the Dell Inspiron One 2320 ($1,249.99 direct, 4 stars).",Sony,Dell,NONE,NONE,BETTER,0.8,315
+O2374227557,"That Samsung, LG, Sony, etc don't have the source code, just means that Google are able to release faster, surely?",Sony,Google,NONE,NONE,WORSE,0.8,114
+O2374472881,"That's a problem for Dell, and it won't get any better until it starts beating Apple at its own game.",Dell,Apple,NONE,NONE,WORSE,1.0,101
+O2375111457,That's BETTER CITY FUEL ECONOMY 2010 Ford THAN A SIX-CYLINDER TOYOTA CAMRY AND F-150 4.6L V8 15/21 Honda ACCORD.3,Ford,Honda,NONE,NONE,BETTER,0.8,113
+O2375382008,"That second conclusion is obviously true, but virginia was slaughtered Saturday by the oregon Ducks, which makes BYU's loss a little uglier.",virginia,oregon,NONE,NONE,WORSE,1.0,140
+O2380386984,"That's true, function passing is painless in Python and a little harder in Ruby.",Python,Ruby,NONE,NONE,BETTER,0.6,80
+O2389306881,The 2012 numbers provides better news for Samsung fans as it dethrones Nokia as the world's top cellphone manufacturer.,Samsung,Nokia,WORSE,NONE,BETTER,1.0,119
+O2391947780,"The 6th Generation of Chevrolet Camaro finally unveiled in Detroit, since 5th generation the Camaro is just getting better to rival the direct competition - Ford Mustang.",Chevrolet,Ford,NONE,NONE,BETTER,1.0,170
+O2393366554,"The abstraction level of both C# and Java is mediocre; it's much better than C, somewhat weaker (!) than C++, and not nearly as good as languages that support both object-oriented and functional programming (such as Lisp and Ocaml).",Java,Lisp,BETTER,NONE,WORSE,1.0,232
+O2401730773,"The answer, much like the iphone, is you better have your laptop with you.",iphone,laptop,NONE,NONE,WORSE,1.0,74
+O2416140757,"The better young male athletes in the US, said McEnroe, prefer to play football and basketball over tennis.",football,tennis,NONE,NONE,BETTER,1.0,107
+O2416675135,The bigger ill is that espn has performed much better than TNT and much worse than fox - which the vast majority of the print media will not discuss.,espn,fox,BETTER,BETTER,WORSE,1.0,149
+P2444336259,"The company was late to get lens coatings sorted out, but beginning in the late 1980s it cemented its position as a leading maker of camera optics, to the point that today I consider it to be a peer of Zeiss and Leica and, broadly speaking, slightly superior to Canon or Nikon as a lensmaker.",Leica,Nikon,NONE,NONE,BETTER,1.0,292
+P2447016108,The consensus seems to be that Java killed Smalltalk.,Java,Smalltalk,NONE,NONE,BETTER,0.8,53
+P2462335318,"The developers explained that Direct3D, the 3D component of DirectX, was a miserable hack and was very much inferior to OpenGL",Direct3D,OpenGL,BETTER,BETTER,WORSE,1.0,126
+P2464927842,"The discussion turned to having other people work on the project, and why I felt people who knew Lisp would be better to attract than people who knew, say, Java.",Lisp,Java,BETTER,WORSE,NONE,1.0,161
+P2469199001,"The ds versions looks really good, but wii could look alot better.",ds,wii,NONE,NONE,WORSE,1.0,66
+P2475268117,"The entity may even provide sample Java code, but Perl is a far better solution.",Java,Perl,NONE,NONE,WORSE,1.0,80
+P2498575631,"The frame is made from ONE-PIECE solid stainless steel, not cheap metal or aluminum like other inferior replicas.",steel,aluminum,NONE,NONE,BETTER,1.0,113
+P2504608892,"The GIS functions of MySQL, and even better ones of PostgreSQL, make light work of this, but I started simply.",MySQL,PostgreSQL,NONE,NONE,WORSE,1.0,110
+P2512573673,The Haskell program that uses lazy ByteStrings is about 30% slower than the Python script.,Haskell,Python,BETTER,BETTER,WORSE,1.0,90
+P2526085198,The interface should be written in Java (or even better Groovy).,Java,Groovy,NONE,NONE,WORSE,0.8,64
+P2538926122,"The language seems to place itself as 'faster than Groovy, simpler than Scala and incorporates all the benefits of Java'.",Scala,Java,NONE,NONE,BETTER,1.0,121
+P2543981020,"The lens from Sigma just as good(or better) as any other lenses from Nikon , Cannon or Minolta.",Sigma,Nikon,NONE,NONE,BETTER,0.6,95
+P2545585453,"The likes of Ford, BMW, Audi, Mercedes, Toyota etc don't even have to try to market a car in Europe because it just happens, but Chevrolet along with their Corvette brand has to work at it much harder.",Ford,Chevrolet,WORSE,WORSE,NONE,1.0,201
+P2558204659,The Mercedes-Benz E220 provides a solid option but it can't match the driving dynamics of the BMW or the style and interior luxury of the Audi.,Mercedes-Benz,Audi,NONE,NONE,WORSE,1.0,143
+P2565066914,The most important difference is that you did your tests using an upclocked nVidia GTX570 GPU that is great for CUDA but lousy for OpenCL.,CUDA,OpenCL,NONE,NONE,BETTER,1.0,138
+P2567375670,"The MS-product which is handling the game proper is DirectX/Direct3D, which is pretty damn decent and generally regarded as the best there is (the competitor is OpenGL).",Direct3D,OpenGL,WORSE,NONE,BETTER,1.0,169
+P2569316420,"Then again, without the Modern UI, Windows 8 doesn't offer many advantages, aside from faster performance, over Windows 7.",Windows 8,Windows 7,BETTER,NONE,WORSE,1.0,122
+P2576227089,The new Windows 7 is said to be so much better than the problems ridden Windows Vista and is a considerable improvement on Windows XP.,Windows Vista,Windows XP,NONE,NONE,WORSE,0.8,134
+P2578097270,"The NFL and professional baseball are covered to death in this country, and hockey is just cooler.""",baseball,hockey,NONE,NONE,WORSE,0.6,99
+P2583885800,"The NP900X4C was decidedly mediocre at gaming tests, thanks to its Intel HD Graphics 4000 integrated graphics, but the 62Wh battery let it last a long time on the MobileMark battery test: just short of 7 hours, ahead of the Zenbook Prime UX32VD (5:26) and the Sony VAIO E15 (4:34) by a wide margin.",Intel,Sony,NONE,NONE,BETTER,0.6,298
+P2596183037,The only sport that's slower to watch than golf is baseball.,golf,baseball,NONE,NONE,BETTER,1.0,60
+P2596262355,The only thing better than a cold glass of beer is tea with Miss McGill.,beer,tea,NONE,NONE,WORSE,1.0,72
+P2596419929,The only thing I like better than pizza is pasta.,pizza,pasta,NONE,BETTER,WORSE,0.8,49
+P2596541142,The only thing left is ditching their Direct3D stuff for OpenGL/OpenCL support to make porting games easier (which will admittedly probably never happen).,Direct3D,OpenGL,NONE,NONE,WORSE,1.0,154
+P2596879199,"The only thing worse than bringing small children to a wedding, is being invited to a small child's birthday party.",wedding,birthday,NONE,NONE,BETTER,1.0,115
+P2596880743,The only thing worse than pro football is pro hockey!,football,hockey,NONE,NONE,BETTER,1.0,53
+Q2606707362,The pasta is mediocre BUT the pizza is very good.,pasta,pizza,NONE,NONE,WORSE,1.0,49
+Q2612180852,The pizza use to be better and the Crazy bread was definately better.,pizza,bread,NONE,NONE,WORSE,0.8333333333333334,69
+Q2613409660,"The player is working just as well as my older Toshiba 1080p upconverting DVD player/recorder and I think the quality is actually better on my Samsung 61"" DLP 1080p HDTV.",Toshiba,Samsung,BETTER,NONE,WORSE,1.0,170
+Q2617345446,"The PowerPC CPU (Apple had a hand in it, but it was mainly Motorola and IBM) was always a much better design than Intel's x86.",Apple,IBM,NONE,BETTER,WORSE,1.0,126
+Q2627704040,The ps3 MOVE is just the wii with better graphics.,ps3,wii,WORSE,NONE,BETTER,1.0,50
+Q2627770948,"The PSP does support a few thing that ds can't, They are DLC, better sound, ps2-like Graphics.",ds,ps2,WORSE,BETTER,NONE,0.8,94
+Q2640628660,"There are other languages which may be better suited than PHP if you want to see things from a different angle - I suggest that you try a functional language like Lisp, Scheme, Haskell, F#, or a weakly typed language like Python.",Lisp,Python,NONE,NONE,BETTER,1.0,229
+Q2653881562,There is also no sane reason to use mySQL (or Oracle) when PostgreSQL is better than both in almost every respect.,Oracle,PostgreSQL,NONE,NONE,WORSE,1.0,114
+Q2654999678,"There is a real, major benefit of using Java over other languages, such as C or Haskell or Smalltalk, which is this: it lets you work with other mediocre programmers, and has limitations that prevents them from doing anything too crazy.",Java,Haskell,NONE,NONE,BETTER,1.0,236
+Q2657868295,There is no obvious reason as to why Lisp should have better performance than Python.,Lisp,Python,BETTER,BETTER,NONE,1.0,85
+Q2671009969,"The restaurant is doing much better,"" Sal reveals of Papa C's Eastside cafe.",restaurant,cafe,NONE,NONE,BETTER,1.0,76
+Q2671107127,The restaurant would have to be better than just a simple cafe or pizza place.,restaurant,cafe,BETTER,BETTER,NONE,1.0,78
+Q2687184395,"The Samsung LN22A450 produces a well-contrasted picture for its size, yet I kept coming back to the Toshiba 22AV500U as a superior small-screen choice, as it features better color quality and an additional HDMI port.",Samsung,Toshiba,NONE,BETTER,WORSE,0.8,216
+Q2711799276,"The shuttle is a decent space truck, but we need a cheaper (and safer) space ""bus.""",truck,bus,BETTER,NONE,WORSE,0.8,83
+Q2717239590,The sooner people stop buying these Lexus things the better as I'm sick of people saying how nice it is when they are considering a new Audi etc. It's a stinking over priced Toyota - get over it!!!,Lexus,Audi,WORSE,BETTER,NONE,0.8333333333333334,197
+Q2736487353,"The thing is that when I look at Ruby, or maybe Groovy or Scala is even better since they're closer to Java, these languages have sets of features that support each other.",Groovy,Java,BETTER,BETTER,WORSE,1.0,171
+Q2750908162,The USB 3.0 port enables 10 times faster file transfer while the Bluetooth and WLAN IEEE 802.11 ac standards enable network communications.,USB,Bluetooth,NONE,NONE,BETTER,1.0,139
+Q2753828157,"The vaunted Intel roadmap is nice, but no nicer than the AMD roadmap, and nothing that IBM couldn't have matched.",Intel,IBM,NONE,NONE,WORSE,1.0,113
+Q2761387385,"The whole Florida line didn't play well versus missouri, but was better against georgia.",missouri,georgia,BETTER,BETTER,NONE,0.8,88
+Q2771987524,"They are more reliable than Apple, less expensive than Dell, and just plain better overall.",Apple,Dell,BETTER,BETTER,NONE,1.0,91
+Q2774278666,They are very nice - with solid wood backs (not the cheap cardboard back type).,wood,cardboard,NONE,NONE,BETTER,1.0,79
+Q2776529464,"They can't be bothered to trade in their old Honda Accord for a new $100,000 BMW or Mercedes because the fancy new car won't get them anywhere any faster than the existing car.",Honda,BMW,NONE,NONE,BETTER,1.0,176
+R2777962701,They cut off tennis coverage to show us Women's college basketball or even worse little league baseball...,tennis,baseball,WORSE,NONE,BETTER,1.0,106
+R2816819765,"This colleague, let's call him Phil, was a role model of self-taught analysis-programming physicists, until he decided that choosing a script language like Python for the said task was completely insane, because, you know, Bash scripts do things much faster, don't they?",Python,Bash,NONE,NONE,WORSE,1.0,270
+R2820815780,"This does NOT have to be Bluetooth tethering, by the way, I'm perfectly content to do this via USB if it makes things easier.",Bluetooth,USB,NONE,BETTER,WORSE,0.8,125
+R2828645977,"This implementation is based on Integer arithmetic, while the second-generation versions RANLXS and RANLXD described above provide Floating-point implementations which will be faster on many platforms.",Integer,Floating-point,NONE,NONE,WORSE,1.0,201
+R2832672616,"This is all done via the gigabit Ethernet interface, rather than the much slower USB interface.",Ethernet,USB,WORSE,NONE,BETTER,1.0,95
+R2839991108,"This is most likely done to optimize for Integer calculations, rather than slower Floating-point math.",Integer,Floating-point,BETTER,BETTER,NONE,1.0,102
+R2842758063,This is one where a company like Dell can dominate a company like Apple that makes a better product.,Dell,Apple,NONE,NONE,BETTER,0.8,100
+R2847891401,"This is updated to take full advantage of Java 8. - Scala is slightly nicer some syntactic flourishments (for comprehensions, pattern matching), but it's not necessary.",Java,Scala,NONE,NONE,WORSE,1.0,168
+R2848866556,"This is where Scala stops being a better Java, in the sense Groovy is, and becomes its own language.",Scala,Java,BETTER,NONE,WORSE,1.0,100
+R2849215469,"This is why it is easier to install Windows 98 first, then Windows XP.",Windows 98,Windows XP,NONE,NONE,BETTER,1.0,70
+R2849512597,"This is Windows XP not Vista !! Windows Vista has nicer desktop than xp, because it has more additional features.",Windows XP,Windows Vista,NONE,NONE,WORSE,0.8,113
+R2861649606,"This post looks at Pepsi-Cola, a huge multinational corporation that's trying harder and harder to catch up to number one, Coca-Cola.",Pepsi,Coca-Cola,NONE,NONE,WORSE,1.0,133
+R2862116213,This printer has always been slow but it's even slower now that I'm using a USB connection instead of Ethernet.,USB,Ethernet,NONE,NONE,WORSE,0.8,111
+R2870085823,"This's the first kernel I'm running on this board; it's a Gigabyte with H61 chipset; what about you? _________________ Buy from companies supporting opensource -- IBM, Dell, HP, Hitachi, Google etc... Disfavor companies supporting only Win -- Logitech, Epson, Pioneer, Kingston, WD, Yahoo, MSI, XFX, Huawei My blog",Google,Kingston,BETTER,BETTER,NONE,1.0,314
+R2877716398,This was one of my favourite games on the ps2 and looks fantastic on the ds: the same but better!,ps2,ds,NONE,NONE,WORSE,1.0,97
+R2892724872,"Thoughts that day turned not to coffee, but to water and juice, the cooler the better.",coffee,juice,NONE,NONE,WORSE,1.0,86
+R2922617051,"To make this delectable side bread, it's easier that saying pizza pie!",bread,pizza,BETTER,NONE,WORSE,0.8,70
+R2924455060,"Tomorrow, the ps2 and some WALL-E (I can not play that game on the ds anymore, cuz it is sooooo much slower, more boring, and all you can do is make/throw cubes).",ps2,ds,NONE,NONE,BETTER,0.6,162
+R2934555772,"To that I say crap, America does is better then any other country on the planet, America always has done it better, and we always will, so if you want to help your country, buy American products, buy the LG TV rather then the Samsung, buy the Chevrolet rather then the Toyota.",Chevrolet,Toyota,NONE,NONE,BETTER,1.0,276
+R2938116469,"Toyota continues to dominate the market with an excellent 21.2% share this month thanks to 884 sales, ahead of BMW very solid at 631 units and 15.1% vs. 13% year-to-date, Mercedes with 510 sales and 12.2% and Volkswagen at 456 units and 10.9% vs. 9.1% year-to-date.",Toyota,BMW,NONE,NONE,BETTER,1.0,265
+S2948497211,Try shooting a wedding on a manual focus Hasselblad and a Nikon F3 or worse still a Leica ;),Nikon,Leica,NONE,NONE,BETTER,0.8,92
+S2960568812,Ubuntu/Mint is definitely slower than Windows 7 and Windows 8 is faster than that.,Windows 7,Windows 8,NONE,NONE,WORSE,1.0,82
+S2962396197,"Ultimately I decided on Scala as it provided an easier transition, was more mature, had greater community support, better interoperability with existing Java code, and a nicer syntax.",Scala,Java,BETTER,WORSE,NONE,1.0,183
+S2963080921,"Umberto, if you read my post carefully, you will see that I never say that Objective-C is superior as a language to Java.",Objective-C,Java,BETTER,BETTER,NONE,0.6,121
+S2964316598,"Undefeated missouri jumped ahead of michigan State by winning 51-28 at Vanderbilt, and the Commodores are a better team than Iowa in my estimation.",missouri,michigan,NONE,NONE,BETTER,1.0,147
+S2969102354,"Unfortunately, the Bluetooth mouse goes through batteries much faster than ""regular"" USB wireless mice do.",Bluetooth,USB,BETTER,BETTER,WORSE,0.6,106
+S2973030164,"Unless you are working experienced Python web developers, PHP is easier to get started with.",Python,PHP,NONE,NONE,WORSE,1.0,92
+S2973160638,"Unless you need USB 3.0, or better Bluetooth, or Fusion drive or something like that.....",USB,Bluetooth,NONE,NONE,WORSE,1.0,89
+S2984110393,"Users of Windows 98 and previous versions will find Windows XP a change for the better, but it isn?t really much of an improvement over Windows 2000 or ME.",Windows 98,Windows XP,NONE,NONE,WORSE,1.0,155
+S3002530523,Video: michigan not much better at policing abortion mills than pennsylvania,michigan,pennsylvania,BETTER,NONE,WORSE,1.0,76
+S3005048842,"virginia coach Tony Bennett said georgia Tech is ""a better team"" this season.",virginia,georgia,NONE,NONE,WORSE,0.8,77
+S3005172629,"virginia Tech put together a solid drive, but michigan forced a 37-yard field goal.",virginia,michigan,NONE,NONE,WORSE,0.8,83
+S3008428816,"Volkswagen improves slightly slower than the market at +28% to 10% share in May, followed by Peugeot (+52%), Mercedes (+29%), BMW (+14%), Nissan up a gargantuan 79% and Ford up an equally impressive 78%.",Nissan,Ford,NONE,NONE,BETTER,0.6,203
+S3024103739,We also plan to add Bluetooth support later but we do encourage our users to stay with USB for faster download.,Bluetooth,USB,NONE,NONE,WORSE,1.0,111
+S3028376121,"We are looking at maybe moving to IBM hardware 2006/7 though whether that will be any better than Dell remains to be seen, I suspect not from what I have heard.",IBM,Dell,BETTER,BETTER,NONE,1.0,160
+S3033272482,"We believe that your upgrade experience in Windows 8 will be a breeze by offering a faster experience, a single upgrade path, and compatibility from prior versions of Windows, ' Microsoft's Brandon LeBlanc claimed in a statement which handily overlooks the fact that upgrades from Windows XP won't migrate any programs or settings.",Windows 8,Windows XP,NONE,NONE,BETTER,1.0,331
+S3037069425,"We chose for PostgreSQL (not to start an MySQL pg flamewar, but pg was the more suitable for our purposes) because it's open, and thus safer.",PostgreSQL,MySQL,NONE,NONE,BETTER,1.0,141
+S3046779983,"We got some developers in the team that just started coming to Java from Delphi, so they already have some work to do, and Groovy is easier for its learning curve; also, pretty productive.",Java,Groovy,NONE,NONE,WORSE,1.0,188
+S3047568913,"We had an option to go West, but the starter housing prices at the time in california made the decision to come to georgia a bit easier.",california,georgia,NONE,NONE,WORSE,1.0,136
+S3058257909,"We know that Windows Vista is a lot harder to counterfeit than Windows XP, but we also know that pirates will keep trying,"" he closes.",Windows Vista,Windows XP,WORSE,WORSE,BETTER,1.0,134
+S3074001085,We obviously linked to youtube above even though hulu has superior quality and content.,youtube,hulu,NONE,NONE,WORSE,1.0,87
+S3074504449,"We often hear that Apple ""plays the game"" better than Sony, HP, Dell, etc - that's not quite right.",Apple,Sony,BETTER,BETTER,NONE,1.0,99
+S3076590768,"We reached to 10k websites as we speak, and we find it 100x harder to run Python than PHP.",Python,PHP,BETTER,BETTER,WORSE,1.0,90
+S3082464864,We say 'Java is the gateway to hell.' Lisp is just a better alternative to the intelligent Internet: It runs on 14 different platforms and doesn't need any type of virtual machine because it compiles directly to native machine instructions on all popular microprocessor architectures.',Java,Lisp,NONE,NONE,WORSE,0.6,285
+S3089779542,"We use tennis balls to start because it's safer -- less chance of getting hurt,"" said Wes Hogan of Bartlett, Wolf Pack hockey Club organizer.",tennis,hockey,NONE,NONE,BETTER,0.8,141
+S3089891317,"We usually don't like Microsoft, but I don't think they are worse than Google.",Microsoft,Google,WORSE,WORSE,BETTER,1.0,78
+S3090092782,We've all seen these benchmarks where Python is 10 or even 100 times slower than Java or C#.,Python,Java,BETTER,BETTER,WORSE,1.0,92
+S3090946788,We've found that downloads are generally slower in Windows Vista and 7 compared to Windows XP.,Windows Vista,Windows XP,NONE,BETTER,WORSE,0.8,94
+S3102273273,What better ingredient to pair with cranberry juice than tea!,juice,tea,BETTER,BETTER,NONE,1.0,61
+S3107985328,What if I can't find any aspect of PHP that is better than Ruby?,PHP,Ruby,BETTER,BETTER,NONE,1.0,64
+S3108011691,"What if I have an integrated Intel card that only supports OpenGL 2.1, but for some reason supports Direct3D 10, which is apparently the better ""programmable"" version?",OpenGL,Direct3D,NONE,NONE,WORSE,1.0,167
+S3113696778,What Perl can do better than Ruby and vice versa,Perl,Ruby,BETTER,BETTER,NONE,1.0,48
+S3113863522,"What puzzles him, though, is that with hundreds of millions of computers still running Windows XP-and Microsoft keener than ever to get their owners to migrate to Windows 7, if not Windows 8-the least the firm might have done is to make the whole upgrade path a good deal easier road to travel.",Windows XP,Windows 8,BETTER,BETTER,NONE,1.0,294
+S3114283329,What's better about Ruby than Python?,Ruby,Python,BETTER,BETTER,NONE,1.0,37
+T3123181941,"When compared to the Ford products we owned before, the Toyota vehicles have been a better experience for us.",Ford,Toyota,NONE,NONE,WORSE,1.0,109
+T3123186443,"When compared to Windows 7 , Windows 8 has a faster booting time .",Windows 7,Windows 8,NONE,NONE,WORSE,0.8,66
+T3125206666,When giving presentations I find it easier to carry around my ipod and A/V chord instead of a laptop and chords.,ipod,laptop,NONE,NONE,BETTER,1.0,112
+T3149667042,Where marketshare matters more -- the tablet market -- Apple dominates over Google and inferior competitors such as Microsoft and Blackberry .,Google,Microsoft,NONE,NONE,BETTER,1.0,142
+T3157630763,"While Direct3D works, OpenGL seems to give better texture quality and smoother frame rate in CS1.6.",Direct3D,OpenGL,NONE,BETTER,WORSE,0.6,99
+T3157696699,"While dozens of manufacturers will gladly slap an Intel, Microsoft, or NVIDIA advertisement on the palmrest of your brand new laptop, Google knows better than to partake in this annoying practice.",Intel,Google,NONE,NONE,WORSE,1.0,196
+T3158179522,"While Gordon's Chevrolet excelled at the end, Busch's Toyota never got better.",Chevrolet,Toyota,NONE,NONE,BETTER,1.0,78
+T3159828573,"While it is certainly true that few companies posted big wins in the equity markets this week, it remains striking that Google underperformed Oracle, IBM, Apple, Microsoft, and Yahoo! (all of whom posted losses much closer to those of NASDAQ) and HP did even worse.",Google,IBM,NONE,NONE,WORSE,1.0,265
+T3161353899,"While Motorola has diminished, Samsung has excelled",Motorola,Samsung,NONE,NONE,WORSE,0.6,51
+T3162418183,"While recognized as a great basketball player, he was only mediocre on the baseball diamond.",basketball,baseball,NONE,NONE,BETTER,1.0,92
+T3164684469,"While the new BMW 3 Series and Infiniti G37 may offer slightly better chassis dynamics than this latest Accord, neither has an engine note as nice as this Honda.",BMW,Honda,NONE,NONE,WORSE,1.0,161
+T3164961359,"While the ps2 was a lousy DVD player, the ps3 is a fantastic Blu-ray player.",ps2,ps3,NONE,BETTER,WORSE,0.8,76
+T3165855318,"While the tutorial implies that using SQLite is the easiest path to getting a working app, it's probably easier to use MySQL or postgres if you're comfortable with those.",SQLite,MySQL,NONE,NONE,WORSE,0.8,170
+T3166388225,"While this manipulation is all available in the standard JDK and is thus available to Java applications, Groovy is better suited for scripting needs like this.",Java,Groovy,NONE,NONE,WORSE,1.0,159
+T3167737390,"While youtube has faced difficulties in monetizing its ads, a site like hulu has grown faster than expected, balancing things out, he said.",youtube,hulu,NONE,NONE,WORSE,1.0,139
+T3175416793,"Why is Honda still in F1? Like Toyota, year-in-and-year-out they continue to show they are inferior to Ferrari, Mercedes, BMW and Renault.",Honda,BMW,NONE,NONE,WORSE,0.6,138
+T3175699804,Why is soda $5 per gallon when milk is so much better for you?,soda,milk,NONE,NONE,WORSE,0.4,62
+T3176038075,Why make it harder on yourself by using such an advanced language as Perl when you can have an easier and more successful time with PHP.,Perl,PHP,NONE,NONE,WORSE,0.8,136
+T3176067313,Why Microsoft and Oracle Are Safer Long-Term Bets Than Google and SAP [ View article ],Microsoft,Google,NONE,NONE,BETTER,0.8,86
+T3176858606,Why should cricketers and hockey players not be able to earn a decent living like footballers or basketball players do?,hockey,basketball,NONE,NONE,WORSE,1.0,119
+T3176894342,Why should I give you $6 for a lousy potato when I've aready paid $35 for a steak?,potato,steak,NONE,BETTER,WORSE,1.0,82
+T3179187114,"wii U CPU and GPU Clock Speeds revealed, slower than ps3/360",wii,ps3,BETTER,BETTER,WORSE,1.0,60
+T3179188500,wii U GPU And CPU Slower Than Xbox 360 And playstation 3,wii,playstation,NONE,NONE,WORSE,1.0,56
+T3180308554,"Will current parents and future parents decide that baseball or whatever is a better, safer alternative to football?",baseball,football,NONE,NONE,BETTER,1.0,116
+T3180531831,Will google Music Become Bigger and Better than itunes?,google,itunes,BETTER,BETTER,NONE,1.0,55
+T3184465297,"Windows 8 Developer desktop - looks like Windows 7, runs a hair faster.",Windows 8,Windows 7,NONE,NONE,BETTER,0.8,71
+T3184468497,Windows 8 has no better support than Windows 7 for NTVDM.,Windows 8,Windows 7,BETTER,BETTER,NONE,1.0,57
+T3184473937,"Windows 8 is sequential successor to Windows 7. It doesn't matter which one is ""better"".",Windows 8,Windows 7,BETTER,BETTER,NONE,0.8,88
+T3184476893,"Windows 8 (MSFT) is being adopted at a slower rate than Vista, and slower than Windows 7, according to usage data from Net Applications.",Windows 8,Windows 7,BETTER,BETTER,WORSE,0.6,136
+T3184740397,"Windows XP needed two service packs, but Windows 98 was even worse, needing a second edition to plug the holes.",Windows XP,Windows 98,NONE,NONE,BETTER,1.0,111
+T3194886735,With my super fast SSD I find that Windows 7 loads no slower Windows 8.,Windows 7,Windows 8,WORSE,NONE,BETTER,0.8,71
+T3210851253,"Worse news still for Toyota is that more new competition is coming, like the Ford Fiesta transplant from Europe.",Toyota,Ford,BETTER,BETTER,NONE,1.0,112
+T3210886630,"Worse than coffee, the effect beer has on my bladder.",coffee,beer,NONE,NONE,BETTER,1.0,53
+T3212787174,Would the new Nikon 85 be that much better than the old one or the inexpensive Sigma to justify the investment?,Nikon,Sigma,BETTER,BETTER,NONE,1.0,111
+T3220097683,"Yale offered nothing at all really, mit was a little nicer, but by far stanford offered the best FA package.",mit,stanford,BETTER,NONE,WORSE,1.0,108
+T3220195962,"Yamaha and Honda dominate the top three, but BMW also have a solid footing in the top 10, with four models featured, including the S1000RR, with over 1,000 unit sales.",Honda,BMW,WORSE,WORSE,NONE,1.0,167
+T3222153720,"Yeah, Nvidia's OpenCL is not good and CUDA is way better.",OpenCL,CUDA,NONE,BETTER,WORSE,1.0,57
+T3224932895,"Yes, even though Scala is primarily a JVM language and often touted as a ""better Java"", it doesn't have interfaces.",Scala,Java,NONE,NONE,BETTER,1.0,115
+T3226352107,"Yes, it's not elegant in pure Java (though Scala is much nicer), but it's effective and can be quite fase.",Java,Scala,NONE,NONE,WORSE,0.8,106
+T3229116753,"Yes, Toyota sells more vehicles but BMW makes a vehicle that delivers a much better driving experience.",Toyota,BMW,NONE,WORSE,BETTER,1.0,103
+T3233960575,You also shouldn't know whether the SSD is a decent quality Samsung a much slower and lower quality Toshiba.,Samsung,Toshiba,WORSE,NONE,BETTER,1.0,108
+T3239865546,"You can do form checking with PHP, but it is much easier to use JavaScript to check the form before posting.",PHP,JavaScript,BETTER,NONE,WORSE,1.0,108
+T3246497103,You can use plywood for a basic bar but planks of lumber look nicer for a more elaborate setup and are easier to finish with stain or paint.,plywood,lumber,NONE,NONE,WORSE,0.6,140
+T3247905833,You could make it in Java but its probably going to be a lot easier in PHP.,Java,PHP,BETTER,NONE,WORSE,1.0,75
+T3250509870,You don't want super sticky rubber though because it will wear out faster on concrete tees.,rubber,concrete,BETTER,NONE,WORSE,1.0,91
+T3263276131,"You need a place to cry into your beer, or better yet your champagne.",beer,champagne,NONE,NONE,WORSE,1.0,69
+T3277591717,"youtube is really solid though, but how about facebook?",youtube,facebook,WORSE,WORSE,NONE,0.8,55
+T3277592110,"youtube is so much easier, or google.",youtube,google,BETTER,WORSE,NONE,1.0,37
+T3277595215,"youtube just won't cut it for a screencast, so I found hosting the video myself (amazon S3), was a better solution.",youtube,amazon,NONE,NONE,WORSE,0.8,115
+T3281768598,"You will want some JavaScript (or JQuery) and at some point some server side scripting, I find PHP easier to learn but asp.Net was more functional.",JavaScript,PHP,NONE,NONE,WORSE,0.4,147
