@@ -57,6 +57,7 @@ The first preprocessing step decided if the full sentence or a part of it should
 The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (replacement). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (distinct replacement). This results in sixteen versions of each feature (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}
 
 \subsection{Dependency}
+\label{sec:lexnet_feat_desc}
 A feature based on LexNet was created to encode dependency information. The original code of LexNet was used to create the textual paths. It had to be modified, as the original code was to restrictive\footnote{The modified version is available at \url{https://github.com/ablx/LexNET}}. First, it allowed only paths up to a length of four edges. Second, it must be possible to reach the first object by following only left edges from the root, and the second object by following only right edges. The restrictions make sense for the original purpose of LexNet. However, XXXX sentences from the comparative argument mining data set do not get a path representation with those restrictions applied.
 
 
@@ -217,7 +218,8 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 \FloatBarrier
 \subsection{Error analysis}
 \label{sec:error_analysis}
-Figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matrices for the two best features in the three-label scenario (InferSent and bag-of-words). The confusion matrices of each fold per feature were summed up to create these tables.
+Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical feature in the three-class scenario (InferSent, also the best feature overall), while figure \ref{fig:3_conf_uni} shows the confusion matrix for the best syntax feature (customised LexNet).
+ The confusion matrices of each fold per feature were summed up to create these tables.
 
 
 
@@ -232,54 +234,83 @@ Figures \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni} display the confusion matr
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
+     \caption{Confusion matrix for the customised LexNet feature using XGBoost} 
        \label{fig:3_conf_uni}
  \centering
-	\includegraphics[width=1\linewidth]{images/experiments/conf-Bag-Of-Words_False}
+	\includegraphics[width=1\linewidth]{images/experiments/conf-middle_paths_unrestricted_16_False}
     \end{minipage} 
 \end{figure}
 
-As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. \texttt{BETTER} and \texttt{WORSE} both represent argumentative sentences and it was expected that the distinction between argumentative and not-argumentative is clearer. 
+As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. The classes  \texttt{BETTER} and \texttt{WORSE} are representing argumentative sentence. It was expected that the distinction between argumentative and not-argumentative is clearer. 
 
-Both features made the same errors on 661 sentences. The unigram model made another 174 errors on sentences which were correctly predicted by the sentence embedding model. The sentence embedding model made 164 unique errors. However, there is no clear pattern which sentences are hard for the unigram or sentence embedding feature. One-hundred-and-fifty wrongly predicted sentences were analysed, examples are shown in table \ref{tbl:3_mistakes}. 
+In total, 1274 sentences were incorrectly classied. Both features made the same errors on 570 sentences. The InferSent feature made 219 additional errors, while the LexNet feature made 485.  Examples are shown in table \ref{tbl:3_mistakes}. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 336.
 
+
+Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
 \begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the three-label scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
-\label{tbl:3_mistakes}
-\begin{tabularx}{\linewidth}{Xrrr}
+\caption{Example sentences for errors made by the classifier in the three-label scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\label{tbl:3_mistakes_se}
+\begin{tabularx}{\linewidth}{lXrrr}
 \toprule
- Sentence & Predicted & Gold & Confidence \\ \midrule
- Is a \textbf{BMW}/Benz 5x better than a \textbf{Honda} Civic\emph{?} & \texttt{BETTER} & \texttt{NONE} & 0.6 \\
- Will \textbf{google} Music Become Bigger and Better than \textbf{itunes}\emph{?}& \texttt{BETTER} & \texttt{NONE} & 0.5 \\
-
-Apparently the \textbf{wii} \emph{isn't} superior to the \textbf{ds} for Square-enix. & \texttt{BETTER} & \texttt{WORSE} & 0.8 \\
- We usually \emph{don't} like \textbf{Microsoft}, but I \emph{don't} think they are worse than \textbf{Google}. & \texttt{WORSE} & \texttt{BETTER} & 0.6 \\
-
- \emph{Worse} than \textbf{coffee}, the effect \textbf{beer} has on my bladder. & \texttt{NONE} & \texttt{BETTER} & 0.6 \\
- We obviously linked to \textbf{youtube} above even though \textbf{hulu} has \emph{superior} quality and content.  & \texttt{NONE} & \texttt{WORSE} & 1 \\
-
- \textbf{Perl} is \emph{slower} and \emph{faster} than \textbf{Java} & \texttt{WORSE} & \texttt{BETTER} & 0.4 \\
-
-\emph{Goodnight} \textbf{NetBeans}, \emph{Hello} \textbf{Eclipse} & \texttt{NONE} & \texttt{WORSE} & 0.4 \\
-
- A \emph{5-2-1} \textbf{california} team went down, \emph{27-7}, then \emph{5-1-1} \textbf{oregon} fell harder, \emph{33-0}. & \texttt{NONE} & \texttt{BETTER} & 0.6 \\
-
-
-
+ & Sentence & Predicted & Gold & Confidence \\ \midrule
+1& Is \textbf{football} better than \textbf{baseball}? & BETTER & NONE & 1.0\\
+2& Is \textbf{Microsoft} better because of \textbf{Apple}? & BETTER & NONE & 1.0\\
+ 
+3& The \textbf{Buick} is a far better driver but doesn't have the wretched excess appeal of the \textbf{Cadillac}. & BETTER & NONE & 1.0\\
+4&They know that \textbf{Lexus} has better residual, and that \textbf{Audi} has better tech. & BETTER & NONE & 1.0\\
+ 
+5& Its Azure PaaS/IaaS platform hasn't overtaken \textbf{Amazon} yet in market share, but \textbf{Microsoft} has enjoyed nine straight quarters of growth at 10 percent or better & NONE & WORSE & 1.0\\
+ 
+ 6& I think I found a better \textbf{sandwich} than a cheese \textbf{steak}. & NONE & BETTER & 1.0\\
+ 
+7&  \textbf{harvard} College accepted just 6.9 percent, its lowest rate ever, and the numbers were not much better elsewhere: 7.2 percent at Stanford,8.2 percent at Princeton, 11.5 percent at \textbf{dartmouth}, and 23 percent at Northwestern-all record lows. & WORSE & NONE & 0.4\\
 \bottomrule
 \end{tabularx}
-
 \end{table}
 
-As said in the guidelines, all questions should be labelled as \texttt{NONE}. This restriction was hard even for the annotators. Twenty of the 150 sentences were questions, fourteen with \texttt{NONE} as the gold label. Thus, the annotators did not assign the correct label for the remaining six sentences. The label \texttt{BETTER} was predicted for all fourteen sentences with the gold label \texttt{NONE} (sentence one in two in table  \ref{tbl:3_mistakes}).
+The first two sentences look comparative, but they are questions. As said in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence seven is a hard sentence. Even the annotators were not able to settle on one class. The missclassification of sentence six comes with some surprise. It is assumed that the position of the cue word \emph{better} leads to the wrong class, as it is not between the two objects.
 
-Twenty sentences contained at least one negation. Sentence three  is a good example for that case. The negation \enquote{\emph{isn't}} changes the meaning of the sentence. Without the negation, the classifier would have predicted correctly.
+Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 390 of the sentences did not get a dependency path. However, only fourty-one of the wrongly classified sentences do not have a path.
+
+\begin{table}[h]
+\caption{Example sentences for errors made by the classifier in the three-label scenario with the LexNet feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\label{tbl:3_mistakes_lexnet}
+\begin{tabularx}{\linewidth}{lXrrr}
+\toprule
+ & Sentence & Predicted & Gold & Confidence \\ \midrule
+1 & Right now \textbf{Apple} is worse then \textbf{Microsoft} ever was. & BETTER & WORSE & 1.0 \\
+2 & I think \textbf{Bash} scripting is harder than \textbf{Python} though. & BETTER & WORSE & 1.0\\
+3 & In my opinion \textbf{Windows 8} is worlds better then \textbf{Windows 7} & NONE & BETTER & 1.0\\
+4 & In FPGAs, \textbf{Integer} or fixed-point math can often run 10 to 100 times faster than \textbf{Floating-point} 
+computations. & NONE & BETTER & 1.0\\
+5 & Congratulations to \textbf{Apple}; you continue to prove you are worse than \textbf{Microsoft} ever was. & BETTER & WORSE & 0.6\\
+ \bottomrule
+\end{tabularx}
+\end{table}
+
+It is salient that the LexNet feature makes errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create embeddings which are meaningful enough. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
 
 
-Another error source is the position of the cue word. It is more likely that \texttt{NONE} is predicted if the cue word is not between the two objects. This might be due to the fact that the features only look at the words in between the two objects. However, adding information on the position of the cue word did not help to increase the result.
+Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 457 of the 570 shared errors.
 
-The majority of the 150 sentences was just hard to classify. Sentence seven does not have a clear winner; even the human annotators did not assign the correct label (\texttt{NONE}). A lot more training data is needed to enable a classifier to learn that sentence eight is comparative. Same is true for sentence nine, which would also need some knowledge to understand that the numbers are important for the comparison.\newline
 
+\begin{table}[h]
+\caption{Example sentences for errors made by both features in the three-label scenario. The objects of interest are printed \textbf{bold}. \emph{Pred. IF} shows the predicted class of the InferSent feature, \emph{Pred. LexNet} the prediction of the LexNet feature. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\label{tbl:3_mistakes_both}
+\begin{tabularx}{\linewidth}{lXrrrr}
+\toprule
+ & Sentence & Pred. IF & Pred. LexNet & Gold & Conf. \\ \midrule
+1 & Is a \textbf{BMW} 3 series \$15,000 better than a \textbf{Ford} Focus? & BETTER & BETTER & NONE & 1.0\\
+2 & \textbf{Google} is the main player now, \textbf{Microsoft} are just plain inferior in Mobile & NONE & NONE & BETTER & 1.0\\
+3 & Yeah, Nvidia's \textbf{OpenCL} is not good and \textbf{CUDA} is way better. & NONE & BETTER & WORSE & 1.0\\
+4 & \textbf{Python} has a better standard library, but \textbf{Perl} has a better nonstandard library & BETTER & WORSE & NONE & 0.8\\
+5 & \textbf{Groovy} code often looks and feels like \textbf{Java} code, but is almost always simpler and easier to use. & NONE & NONE & BETTER & 0.4\\
+
+ \bottomrule
+\end{tabularx}
+\end{table}
+
+The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four). 
 
 % === binary
 
@@ -288,47 +319,47 @@ The majority of the 150 sentences was just hard to classify. Sentence seven does
 
 
 
-Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. 
-\begin{figure}[h]
-    \begin{minipage}{.5\linewidth}
-   \caption{Confusion matrix for the InferSent feature using XGBoost} 
-    \label{fig:2_conf_inf}
- \centering
-	\includegraphics[width=1\textwidth]{images/experiments/conf-InferSent_True}
-  \end{minipage} \hfill
-    \begin{minipage}{.5\linewidth}
-  
-     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
-       \label{fig:2_conf_uni}
- \centering
-	\includegraphics[width=1\textwidth]{images/experiments/conf-Bag-Of-Words_true}
-    \end{minipage} 
-\end{figure}
-Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
-
-
-The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
-
-\begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
-\label{tbl:2_mistakes}
-\begin{tabularx}{\linewidth}{Xrrr}
-\toprule
- Sentence & Predicted & Gold & Confidence\\ \midrule
- Why \emph{can't} \textbf{Ford} puts better handling into the FWD Fusion if \textbf{Honda} can do it 10 years ago\emph{?} & \texttt{ARG} & \texttt{NONE} & 0.5\\
- 
- \textbf{Java} \emph{isn't} too bad of a first language, but \textbf{Python} is a little easier to pick up. & \texttt{NONE} & \texttt{ARG} & 1 \\
- My minestrone \textbf{soup} is always better \emph{with} homemade \textbf{pasta}. & \texttt{ARG} & \texttt{NONE} & 0.8\\
- 
- \textbf{Scala} probably embraces \textbf{Java} \emph{better} than any other language in the book. & \texttt{ARG} & \texttt{NONE} & 0.8 \\
- 
- \textbf{Windows 8} has efficiency improvements over \textbf{Windows 7}, making it about \emph{10\% faster} overall. & \texttt{NONE} & \texttt{ARG} & 1 \\
-\bottomrule
-\end{tabularx}
-
-\end{table}
-
-The first sentence is an example for the problems with questions and, like the second, negations. In fourth and fifth sentence, the cue word appears after the objects.
+%Figures \ref{fig:2_conf_inf} and \ref{fig:2_conf_uni} show the confusion matrices for the binary setup. 
+%\begin{figure}[h]
+%    \begin{minipage}{.5\linewidth}
+%   \caption{Confusion matrix for the InferSent feature using XGBoost} 
+%    \label{fig:2_conf_inf}
+% \centering
+%	\includegraphics[width=1\textwidth]{images/experiments/conf-InferSent_True}
+%  \end{minipage} \hfill
+%    \begin{minipage}{.5\linewidth}
+%  
+%     \caption{Confusion matrix for the bag-of-words feature using XGBoost} 
+%       \label{fig:2_conf_uni}
+% \centering
+%	\includegraphics[width=1\textwidth]{images/experiments/conf-middle_paths_unrestricted_16_False}
+%    \end{minipage} 
+%\end{figure}
+%Similar to the three-classes scenario, both feature setups made the same mistakes on 517 sentences. The unigram feature produced 204 unique errors, the sentence embeddings 192. It bears mentioning that 765 of the 913 errors are also present in the three-label scenario, so only 148 errors are new. 
+%
+%
+%The binary scenario benefits from the reduced class imbalance, yet the errors made are essentially the same. Table \ref{tbl:2_mistakes} shows some example sentences from the 148 new errors.
+%
+%\begin{table}[h]
+%\caption{Example sentences for errors made by the classifier in the binary scenario. The objects of interest are printed \textbf{bold}, the assumed error source in \emph{italics}. The class \texttt{ARG} was created by merging the classes \texttt{BETTER} and \texttt{WORSE} before the classification. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+%\label{tbl:2_mistakes}
+%\begin{tabularx}{\linewidth}{Xrrr}
+%\toprule
+% Sentence & Predicted & Gold & Confidence\\ \midrule
+% Why \emph{can't} \textbf{Ford} puts better handling into the FWD Fusion if \textbf{Honda} can do it 10 years ago\emph{?} & \texttt{ARG} & \texttt{NONE} & 0.5\\
+% 
+% \textbf{Java} \emph{isn't} too bad of a first language, but \textbf{Python} is a little easier to pick up. & \texttt{NONE} & \texttt{ARG} & 1 \\
+% My minestrone \textbf{soup} is always better \emph{with} homemade \textbf{pasta}. & \texttt{ARG} & \texttt{NONE} & 0.8\\
+% 
+% \textbf{Scala} probably embraces \textbf{Java} \emph{better} than any other language in the book. & \texttt{ARG} & \texttt{NONE} & 0.8 \\
+% 
+% \textbf{Windows 8} has efficiency improvements over \textbf{Windows 7}, making it about \emph{10\% faster} overall. & \texttt{NONE} & \texttt{ARG} & 1 \\
+%\bottomrule
+%\end{tabularx}
+%
+%\end{table}
+%
+%The first sentence is an example for the problems with questions and, like the second, negations. In fourth and fifth sentence, the cue word appears after the objects.
 \FloatBarrier
 \section{Discussion}
 Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
