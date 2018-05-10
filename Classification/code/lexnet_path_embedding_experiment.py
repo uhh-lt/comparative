@@ -36,12 +36,14 @@ for train, test in k_folds(2, data_filtered, random_state=42):
     predict = fitted.predict(np.array(test['feat'].values.tolist()))
     all_predictions += predict.tolist()
     all_test_vals += test['most_frequent_label'].values.tolist()
+    print(classification_report(test['most_frequent_label'].values, predict, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
 
 data = pd.read_csv('data/data_if.csv')
 data_filtered_2 = data[data.id.isin(data_filtered.id.values.tolist()) == False]
 infersent_model = initialize_infersent(data_filtered_2.sentence.values)
 assert (len(data_filtered) + len(data_filtered_2)) == len(data)
 
+"""
 for train, test in k_folds(2, data_filtered_2, random_state=42):
     classifier = XGBClassifier(n_jobs=8, n_estimators=1000)
     f = InfersentFeature(infersent_model)
@@ -50,7 +52,7 @@ for train, test in k_folds(2, data_filtered_2, random_state=42):
     values = train['most_frequent_label'].values.tolist()
     fitted = classifier.fit(train_f, values)
     all_predictions += fitted.predict(test_f).tolist()
-    all_test_vals += test['most_frequent_label'].values.tolist()
+    all_test_vals += test['most_frequent_label'].values.tolist()"""
 
 print(
     classification_report(all_test_vals, all_predictions, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
