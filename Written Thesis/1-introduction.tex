@@ -205,5 +205,7 @@ The paths were encoded using an LSTM. The average of all encoded paths was then 
 The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are also used. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernymy is unambigous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
 
 However, it is expected that the dependency path between the objects of interest adds valuable information. This thesis reuses the idea on how to extract and encode paths between two words.
+
 \section{Gradient Boosting}
-tdb
+Boosting is a technique to combine a set of weak learners (for examples, shallow decision trees) into one good learner. The classification performance of a single weak learner is typically just a little bit better than random guessing.
+
