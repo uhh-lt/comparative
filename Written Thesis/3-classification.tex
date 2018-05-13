@@ -175,18 +175,18 @@ All features yield f1 scores at least ten points over the baseline. Bag-of-words
 Despite the fact that only 1502 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1502 sentences confirms this, as the feature is then able to achieve an f1 score of 0.76.\newline
 
 
-\begin{figure}[htbp]
+\begin{figure}[p]
          \caption{\textbf{Precision} for the three-class scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_precision}
  \centering
-	\includegraphics[width=1\textwidth]{images/experiments/precision-False}
+	\includegraphics[width=0.9\textwidth]{images/experiments/precision-False}
 \end{figure}
 
-  \begin{figure}[htbp]
+  \begin{figure}[p]
               \caption{\textbf{Recall} for the three-class scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the recall score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:3_recall}
  \centering
-	\includegraphics[width=1\textwidth]{images/experiments/recall-False}
+	\includegraphics[width=0.9\textwidth]{images/experiments/recall-False}
 \end{figure}
 
 \FloatBarrier
@@ -210,18 +210,18 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 
 
 
-\begin{figure}[htbp]
+\begin{figure}[p]
          \caption{\textbf{Precision} for the binary scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:2_precision}
     \centering
-	\includegraphics[width=1\linewidth]{images/experiments/precision-True}
+	\includegraphics[width=0.9\linewidth]{images/experiments/precision-True}
     \end{figure}
     
-    \begin{figure}[tb]
+    \begin{figure}[p]
               \caption{\textbf{Precision} for the binary scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:2_recall}
  \centering
-	\includegraphics[width=1\linewidth]{images/experiments/recall-True}
+	\includegraphics[width=0.9\linewidth]{images/experiments/recall-True}
 
 \end{figure}
 
@@ -329,7 +329,7 @@ In the binary scenario, 1144 errors were made. Both features made the same error
 It was expected that union of \texttt{BETTER} and \texttt{WORSE} into one class will improve the result significantally, as the class imbalance is reduced this way. However, this does not appear to be the case. The classifier made almost as many mistakes as in the three-class scenario.
 
 \FloatBarrier
-\section{Discussion}
+\subsection{Discussion}
 Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
  Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
 
@@ -346,7 +346,67 @@ Another interesting observation is that the three-class scenario and the binary 
 
 
 \section{Evaluation with the held-out data}
-The final evaluation was done with 1455 sentences which were never seen by the model before.
-
+\subsection{Results}
 \label{sec:final}
 
+The held-out data set contains 1455 sentences (1060 \texttt{NONE}, 276 \texttt{BETTER}, 119 \texttt{WORSE}). The classifier was trained on the complete data set used during development (5759 sentences).
+
+The path embeddings for the held-out data were generated with the same neural network architecture as shown in figure \ref{fig:lexnet}.
+
+The results for the three-class scenario are presented in figures \ref{fig:h_3_f1} (f1 score), \ref{fig:h_3_prec} (precision) and \ref{fig:h_3_rec}.
+
+
+\begin{figure}[htb]
+         \caption{\textbf{F1 score} for the three-class scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+    \label{fig:h_3_f1}
+    \centering
+	\includegraphics[width=1\linewidth]{images/heldout/h-f1-False}
+    \end{figure}
+    
+
+
+\begin{figure}[htbp]
+         \caption{\textbf{Precision} for the three-class scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+    \label{fig:h_3_prec}
+    \centering
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-precision-False}
+    \end{figure}
+    
+    \begin{figure}[tb]
+              \caption{\textbf{Recall} for the three-class scenario using XGBoost with the held-out data.. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis.} 
+       \label{fig:h_3_rec}
+ \centering
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-recall-False}
+
+\end{figure}
+
+\FloatBarrier
+
+The results for the binary scenario are presentend in \ref{fig:h_2_f1} (f1 score), \ref{fig:h_2_prec} (precision) and \ref{fig:h_2_rec}. In contrast to the three-class scenario, the bag-of-words model is performs best. It achieved an f1 score of
+
+% BINARY
+\begin{figure}[htbp]
+         \caption{\textbf{F1 score} for the binary scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+    \label{fig:h_2_f1}
+    \centering
+	\includegraphics[width=1\linewidth]{images/heldout/h-f1-True}
+    \end{figure}
+
+
+\begin{figure}[htbp]
+         \caption{\textbf{Precision} for the binary scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+    \label{fig:h_2_prec}
+    \centering
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-precision-True}
+    \end{figure}
+    
+    \begin{figure}[tb]
+              \caption{\textbf{Recall} for the binary scenario using XGBoost with the held-out data.. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis.} 
+       \label{fig:h_2_rec}
+ \centering
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-recall-True}
+
+\end{figure}
+\FloatBarrier
+\subsection{Discussion}
+InferSent, Bag-Of-Words, Mean Word Embeddings and part-of-speech n-grams benefited from the increased size of the training data in both scenarios. InferSent is again the best feature, with an f1 score 5 points higher than bag-of-words. Mean Word Embeddings are the second best feature with an f1 score of 0.93. This is in contrast to the development results (see section \ref{sec:3_results}) , were InferSent and Bag-Of-Worlds got almost equal results, while Mean Word Embeddings was two points behind. The part-fo-speech n-grams increased the f1 score on \texttt{WORSE} significantly. Again, the boolean comparative adjective feature was not able to recognize \texttt{WORSE} at all.
