@@ -5,19 +5,25 @@
 % -----------------------------------------------------------------------
 % -----------------------------------------------------------------------
 % -----------------------------------------------------------------------
-\chapter{Introduction}
+\chapter{Introduction: An Open-Domain Comparative Argumentative Machine (CAM)}
+This thesis discusses the topic of \emph{Comparative Argument Mining (CAM)}. Comparative Argument Mining is a subfield of Argument Mining, a recent research topic in natural language processing.
 
-\section{Motivation: An Open-Domain Comparative Argumentative Machine (CAM)}
+The goal is to develop a system which is able to decide if a given sentence compares two known object and, if it does, which object is the better one. For instance, for the sentence \emph{\enquote{In my mind, Python is better than Java!}}, the system should answer that the sentence is comparative and that Python won the comparison.
 
-tbd
+Such a system is useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like online comparison portals. As presentend in section \ref{sec:domainspec}, those portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and there like. Furthermore, this new knowledge would include the thoughts and opinions of their autors. This would be in contrast to the pure factual information from databases. For instance, the system could find out that many people complain that the telephone support of insurance company X is way better than the one of company Y - an information seldomly found in databases.\newline
 
+The thesis is structured into three main parts. The first part discusses recent publications in argument mining and explains the needed concepts from natural language processing and machine learning.
+
+Because Comparative Argument Mining is a novel field, no suitable data set is present. The second part describes the creation of a data set with CommonCrawl data and crowdsourcing methods to label the data. The result is data set cotaining 7199 sentences, containign comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects if the sentence is comparative and if the first mentioned object in the sentence won the comparison.
+
+The third part uses this data set to train machine learning models on several features in order to predict the correct class. As the final evaluation, all features were tested on totally unseen data.
 
 \chapter{Background}
 \section{Related Work}
 \label{sec:argth}
 \label{sec:argmine}
 A general introduction on the research topic \emph{Argument Mining} is given in \cite{Lippi2016Argumentation-M}.
- The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems are described. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is described as a classification problem. Second, the boundaries of the argumentative units must be identified; this is understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
+The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems are described. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is described as a classification problem. Second, the boundaries of the argumentative units must be identified; this is understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
 
 
 %07 biomed
@@ -55,6 +61,7 @@ The role of discourse markers in the identification of claims and premises are d
 
 
 \section{Domain-Specific Comparative Systems}
+\label{sec:domainspec}
 Many comparison portals can be found on the internet. It is not unusual to see a television commercial those comparison portals, which suggest that they are used frequently every day.
 
 Most portals are specific to a few domains and a subset of properties, for example, car insurances and their price. Because of that, the portals have restrictions. Comparisons are only possible between objects of the domains and predefined properties. Source of the data is usually databases. Humans are involved in gathering, entering and processing the data.
