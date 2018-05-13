@@ -7,11 +7,10 @@ This setup did not return paths for every sentence, so all sentences without a p
 import json
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
 
-from infersent.infersent_feature import initialize_infersent, InfersentFeature
+from infersent.infersent_feature import initialize_infersent
 from util.data_utils import k_folds
 
 data_filtered = pd.read_csv('data/data_if.csv')
