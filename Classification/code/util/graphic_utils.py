@@ -25,7 +25,7 @@ def print_confusion_matrix(name, confusion_matrix, class_names):
     fig.savefig('graphics/conf-{}.pdf'.format(name))
 
 
-def plot(d):
+def plot(d,prefix=''):
     """creates plots for f1 score, precision and recall"""
     for p in ['f1','precision','recall']:
         pal = sns.color_palette("muted")[:2]+[sns.color_palette("muted")[3]] if (len(d['class'].unique()) == 3) else  sns.color_palette("muted")
@@ -42,4 +42,4 @@ def plot(d):
         plt.xlabel('')
         plt.ylabel('')
         ax.xaxis.set_ticklabels(ax.xaxis.get_ticklabels(), rotation=0, ha='center', fontsize=15)
-        fig.savefig("graphics/{}-{}.pdf".format(p,len(d['class'].unique()) == 3))
+        fig.savefig("graphics/{}{}-{}.pdf".format(prefix,p,len(d['class'].unique()) == 3))
