@@ -8,29 +8,31 @@ The held-out set stayed untouched until the final evaluation presented in sectio
 
 If not stated otherwise, scikit-learn (\cite{scikit-learn} was used to perform feature processing, the classification and evaluation.
 
-\section{Choice of Algorithms}
+\section{Classification Algorithm Selection}
 
-\begin{figure}[htb]
+
+To find the most suitable classification algorithms, thirteen (see figure \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. A binary bag-of-words model computed on the whole sentence (see section \ref{sec:features}) was used as the feature. The f1 score was used as the metric to compare the algorithms. 
+
+\begin{figure}[tb]
 \centering
 \caption{F1 score of all tested classification algorithms. A binary bag-of-words feature was used as the baseline feature. Each algorithm was trained with five stratified folds of the data. The black bars show the standard derivation.}
 \label{tbl:algo}
 \includegraphics[width=0.8\linewidth]{images/classifier}
 \end{figure}
 
-To find the most suitable classification algorithms, thirteen (see figure \ref{tbl:algo}) were selected and compared. Except \emph{XGBoost}\footnote{XGBoost is not part of scikit-learn. The implementation presented in \cite{DBLP:journals/corr/ChenG16} was used.} and \emph{Extra Trees Classifier}, all algorithms were used in at least one paper presented in section \ref{sec:argmine}. A binary bag-of-words model computed on the whole sentence (see section \ref{sec:features}) was used as the sole feature. The f1 score was used as the metric to compare the algorithms. 
 
 Tree-based methods and linear models worked good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
 
-As XGBoost and Logistic Regression already work in a pleasing way, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
+As XGBoost and Logistic Regressiony achieve high f1 scores, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
 
 In the following sections, all experiments were conducted using XGBoost with 1000 estimators.
 
 
 \section{Features}
 \label{sec:features}
-Several vector representations were tested as features. The simplest one was a binary bag-of-words model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams. The mean word embedding vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). Also, the pretrained InferSent model was used to create sentence embedding vectors.
+Several vector representations were tested as features. The simplest one was a binary \emph{Bag-Of-Words} model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams (called \emph{POS n-grams}). The \emph{Mean Word Embedding} vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). The pretrained \emph{InferSent} model\footnote{\url{https://github.com/facebookresearch/InferSent} (checked 13.05.2018)} was used to create sentence embedding vectors.
 
-A boolean feature capturing the appearance of a comparative adjective\footnote{Tag \emph{JJR} in the Penn Treebank (\url{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html})} was tested as well. Part-of-speech tagging for all features was done using spaCy.
+A boolean feature capturing the appearance of a comparative adjective (called \emph{Contains JJR}) \footnote{Tag \emph{JJR} in the Penn Treebank (\url{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html})} was tested as well. Part-of-speech tagging for all features was done using spaCy.\newline
 
 Two preprocessing steps were used to generate the input for the feature calculation.
 
@@ -53,17 +55,17 @@ First part & removal & In my mind, \\
 
 The first preprocessing step decided if the full sentence or a part of it should be used. The \emph{first part} contains all words from the beginning of the sentence to the first object, while the \emph{last part} contains all words from the second object to the end of the sentence. The \emph{middle part} contains all words between the first and the second object.
 
-The second step was done to assess how important the objects are for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \emph{OBJECT} (\emph{replacement}). Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (\emph{distinct replacement}). This results in sixteen versions of each of the features mentioned above (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}.\newline
+The second step was done to check the importance of the objects for the classification. The objects either stayed untouched, were removed or replaced. Two different replacement strategies were tested. First, both objects were replaced by the term \mbox{\emph{OBJECT} (\emph{replacement})}. Second, the first object was replaced by \emph{OBJECT\_A} and the second by \emph{OBJECT\_B} (\emph{distinct replacement}). This results in sixteen versions of each of the features mentioned above (four parts $\times$ four object strategies). Some examples are shown in table \ref{preprocessing_example}.\newline
 
 
 \label{sec:lexnet_feat_desc}
-Two features based on LexNet were created to encode dependency parsing information. The original code of LexNet was used to create the string representation of paths, as described in section \ref{sec:lexnet}. An LSTM was used to create path embeddings out of the string paths. Because the paper does not mention any details about the LSTM encoder, different architectures and hyper-parameter values were tested. The best results were achieved with the architecture described in figure \ref{fig:lexnetnn}. The batch  size was set to 128, \emph{RMSprop} (cite) was used as the optimizer. The network was trained for 150 epochs.
+Two features based on LexNet were created to encode dependency parsing information. The original code of LexNet was used to create the string representation of paths, as described in section \ref{sec:lexnet}. An LSTM was used to create path embeddings out of the string paths. Because the paper does not mention any details about the LSTM encoder, different architectures and hyper-parameter values were tested. The best results were achieved with the architecture described in figure \ref{fig:lexnetnn}.
 
-The addition of more layers or neurons did not increase the performance of the network. This is also true for adding bidirectionality to the LSTM layer. The paths (encoded as one-hot vectors) were used as targets for the network. Keras' embedding layer was used to create word embeddings of length 100 out of the path components prior to the path embeddings.
+The addition of more layers or neurons did not increase the performance of the network. This is also true for adding bidirectionality to the LSTM layer. The paths (encoded as one-hot vectors) were used as targets for the network. Keras' embedding layer was used to create word embeddings of length 100 for the string path components.
 
 \begin{figure}[htbp]
 \centering
-\caption{Architecture of the LSTM path encoder. The embedding layer creates word embeddings for the path parts, which are fed into an LSTM with 200 neurons. The result is pooled and fed into a softmax layer. Keras \cite{chollet2015keras} was used to implement the network. The network was trained for 150 epochs with a batch size of 128 and RMSprop as the optimizer.}
+\caption{Architecture of the LSTM path encoder. The embedding layer creates word embeddings for the path parts, which are fed into an LSTM with 200 neurons. The result is pooled (pool size of 2) and fed into a softmax layer. Keras \cite{chollet2015keras} was used to implement the network. The network was trained for 150 epochs with a batch size of 128 and RMSprop as the optimizer.}
 \label{fig:lexnetnn}
 \includegraphics{images/lex_arch}
 \end{figure}
@@ -72,7 +74,7 @@ The addition of more layers or neurons did not increase the performance of the n
 
 Different setups for the string path creation were tested. In the original implementation, the paths are restricted to a length of four. The directionality of edges is restricted as well. The first object must be reachable from the lowest common head of the two objects by following left edges only, the second one by following right edges. In the following, this setup is refered as \emph{original}. However, only 1502 sentences from the training set get a path with this restrictions. 
 
-To overcome this problem, the restrictions were relaxed. The second LexNet setup (called \emph{customised}) limits the paths to a size of sixteen and abolishes the directionality restriction. With this setup, only 390 sentences do not get a path.\footnote{All sentence without a generated path get the artifical path \emph{NOPATH}}
+To overcome this problem, the restrictions were relaxed. The second LexNet setup (called \emph{customised}) limits the paths to a size of sixteen and abolishes the directionality restriction. With this setup, only 390 sentences do not get a path.\footnote{All sentence without a generated path get the artifical path \emph{NOPATH}. The customised version of LexNet is available at \url{https://github.com/ablx/LexNET}}
 
 
 
@@ -82,12 +84,12 @@ To overcome this problem, the restrictions were relaxed. The second LexNet setup
 \section{Experiments}
 \subsection{Baselines}
 \label{sec:3_baseline}
-As described in section \ref{sec:argmine}, there is no task which is similar enough the one at hand which could be used as a baseline. Thus, two baselines using the obtained data were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline} and \ref{tbl:binmaj}, assigns all sentences to the class \texttt{NONE}.
+As described in section \ref{sec:argmine}, there is no task which is similar enough to the one at hand which could be used as a baseline. Thus, two baselines were created. The first baseline, shown in table \ref{tbl:3stratifiedbaseline} and \ref{tbl:binmaj}, assigns all sentences to the class \texttt{NONE}.
 
 % 24.3
 \begin{table}[!htb]
 	\begin{minipage}{.5\linewidth}
-		\caption{Random (stratified) baseline for the three-label scenario.}
+		\caption{Random (stratified) baseline for the three-class scenario.}
 		\label{tbl:3stratifiedbaseline}
 		\centering
 		      
@@ -104,7 +106,7 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 	\end{minipage}%
 	\begin{minipage}{.5\linewidth}
 		\centering
-		\caption{Majority class baseline for the  for the three-label scenario.}
+		\caption{Majority class baseline for the  for the three-class scenario.}
 		\label{tbl:3majoritybaseline}
 		\begin{tabularx}{0.97\linewidth}{Xrrrr}
 			\toprule
@@ -153,15 +155,15 @@ The second baseline was created by assigning classes to the data at random, resp
 		\end{tabularx}
 	\end{minipage} 
 \end{table}
-For all baselines, the scikit-learn's \texttt{DummyClassifer} was used.
+Scikit-learns \texttt{DummyClassifer} was used for all baselines.
 
 \subsection{Results}
 \label{sec:3_results}
-The classification results for the best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calculated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features except the LexNet features used the middle part of the sentence and left the objects untouched. In the LexNet features, the objects were replaced with \emph{Objecta} and \emph{Objectb}. \emph{LexNet (original} used the full sentence and \emph{LexNet (customised} used the middle part of the sentence. 
+The classification results for the best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calculated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features except the LexNet features used the middle part of the sentence and left the objects untouched. In the LexNet features, the objects were replaced with \emph{Objecta} and \emph{Objectb}. \emph{LexNet (original)} used the full sentence and \emph{LexNet (customised)} used the middle part of the sentence. 
 
 
 \begin{figure}[htbp]
-      \caption{\textbf{F1 score} for the three-class scenario using XGBoost. The gray bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
+      \caption{\textbf{F1 score} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_f1}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/f1-False}
@@ -176,14 +178,14 @@ Despite the fact that only 1502 sentences got a path embedding for \emph{LexNet 
 
 
 \begin{figure}[p]
-         \caption{\textbf{Precision} for the three-class scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
+         \caption{\textbf{Precision} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_precision}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/precision-False}
 \end{figure}
 
   \begin{figure}[p]
-              \caption{\textbf{Recall} for the three-class scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the recall score on the y-axis. The black bar displays the standard derivation.} 
+              \caption{\textbf{Recall} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the recall score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:3_recall}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/recall-False}
@@ -194,15 +196,15 @@ Despite the fact that only 1502 sentences got a path embedding for \emph{LexNet 
 % === binary 
 Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
 \begin{figure}[htbp]
-      \caption{\textbf{F1 score} for the binary scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
-    \label{fig:3_f1}
+      \caption{\textbf{F1 score} for the binary scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
+ 
 
     \label{fig:2_f1}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
 
 \end{figure}
-As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got f1 scores close to each other. The feature \emph{LexNet (original)} is again the worst, yet the score is nineteen points above the baseline.
+As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} is again the worst, yet the score is nineteen points above the baseline.
 
 
 
@@ -211,14 +213,14 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 
 
 \begin{figure}[p]
-         \caption{\textbf{Precision} for the binary scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
+         \caption{\textbf{Precision} for the binary scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:2_precision}
     \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/precision-True}
     \end{figure}
     
     \begin{figure}[p]
-              \caption{\textbf{Precision} for the binary scenario using XGBoost. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
+              \caption{\textbf{Precision} for the binary scenario using XGBoost. The grey bar shows the weighted. The feature names (see section \ref{sec:features}) are presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:2_recall}
  \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/recall-True}
@@ -231,7 +233,7 @@ As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-word
 \subsection{Error analysis}
 \label{sec:error_analysis}
 Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical feature in the three-class scenario (InferSent, also the best feature overall), while figure \ref{fig:3_conf_uni} shows the confusion matrix for the best syntax feature (customised LexNet).
- The confusion matrices of each fold per feature were summed up to create these tables.
+ The confusion matrices of each fold per feature were summed up to create the figures.
 
 
 
@@ -239,14 +241,14 @@ Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical f
 
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
-   \caption{Confusion matrix for the InferSent feature using XGBoost} 
+   \caption{Confusion matrix for the InferSent feature using XGBoost in the three-class scenario.} 
     \label{fig:3_conf_inf}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-InferSent_False}
   \end{minipage} \hfill
     \begin{minipage}{.5\linewidth}
   
-     \caption{Confusion matrix for the customised LexNet feature using XGBoost} 
+     \caption{Confusion matrix for the customised LexNet feature using XGBoost in the three-class scenario.} 
        \label{fig:3_conf_uni}
  \centering
 	\includegraphics[width=1\linewidth]{images/experiments/conf-middle_paths_unrestricted_16_False}
@@ -255,12 +257,9 @@ Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical f
 
 As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. The classes  \texttt{BETTER} and \texttt{WORSE} are representing argumentative sentence. It was expected that the distinction between argumentative and not-argumentative is clearer. 
 
-In total, 1274 sentences were incorrectly classied. Both features made the same errors on 570 sentences. The InferSent feature made 219 additional errors, while the LexNet feature made 485.  Examples are shown in table \ref{tbl:3_mistakes}. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 336.
-
-
-Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
+In total, 1274 sentences were incorrectly classied. Both features made the same errors on 570 sentences. The InferSent feature made 219 additional errors, while the LexNet feature made 485. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 336. Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
 \begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the three-label scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\caption{Example sentences for errors made by XGBoost in the three-class scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_se}
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
@@ -280,12 +279,20 @@ Examples on errors made solely by the InferSent feature are given in table \ref{
 \end{tabularx}
 \end{table}
 
-The first two sentences look comparative, but they are questions. As said in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence seven is a hard sentence. Even the annotators were not able to settle on one class. The missclassification of sentence six comes with some surprise. It is assumed that the position of the cue word \emph{better} leads to the wrong class, as it is not between the two objects.
+The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence seven is a hard sentence. Even the annotators were not able to settle on one class. The missclassification of sentence six comes with some surprise.
 
 Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 390 of the sentences did not get a dependency path. However, only fourty-one of the wrongly classified sentences do not have a path.
 
-\begin{table}[h]
-\caption{Example sentences for errors made by the classifier in the three-label scenario with the LexNet feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+It is salient that the LexNet feature makes errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
+
+Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 457 of the 570 shared errors.
+
+The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
+
+In the binary scenario, 1144 errors were made. Both features made the same errors on 394 sentences. LexNet made 496 unique errors, while InferSent made 254. However, 671 errors were already made in the three-class scenario, only 473 errors are new. All in all, the analysis of the errors made in the binary scenario did not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences).
+
+\begin{table}[htbp]
+\caption{Example errors made by the classifier in the three-class scenario with the LexNet feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_lexnet}
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
@@ -300,14 +307,8 @@ computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
 \end{tabularx}
 \end{table}
 
-It is salient that the LexNet feature makes errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create embeddings which are meaningful enough. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
-
-
-Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 457 of the 570 shared errors.
-
-
-\begin{table}[h]
-\caption{Example sentences for errors made by both features in the three-label scenario. The objects of interest are printed \textbf{bold}. \emph{Pred. IF} shows the predicted class of the InferSent feature, \emph{Pred. LexNet} the prediction of the LexNet feature. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\begin{table}[htbp]
+\caption{Example errors made by InferSent and LexNet in the three-label scenario. The objects of interest are printed \textbf{bold}. \emph{Pred. IF} shows the predicted class of the InferSent feature, \emph{Pred. LexNet} the prediction of the LexNet feature. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_both}
 \begin{tabularx}{\linewidth}{lXrrrr}
 \toprule
@@ -322,25 +323,19 @@ Sentences which were wrongly classified by both features are presented in table 
 \end{tabularx}
 \end{table}
 
-The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
-
-In the binary scenario, 1144 errors were made. Both features made the same errors on 394 sentences. LexNet made 496 unique errors, while InferSent made 254. However, 671 errors were already made in the three-class scenario, so that only 473 errors are new. All in all, the analysis of the errors made in the binary scenario does not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences).
-
-It was expected that union of \texttt{BETTER} and \texttt{WORSE} into one class will improve the result significantally, as the class imbalance is reduced this way. However, this does not appear to be the case. The classifier made almost as many mistakes as in the three-class scenario.
-
 \FloatBarrier
 \subsection{Discussion}
 Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
- Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another represenation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
+ Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another representation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
 
-Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any vector representation.
+Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any feature.
 
-All in all, no combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). Hower, this was not the case. Adding the LexNet vectors to the InferSent vectors reduced the scores.
+All in all, no combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). Hower, this was not the case. Appending the LexNet vectors to the InferSent vectors reduced the scores.
 
 An interesting observation is that the simple bag-of-words model performs almost equal to the more complex models. Even a single boolean feature which captures if the sentence contains a comparative adjective yields an f1 score way over the baseline.
 
 As expected, the smallest class in the data set caused the biggest problems. The recall for \texttt{WORSE} is about three times below the recall for \texttt{BETTER}.
-Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation. Looking at the confusion matrices in figure \ref{fig:3_conf_uni} and \ref{fig:3_conf_inf}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special cases of a class \texttt{ARG}.
+Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation. Looking at the confusion matrices in figure \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special cases of a class \texttt{ARG}.
 
 Another interesting observation is that the three-class scenario and the binary scenario made mistakes on the same sentences. In fact, the majority of mistakes made by the binary scenario were made by the three-classes scenario as well.
 
@@ -351,29 +346,29 @@ Another interesting observation is that the three-class scenario and the binary 
 
 The held-out data set contains 1455 sentences (1060 \texttt{NONE}, 276 \texttt{BETTER}, 119 \texttt{WORSE}). The classifier was trained on the complete data set used during development (5759 sentences).
 
-The path embeddings for the held-out data were generated with the same neural network architecture as shown in figure \ref{fig:lexnet}.
+The path embeddings for the held-out data were generated with the same neural network architecture as shown in figure \ref{fig:lexnetnn}.
 
 The results for the three-class scenario are presented in figures \ref{fig:h_3_f1} (f1 score), \ref{fig:h_3_prec} (precision) and \ref{fig:h_3_rec}.
 
 
-\begin{figure}[htb]
-         \caption{\textbf{F1 score} for the three-class scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+\begin{figure}[htbp]
+         \caption{\textbf{F1 score} for the three-class scenario using XGBoost with the held-out data. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis.} 
     \label{fig:h_3_f1}
     \centering
-	\includegraphics[width=1\linewidth]{images/heldout/h-f1-False}
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-f1-False}
     \end{figure}
     
 
 
 \begin{figure}[htbp]
-         \caption{\textbf{Precision} for the three-class scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+         \caption{\textbf{Precision} for the three-class scenario using XGBoost with the held-out data. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
     \label{fig:h_3_prec}
     \centering
 	\includegraphics[width=0.9\linewidth]{images/heldout/h-precision-False}
     \end{figure}
     
-    \begin{figure}[tb]
-              \caption{\textbf{Recall} for the three-class scenario using XGBoost with the held-out data.. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis.} 
+    \begin{figure}[htbp]
+              \caption{\textbf{Recall} for the three-class scenario using XGBoost with the held-out data.. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) is presented on the x-axis, the recall score on the y-axis.} 
        \label{fig:h_3_rec}
  \centering
 	\includegraphics[width=0.9\linewidth]{images/heldout/h-recall-False}
@@ -382,26 +377,26 @@ The results for the three-class scenario are presented in figures \ref{fig:h_3_f
 
 \FloatBarrier
 
-The results for the binary scenario are presentend in \ref{fig:h_2_f1} (f1 score), \ref{fig:h_2_prec} (precision) and \ref{fig:h_2_rec}. In contrast to the three-class scenario, the bag-of-words model is performs best. It achieved an f1 score of
+The results for the binary scenario are presentend in \ref{fig:h_2_f1} (f1 score), \ref{fig:h_2_prec} (precision) and \ref{fig:h_2_rec}.
 
 % BINARY
 \begin{figure}[htbp]
-         \caption{\textbf{F1 score} for the binary scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+         \caption{\textbf{F1 score} for the binary scenario using XGBoost with the held-out data. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) is presented on the x-axis, the f1 score on the y-axis.} 
     \label{fig:h_2_f1}
     \centering
-	\includegraphics[width=1\linewidth]{images/heldout/h-f1-True}
+	\includegraphics[width=0.9\linewidth]{images/heldout/h-f1-True}
     \end{figure}
 
 
 \begin{figure}[htbp]
-         \caption{\textbf{Precision} for the binary scenario using XGBoost with the held-out data. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
+         \caption{\textbf{Precision} for the binary scenario using XGBoost with the held-out data. The grey bar shows the weighted average. The feature name (see section \ref{sec:features}) is presented on the x-axis, the precision score on the y-axis.} 
     \label{fig:h_2_prec}
     \centering
 	\includegraphics[width=0.9\linewidth]{images/heldout/h-precision-True}
     \end{figure}
     
-    \begin{figure}[tb]
-              \caption{\textbf{Recall} for the binary scenario using XGBoost with the held-out data.. The blue bar shows the weighted average of each class. The feature name (see section \ref{sec:features}) is presented on the x-axis, the binary score on the y-axis.} 
+    \begin{figure}[htbp]
+              \caption{\textbf{Recall} for the binary scenario using XGBoost with the held-out data. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) is presented on the x-axis, the recall score on the y-axis.} 
        \label{fig:h_2_rec}
  \centering
 	\includegraphics[width=0.9\linewidth]{images/heldout/h-recall-True}
@@ -409,4 +404,4 @@ The results for the binary scenario are presentend in \ref{fig:h_2_f1} (f1 score
 \end{figure}
 \FloatBarrier
 \subsection{Discussion}
-InferSent, Bag-Of-Words, Mean Word Embeddings and part-of-speech n-grams benefited from the increased size of the training data in both scenarios. InferSent is again the best feature, with an f1 score 5 points higher than bag-of-words. Mean Word Embeddings are the second best feature with an f1 score of 0.93. This is in contrast to the development results (see section \ref{sec:3_results}) , were InferSent and Bag-Of-Worlds got almost equal results, while Mean Word Embeddings was two points behind. The part-fo-speech n-grams increased the f1 score on \texttt{WORSE} significantly. Again, the boolean comparative adjective feature was not able to recognize \texttt{WORSE} at all.
+InferSent, Bag-Of-Words, Mean Word Embeddings and part-of-speech n-grams benefited from the increased size of the training data in both scenarios. InferSent is again the best feature, with an f1 score 5 points higher than bag-of-words. Mean Word Embeddings are the second best feature with an f1 score of 0.93. This is in contrast to the development results (see section \ref{sec:3_results}) , were InferSent and Bag-Of-Worlds got almost equal results, while Mean Word Embeddings was two points behind. The part-of-speech n-grams got a much higher f1 score for \texttt{WORSE}. Again, the boolean comparative adjective feature was not able to recognize \texttt{WORSE} at all.
