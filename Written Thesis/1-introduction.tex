@@ -215,5 +215,17 @@ However, it is expected that the dependency path between the objects of interest
 
 \section{LSTM}
 \section{Gradient Boosting}
-Boosting is a technique to combine a set of weak learners (for examples, shallow decision trees) into one good learner. The classification performance of a single weak learner is typically just a little bit better than random guessing.
+The following overview is based on chapter ten of \cite{friedman2001elements}. Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
+
+The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data, which creates the set of weak learners. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
+
+\[G(x) = \text{sign}\left(\sum^M_{m=1} \alpha_m G_m(x)\right) \]
+
+The values for $\alpha_m$ are computed by the algorithm and determine how much the weak learner \emph{$G_m$} contributes to the prediction.
+
+Boosting can be used with various machine learning algorithms and is suitable for regression as well as classification tasks. The boosting method used in this thesis is \emph{gradient boosting} with \emph{decision trees} as learners. In gradient boosting, \emph{$G_{m+1}$} is fitted on the residuals of \emph{$G_m$}. Thus, each tree tries to improve on the training examples on which the previous learner was weak on.
+
+A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presentend in \cite{DBLP:journals/corr/ChenG16}.
+
+
 
