@@ -121,6 +121,35 @@ To summarise, a lot of different comparison portals exist and are widely used. E
 Adding information like comments and product reviews can enrich the comparison with reasons and opinions, such as \enquote{Ruby is easier to learn than C} or \enquote{Python is more suitable for scientific applications than Erlang as many libraries exist}.
 
 \FloatBarrier
+
+\section{Machine Learning Methods}
+\subsection{Recurrent Neural Networks and Long short-term memory}
+A \emph{feed-forward (artificial) neural network (ANN)} can be seen as a directed, acyclic graph. The data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{t} is part of the input of layer \emph{h} at time \emph{$t+1$}. In doing so, RNNs hold an internal state which is can be used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an indepented data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
+
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.9\textwidth,scale=0.5]{images/rnn_schema}
+	\caption{Schematic view of an RNN. The right side shows the RNN unfolded for two time steps.}
+		\label{fig:rnnschema}
+\end{figure}
+
+Different types of recurrent units have been used. A popular form are \emph{Long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs were developed to overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
+
+
+\ subsection{Gradient Boosting}
+The following overview is based on chapter ten of \cite{friedman2001elements}. Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
+
+The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data, which creates the set of weak learners. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
+
+\[G(x) = \text{sign}\left(\sum^M_{m=1} \alpha_m G_m(x)\right) \]
+
+The values for $\alpha_m$ are computed by the algorithm and determine how much the weak learner \emph{$G_m$} contributes to the prediction.
+
+Boosting can be used with various machine learning algorithms and is suitable for regression as well as classification tasks. The boosting method used in this thesis is \emph{gradient boosting} with \emph{decision trees} as learners. In gradient boosting, \emph{$G_{m+1}$} is fitted on the residuals of \emph{$G_m$}. Thus, each tree tries to improve on the training examples on which the previous learner was weak on.
+
+A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presentend in \cite{DBLP:journals/corr/ChenG16}.
+
+
 \section{Precision, Recall and F1 score}
 \section{Vector Representations for Documents}
 % cosine similarity
@@ -212,20 +241,6 @@ The paths were encoded using an LSTM. The average of all encoded paths was then 
 The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are also used. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernymy is unambigous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
 
 However, it is expected that the dependency path between the objects of interest adds valuable information. This thesis reuses the idea on how to extract and encode paths between two words.
-
-\section{LSTM}
-\section{Gradient Boosting}
-The following overview is based on chapter ten of \cite{friedman2001elements}. Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
-
-The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data, which creates the set of weak learners. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
-
-\[G(x) = \text{sign}\left(\sum^M_{m=1} \alpha_m G_m(x)\right) \]
-
-The values for $\alpha_m$ are computed by the algorithm and determine how much the weak learner \emph{$G_m$} contributes to the prediction.
-
-Boosting can be used with various machine learning algorithms and is suitable for regression as well as classification tasks. The boosting method used in this thesis is \emph{gradient boosting} with \emph{decision trees} as learners. In gradient boosting, \emph{$G_{m+1}$} is fitted on the residuals of \emph{$G_m$}. Thus, each tree tries to improve on the training examples on which the previous learner was weak on.
-
-A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presentend in \cite{DBLP:journals/corr/ChenG16}.
 
 
 
