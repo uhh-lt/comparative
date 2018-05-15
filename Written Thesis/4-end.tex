@@ -30,16 +30,16 @@ The results in \ref{sec:final} show that several features generalise well. The f
 	
 	\begin{table}[h] 
 		\centering 
+		% 15.5
 		\caption{Bag-Of-Words feature (three-class scenario). The presence of all unigrams in the corpus are represented as binary features.} 
 		\label{  }
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.80 \scriptsize{(0.02)} & 0.72 \scriptsize{(0.02)} & 0.75 \scriptsize{(0.01)} \\ 
-			\texttt{WORSE}   & 0.62 \scriptsize{(0.06)} & 0.39 \scriptsize{(0.05)} & 0.48 \scriptsize{(0.05)} \\ 
-			\texttt{NONE}    & 0.89 \scriptsize{(0.01)} & 0.95 \scriptsize{(0.01)} & 0.92 \scriptsize{(0.00)} \\ 
-			average & 0.85 \scriptsize{(0.01)} & 0.86 \scriptsize{(0.00)} & 0.85 \scriptsize{(0.01)} \\ 
-			\bottomrule
+			\texttt{BETTER}	&	 0.79 \scriptsize{$\pm$0.02} &	 0.70 \scriptsize{$\pm$0.03} &	 0.74 \scriptsize{$\pm$0.01}  \\ 
+\texttt{WORSE}	&	 0.62 \scriptsize{$\pm$0.06} &	 0.36 \scriptsize{$\pm$0.05} &	 0.46 \scriptsize{$\pm$0.05}  \\ 
+\texttt{NONE}	&	 0.89 \scriptsize{$\pm$0.01} &	 0.95 \scriptsize{$\pm$0.01} &	 0.92 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.85 \scriptsize{$\pm$0.01} &	 0.86 \scriptsize{$\pm$0.00} &	 0.85 \scriptsize{$\pm$0.01}  \\ 			\bottomrule
 		\end{tabular}
 	\end{table}
 	
@@ -59,7 +59,7 @@ The results in \ref{sec:final} show that several features generalise well. The f
 	\end{table}
 	
 	
-	
+	% 15.5
 	\begin{table}[h] 
 		\centering 
 		\caption{InferSent (sentence embeddings) feature (three-class scenario).} 
@@ -67,10 +67,10 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.79 \scriptsize{(0.02)} & 0.73 \scriptsize{(0.03)} & 0.76 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.53 \scriptsize{(0.07)} & 0.34 \scriptsize{(0.02)} & 0.41 \scriptsize{(0.03)} \\ 
-			\texttt{NONE}    & 0.90 \scriptsize{(0.01)} & 0.95 \scriptsize{(0.00)} & 0.92 \scriptsize{(0.00)} \\ 
-			average & 0.85 \scriptsize{(0.01)} & 0.86 \scriptsize{(0.01)} & 0.85 \scriptsize{(0.01)} \\ 
+\texttt	{BETTER}	&	 0.78 \scriptsize{$\pm$0.03} &	 0.71 \scriptsize{$\pm$0.03} &	 0.74 \scriptsize{$\pm$0.02}  \\ 
+\texttt	{WORSE}	&	 0.60 \scriptsize{$\pm$0.03} &	 0.28 \scriptsize{$\pm$0.05} &	 0.39 \scriptsize{$\pm$0.04}  \\ 
+\texttt	{NONE}	&	 0.89 \scriptsize{$\pm$0.00} &	 0.96 \scriptsize{$\pm$0.01} &	 0.92 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.84 \scriptsize{$\pm$0.01} &	 0.86 \scriptsize{$\pm$0.01} &	 0.84 \scriptsize{$\pm$0.01}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -89,7 +89,7 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\end{tabular}
 	\end{table}
 	
-	
+	% 15.5
 	\begin{table}[h] 
 		\centering 
 		\caption{Mean Word Embeddings (three-class scenario). All GloVe word vectors of a sentence were summed up and divided by the number of words in the sentence.} 
@@ -97,10 +97,10 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.71 \scriptsize{(0.01)} & 0.73 \scriptsize{(0.04)} & 0.72 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.47 \scriptsize{(0.05)} & 0.16 \scriptsize{(0.02)} & 0.24 \scriptsize{(0.03)} \\ 
-			\texttt{NONE}    & 0.88 \scriptsize{(0.01)} & 0.94 \scriptsize{(0.00)} & 0.91 \scriptsize{(0.00)} \\ 
-			average & 0.82 \scriptsize{(0.01)} & 0.84 \scriptsize{(0.01)} & 0.82 \scriptsize{(0.01)} \\ 
+\texttt	{BETTER}	&	 0.70 \scriptsize{$\pm$0.03} &	 0.73 \scriptsize{$\pm$0.02} &	 0.72 \scriptsize{$\pm$0.01}  \\ 
+\texttt	{WORSE}	&	 0.45 \scriptsize{$\pm$0.09} &	 0.15 \scriptsize{$\pm$0.04} &	 0.22 \scriptsize{$\pm$0.05}  \\ 
+\texttt	{NONE}	&	 0.89 \scriptsize{$\pm$0.00} &	 0.95 \scriptsize{$\pm$0.01} &	 0.92 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.82 \scriptsize{$\pm$0.01} &	 0.84 \scriptsize{$\pm$0.00} &	 0.82 \scriptsize{$\pm$0.00}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -119,25 +119,25 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\end{tabular}
 	\end{table}
 	
-
+% 15.5
 	\begin{table}[h] 
 		\centering 
-		\caption{N-gram POS feature (three-class scenario). The presence of the 500 most frequent part-of-speech bi-, tri- and four-grams were represented as binary features.} 
+		\caption{POS n-gram feature (three-class scenario). The presence of the 500 most frequent part-of-speech bi-, tri- and four-grams were represented as binary features.} 
 		\label{  }
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.57 \scriptsize{(0.01)} & 0.59 \scriptsize{(0.03)} & 0.58 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.26 \scriptsize{(0.02)} & 0.11 \scriptsize{(0.02)} & 0.15 \scriptsize{(0.02)} \\ 
-			\texttt{NONE}    & 0.87 \scriptsize{(0.01)} & 0.92 \scriptsize{(0.02)} & 0.89 \scriptsize{(0.01)} \\ 
-			average & 0.76 \scriptsize{(0.01)} & 0.79 \scriptsize{(0.01)} & 0.77 \scriptsize{(0.01)} \\ 
+BETTER	&	 0.61 \scriptsize{$\pm$0.03} &	 0.56 \scriptsize{$\pm$0.02} &	 0.58 \scriptsize{$\pm$0.02}  \\ 
+WORSE	&	 0.20 \scriptsize{$\pm$0.05} &	 0.09 \scriptsize{$\pm$0.03} &	 0.12 \scriptsize{$\pm$0.04}  \\ 
+NONE	&	 0.86 \scriptsize{$\pm$0.01} &	 0.93 \scriptsize{$\pm$0.01} &	 0.89 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.76 \scriptsize{$\pm$0.01} &	 0.79 \scriptsize{$\pm$0.01} &	 0.77 \scriptsize{$\pm$0.01}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
 	
 	\begin{table}[h] 
 		\centering 
-		\caption{N-gram POS feature (three-class scenario). The presence of the 500 most frequent part-of-speech bi-, tri- and four-grams were represented as binary features.} 
+		\caption{POS n-gram feature (binary- scenario). The presence of the 500 most frequent part-of-speech bi-, tri- and four-grams were represented as binary features.} 
 		\label{  }
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
@@ -151,18 +151,18 @@ The results in \ref{sec:final} show that several features generalise well. The f
 	
 
 	
-
+% 15.5
 	\begin{table}[h] 
 		\centering 
-		\caption{Binary feature which represents the presence of a comparative adjective in the sentence (three-class scenario).} 
+		\caption{Contains JJR feature which represents the presence of a comparative adjective in the sentence (three-class scenario).} 
 		\label{ }
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.56 \scriptsize{(0.01)} & 0.62 \scriptsize{(0.04)} & 0.59 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.00 \scriptsize{(0.00)} & 0.00 \scriptsize{(0.00)} & 0.00 \scriptsize{(0.00)} \\ 
-			\texttt{NONE}    & 0.85 \scriptsize{(0.01)} & 0.92 \scriptsize{(0.01)} & 0.88 \scriptsize{(0.01)} \\ 
-			average & 0.73 \scriptsize{(0.01)} & 0.79 \scriptsize{(0.01)} & 0.76 \scriptsize{(0.01)} \\ 
+\texttt	{BETTER}	&	 0.56 \scriptsize{$\pm$0.02} &	 0.61 \scriptsize{$\pm$0.02} &	 0.58 \scriptsize{$\pm$0.01}  \\ 
+\texttt	{WORSE}	&	 0.00 \scriptsize{$\pm$0.00} &	 0.00 \scriptsize{$\pm$0.00} &	 0.00 \scriptsize{$\pm$0.00}  \\ 
+\texttt	{NONE}	&	 0.85 \scriptsize{$\pm$0.00} &	 0.92 \scriptsize{$\pm$0.01} &	 0.88 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.72 \scriptsize{$\pm$0.00} &	 0.79 \scriptsize{$\pm$0.01} &	 0.75 \scriptsize{$\pm$0.01}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -182,7 +182,7 @@ The results in \ref{sec:final} show that several features generalise well. The f
 	\end{table}
 	
 	
-	
+	% 15.5
 	\begin{table}[h] 
 		\centering 
 		\caption{LexNet path embeddings with a maximum length of four and restrictions of the edge direction (three-class scenario). This setup is equal to the original setup in \cite{DBLP:journals/corr/ShwartzD16}} 
@@ -190,10 +190,10 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.65 \scriptsize{(0.02)} & 0.20 \scriptsize{(0.01)} & 0.30 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.58 \scriptsize{(0.12)} & 0.07 \scriptsize{(0.02)} & 0.13 \scriptsize{(0.03)} \\ 
-			\texttt{NONE}    & 0.76 \scriptsize{(0.00)} & 0.98 \scriptsize{(0.00)} & 0.86 \scriptsize{(0.00)} \\ 
-			average & 0.73 \scriptsize{(0.01)} & 0.76 \scriptsize{(0.00)} & 0.69 \scriptsize{(0.00)} \\ 
+\texttt	{BETTER}	&	 0.66 \scriptsize{$\pm$0.04} &	 0.21 \scriptsize{$\pm$0.02} &	 0.31 \scriptsize{$\pm$0.03}  \\ 
+\texttt	{WORSE}	&	 0.44 \scriptsize{$\pm$0.14} &	 0.04 \scriptsize{$\pm$0.01} &	 0.08 \scriptsize{$\pm$0.02}  \\ 
+\texttt	{NONE}	&	 0.76 \scriptsize{$\pm$0.00} &	 0.98 \scriptsize{$\pm$0.00} &	 0.86 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.72 \scriptsize{$\pm$0.01} &	 0.76 \scriptsize{$\pm$0.00} &	 0.69 \scriptsize{$\pm$0.01}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -212,7 +212,7 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\end{tabular}
 	\end{table}
 	
-	%===
+	%=== 15.5
 	\begin{table}[h] 
 		\centering 
 		\caption{LexNet path embeddings with a maximum length of sixteen and no restrictions of the edge direction (three-class scenario).} 
@@ -220,10 +220,10 @@ The results in \ref{sec:final} show that several features generalise well. The f
 		\begin{tabular}{@{}lrrrr@{}}
 			\toprule
 			        & precision                & recall                   & f1 score                 \\ \midrule 
-			\texttt{BETTER}  & 0.64 \scriptsize{(0.05)} & 0.64 \scriptsize{(0.03)} & 0.64 \scriptsize{(0.02)} \\ 
-			\texttt{WORSE}   & 0.41 \scriptsize{(0.08)} & 0.15 \scriptsize{(0.04)} & 0.22 \scriptsize{(0.04)} \\ 
-			\texttt{NONE}    & 0.87 \scriptsize{(0.01)} & 0.93 \scriptsize{(0.01)} & 0.90 \scriptsize{(0.00)} \\ 
-			average & 0.79 \scriptsize{(0.01)} & 0.81 \scriptsize{(0.01)} & 0.80 \scriptsize{(0.01)} \\ 
+\texttt	{BETTER}&	 0.68 \scriptsize{$\pm$0.02} &	 0.54 \scriptsize{$\pm$0.04} &	 0.60 \scriptsize{$\pm$0.02}  \\ 
+\texttt	{WORSE}	&	 0.34 \scriptsize{$\pm$0.06} &	 0.15 \scriptsize{$\pm$0.01} &	 0.21 \scriptsize{$\pm$0.02}  \\ 
+\texttt	{NONE}	&	 0.86 \scriptsize{$\pm$0.01} &	 0.96 \scriptsize{$\pm$0.01} &	 0.90 \scriptsize{$\pm$0.00}  \\ 
+average	&	 0.78 \scriptsize{$\pm$0.00} &	 0.81 \scriptsize{$\pm$0.00} &	 0.79 \scriptsize{$\pm$0.00}  \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}

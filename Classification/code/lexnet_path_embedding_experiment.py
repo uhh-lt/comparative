@@ -13,8 +13,8 @@ from xgboost import XGBClassifier
 from infersent.infersent_feature import initialize_infersent
 from util.data_utils import k_folds
 
-data_filtered = pd.read_csv('data/data_if.csv')
-path_embeddings = pd.read_csv('data/path_embeddings/full_paths_original_4.csv')
+data_filtered = pd.read_csv('data/data.csv')
+path_embeddings = pd.read_csv('data/full_paths_original_4.csv')
 print('All sentences {}'.format(len(path_embeddings)))
 print('Without embedding {}'.format(len(path_embeddings[path_embeddings.paths.str.contains('NOPATH')])))
 path_embeddings = path_embeddings[path_embeddings.paths.str.contains('NOPATH') == False]

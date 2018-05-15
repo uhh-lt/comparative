@@ -161,7 +161,7 @@ Scikit-learns \texttt{DummyClassifer} was used for all baselines.
 \label{sec:3_results}
 The classification results for the best performing feature configurations in the three-class scenario are presented in figures \ref{fig:3_f1} (f1 score), \ref{fig:3_precision} (precision) and \ref{fig:3_recall} (recall). Each feature was tested and evaluated using five stratified folds. Presented are the overall results and the results for each class. The black bar shows the standard derivation. All scores were calculated with scikit-learn's metric module (\texttt{sklearn.metrics}). All features except the LexNet features used the middle part of the sentence and left the objects untouched. In the LexNet features, the objects were replaced with \emph{Objecta} and \emph{Objectb}. \emph{LexNet (original)} used the full sentence and \emph{LexNet (customised)} used the middle part of the sentence. 
 
-
+% 15.5
 \begin{figure}[htbp]
       \caption{\textbf{F1 score} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_f1}
@@ -171,10 +171,10 @@ The classification results for the best performing feature configurations in the
 \end{figure}
 
 
-
-All features yield f1 scores at least ten points over the baseline. Bag-of-words (f1 score 0.855) and InferSent (f1 score 0.858) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
-
-Despite the fact that only 1502 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1502 sentences confirms this, as the feature is then able to achieve an f1 score of 0.76.\newline
+% 15.5 f1 scores
+All features yield f1 scores at least ten points over the baseline. Bag-of-words (f1 score 0.848) and InferSent (f1 score 0.842) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
+% 15.5 lexnet dinge
+Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1519 sentences confirms this, as the feature is then able to achieve an f1 score of 0.75.\newline
 
 
 \begin{figure}[p]
@@ -237,8 +237,7 @@ Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical f
 
 
 
-
-
+% 15.5
 \begin{figure}[h]
     \begin{minipage}{.5\linewidth}
    \caption{Confusion matrix for the InferSent feature using XGBoost in the three-class scenario.} 

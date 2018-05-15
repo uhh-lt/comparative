@@ -33,7 +33,8 @@ class PathEmbeddingFeature(BaseFeature):
         paths = pd.read_csv(self.path_file)
         feat = []
         for i, row in dataframe.iterrows():
-            embedding = paths[paths.id == i].embedding
+            embedding = paths[paths.id == row.id].embedding
+            a = embedding.values
             tolist_ = json.loads(embedding.values.tolist()[0])
             feat.append(tolist_)
         assert len(feat) == len(dataframe)

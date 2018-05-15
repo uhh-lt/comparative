@@ -18,6 +18,7 @@ from transformers.data_extraction import ExtractMiddlePart
 from util.data_utils import load_data, k_folds, get_misclassified
 from util.graphic_utils import print_confusion_matrix, plot
 from util.misc_utils import get_logger
+from util.precalculate_features import precalculate_embedding, prepare_for_paths
 
 """
 This script was used to test the different features.
@@ -28,11 +29,11 @@ This script was used to test the different features.
 # future work: hypenet bootstrap
 
 nlp = spacy.load('en_core_web_lg')
-logger = get_logger('finale_fassung')
+logger = get_logger('final_version_no_dups')
 
 LABEL = 'most_frequent_label'
-data = load_data('data_if.csv')
-data_bin = load_data('data_if.csv', binary=True)
+#data = precalculate_embedding(load_data('data.csv'))
+data_bin = precalculate_embedding(load_data('data.csv', binary=True))
 
 # infersent_model = initialize_infersent(data.sentence.values)
 
@@ -46,10 +47,10 @@ def perform_classificiation(data, labels):
 
     feature_unions = [
 
-        FeatureUnion([('full_paths_original_4_aip', make_pipeline(PathEmbeddingFeature('./data/path_embeddings/full_paths_original_4.csv')))]),
-        FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(PathEmbeddingFeature('./data/path_embeddings/middle_paths_unrestricted_16.csv')))]),
+        FeatureUnion([('full_paths_original_4_aip', make_pipeline(PathEmbeddingFeature('./data/full_paths_original_4.csv')))]),
+        FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(PathEmbeddingFeature('./data/middle_paths_unrestricted_16.csv')))]),
         FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
-        FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part', value_transform=lambda x: json.loads(x))))]),
+        FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part')))]),
         FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
         FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
         FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
@@ -99,6 +100,7 @@ def perform_classificiation(data, labels):
 
         except Exception as ex:
             logger.error(ex)
+            raise ex
         logger.info(conf_dict[caption])
         print_confusion_matrix('{}_{}'.format(caption, binary), conf_dict[caption], labels)
         logger.info("\n\n=================\n\n")
@@ -108,5 +110,5 @@ def perform_classificiation(data, labels):
     plot(result_frame)
 
 
-perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-# perform_classificiation(data_bin, ['ARG', 'NONE'])
+#perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
+perform_classificiation(data_bin, ['ARG', 'NONE'])
