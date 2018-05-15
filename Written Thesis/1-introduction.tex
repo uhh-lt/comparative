@@ -150,7 +150,23 @@ Boosting can be used with various machine learning algorithms and is suitable fo
 A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presentend in \cite{DBLP:journals/corr/ChenG16}.
 
 
-\section{Precision, Recall and F1 score}
+\section{Performance measures}
+Precision, Recall and f1 score are measures to check the classification performance. The measures are calculated per class.
+
+The precision of a classifier with regards to class \emph{c} is defined as:
+\[ \text{P(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false positives}} \]
+Precision is the ratio between correctly predicted examples for class \emph{c} and all predicted examples of class \emph{c}.
+
+
+The recall of a classifier with regards to class \emph{c} is defined as:
+\[ \text{R(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false negatives}} \]
+
+
+If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} would be one, while the recall will be near zero. Likewise, if all  all examples are classified as \emph{c}, the recall will be one, while the precision will be zero. 
+
+The f1 balances precision and recall. It is defined as the harmonic mean:
+\[ F_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
+
 \section{Vector Representations for Documents}
 % cosine similarity
 Because many machine learning algorithms work with numeric values as input, text must be transformed into a numerical representation. Several methods are known to transform text into numeric feature vectors.
