@@ -33,13 +33,13 @@ logger = get_logger('heldout')
 
 # adding the precalculated path embeddings and sentence embeddings
 _train_data = pd.read_csv('data/data.csv')
-train_data = add_embeddings_to_df(_train_data, 'data/path_embeddings/full_paths_original_4.csv', FULL_4)
-train_data = add_embeddings_to_df(_train_data, 'data/path_embeddings/middle_paths_unrestricted_16.csv', MIDDLE_16)
+train_data = add_embeddings_to_df(_train_data, 'data/full_paths_original_4.csv', FULL_4)
+train_data = add_embeddings_to_df(_train_data, 'data/middle_paths_unrestricted_16.csv', MIDDLE_16)
 train_data = precalculate_embedding(train_data)
 
 _test_data = pd.read_csv('data/do-not-touch/held-out-data.csv')
-test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/full_paths_original_4.csv', FULL_4)
-test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/middle_paths_unrestricted_16.csv', MIDDLE_16)
+test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/h_full_paths_original_4.csv', FULL_4)
+test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/h_middle_paths_unrestricted_16.csv', MIDDLE_16)
 test_data = precalculate_embedding(test_data)
 
 print('Training Data Statistics: \n{}\n'.format(train_data.most_frequent_label.value_counts()))
@@ -100,5 +100,5 @@ def run_experiment(binary):
     result_frame.to_csv('graphics/data/heldout_results_{}.csv'.format(binary), index=False)
 
 
-run_experiment(False)
+#run_experiment(False)
 run_experiment(True)
