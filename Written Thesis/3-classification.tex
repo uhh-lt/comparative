@@ -174,17 +174,18 @@ The classification results for the best performing feature configurations in the
 % 15.5 f1 scores
 All features yield f1 scores at least ten points over the baseline. Bag-of-words (f1 score 0.848) and InferSent (f1 score 0.842) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
 % 15.5 lexnet dinge
+
 Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1519 sentences confirms this, as the feature is then able to achieve an f1 score of 0.75.\newline
 
 
-\begin{figure}[p]
+\begin{figure}[htbp]
          \caption{\textbf{Precision} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:3_precision}
  \centering
 	\includegraphics[width=0.9\textwidth]{images/experiments/precision-False}
 \end{figure}
 
-  \begin{figure}[p]
+  \begin{figure}[htbp]
               \caption{\textbf{Recall} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the recall score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:3_recall}
  \centering
@@ -204,7 +205,7 @@ Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{f
 	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
 
 \end{figure}
-As with the three-class scenario, InferSent (f1 score 0.886) and the bag-of-words (f1 score 0.882) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} is again the worst, yet the score is nineteen points above the baseline.% 15.5
+As with the three-class scenario, InferSent (f1 score 0.886) and the bag-of-words (f1 score 0.882) performed best and got almost equal results. They are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} is again the worst, yet the score is ten points above the baseline.% 15.5
 
 
 
@@ -255,40 +256,44 @@ Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical f
 \end{figure}
 
 As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. The classes  \texttt{BETTER} and \texttt{WORSE} are representing argumentative sentence. It was expected that the distinction between argumentative and not-argumentative is clearer. 
-
-In total, 1274 sentences were incorrectly classied. Both features made the same errors on 570 sentences. The InferSent feature made 219 additional errors, while the LexNet feature made 485. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 336. Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
+% 15.55
+In total, 1311 sentences were incorrectly classfied. Both features made the same errors on 607 sentences. The InferSent feature made 220 additional errors, while the LexNet feature made 484. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred-twenty-five of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 356. Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
 \begin{table}[h]
 \caption{Example sentences for errors made by XGBoost in the three-class scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_se}
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
  & Sentence & Predicted & Gold & Confidence \\ \midrule
-1& Is \textbf{football} better than \textbf{baseball}? & \texttt{BETTER} & \texttt{NONE} & 1.0\\
-2& Is \textbf{Microsoft} better because of \textbf{Apple}? & \texttt{BETTER} & \texttt{NONE} & 1.0\\
+1& Is \textbf{Python} better than \textbf{Perl}? & \texttt{BETTER} & \texttt{NONE} & 0.6\\ % 15.5
+
+2& Is \textbf{Microsoft} better because of \textbf{Apple}? & \texttt{BETTER} & \texttt{NONE} & 1.0\\ % 15.5
  
-3& The \textbf{Buick} is a far better driver but doesn't have the wretched excess appeal of the \textbf{Cadillac}. & \texttt{BETTER} & \texttt{NONE} & 1.0\\
-4&They know that \textbf{Lexus} has better residual, and that \textbf{Audi} has better tech. & \texttt{BETTER} & \texttt{NONE} & 1.0\\
+3& \textbf{Microsoft} is the devil but \textbf{Sony} truly isn't any better. & \texttt{WORSE} & \texttt{NONE} & 1.0\\ % 15.5
+
+4& \textbf{Python} is much better suited as a "glue" language, while \textbf{Java} is better characterized as a low-level implementation language. & \texttt{BETTER} & \texttt{NONE} & 1.0\\ % 15.5
  
-5& Its Azure PaaS/IaaS platform hasn't overtaken \textbf{Amazon} yet in market share, but \textbf{Microsoft} has enjoyed nine straight quarters of growth at 10 percent or better & \texttt{NONE} & \texttt{WORSE} & 1.0\\
+5& Its Azure PaaS/IaaS platform hasn't overtaken \textbf{Amazon} yet in market share, but \textbf{Microsoft} has enjoyed nine straight quarters of growth at 10 percent or better & \texttt{NONE} & \texttt{WORSE} & 1.0\\ % 15.5
  
- 6& I think I found a better \textbf{sandwich} than a cheese \textbf{steak}. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
+ 6& arrrggghh...\textbf{Python} is a terrible language - only \textbg{Perl} sucks worse. & \texttt{WORSE} & \texttt{BETTER} & 1.0\\ % 15.5
  
-7&  \textbf{harvard} College accepted just 6.9 percent, its lowest rate ever, and the numbers were not much better elsewhere: 7.2 percent at Stanford,8.2 percent at Princeton, 11.5 percent at \textbf{dartmouth}, and 23 percent at Northwestern-all record lows. & \texttt{WORSE} & \texttt{NONE} & 0.4\\
+7&  Good to see again a \textbf{Renault} ahead of a \textbf{Ferrari}. & \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
 \bottomrule
 \end{tabularx}
 \end{table}
+% 15.5
+The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence six has three negative words in it. Sentence seven is a hard sentence, as it does not contain any cue word.
+% 15.5
 
-The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence seven is a hard sentence. Even the annotators were not able to settle on one class. The missclassification of sentence six comes with some surprise.
-
-Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 390 of the sentences did not get a dependency path. However, only fourty-one of the wrongly classified sentences do not have a path.
+Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only thirty-six of the wrongly classified sentences do not have a path.
 
 It is salient that the LexNet feature makes errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
 
-Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 457 of the 570 shared errors.
+% 15.5
+Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 477 of the 607 shared errors.
 
 The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
 
-In the binary scenario, 1144 errors were made. Both features made the same errors on 394 sentences. LexNet made 496 unique errors, while InferSent made 254. However, 671 errors were already made in the three-class scenario, only 473 errors are new. All in all, the analysis of the errors made in the binary scenario did not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences).
+In the binary scenario, 1183 errors were made. Both features made the same errors on 380 sentences. LexNet made 520 unique errors, while InferSent made 283. However, 739 errors were already made in the three-class scenario, only 444 errors are new. All in all, the analysis of the errors made in the binary scenario did not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences). %15.5
 
 \begin{table}[htbp]
 \caption{Example errors made by the classifier in the three-class scenario with the LexNet feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
@@ -296,12 +301,16 @@ In the binary scenario, 1144 errors were made. Both features made the same error
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
  & Sentence & Predicted & Gold & Confidence \\ \midrule
-1 & Right now \textbf{Apple} is worse then \textbf{Microsoft} ever was. & \texttt{BETTER} & \texttt{WORSE} & 1.0 \\
-2 & I think \textbf{Bash} scripting is harder than \textbf{Python} though. & \texttt{BETTER} & \texttt{WORSE} & 1.0\\
-3 & In my opinion \textbf{Windows 8} is worlds better then \textbf{Windows 7} & \texttt{NONE} & \texttt{BETTER} & 1.0\\
+1 & Right now \textbf{Apple} is worse then \textbf{Microsoft} ever was. & \texttt{BETTER} & \texttt{WORSE} & 0.8 \\ % 15.5
+
+2 & \textbf{california} is a much harder place to practice law than is South \textbf{carolina}. & \texttt{NONE} & \texttt{WORSE} & 1.0\\ % 15.5
+
+3 & \textbf{google+} starts out far faster than \textbf{facebook}, Twitter& \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
+
 4 & In FPGAs, \textbf{Integer} or fixed-point math can often run 10 to 100 times faster than \textbf{Floating-point} 
-computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
-5 & Congratulations to \textbf{Apple}; you continue to prove you are worse than \textbf{Microsoft} ever was. & \texttt{BETTER} & \texttt{WORSE} & 0.6\\
+computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
+
+5 & Your \textbf{iphone} is a much better display than your desktop/\textbf{laptop} & \texttt{NONE} & \texttt{BETTER} & 0.8\\
  \bottomrule
 \end{tabularx}
 \end{table}
@@ -312,11 +321,15 @@ computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\
 \begin{tabularx}{\linewidth}{lXrrrr}
 \toprule
  & Sentence & Pred. IF & Pred. LexNet & Gold & Conf. \\ \midrule
-1 & Is a \textbf{BMW} 3 series \$15,000 better than a \textbf{Ford} Focus? & \texttt{BETTER} & \texttt{BETTER} & \texttt{NONE} & 1.0\\
-2 & \textbf{Google} is the main player now, \textbf{Microsoft} are just plain inferior in Mobile & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 1.0\\
-3 & Yeah, Nvidia's \textbf{OpenCL} is not good and \textbf{CUDA} is way better. & \texttt{NONE} & \texttt{BETTER} & \texttt{WORSE} & 1.0\\
-4 & \textbf{Python} has a better standard library, but \textbf{Perl} has a better nonstandard library & \texttt{BETTER} & \texttt{WORSE} & \texttt{NONE} & 0.8\\
-5 & \textbf{Groovy} code often looks and feels like \textbf{Java} code, but is almost always simpler and easier to use. & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 0.4\\
+1 & Is a \textbf{BMW} 3 series \$15,000 better than a \textbf{Ford} Focus? & \texttt{BETTER} & \texttt{BETTER} & \texttt{NONE} & 1.0\\ % 15.5
+
+2 & \textbf{Google} is the main player now, \textbf{Microsoft} are just plain inferior in Mobile & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
+
+3 & Yeah, Nvidia's \textbf{OpenCL} is not good and \textbf{CUDA} is way better. & \texttt{NONE} & \texttt{BETTER} & \texttt{WORSE} & 1.0\\ % 15.5
+
+4 & \textbf{Python} grew out of the need for a "better" \textbf{Perl}. & \texttt{WORSE} & \texttt{NONE} & \texttt{BETTER} & 1.0\\
+
+5 & \textbf{Groovy} code often looks and feels like \textbf{Java} code, but is almost always simpler and easier to use. & \texttt{NONE} & \texttt{NONE} & \texttt{BETTER} & 0.4\\ % 15.5
 
  \bottomrule
 \end{tabularx}
