@@ -29,30 +29,30 @@ def add_embeddings_to_df(df, embedding_file, column_name):
     return df
 
 
-logger = get_logger('heldout')
+logger = get_logger('heldout_jl')
 
 # adding the precalculated path embeddings and sentence embeddings
 _train_data = pd.read_csv('data/data.csv')
-train_data = add_embeddings_to_df(_train_data, 'data/full_paths_original_4.csv', FULL_4)
-train_data = add_embeddings_to_df(_train_data, 'data/middle_paths_unrestricted_16.csv', MIDDLE_16)
+train_data = add_embeddings_to_df(_train_data, '../all_data_files/extras/combi_full_paths_original_4.csv', FULL_4)
+train_data = add_embeddings_to_df(_train_data, '../all_data_files/extras/combi_middle_paths_unrestricted_16.csv', MIDDLE_16)
 train_data = precalculate_embedding(train_data)
 
 _test_data = pd.read_csv('data/do-not-touch/held-out-data.csv')
-test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/h_full_paths_original_4.csv', FULL_4)
-test_data = add_embeddings_to_df(_test_data, 'data/do-not-touch/h_middle_paths_unrestricted_16.csv', MIDDLE_16)
+test_data = add_embeddings_to_df(_test_data, '../all_data_files/extras/combi_full_paths_original_4.csv', FULL_4)
+test_data = add_embeddings_to_df(_test_data, '../all_data_files/extras/combi_middle_paths_unrestricted_16.csv', MIDDLE_16)
 test_data = precalculate_embedding(test_data)
 
 print('Training Data Statistics: \n{}\n'.format(train_data.most_frequent_label.value_counts()))
 print('Test Data Statistics: \n{}'.format(test_data.most_frequent_label.value_counts()))
 
 feature_unions = [
-    FeatureUnion([('full_paths_original_4_aip', make_pipeline(SelectDataFrameColumn(FULL_4)))]),
-    FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(SelectDataFrameColumn(MIDDLE_16)))]),
-    FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
-    FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part')))]),
-    FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
-    FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4))))]),
-    FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
+    FeatureUnion([('full_paths_original_4', make_pipeline(SelectDataFrameColumn(FULL_4)))]),
+   FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(SelectDataFrameColumn(MIDDLE_16)))]),
+ #   FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
+ #   FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part')))]),
+ #   FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
+ #   FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4))))]),
+ #   FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
 ]
 
 
@@ -80,7 +80,7 @@ def run_experiment(binary):
         logger.info(matrix)
 
         # build the graphics
-        print_confusion_matrix('heldout_{}_{}'.format(caption, binary), matrix, labels)
+        print_confusion_matrix('jl_heldout_{}_{}'.format(caption, binary), matrix, labels)
 
         result_frame.loc[idx] = [caption, 'Overall', f1_score(test_data['most_frequent_label'].values, predicted, average='weighted'), precision_score(test_data['most_frequent_label'].values, predicted, average='weighted'),
                                  recall_score(test_data['most_frequent_label'].values, predicted, average='weighted')]
@@ -94,10 +94,10 @@ def run_experiment(binary):
         for _id, sentence, a, b, predicted, gold in get_misclassified(predicted, test_data):
             miss.loc[idx_mc] = [_id, caption, sentence, a, b, predicted, gold]
             idx_mc += 1
-        miss.to_csv('missclassified/heldout__{}_binary_{}.csv'.format(caption, binary), index=False)
+        #miss.to_csv('missclassified/heldout__{}_binary_{}.csv'.format(caption, binary), index=False)
 
         logger.info("\n\n============\n\n")
-    result_frame.to_csv('graphics/data/heldout_results_{}.csv'.format(binary), index=False)
+    result_frame.to_csv('graphics/data/jl_heldout_results_{}.csv'.format(binary), index=False)
 
 
 #run_experiment(False)

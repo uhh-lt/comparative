@@ -96,10 +96,10 @@ As described in section \ref{sec:argmine}, there is no task which is similar eno
 		\begin{tabularx}{0.97\linewidth}{Xrrrr}
 			\toprule
 			                & precision                    & recall                       & f1 score                     \\ \midrule 
-			\texttt{BETTER} & 0.22 \scriptsize{$\pm$0.02} & 0.23 \scriptsize{$\pm$0.02} & 0.22 \scriptsize{$\pm$0.02} \\ 
-			\texttt{WORSE}  & 0.10 \scriptsize{$\pm$0.02} & 0.08 \scriptsize{$\pm$0.02} & 0.09 \scriptsize{$\pm$0.02} \\ 
-			\texttt{NONE}   & 0.74 \scriptsize{$\pm$0.00}  & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01} \\ 
-			avg.         & 0.59 \scriptsize{$\pm$0.01} & 0.59 \scriptsize{$\pm$0.01} & 0.59 \scriptsize{$\pm$0.01} \\ 
+			\texttt{BETTER} & 0.19 \scriptsize{$\pm$0.01} & 0.21 \scriptsize{$\pm$0.01} & 0.20 \scriptsize{$\pm$0.01} \\ 
+			\texttt{WORSE}  & 0.06 \scriptsize{$\pm$0.02} & 0.05 \scriptsize{$\pm$0.02} & 0.06 \scriptsize{$\pm$0.03} \\ 
+			\texttt{NONE}   & 0.73 \scriptsize{$\pm$0.00}  & 0.73 \scriptsize{$\pm$0.0} & 0.73 \scriptsize{$\pm$0.00} \\ 
+			avg.         & 0.57 \scriptsize{$\pm$0.00} & 0.58 \scriptsize{$\pm$0.01} & 0.57 \scriptsize{$\pm$0.00} \\ 
 			\bottomrule
 		\end{tabularx} 
 		
@@ -134,9 +134,9 @@ The second baseline was created by assigning classes to the data at random, resp
 		\begin{tabularx}{0.97\linewidth}{Xrrrr}
 			\toprule
 			              & precision                    & recall                       & f1 score                              \\ \midrule 
-			\texttt{ARG}  & 0.31 \scriptsize{$\pm$0.02} & 0.31 \scriptsize{$\pm$0.02} & 0.31 \scriptsize{$\pm$0.02}          \\ 
-			\texttt{NONE} & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01} & 0.74 \scriptsize{$\pm$0.01}          \\ 
-			avg.       & 0.62 \scriptsize{$\pm$0.01} & 0.62 \scriptsize{$\pm$0.01} & \textbf{0.62} \scriptsize{$\pm$0.01} \\ 
+			\texttt{ARG}  & 0.26 \scriptsize{$\pm$0.03} & 0.26 \scriptsize{$\pm$0.03} & 0.26 \scriptsize{$\pm$0.03}          \\ 
+			\texttt{NONE} & 0.72 \scriptsize{$\pm$0.01} & 0.72 \scriptsize{$\pm$0.01} & 0.72 \scriptsize{$\pm$0.01}          \\ 
+			avg.       & 0.60 \scriptsize{$\pm$0.02} & 0.60 \scriptsize{$\pm$0.02} & 0.60 \scriptsize{$\pm$0.02} \\ 
 			\bottomrule
 		\end{tabularx}
 		
@@ -150,7 +150,7 @@ The second baseline was created by assigning classes to the data at random, resp
 			              & precision                    & recall                       & f1 score                     \\ \midrule 
 			\texttt{ARG}  & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} & 0.00 \scriptsize{$\pm$0.00} \\ 
 			\texttt{NONE} & 0.73 \scriptsize{$\pm$0.00} & 1.00 \scriptsize{$\pm$0.00} & 0.84 \scriptsize{$\pm$0.00} \\ 
-			avg.       & 0.53 \scriptsize{$\pm$0.00} & 0.73 \scriptsize{$\pm$0.00} & 0.61 \scriptsize{$\pm$0.00} \\ 
+			avg.       & 0.53 \scriptsize{$\pm$0.00} & 0.73 \scriptsize{$\pm$0.00} & \textbf{0.61} \scriptsize{$\pm$0.00} \\ 
 			\bottomrule
 		\end{tabularx}
 	\end{minipage} 
@@ -172,7 +172,7 @@ The classification results for the best performing feature configurations in the
 
 
 % 15.5 f1 scores
-All features yield f1 scores at least ten points over the baseline. Bag-of-words (f1 score 0.848) and InferSent (f1 score 0.842) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
+The best feature (bag-of-words) yields a score 24 points above the baseline. The worst feature (\emph{LexNet (original)}) is still eight points above the baseline. Bag-of-words (f1 score 0.848) and InferSent (f1 score 0.842) deliver almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yields a f1 score over the baseline as well. However, it does not assign any examples to the class \texttt{WORSE}.
 % 15.5 lexnet dinge
 
 Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1519 sentences confirms this, as the feature is then able to achieve an f1 score of 0.75.\newline
@@ -337,17 +337,17 @@ computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
 
 \FloatBarrier
 \subsection{Discussion}
-Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Intuitivly, this makes sense. Comparative sentences are often formed after the pattern \emph{Noun Verb Comparative Adjective Noun}, as in \emph{\enquote{Python is better than Ruby}}. Sentences which are not formed after this pattern caused wrong predictions, as presented in \ref{sec:error_analysis}.
- Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another representation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
+Section \ref{sec:3_results} only shows the results for the best performing configuration of each feature. This is, for all cases, the middle part of the sentence. Sentences which are not formed after this pattern caused wrong predictions, as presented \ref{sec:error_analysis}.
+
+Using the full sentence worked second best. Adding the first and/or last part of the sentence did not increase the f1 score at all, no matter if the same or another representation type than the one for the middle part is used. The first and second part alone never got an f1 score above the baseline.
 
 Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any feature.
 
-All in all, no combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). Hower, this was not the case. Appending the LexNet vectors to the InferSent vectors reduced the scores.
+An interesting observation is that the simple bag-of-words model performs equal or better than the more complex models. The simple feature \emph{Contains JJR} (which is only one boolean value) is able to distinguish argumentative and non-argumentative sentences in a pleasing way, yiedling an f1 score fourten points above the baseline.
 
-An interesting observation is that the simple bag-of-words model performs almost equal to the more complex models. Even a single boolean feature which captures if the sentence contains a comparative adjective yields an f1 score way over the baseline.
+The values for LexNet path embeddings show that this is a reasonable way to encode sentences. The original setup found only paths for 26\% of the sentences, yet it yielded an f1 score eight points above the baseline. The customisation made it even more powerful. No combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). Hower, this was not the case. Appending the LexNet vectors to the InferSent vectors reduced the scores.
 
-As expected, the smallest class in the data set caused the biggest problems. The recall for \texttt{WORSE} is about three times below the recall for \texttt{BETTER}.
-Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation. Looking at the confusion matrices in figure \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special cases of a class \texttt{ARG}.
+As expected, the smallest class in the data set caused the biggest problems. Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation for most features. Looking at the confusion matrices in figure \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special argumentative sentences in general.
 
 Another interesting observation is that the three-class scenario and the binary scenario made mistakes on the same sentences. In fact, the majority of mistakes made by the binary scenario were made by the three-classes scenario as well.
 
@@ -356,7 +356,7 @@ Another interesting observation is that the three-class scenario and the binary 
 \subsection{Results}
 \label{sec:final}
 
-The held-out data set contains 1455 sentences (1060 \texttt{NONE}, 276 \texttt{BETTER}, 119 \texttt{WORSE}). The classifier was trained on the complete data set used during development (5759 sentences).
+The held-out data set contains 1441 sentences (1048 \texttt{NONE}, 273 \texttt{BETTER}, 119 \texttt{WORSE}). The classifier was trained on the complete data set used during development (5759 sentences).
 
 The path embeddings for the held-out data were generated with the same neural network architecture as shown in figure \ref{fig:lexnetnn}.
 
@@ -416,4 +416,28 @@ The results for the binary scenario are presentend in \ref{fig:h_2_f1} (f1 score
 \end{figure}
 \FloatBarrier
 \subsection{Discussion}
-InferSent, Bag-Of-Words, Mean Word Embeddings and part-of-speech n-grams benefited from the increased size of the training data in both scenarios. InferSent is again the best feature, with an f1 score 5 points higher than bag-of-words. Mean Word Embeddings are the second best feature with an f1 score of 0.93. This is in contrast to the development results (see section \ref{sec:3_results}) , were InferSent and Bag-Of-Worlds got almost equal results, while Mean Word Embeddings was two points behind. The part-of-speech n-grams got a much higher f1 score for \texttt{WORSE}. Again, the boolean comparative adjective feature was not able to recognize \texttt{WORSE} at all.
+All features except LexNet benefited from the increased size of the training data, yet the increase of the f1 score is not larger than one or two points.\newline
+
+LexNet did not generalise at all. The original setup predicts \texttt{NONE} to all examples in the three-class scenario, thus it gets the same f1 score as the baseline. It is able to predicts a small portion to \texttt{ARG} in the binary scenario, so that the f1 score is one point above the baseline. The customised version predicts all classes, yet the results are twenty-seven points below the baseline for the three-class scenario and thirty-eight points below in the binary scenario.
+
+The problem is the size of the data set. LexNet created 2344 unique paths for the 5759 examples in the training data and 593 unique paths for the 1441 examples in the held-out data. As a result, one path only represents few sentences. Training and held-out only have 81 paths in common. The same is true for the customised setup, were even more paths are created (4339 for the training data and 1263 for the held-out data). Training and held-out only share 228 paths. So, from LexNets point of view, training and held-out data are highly dissimilar.
+
+This problem can be reduced with a larger data set. The Wikipedia corpus used in \cite{DBLP:conf/acl/ShwartzGD16} is magnitudes larger: it cointains 4,682,000 articles.\footnote{Wikipedia Dump from 2015, \url{https://en.wikipedia.org/wiki/Wikipedia:Size_of_Wikipedia} (checked 15.5.2018)} The ratio between paths and sentences are much smaller in a corpus of this size.
+
+The results with the training data alone (section \ref{sec:3_results}) can be explained by the fact that the paths of all training examples were learned simultaneously. In contrast, the held-out embeddings were learned without information from the training set. The performance of the LexNet feature increases if the path embeddings are learned on all data (training and held-out; see figures \ref{fig:jl_3_f1} and  \ref{fig:jl_2_f1}).
+
+
+\begin{figure}[htbp]
+         \caption{\textbf{F1 score} for the LexNet feature in the three-class scenario. This time, path embeddings were learned on all data (training and held-out). XGBoost was trained on the training data and tested on the held-out data.} 
+    \label{fig:jl_3_f1}
+    \centering
+	\includegraphics[width=1\linewidth]{images/extra/jl-f1-False}
+    \end{figure}
+    
+    
+\begin{figure}[htbp]
+         \caption{\textbf{F1 score} for the LexNet feature in the binary scenario. This time, path embeddings were learned on all data (training and held-out). XGBoost was trained on the training data and tested on the held-out data.} 
+    \label{fig:jl_2_f1}
+    \centering
+	\includegraphics[width=1\linewidth]{images/extra/jl-f1-True}
+    \end{figure}
