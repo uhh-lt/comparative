@@ -17,7 +17,7 @@ To find the most suitable classification algorithms, thirteen (see figure \ref{t
 \centering
 \caption{F1 score of all tested classification algorithms. A binary bag-of-words feature was used as the baseline feature. Each algorithm was trained with five stratified folds of the data. The black bars show the standard derivation.}
 \label{tbl:algo}
-\includegraphics[width=0.8\linewidth]{images/classifier}
+\includegraphics[width=1\linewidth]{images/classifier}
 \end{figure}
 
 
@@ -198,29 +198,29 @@ Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{f
 \begin{figure}[htbp]
       \caption{\textbf{F1 score} for the binary scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis. The black bar displays the standard derivation.} 
  
-
+% 15.5
     \label{fig:2_f1}
  \centering
 	\includegraphics[width=1\textwidth]{images/experiments/f1-True}
 
 \end{figure}
-As with the three-class scenario, InferSent (f1 score 0.894) and the bag-of-words (f1 score 0.890) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} is again the worst, yet the score is nineteen points above the baseline.
+As with the three-class scenario, InferSent (f1 score 0.886) and the bag-of-words (f1 score 0.882) performed best and got almost equal results. In contrast to the three-classes scenario, they are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} is again the worst, yet the score is nineteen points above the baseline.% 15.5
 
 
 
 
 
 
-
+% 15.5
 \begin{figure}[p]
          \caption{\textbf{Precision} for the binary scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
     \label{fig:2_precision}
     \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/precision-True}
     \end{figure}
-    
+    % 15.5
     \begin{figure}[p]
-              \caption{\textbf{Precision} for the binary scenario using XGBoost. The grey bar shows the weighted. The feature names (see section \ref{sec:features}) are presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
+              \caption{\textbf{Recall} for the binary scenario using XGBoost. The grey bar shows the weighted. The feature names (see section \ref{sec:features}) are presented on the x-axis, the binary score on the y-axis. The black bar displays the standard derivation.} 
        \label{fig:2_recall}
  \centering
 	\includegraphics[width=0.9\linewidth]{images/experiments/recall-True}

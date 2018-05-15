@@ -37,7 +37,7 @@ for train, test in k_folds(2, data_filtered, random_state=42):
     all_test_vals += test['most_frequent_label'].values.tolist()
     print(classification_report(test['most_frequent_label'].values, predict, labels=['BETTER', 'WORSE', 'NONE'], digits=2))
 
-data = pd.read_csv('data/data_if.csv')
+data = pd.read_csv('data/data.csv')
 data_filtered_2 = data[data.id.isin(data_filtered.id.values.tolist()) == False]
 infersent_model = initialize_infersent(data_filtered_2.sentence.values)
 assert (len(data_filtered) + len(data_filtered_2)) == len(data)
