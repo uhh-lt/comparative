@@ -124,7 +124,7 @@ Adding information like comments and product reviews can enrich the comparison w
 
 \section{Machine Learning Methods}
 \subsection{Recurrent Neural Networks and Long Short-term Memory}
-In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$1$}. In doing so, RNNs hold an internal state which is can be used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
+In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$t$}. In doing so, RNNs hold an internal state which is used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
 
 \begin{figure}[ht]
 \centering
@@ -133,13 +133,13 @@ In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequent
 		\label{fig:rnnschema}
 \end{figure}
 
-Different types of recurrent units have been developed. A popular form are \emph{Long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
+Different types of recurrent units have been developed. A popular form are \emph{long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
 
 
 \subsection{Gradient Boosting}
 Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
 
-The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data, which creates the set of weak learners. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
+The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
 
 \[G(x) = \text{sign}\left(\sum^M_{m=1} \alpha_m G_m(x)\right) \]
 
@@ -151,7 +151,7 @@ A frequently used implementation of gradient boosted decision trees is \emph{XGB
 
 
 \section{Performance Measures}
-Precision, Recall and f1 score are measures to check the classification performance. The measures are calculated per class.
+Precision, recall and f1 score are measures to check the classification performance. The measures are calculated per class.
 
 The precision of a classifier with regards to class \emph{c} is defined as:
 \[ \text{P(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false positives}} \]
@@ -162,7 +162,7 @@ The recall of a classifier with regards to class \emph{c} is defined as:
 \[ \text{R(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false negatives}} \]
 
 
-If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} would be one, while the recall will be near zero. Likewise, if all  all examples are classified as \emph{c}, the recall will be one, while the precision will be zero. 
+If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} is one, while the recall is near zero. Likewise, if all  all examples are classified as \emph{c}, the recall is one, while the precision is zero. 
 
 The f1 balances precision and recall. It is defined as the harmonic mean:
 \[ F_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
@@ -171,15 +171,15 @@ The f1 balances precision and recall. It is defined as the harmonic mean:
 % cosine similarity
 Because many machine learning algorithms work with numeric values as input, text must be transformed into a numerical representation. Several methods are known to transform text into numeric feature vectors.
 \subsection{Bag-of-words and Bag-Of-Ngrams}
-The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document j is represented by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document (the \emph{term frequency} $\text{tf}(i,j)$).
+The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document  \emph{j} is represented by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document \emph{j} (the \emph{term frequency} $\text{tf}(i,j)$).
 
-The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
+The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a higher value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
 
-The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removing all very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stopwords) and by using a weighting function for the remaining words, most commonly \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
+The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removin very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stop words) and by using a weighting function for the remaining words. A commonly used weighting function is \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
 
 \[\vec{d_{j,i}} = \text{tf}_{i,j} \times \log{ \frac{N}{n_i} } \]
 
-where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) i appears in.
+where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) \emph{i} appears in.
 
 The other problems, sparsity and length, remain. They are solved in other vector representations.
 
@@ -187,21 +187,21 @@ The other problems, sparsity and length, remain. They are solved in other vector
 \subsection{Mean Word Embeddings}
 Word Embeddings are dense, low-dimension vector representations of words. They are learned by neural networks. The basic idea is to train an neural network on a suitable task. They weight matrix (\emph{embedding matrix}) of a defined hidden layer then contains the word embeddings.
 
-The matrix is initialized with random values. After the network was trained, each column represents one word in $\mathcal{V}$ and each embedding has as many components as the hidden layer has neurons. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
+The matrix is initialized with random values. After the network was trained, each column represents one word in the vocabulary $\mathcal{V}$ and each embedding has as many components as the hidden layer has neurons. This leads to word vectors which are much smaller than $|\mathcal{V}|$.
 
-A method to learn word embeddings using a feed-forward neural network was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the cosine similarity\footnote{a similarity metric for vectors: $\times$} between the learned vectors of related words (like cat and dog) is much higher than the cosine similarity between unrelated words (like cat and chair).
+A method to learn word embeddings with feed-forward neural networks was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the similarity between the learned vectors of related words (like cat and dog) is much higher than the similarity between unrelated words (like cat and chair).
 
-Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (\cite{NIPS2013_5021}) and \emph{GloVe} (\cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors are used, were each word is represented by a vector with 300 components.
+Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (presented in \cite{NIPS2013_5021}) and \emph{GloVe} (presented in \cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors of size 300 were used.
 
-The word embeddings can be used to create a dense, low-dimension vector representation for a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
+The word embeddings can be used to create a dense, low-dimension vector representation of a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
 
 \subsection{Sentence Embeddings and InferSent}
-Bag-of-words an mean word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but both sentences will get the same bag-of-words vector and mean word embedding.
+Bag-of-words an mean word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but both sentences will get the same bag-of-words and mean word embedding vector.
 
 Sentence embeddings aim to learn embeddings for pieces of text instead of single words. In this way, sequence information is taken into account. Several methods have been proposed to create sentence embeddings (e.g. FastSent \cite{hill2016learning} and SkipTought \cite{NIPS2015_5950}). In this thesis, \emph{InferSent} as presented in \cite{Conneau:2017aa} is used.
 
 
-InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in table \ref{tbl:snli}. The authors assume that the \enquote{semantic nature} %zitat
+InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in table \ref{tbl:snli}. The authors assumed that the \enquote{semantic nature} %zitat
 makes the data set suitable for learning universal sentence embeddings.
 
 \begin{table}[ht]
@@ -234,7 +234,7 @@ Twelve transfer task\footnote{For example: binary classification (sentiment anal
 
 The embeddings generated by the BiLSTM with max pooling and an embedding size of 4096 yielded the best accuracy for SNLI and the transfer tasks. Also, the embeddings were better than other state-of-the-art sentence embeddings like SkipThought.
 
-A pretrained model for InferSent is available on GitHub\footnote{\url{https://github.com/facebookresearch/InferSent} (checked 13.05.2018)}. This model is used in section \ref{sec:features}.
+A pretrained model for InferSent is available on GitHub\footnote{\url{https://github.com/facebookresearch/InferSent} (checked: 13.05.2018)}. This model was used in section \ref{sec:features}.
 
 \subsection{HypeNet and LexNet}
 \label{sec:lexnet}
@@ -252,11 +252,11 @@ For each term pair, all dependency paths were extracted. Each edge was represent
 \end{figure}
 
 
-The paths were encoded using an LSTM. The average of all encoded paths was then used as the path information for the word pair. The combination of distributional and path information outperformed state-of-the-art techniques.\newline
+The paths were encoded using an LSTM. The average of all encoded paths was used as the path information for the word pair. The combination of distributional and path information outperformed state-of-the-art techniques.\newline
 
 The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are also used. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernyms is unambiguous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
 
-However, it is expected that the dependency path between the objects of interest adds valuable information. This thesis reuses the idea on how to extract and encode paths between two words.
+However, it is expected that the dependency path between the objects of interest adds valuable information. In this thesis, the idea on how to extract and encode paths between two words is reused.
 
 
 
