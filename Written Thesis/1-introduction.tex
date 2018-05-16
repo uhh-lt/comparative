@@ -10,52 +10,52 @@ This thesis discusses the topic of \emph{Comparative Argument Mining (CAM)}. Com
 
 The goal is to develop a system which is able to decide if a given sentence compares two known object and, if it does, which object win the comparison. For instance, for the sentence \emph{\enquote{In my mind, Python is better than Java!}}, the system should answer that the sentence is comparative and that Python won the comparison.
 
-Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presentend in section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their autors. This would be in contrast to the pure factual information from databases. For instance, the system could find out that many people complain that the telephone support of insurance company X is way better than the one of company Y - an information seldomly found in databases.\newline
+Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This is in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information seldom found in databases.\newline
 
 The thesis is structured into three main parts. The first part discusses recent publications in Argument Mining and explains the needed concepts from Natural Language Processing and Machine Learning.
 
-Because Comparative Argument Mining is a novel field, no suitable data set for this task is present. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containign comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects if the sentence is comparative and if the first mentioned object in the sentence won the comparison.
+Because Comparative Argument Mining is a novel field, no suitable data set for this task is present. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containing comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects if the sentence is comparative and if the first mentioned object in the sentence won the comparison.
 
-The third part uses this data set to train machine learning models on several features in order to predict the correct class. As the final evaluation, all features were tested on totally unseen data.
+The third part uses this data set to train machine learning models on several features in order to predict the correct class. As the final evaluation, all features are tested on totally unseen data.
 
 \chapter{Background}
 \section{Related Work}
 \label{sec:argth}
 \label{sec:argmine}
-A general introduction on the research topic \emph{Argument Mining} is given in \cite{Lippi2016Argumentation-M}.
-The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems are described. First, the input must be divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step is described as a classification problem. Second, the boundaries of the argumentative units must be identified; this is understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
+A general introduction on the research topic \emph{Argument Mining} was given in \cite{Lippi2016Argumentation-M}.
+The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems were described. First, the input is divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step was described as a classification problem. Second, the boundaries of the argumentative units must be identified; this was understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
 
 
 %07 biomed
 
 
-A system which is capable of recognising comparative sentences and their components such as the compared entities, the property which is used to compare the entities and the direction of comparison was presented in \cite{fiszman2007interpreting}. The evaluation showed that the outcome has a high quality (f1 score of 0.81). However, the presented system is specific to the domain of studies on drug therapy. The system used patterns generated from hand-selected sentences, as well as domain knowledge. Therefore, the methods cannot be easily  transferred for the problem of this thesis.
+A system which is capable of recognising comparative sentences and their components such as the compared entities, the property which is used to compare the entities and the direction of comparison was presented in \cite{fiszman2007interpreting}. The evaluation showed that the outcome has a high quality (f1 score of 0.81). However, the presented system was specific to the domain of studies on drug therapy. The system used patterns generated from hand-selected sentences, as well as domain knowledge. Therefore, the methods cannot be easily  transferred for the problem of this thesis.
 
 %  12 sci
-In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem is formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features are tailored for medical publications. Features to capture the presence of specific words are used, many of them bound to the medical domain. The analysis of 274 sentences resulted in syntactic features. Similar to \cite{fiszman2007interpreting}, the features cannot be directly transferred to other domains.
+In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem was formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features were tailored for medical publications. Features to capture the presence of specific words were used, many of them bound to the medical domain. The analysis of 274 sentences resulted in syntactic features. Similar to \cite{fiszman2007interpreting}, the features cannot be directly transferred to other domains.
 
 % 10 biomed
-A recent publication on \emph{Comparative Argument Mining} is \cite{gupta2017identifying}, where a set of rules for the identification of comparative sentences (and the compared entities) is derived from \emph{Syntactic Parse Trees}. With those rules, the authors achieved a f1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent.\newline
+A recent publication on \emph{Comparative Argument Mining} is \cite{gupta2017identifying}, were a set of rules for the identification of comparative sentences (and the compared entities) was derived from \emph{Syntactic Parse Trees}. With these rules, the authors achieved a f1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent.\newline
 
-The challenges occurring while processing texts from social media are described in \cite{Snajder2017Social-Media-Ar}. Besides the noisiness of text, missing argument structures and poorly formulated claims are mentioned. It is expected that the text used in this thesis will have the same shortcomings. Additionally, \cite{Snajder2017Social-Media-Ar} emphasized that analyzing social media texts can delivery reasons behind opinions.
+The challenges occurring while processing texts from social media were described in \cite{Snajder2017Social-Media-Ar}. Besides the noisiness of text, missing argument structures and poorly formulated claims were mentioned. It is expected that the text used in this thesis will have the same shortcomings. Additionally, \cite{Snajder2017Social-Media-Ar} emphasized that analyzing social media texts can delivery reasons behind opinions.
 
-In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also points to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{Brexit} and \enquote{Grexit} either as argumentative or as non-argumentative. Beside features used in other mentioned papers, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using Logistic Regression) for the classification. It must to be said that the data set is small (1887 tweets) and the domain is rather specific.\newline
+In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also pointed to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{Brexit} and \enquote{Grexit} either as argumentative or as non-argumentative. Beside features used in other mentioned papers, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using Logistic Regression) for the classification. It must to be said that the data set is small (1887 tweets) and the domain is rather specific.\newline
 
 Publications dealing with the identification of argument structures are of relevance for this thesis, as they provide valuable insights on the suitability of features and algorithms.
 
 %what works and what does not
-The autors of \cite{Aker2017What-works-and-} summarised and compared features used in other publications for identification of argumentative sentences. In addition to the algorithms used in the publications, a Convolutional Neural Network (as described in \cite{Kim2014Convolutional-N}) was tested. Two existing corpora and six different classification algorithms were used. The comparison resulted in the insight that structural features and Random Forests worked the best.
+The authors of \cite{Aker2017What-works-and-} summarised and compared features used in other publications for identification of argumentative sentences. In addition to the algorithms used in the publications, a Convolutional Neural Network (as described in \cite{Kim2014Convolutional-N}) was tested. Two existing corpora and six different classification algorithms were used. The comparison resulted in the insight that structural features and Random Forests worked the best.
 
-A two-step procedure to identify components of arguments (such as claim and premise) and their relationships (like \enquote{premise A supports claim B}) is presented in \cite{Stab2014Identifying-Arg}. The identification step is formulated as a multi-class classification. For the identification of argumentative components, a f1 score of 0.72 is reported.
+A two-step procedure to identify components of arguments (such as claim and premise) and their relationships (like \enquote{premise A supports claim B}) is presented in \cite{Stab2014Identifying-Arg}. The identification step is formulated as a multi-class classification. For the identification of argumentative components, a f1 score of 0.72 was reported.
 
 %essence of a claim
-How different datasets represent the argumentative unit of a \emph{claim} is analysed in \cite{Daxenberger2017What-is-the-Ess}. After an analysis of the data sets and their annotation scheme, the autors conducted two experiments.
-In the first one, each learner was trained and evaluated (10-fold cross-validation) on each dataset one after another. On average, the macro f1 score for identifying claims was 0.67 (all results ranging from 0.60 to 0.80). No significant difference between the results of Logistic Regression the neural networks was found. In isolation, lexical features, syntactical features and word embeddings were most helpful. Structural features turned out to be the weakest.
-The second experiment was conducted in a cross-domain fashion. For each pair of datasets, one was used as the training set and the other one as the test set. The average macro f1 score was 0.54. In this scenario, the best feature combination outperformed all neural models. The autors assumed that there might not be enough training data for the neural models.
+How different datasets represent the argumentative unit of a \emph{claim} was analysed in \cite{Daxenberger2017What-is-the-Ess}. After an analysis of the data sets and their annotation scheme, the authors conducted two experiments.
+In the first one, each learner was trained and evaluated (10-fold cross-validation) on each dataset one after another. On average, the macro f1 score for the identification of claims was 0.67 (all results ranging from 0.60 to 0.80). No significant difference between the results of Logistic Regression the neural networks was found. In isolation, lexical features, syntactical features and word embeddings were most helpful. Structural features turned out to be the weakest.
+The second experiment was conducted in a cross-domain fashion. For each pair of datasets, one was used as the training set and the other one as the test set. The average macro f1 score was 0.54. In this scenario, the best feature combination outperformed all neural models. The authors assumed that there might not be enough training data for the neural models.
 As the last point, the authors noted that all claims share at least some lexical clues.
 
 
-The role of discourse markers in the identification of claims and premises are discussed in \cite{Eckle-Kohler2015On-the-Role-of-}. A discourse marker is a word or a phrase which connects discourse units. For instance, the word \enquote{as} can show a relation between claim and premise: \enquote{As the students get frustrated, their performance generally does not improve}.  A similar function is expected for words like \enquote{better}, \enquote{worse} or \enquote{because} in this thesis. The authors showed that discourse markers are good at discriminating claim and premises. If claim and premise are merged into one class \enquote{argumentative}, this can be used to identify argumentative sentences. The f1 score is not presented, but the accuracy is between 64.53 and 72.79 percent.
+The role of discourse markers in the identification of claims and premises were discussed in \cite{Eckle-Kohler2015On-the-Role-of-}. A discourse marker is a word or a phrase which connects discourse units. For instance, the word \enquote{as} can show a relation between claim and premise: \enquote{As the students get frustrated, their performance generally does not improve}.  A similar function is expected for words like \enquote{better}, \enquote{worse} or \enquote{because} in this thesis. The autors showed that discourse markers are good at discriminating claim and premises. If claim and premise are merged into one class \enquote{argumentative}, this can be used to identify argumentative sentences. The f1 score is not presented, but the accuracy is between 64.53 and 72.79 percent.
 
 
 
@@ -66,7 +66,7 @@ Comparison portals are a possible application for Comparative Argument Mining. M
 
 Most portals are specific to a few domains and a subset of properties, for example, car insurances and their price. Comparisons are only possible between objects of the domains and predefined properties. Source of the data is usually databases. Humans are involved in gathering, entering and processing the data.
 
-Comparison Portals solely compare and deliver facts. Because of that, they can only hint to choose X over Y based on the facts collected.  However, an insurance X might be the best in the comparison (e.g. best price), while the internet is full of complaints about lousy service.
+Comparison Portals only compare and deliver facts. Because of that, they can only hint to choose X over Y based on the facts collected.  However, an insurance X might be the best in the comparison (e.g. best price), while the internet is full of complaints about lousy service.
 
 Examples of Comparative Portals are \emph{Check24.de\footnote{\url{https://check24.de} (checked: 13.04.2018)}, Verivox.de\footnote{\url{https://verivox.de} (checked: 13.04.2018)}, Idealo.de\footnote{\url{https://idealo.de} (checked: 13.04.2018)}, GoCompare.com\footnote{\url{https://gocompare.com} (checked: 13.04.2018)},} and \emph{Compare.com}\footnote{\url{https://compare.com} (checked: 13.04.2018)} just to name a few.
 
@@ -82,15 +82,15 @@ For instance, to compare different DSL providers, the user has to enter her addr
 \begin{figure}[tbp]
  \centering
 	\includegraphics[width=0.8\textwidth]{images/ds-sys/check24_2}
-	\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criterias.}
+	\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criteria.}
 	\label{img:check24_2}
 \end{figure}
 The other sites work similar. All in all, they provide more of a ranking than a comparison.
 
 
-Another interesting type of websites are Question Answering Portals like \emph{Quora.com}\footnote{\url{https://quora.com} (checked: 13.04.2018)} or \emph{GuteFrage.net}\footnote{\url{https://gutefrage.net} (checked: 13.04.2018)}. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
-On Quora, more than 2.380.000 questions have the phrase \enquote{better than} in their title. If \emph{Ruby} and \emph{Python} are added, 10.100 questions remain.\footnote{Checked via Google on 11.12.2017. Search phrase: \texttt{"better than" site:quora.com} and \texttt{ruby python "better than" site:quora.com}}
-Same is true for the German site GuteFrage.net, though, the numbers are smaller than on Quora.com.\footnote{334.000 for \texttt{"besser als" site:gutefrage.net} and 78 for \texttt{ruby python "Besser als" site:gutefrage.net}}\newline
+Another interesting type of website are Question Answering Portals like \emph{Quora.com}\footnote{\url{https://quora.com} (checked: 13.04.2018)} or \emph{GuteFrage.net}\footnote{\url{https://gutefrage.net} (checked: 13.04.2018)}. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
+On Quora.com, more than 2.380.000 questions have the phrase \enquote{better than} in their title. If \emph{Ruby} and \emph{Python} are added, 10.100 questions remain.\footnote{Checked via Google on 11.12.2017. Search phrase: \texttt{"better than" site:quora.com} and \texttt{ruby python "better than" site:quora.com}}
+Same is true for the German site GuteFrage.net, though, the numbers are smaller than on Quora.com.\footnote{334.000 for \texttt{"besser als" site:gutefrage.net} and 78 for \texttt{ruby python "Besser als" site:gutefrage.net}}
 
 More interestingly are systems which can compare any objects on arbitrary properties, like \emph{Diffen.com}\footnote{\url{https://diffen.com} (checked: 13.04.2018)} and \emph{Versus.com}\footnote{\url{https://versus.com} (checked: 13.04.2018)}.
 
@@ -123,8 +123,8 @@ Adding information like comments and product reviews can enrich the comparison w
 \FloatBarrier
 
 \section{Machine Learning Methods}
-\subsection{Recurrent Neural Networks and Long short-term memory}
-A \emph{feed-forward (artificial) neural network (ANN)} can be seen as a directed, acyclic graph. The data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{t} is part of the input of layer \emph{h} at time \emph{$t+1$}. In doing so, RNNs hold an internal state which is can be used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an indepented data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
+\subsection{Recurrent Neural Networks and Long Short-term Memory}
+In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$1$}. In doing so, RNNs hold an internal state which is can be used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
 
 \begin{figure}[ht]
 \centering
@@ -133,11 +133,11 @@ A \emph{feed-forward (artificial) neural network (ANN)} can be seen as a directe
 		\label{fig:rnnschema}
 \end{figure}
 
-Different types of recurrent units have been used. A popular form are \emph{Long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs were developed to overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
+Different types of recurrent units have been developed. A popular form are \emph{Long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
 
 
 \subsection{Gradient Boosting}
-The following overview is based on chapter ten of \cite{friedman2001elements}. Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
+Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
 
 The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data, which creates the set of weak learners. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
 
@@ -145,12 +145,12 @@ The main idea behind \emph{gradient boosting} is to fit the weak learner sequent
 
 The values for $\alpha_m$ are computed by the algorithm and determine how much the weak learner \emph{$G_m$} contributes to the prediction.
 
-Boosting can be used with various machine learning algorithms and is suitable for regression as well as classification tasks. The boosting method used in this thesis is \emph{gradient boosting} with \emph{decision trees} as learners. In gradient boosting, \emph{$G_{m+1}$} is fitted on the residuals of \emph{$G_m$}. Thus, each tree tries to improve on the training examples on which the previous learner was weak on.
+Boosting can be used with various machine learning algorithms and is suitable for regression as well as classification tasks. The boosting method used in this thesis is \emph{gradient boosting}\footnote{A detailed description is given in chapter ten of \cite{friedman2001elements}.} with \emph{decision trees} as learners. In gradient boosting, \emph{$G_{m+1}$} is fitted on the residuals of \emph{$G_m$}. Thus, each tree tries to improve on the training examples on which the previous learner was weak on.
 
-A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presentend in \cite{DBLP:journals/corr/ChenG16}.
+A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presented in \cite{DBLP:journals/corr/ChenG16}.
 
 
-\section{Performance measures}
+\section{Performance Measures}
 Precision, Recall and f1 score are measures to check the classification performance. The measures are calculated per class.
 
 The precision of a classifier with regards to class \emph{c} is defined as:
@@ -170,10 +170,10 @@ The f1 balances precision and recall. It is defined as the harmonic mean:
 \section{Vector Representations for Documents}
 % cosine similarity
 Because many machine learning algorithms work with numeric values as input, text must be transformed into a numerical representation. Several methods are known to transform text into numeric feature vectors.
-\subsection{Bag-of-words and bag-of-ngrams}
-The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document j is representend by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document (the \emph{term frequency} $\text{tf}(i,j)$).
+\subsection{Bag-of-words and Bag-Of-Ngrams}
+The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document j is represented by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document (the \emph{term frequency} $\text{tf}(i,j)$).
 
-The model is fast to calculate but does not take any sequence or grammar information into accoun. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likley to get a value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
+The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
 
 The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removing all very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stopwords) and by using a weighting function for the remaining words, most commonly \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
 
@@ -230,7 +230,7 @@ The architecture of the neural network is presented in figure \ref{fig:infersent
 
 The authors tested six architectures for the sentence encoder: LSTM (\cite{hochreiter1997long}), GRU (\cite{cho2014properties}), BiLSTM with mean/max pooling (\cite{collobert2008unified}), self-attentive networks (\cite{liu2016learning}, \cite{lin2017structured}) and hierarchical ConvNet (\cite{zhao2015self}). 
 
-Twelve transfer task\footnote{For example: binary classification (sentiment analysis, product reviews, subjectivity/objectivity, opinion polarity), multi-class classification (question type), entailment and semantic relatedness, semantic tectual similarity, paraphrase detection and caption-image retrieval.} were used to test the quality of the embeddings. For each task and encoder architecture, the embeddings were used as features. Logistic Regression was used as the machine learning algorithm.
+Twelve transfer task\footnote{For example: binary classification (sentiment analysis, product reviews, subjectivity/objectivity, opinion polarity), multi-class classification (question type), entailment and semantic relatedness, semantic textual similarity, paraphrase detection and caption-image retrieval.} were used to test the quality of the embeddings. For each task and encoder architecture, the embeddings were used as features. Logistic Regression was used as the machine learning algorithm.
 
 The embeddings generated by the BiLSTM with max pooling and an embedding size of 4096 yielded the best accuracy for SNLI and the transfer tasks. Also, the embeddings were better than other state-of-the-art sentence embeddings like SkipThought.
 
@@ -240,7 +240,7 @@ A pretrained model for InferSent is available on GitHub\footnote{\url{https://gi
 \label{sec:lexnet}
 HypeNet, presented in \cite{DBLP:conf/acl/ShwartzGD16}, is a method to detect hypernym relations between words. It combines distributational and dependency path based methods to create a vector representation for word pairs. LexNet, presented in \cite{DBLP:journals/corr/ShwartzD16}, is a generalisation of HypeNet, which is able to detect multiple semantic relationships between two words.
 
-The dependency paths add information about joint occurences of the two words, while the distributational methods add information about the terms in separate contexts. Word Embeddings are used as distributational features.
+The dependency paths add information about joint occurrences of the two words, while the distributional methods add information about the terms in separate contexts. Word Embeddings are used as distributional features.
 
 For each term pair, all dependency paths were extracted. Each edge was represented as \texttt{lemma/POS/dependency label/direction}. An example is given in figure \ref{fig:hypenet}. 
 
@@ -252,9 +252,9 @@ For each term pair, all dependency paths were extracted. Each edge was represent
 \end{figure}
 
 
-The paths were encoded using an LSTM. The average of all encoded paths was then used as the path information for the word pair. The combination of distributational and path information outperformed state-of-the-art techniques.\newline
+The paths were encoded using an LSTM. The average of all encoded paths was then used as the path information for the word pair. The combination of distributional and path information outperformed state-of-the-art techniques.\newline
 
-The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are also used. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernymy is unambigous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
+The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are also used. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernyms is unambiguous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
 
 However, it is expected that the dependency path between the objects of interest adds valuable information. This thesis reuses the idea on how to extract and encode paths between two words.
 

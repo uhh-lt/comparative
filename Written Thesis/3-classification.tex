@@ -23,14 +23,14 @@ To find the most suitable classification algorithms, thirteen (see figure \ref{t
 
 Tree-based methods and linear models worked good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
 
-As XGBoost and Logistic Regressiony achieve high f1 scores, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
+As XGBoost and Logistic Regression achieve high f1 scores, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
 
 In the following sections, all experiments were conducted using XGBoost with 1000 estimators.
 
 
 \section{Features}
 \label{sec:features}
-Several vector representations were tested as features. The simplest one was a binary \emph{Bag-Of-Words} model realised with scikit-learns \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams (called \emph{POS n-grams}). The \emph{Mean Word Embedding} vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). The pretrained \emph{InferSent} model\footnote{\url{https://github.com/facebookresearch/InferSent} (checked 13.05.2018)} was used to create sentence embedding vectors.
+Several vector representations were tested as features. The simplest one was a binary \emph{Bag-Of-Words} model realised with scikit-learn's \texttt{CountVectorizer}. Another vector representation was generated with the five-hundred most frequent part-of-speech bi-, tri and four-grams (called \emph{POS n-grams}). The \emph{Mean Word Embedding} vector was created by calculating the mean of each word's GloVe vector (as contained in spaCy's \texttt{en\_core\_web\_lg}\footnote{\url{https://spacy.io/models/en\#section-en\_core\_web\_lg}} model). The pretrained \emph{InferSent} model\footnote{\url{https://github.com/facebookresearch/InferSent} (checked 13.05.2018)} was used to create sentence embedding vectors.
 
 A boolean feature capturing the appearance of a comparative adjective (called \emph{Contains JJR}) \footnote{Tag \emph{JJR} in the Penn Treebank (\url{https://www.ling.upenn.edu/courses/Fall\_2003/ling001/penn\_treebank\_pos.html})} was tested as well. Part-of-speech tagging for all features was done using spaCy.\newline
 
@@ -72,7 +72,7 @@ The addition of more layers or neurons did not increase the performance of the n
 
 
 
-Different setups for the string path creation were tested. In the original implementation, the paths are restricted to a length of four. The directionality of edges is restricted as well. The first object must be reachable from the lowest common head of the two objects by following left edges only, the second one by following right edges. In the following, this setup is refered as \emph{original}. However, only 1502 sentences from the training set get a path with this restrictions. 
+Different setups for the string path creation were tested. In the original implementation, the paths are restricted to a length of four. The directionality of edges is restricted as well. The first object must be reachable from the lowest common head of the two objects by following left edges only, the second one by following right edges. In the following, this setup is referred as \emph{original}. However, only 1502 sentences from the training set get a path with this restrictions. 
 
 To overcome this problem, the restrictions were relaxed. The second LexNet setup (called \emph{customised}) limits the paths to a size of sixteen and abolishes the directionality restriction. With this setup, only 390 sentences do not get a path.\footnote{All sentence without a generated path get the artifical path \emph{NOPATH}. The customised version of LexNet is available at \url{https://github.com/ablx/LexNET}}
 
@@ -255,11 +255,11 @@ Figure \ref{fig:3_conf_inf} displays the confusion matrix for the best lexical f
     \end{minipage} 
 \end{figure}
 
-As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expections. The classes  \texttt{BETTER} and \texttt{WORSE} are representing argumentative sentence. It was expected that the distinction between argumentative and not-argumentative is clearer. 
+As presented above, \texttt{WORSE} was the hardest class to recognize. The matrices show that it was more often confused with \texttt{NONE} than with \texttt{BETTER}. This is contrary to the expectations. The classes  \texttt{BETTER} and \texttt{WORSE} are representing argumentative sentence. It was expected that the distinction between argumentative and not-argumentative is clearer. 
 % 15.55
-In total, 1311 sentences were incorrectly classfied. Both features made the same errors on 607 sentences. The InferSent feature made 220 additional errors, while the LexNet feature made 484. Suprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred-twenty-five of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 356. Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
+In total, 1311 sentences were incorrectly classified. Both features made the same errors on 607 sentences. The InferSent feature made 220 additional errors, while the LexNet feature made 484. Surprisingly, the majority of errors was made on sentences with a high confidence. Four-hundred-twenty-five of the shared errors were made on sentences with a confidence of one. InferSent made 156 errors on highly confident sentences, while LexNet made 356. Examples on errors made solely by the InferSent feature are given in table \ref{tbl:3_mistakes_se}.
 \begin{table}[h]
-\caption{Example sentences for errors made by XGBoost in the three-class scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confiedence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\caption{Example sentences for errors made by XGBoost in the three-class scenario with the InferSent feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_se}
 \begin{tabularx}{\linewidth}{lXrrr}
 \toprule
@@ -284,16 +284,16 @@ In total, 1311 sentences were incorrectly classfied. Both features made the same
 The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence six has three negative words in it. Sentence seven is a hard sentence, as it does not contain any cue word.
 % 15.5
 
-Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusivly made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only thirty-six of the wrongly classified sentences do not have a path.
+Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusively made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only thirty-six of the wrongly classified sentences do not have a path.
 
 It is salient that the LexNet feature makes errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
 
 % 15.5
 Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 477 of the 607 shared errors.
 
-The shared errors are similar to the errors made exclusivly by InferSent. Again, they can be coarsly grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
+The shared errors are similar to the errors made exclusively by InferSent. Again, they can be coarsely grouped, for instance into questions (sentence one in table \ref{tbl:3_mistakes_both}) or sentences without a clear winner (sentence four).\newline
 
-In the binary scenario, 1183 errors were made. Both features made the same errors on 380 sentences. LexNet made 520 unique errors, while InferSent made 283. However, 739 errors were already made in the three-class scenario, only 444 errors are new. All in all, the analysis of the errors made in the binary scenario did not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusivly by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences). %15.5
+In the binary scenario, 1183 errors were made. Both features made the same errors on 380 sentences. LexNet made 520 unique errors, while InferSent made 283. However, 739 errors were already made in the three-class scenario, only 444 errors are new. All in all, the analysis of the errors made in the binary scenario did not give any new insights. Again, the majority of errors was made on sentences with a high confidence. The errors made exclusively by LexNet seem random again, while the shared errors and the errors made by InferSent have similar sources (e.g. questions, no clear winner, complex sentences). %15.5
 
 \begin{table}[htbp]
 \caption{Example errors made by the classifier in the three-class scenario with the LexNet feature. The objects of interest are printed \textbf{bold}. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
@@ -343,11 +343,11 @@ Using the full sentence worked second best. Adding the first and/or last part of
 
 Replacing or removing the objects did not increase the score significantly. In most cases, the difference in the f1 score between no replacement/removal and the best replacement/removal strategy was only reflected in the third or fourth decimal place. Hence, the concrete objects are not important at all for the classification. This is also supported by the fact that adding the word vectors of the objects as features did not increase the result for any feature.
 
-An interesting observation is that the simple bag-of-words model performs equal or better than the more complex models. The simple feature \emph{Contains JJR} (which is only one boolean value) is able to distinguish argumentative and non-argumentative sentences in a pleasing way, yiedling an f1 score fourten points above the baseline.
+An interesting observation is that the simple bag-of-words model performs equal or better than the more complex models. The simple feature \emph{Contains JJR} (which is only one boolean value) is able to distinguish argumentative and non-argumentative sentences in a pleasing way, yielding an f1 score fourteen points above the baseline.
 
-The values for LexNet path embeddings show that this is a reasonable way to encode sentences. The original setup found only paths for 26\% of the sentences, yet it yielded an f1 score eight points above the baseline. The customisation made it even more powerful. No combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). Hower, this was not the case. Appending the LexNet vectors to the InferSent vectors reduced the scores.
+The values for LexNet path embeddings show that this is a reasonable way to encode sentences. The original setup found only paths for 26\% of the sentences, yet it yielded an f1 score eight points above the baseline. The customisation made it even more powerful. No combination of vector representations increased the score in any way. It was expected that a combination of LexNet features and one of the other features like InferSent will increase the f1 score, as they encode different information (lexical and syntactial). However, this was not the case. Appending the LexNet vectors to the InferSent vectors reduced the scores.
 
-As expected, the smallest class in the data set caused the biggest problems. Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation for most features. Looking at the confusion matrices in figure \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitivly, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special argumentative sentences in general.
+As expected, the smallest class in the data set caused the biggest problems. Precision, recall and f1 score of \texttt{WORSE} have a high standard derivation for most features. Looking at the confusion matrices in figure \ref{fig:3_conf_inf} and \ref{fig:3_conf_uni}, \texttt{WORSE} was confused with \texttt{NONE} for the majority of cases. Intuitively, a confusion between \texttt{WORSE} and \texttt{BETTER} was expected, since both classes should reflect special argumentative sentences in general.
 
 Another interesting observation is that the three-class scenario and the binary scenario made mistakes on the same sentences. In fact, the majority of mistakes made by the binary scenario were made by the three-classes scenario as well.
 
@@ -422,7 +422,7 @@ LexNet did not generalise at all. The original setup predicts \texttt{NONE} to a
 
 The problem is the size of the data set. LexNet created 2344 unique paths for the 5759 examples in the training data and 593 unique paths for the 1441 examples in the held-out data. As a result, one path only represents few sentences. Training and held-out only have 81 paths in common. The same is true for the customised setup, were even more paths are created (4339 for the training data and 1263 for the held-out data). Training and held-out only share 228 paths. So, from LexNets point of view, training and held-out data are highly dissimilar.
 
-This problem can be reduced with a larger data set. The Wikipedia corpus used in \cite{DBLP:conf/acl/ShwartzGD16} is magnitudes larger: it cointains 4,682,000 articles.\footnote{Wikipedia Dump from 2015, \url{https://en.wikipedia.org/wiki/Wikipedia:Size_of_Wikipedia} (checked 15.5.2018)} The ratio between paths and sentences are much smaller in a corpus of this size.
+This problem can be reduced with a larger data set. The Wikipedia corpus used in \cite{DBLP:conf/acl/ShwartzGD16} is magnitudes larger: it contains 4,682,000 articles.\footnote{Wikipedia Dump from 2015, \url{https://en.wikipedia.org/wiki/Wikipedia:Size_of_Wikipedia} (checked 15.5.2018)} The ratio between paths and sentences are much smaller in a corpus of this size.
 
 The results with the training data alone (section \ref{sec:3_results}) can be explained by the fact that the paths of all training examples were learned simultaneously. In contrast, the held-out embeddings were learned without information from the training set. The performance of the LexNet feature increases if the path embeddings are learned on all data (training and held-out; see figures \ref{fig:jl_3_f1} and  \ref{fig:jl_2_f1}).
 
