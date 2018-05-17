@@ -8,7 +8,7 @@ The data set was designed to answer two questions. First, does a sentence compar
 The data set was created with data from CommonCrawl and labelled using the crowdsourcing platform CrowdFlower\footnote{\url{https://www.crowdflower.com} (checked: 23.02.2018), now called \emph{Figure Eight}}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
 
 % zahlen 24.03
-The final data set has 7199 sentences, each containing one of 271 object pairs. Each sentence was annotated by at least five annotators.
+The final data set has 7199 sentences, each containing one of 271 distinct object pairs. Each sentence was annotated by at least five annotators.
 
 \section{Common Crawl Text Corpus}
 The sentences for the crowdsourcing task were obtained from a CommonCrawl\footnote{\url{https://commoncrawl.org} (checked: 23.02.2018)} data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
@@ -60,7 +60,7 @@ wine & beer  & 100  \\
 \end{tabular}
 \end{table}
 
-Not all comparisons will contain one of the cue words mentioned above. Two different queries were used to overcome the coverage problem. Sevenhundred-fiftey sentences were obtained using query \ref{lst:es-query-a} (75 for each pair) and 250 using query \ref{lst:es-query-b} (25 for each pair). The second query will also match not-anticipated sentences such as \enquote{\emph{I like X more than Y since Z.}}.
+Not all comparisons will contain one of the cue words mentioned above. Two different queries were used to overcome the coverage problem. 750 sentences were obtained using Listing \ref{lst:es-query-a} (75 for each pair) and 250 using Listing \ref{lst:es-query-b} (25 for each pair). The second query will also match not-anticipated sentences such as \enquote{\emph{I like X more than Y since Z.}}.
 
 
 
@@ -112,11 +112,11 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 
 \subsection{First Prestudy}
-The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 of the 1000 sentences was started. 
+The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 of the 1000 sentences was concucted. 
 
 
 
-For each sentence, the annotators were asked which of the classes describes the sentence best (see figure \ref{img:1_question} and table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}, for instance, if both objects of interest appear in the sentence, but they are not compared against each other.
+For each sentence, the annotators were asked which of the classes describes the sentence best (see Figure \ref{img:1_question} and Table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of Chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}, for instance, if both objects of interest appear in the sentence, but they are not compared against each other.
 
 \begin{figure}[h]
 \centering
@@ -146,7 +146,7 @@ In each sentence, the first object of interest was replaced with \texttt{OBJECT\
 
 Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz with eight test questions before the actual annotation process. One of the five sentences was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
 
-Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation results. As 45 sentences are comparative, the selection procedure worked satisfying.
+Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation results. As 45 sentences are comparative, the selection procedure worked satisfyingly.
 
 
 \begin{table}[htbp]
@@ -171,7 +171,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 
 \begin{figure}[htbp]
 \centering
-\caption{The results of the first prestudy. As 45  sentences are comparative, the selection procedure worked satisfying.}
+\caption{The results of the first prestudy. As 45  sentences are comparative, the selection procedure worked satisfyingly.}
 \label{fig:dist_pre_a}
 \includegraphics[width=1\linewidth]{images/dataset/prea-dist}
 \end{figure}
@@ -182,17 +182,17 @@ The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg})
 \begin{table}[htbp]
 \caption{Annotation confidence for the \emph{first prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
 \label{fig:pre_a_agg}
-\begin{tabularx}{\textwidth}{XXX}
+\begin{tabularx}{\textwidth}{rrr}
 \toprule
 Confidence & Sentences & \% of data set \\
 \midrule
-100\%	&	37	&	37.00	 \\ 
-91-99\%	&	0	&	0.00	 \\ 
-81-90\%	&	0	&	0.00	 \\ 
-71-80\%	&	5	&	5.00	 \\ 
-61-70\%	&	50	&	50.00	 \\ 
-51-60\%	&	0	&	0.00	 \\ 
-0-50\%	&	8	&	8.00	 \\ 
+100\%	&	37	&	37	 \\ 
+91-99\%	&	0	&	0	 \\ 
+81-90\%	&	0	&	0	 \\ 
+71-80\%	&	5	&	5	 \\ 
+61-70\%	&	50	&	50	 \\ 
+51-60\%	&	0	&	0	 \\ 
+0-50\%	&	8	&	8	 \\ 
 \bottomrule
 \end{tabularx}
 \end{table}

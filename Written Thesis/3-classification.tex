@@ -21,7 +21,7 @@ To find the most suitable classification algorithms, thirteen (see figure \ref{t
 \end{figure}
 
 
-Tree-based methods and linear models worked good. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
+Tree-based methods and linear models worked well. Support Vector Machines with non-linear kernels assigned \texttt{NONE} to all sentences.
 
 As XGBoost and Logistic Regression achieved high f1 scores, no further investigations on the performance of other algorithms was done. A set of hyper-parameters for XGBoost was tested using exhaustive grid search and randomized search. However, no significant increase in the f1 score could be achieved.
 
@@ -174,7 +174,7 @@ The classification results of the best performing feature configurations in the 
 The best feature (bag-of-words) yielded a score 24 points above the baseline. The worst feature (\emph{LexNet (original)}) was still eight points above the baseline. Bag-of-words (f1 score 0.848) and InferSent (f1 score 0.842) delivered almost identical results. The boolean feature that captures comparative adjectives in the middle of the sentence yielded a f1 score over the baseline as well. However, it did not assign any examples to the class \texttt{WORSE}.
 % 15.5 lexnet dinge
 
-Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correct. This indicates that this feature setup is reasonable and would work good if more examples were present. An experiment with only the 1519 sentences confirms this, as the feature is then able to achieve an f1 score of 0.75.
+Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet (original)}, the feature is able to predict some sentences correctly. This indicates that this feature setup is reasonable and would work probably work well if more examples were present. An experiment with only the 1519 sentences confirms this, as the feature is then able to achieve an f1 score of 0.75.
 
 \begin{figure}[p]
          \caption{\textbf{Precision} for the three-class scenario using XGBoost. The grey bar shows the weighted average. The feature names (see section \ref{sec:features}) are presented on the x-axis, the precision score on the y-axis. The black bar displays the standard derivation.} 
@@ -284,7 +284,7 @@ The first two sentences look comparative, but they are questions. As stated in t
 
 Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusively made by the LexNet feature. As described in section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only 36 of the wrongly classified sentences did not had a path.
 
-It is salient that the LexNet feature maked errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will yield good results.
+It is salient that the LexNet feature maked errors an fairly simple sentences like the first one in table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsly grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will likely yield good results.
 
 % 15.5
 Sentences which were wrongly classified by both features are presented in table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 477 of the 607 shared errors.

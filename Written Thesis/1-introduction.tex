@@ -10,13 +10,13 @@ This thesis discusses the topic of \emph{Comparative Argument Mining (CAM)}. Com
 
 The goal is to develop a system which is able to decide if a given sentence compares two known object and, if it does, which object win the comparison. For instance, for the sentence \emph{\enquote{In my mind, Python is better than Java!}}, the system should answer that the sentence is comparative and that Python won the comparison.
 
-Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This is in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information seldom found in databases.\newline
+Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This stands in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information rarely found in databases.\newline
 
 The thesis is structured into three main parts. The first part discusses recent publications in Argument Mining and explains the needed concepts from Natural Language Processing and Machine Learning.
 
-Because Comparative Argument Mining is a novel field, no suitable data set for this task is present. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containing comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects if the sentence is comparative and if the first mentioned object in the sentence won the comparison.
+Because Comparative Argument Mining is a novel field, no suitable data set for this task currently exists. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containing comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects whether the sentence is comparative and whether the first mentioned object in the sentence won the comparison.
 
-The third part uses this data set to train machine learning models on several features in order to predict the correct class. As the final evaluation, all features are tested on totally unseen data.
+The third part uses this data set to train machine learning models on several feature representations in order to predict the correct class. As the final evaluation, all features are tested on held-out data.
 
 \chapter{Background}
 \section{Related Work}
@@ -39,7 +39,7 @@ A recent publication on \emph{Comparative Argument Mining} is \cite{gupta2017ide
 
 The challenges occurring while processing texts from social media were described in \cite{Snajder2017Social-Media-Ar}. Besides the noisiness of text, missing argument structures and poorly formulated claims were mentioned. It is expected that the text used in this thesis will have the same shortcomings. Additionally, \cite{Snajder2017Social-Media-Ar} emphasized that analyzing social media texts can delivery reasons behind opinions.
 
-In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also pointed to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{Brexit} and \enquote{Grexit} either as argumentative or as non-argumentative. Beside features used in other mentioned papers, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using Logistic Regression) for the classification. It must to be said that the data set is small (1887 tweets) and the domain is rather specific.\newline
+In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also pointed to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{Brexit} and \enquote{Grexit} either as argumentative or as non-argumentative. Beside features used in other mentioned papers, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using Logistic Regression) for the classification. It must to be mentioned that the data set is small (1887 tweets) and the domain is rather specific.\newline
 
 Publications dealing with the identification of argument structures are of relevance for this thesis, as they provide valuable insights on the suitability of features and algorithms.
 
@@ -62,16 +62,16 @@ The role of discourse markers in the identification of claims and premises were 
 \section{Domain-Specific Comparative Systems}
 \label{sec:domainspec}
 
-Comparison portals are a possible application for Comparative Argument Mining. Many comparison portals can be found on the internet. It is not unusual to see a television commercial those comparison portals, which suggest that they are used frequently every day.
+Comparison portals are a possible application for Comparative Argument Mining. Many comparison portals can be found on the internet. It is not unusual to see a television commercial of those comparison portals, which suggests that they are used frequently every day.
 
 Most portals are specific to a few domains and a subset of properties, for example, car insurances and their price. Comparisons are only possible between objects of the domains and predefined properties. Source of the data is usually databases. Humans are involved in gathering, entering and processing the data.
 
-Comparison Portals only compare and deliver facts. Because of that, they can only hint to choose X over Y based on the facts collected.  However, an insurance X might be the best in the comparison (e.g. best price), while the internet is full of complaints about lousy service.
+Comparison Portals only compare and deliver facts. Because of that, they can only hint to choose X over Y based on the facts collected.  However, an insurance company X might be the best in the comparison (e.g. best price), while the internet is full of complaints about its lousy service.
 
-Examples of Comparative Portals are \emph{Check24.de\footnote{\url{https://check24.de} (checked: 13.04.2018)}, Verivox.de\footnote{\url{https://verivox.de} (checked: 13.04.2018)}, Idealo.de\footnote{\url{https://idealo.de} (checked: 13.04.2018)}, GoCompare.com\footnote{\url{https://gocompare.com} (checked: 13.04.2018)},} and \emph{Compare.com}\footnote{\url{https://compare.com} (checked: 13.04.2018)} just to name a few.
+Examples of Comparative portals are \emph{Check24.de\footnote{\url{https://check24.de} (checked: 13.04.2018)}, Verivox.de\footnote{\url{https://verivox.de} (checked: 13.04.2018)}, Idealo.de\footnote{\url{https://idealo.de} (checked: 13.04.2018)}, GoCompare.com\footnote{\url{https://gocompare.com} (checked: 13.04.2018)},} and \emph{Compare.com}\footnote{\url{https://compare.com} (checked: 13.04.2018)} just to name a few.
 
 As an example, Check24.de is able to compare a wide variety of different objects like several insurances, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type, Check24 shows a ranking of different providers. The user can choose different properties to re-rank the list.
-For instance, to compare different DSL providers, the user has to enter her address (figure  \ref{img:check24_1}), how fast the internet should be and if she wants telephone and television as well. She can then sort the results by price, speed, and grade(figure \ref{img:check24_2}).
+For instance, to compare different DSL providers, the user has to enter her address (figure  \ref{img:check24_1}), how fast the internet should be and if she wants telephone and television as well. She can then sort the results by price, speed, and grade (figure \ref{img:check24_2}).
 \begin{figure}[tbp]
  \centering
 	\includegraphics[width=0.9\textwidth]{images/ds-sys/check24_1}
@@ -85,10 +85,10 @@ For instance, to compare different DSL providers, the user has to enter her addr
 	\caption{Check24.de DSL contract comparison result. The contracts can be sorted by domain-specific criteria.}
 	\label{img:check24_2}
 \end{figure}
-The other sites work similar. All in all, they provide more of a ranking than a comparison.
+The other sites work similarly. All in all, they provide more of a ranking than a comparison.
 
 
-Another interesting type of website are Question Answering Portals like \emph{Quora.com}\footnote{\url{https://quora.com} (checked: 13.04.2018)} or \emph{GuteFrage.net}\footnote{\url{https://gutefrage.net} (checked: 13.04.2018)}. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
+Another interesting type of website are question answering portals like \emph{Quora.com}\footnote{\url{https://quora.com} (checked: 13.04.2018)} or \emph{GuteFrage.net}\footnote{\url{https://gutefrage.net} (checked: 13.04.2018)}. Although comparisons are not their primary goal, a lot of comparative questions are present on those sites.
 On Quora.com, more than 2.380.000 questions have the phrase \enquote{better than} in their title. If \emph{Ruby} and \emph{Python} are added, 10.100 questions remain.\footnote{Checked via Google on 11.12.2017. Search phrase: \texttt{"better than" site:quora.com} and \texttt{ruby python "better than" site:quora.com}}
 Same is true for the German site GuteFrage.net, though, the numbers are smaller than on Quora.com.\footnote{334.000 for \texttt{"besser als" site:gutefrage.net} and 78 for \texttt{ruby python "Besser als" site:gutefrage.net}}
 
@@ -165,7 +165,7 @@ The recall of a classifier with regards to class \emph{c} is defined as:
 If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} is one, while the recall is near zero. Likewise, if all  all examples are classified as \emph{c}, the recall is one, while the precision is zero. 
 
 The f1 balances precision and recall. It is defined as the harmonic mean:
-\[ F_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
+\[ f_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
 
 \section{Vector Representations for Documents}
 % cosine similarity
@@ -173,9 +173,9 @@ Because many machine learning algorithms work with numeric values as input, text
 \subsection{Bag-of-words and Bag-Of-Ngrams}
 The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document  \emph{j} is represented by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document \emph{j} (the \emph{term frequency} $\text{tf}(i,j)$).
 
-The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a higher value as \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
+The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a higher value than \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
 
-The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removin very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stop words) and by using a weighting function for the remaining words. A commonly used weighting function is \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
+The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removing very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stop words) and by using a weighting function for the remaining words. A commonly used weighting function is \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
 
 \[\vec{d_{j,i}} = \text{tf}_{i,j} \times \log{ \frac{N}{n_i} } \]
 
@@ -193,7 +193,7 @@ A method to learn word embeddings with feed-forward neural networks was presente
 
 Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (presented in \cite{NIPS2013_5021}) and \emph{GloVe} (presented in \cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors of size 300 were used.
 
-The word embeddings can be used to create a dense, low-dimension vector representation of a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks is presented in \cite{Wieting:2015aa}.
+The word embeddings can be used to create a dense, low-dimension vector representation of a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks has been demonstrated in \cite{Wieting:2015aa}.
 
 \subsection{Sentence Embeddings and InferSent}
 Bag-of-words an mean word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but both sentences will get the same bag-of-words and mean word embedding vector.
@@ -201,7 +201,7 @@ Bag-of-words an mean word embeddings lose sequence information. However, the seq
 Sentence embeddings aim to learn embeddings for pieces of text instead of single words. In this way, sequence information is taken into account. Several methods have been proposed to create sentence embeddings (e.g. FastSent \cite{hill2016learning} and SkipTought \cite{NIPS2015_5950}). In this thesis, \emph{InferSent} as presented in \cite{Conneau:2017aa} is used.
 
 
-InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in table \ref{tbl:snli}. The authors assumed that the \enquote{semantic nature} %zitat
+InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570.000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in table \ref{tbl:snli}. The authors assumed that the \enquote{semantic nature} %zitat
 makes the data set suitable for learning universal sentence embeddings.
 
 \begin{table}[ht]
@@ -230,7 +230,7 @@ The architecture of the neural network is presented in figure \ref{fig:infersent
 
 The authors tested six architectures for the sentence encoder: LSTM (\cite{hochreiter1997long}), GRU (\cite{cho2014properties}), BiLSTM with mean/max pooling (\cite{collobert2008unified}), self-attentive networks (\cite{liu2016learning}, \cite{lin2017structured}) and hierarchical ConvNet (\cite{zhao2015self}). 
 
-Twelve transfer task\footnote{For example: binary classification (sentiment analysis, product reviews, subjectivity/objectivity, opinion polarity), multi-class classification (question type), entailment and semantic relatedness, semantic textual similarity, paraphrase detection and caption-image retrieval.} were used to test the quality of the embeddings. For each task and encoder architecture, the embeddings were used as features. Logistic Regression was used as the machine learning algorithm.
+Twelve transfer tasks\footnote{For example: binary classification (sentiment analysis, product reviews, subjectivity/objectivity, opinion polarity), multi-class classification (question type), entailment and semantic relatedness, semantic textual similarity, paraphrase detection and caption-image retrieval.} were used to test the quality of the embeddings. For each task and encoder architecture, the embeddings were used as features. Logistic Regression was used as the classification algorithm.
 
 The embeddings generated by the BiLSTM with max pooling and an embedding size of 4096 yielded the best accuracy for SNLI and the transfer tasks. Also, the embeddings were better than other state-of-the-art sentence embeddings like SkipThought.
 
