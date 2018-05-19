@@ -34,7 +34,7 @@ Two prestudies were conducted to answer those questions.
 
 
 
-\subsection{Sentence Selection}
+\subsection{Sentence Sampling Method}
 The sentences for the crowdsourcing task must have a high probability of being comparative so that enough positive examples for the machine learning part are present. To ensure this, a list of cue words which indicate comparison was compiled by hand. For the prestudy, those words were \enquote{\emph{better}}, \enquote{\emph{worse}}, \enquote{\emph{inferior}}, \enquote{\emph{superior}} and \enquote{\emph{because}}. 
 
 Comparable objects are needed as well. A list of object pairs was selected by hand (see table \ref{tbl:prestudy-objects}). The pairs were selected so that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this was that pets are compared differently than programming languages. In this way, there will be different comparison patterns in the data.
@@ -112,7 +112,7 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 
 
-\subsection{First Prestudy}
+\subsection{First Prestudy: Sentence Sampling and Guidelines }
 The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 of the 1000 sentences was concucted. 
 
 
@@ -209,7 +209,7 @@ Fourteen out of 55 participants took part in an exit survey to rate the task. Th
 
 
 \FloatBarrier
-\subsection{Second Prestudy}
+\subsection{Second Prestudy: Sentence Preprocessing and Rephrasing of the Guidelines}
 Two-hundred sentences were annotated in the second prestudy. To address the shortcomings mentioned above, the task design was changed in several aspects.
 
 Some aspects were identical to the first study. As the sentence selection process worked fine, the same 1000 base sentences were used in the second prestudy.  Each sentence was annotated by three annotators. The annotators saw five sentences per page, one being a test question. They had to pass a quiz of eight test questions and had to keep an accuracy of 70\% on the test questions during the annotation procedure. The classes were the same as in the first prestudy (see table \ref{tbl:prestudyclasses-a}).
@@ -312,7 +312,6 @@ All in all, the prestudy was successful. There are only few cases where no agree
 \newpage
 \section{Main Study}
 \label{sec:mainstudy}
-\subsection{Design changes}
 \label{sec:designchanges}
 The insights from the prestudy influenced the design of the main study.
 
@@ -335,7 +334,7 @@ Class & Description \\ \midrule
 Instead of one big task, several tasks per domain were created. All tasks used the same annotation guidelines. Each sentence was at least annotated by five annotators.
 
 
-\subsection{Sentence Selection}
+\subsection{Sentence Sampling Method and Domain Selection}
 The sentence selection process was similar to the prestudy. The pairs and the cue words (see Figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText, a software package for distributional semantics. JoBimText\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (checked: 28.02.2018)} was queried for the nine words most similar to \emph{better} and \emph{worse}, so that more comparisons were captured by the selection process.
 
 \begin{figure}[hb]
@@ -510,7 +509,7 @@ The label distribution of the 742 sentences is presented in the Figure \ref{fig:
 \includegraphics[width=1\linewidth]{images/dataset/pre-dist}
 \end{figure}
 \FloatBarrier
-\subsection{Brands}
+\subsection{Domain Subset: Brands}
 \label{sec:brands}
 
 % zahlen 23.3
@@ -559,7 +558,7 @@ For the first 750 sentences (with four classes), 47\% failed the initial quiz (3
 150 annotators took the exit survey to rate the task on a scale from one to five. Overall, the task was rated with 3.7. The instructions got 4.0, the fairness of test questions 3.5, the difficulty 3.6 and the payment 3.7.\footnote{The numbers are the average of the survey results for each task created on CrowdFlower, weighted by the number of participants.} Broken down, the four-class task (67 participants) got a rating of 3.5, the three-class task (83 participants) 3.8.
 
 
-\subsection{Computer Science}
+\subsection{Domain Subset: Computer Science}
 % zahlen 23.3
 For the Computer Science domain, 2425 sentences (containing one of 42 pairs) were annotated. The confidence of the annotations (table \ref{fig:compsci_agg}) is satisfactory. The class distribution (Figure \ref{fig:compsci_fin}) is better, as more sentences are comparative.
 
@@ -593,7 +592,7 @@ Confidence & Sentences & \% of data set \\
 As with Brands, 48\% failed the initial quiz for the task with four classes. 25\% dropped out during the annotation process. Again, the numbers improved after \texttt{OTHER} was removed. Only 15\% failed the quiz and 7\% were removed during the annotation process.
 
 One hundred and six annotators took the exit survey. The task was rated with 3.9. The instructions (the instructions were the same for all tasks) got 4.2, test question fairness 4.1, difficulty 3.9 and payment (all tasks had the same payment) 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
-\subsection{Random}
+\subsection{Domain Subset: Random}
 The random domain contains 2439 sentences with 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (Figure \ref{fig:random_fin}) are satisfactory.
    % zahlen 23.3 
 \begin{table}[h]
