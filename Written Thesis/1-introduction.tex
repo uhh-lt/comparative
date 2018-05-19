@@ -10,7 +10,7 @@ This thesis discusses the topic of \emph{Comparative Argument Mining (CAM)}. Com
 
 The goal is to develop a system which is able to decide if a given sentence compares two known object and, if it does, which object win the comparison. For instance, for the sentence \emph{\enquote{In my mind, Python is better than Java!}}, the system should answer that the sentence is comparative and that Python won the comparison.
 
-Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This stands in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information rarely found in databases.\newline
+Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in Section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This stands in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information rarely found in databases.\newline
 
 The thesis is structured into three main parts. The first part discusses recent publications in Argument Mining and explains the needed concepts from Natural Language Processing and Machine Learning.
 
@@ -72,7 +72,7 @@ Comparison Portals only compare and deliver facts. Because of that, they can onl
 Examples of Comparative portals are \emph{Check24.de\footnote{\url{https://check24.de} (checked: 13.04.2018)}, Verivox.de\footnote{\url{https://verivox.de} (checked: 13.04.2018)}, Idealo.de\footnote{\url{https://idealo.de} (checked: 13.04.2018)}, GoCompare.com\footnote{\url{https://gocompare.com} (checked: 13.04.2018)},} and \emph{Compare.com}\footnote{\url{https://compare.com} (checked: 13.04.2018)} just to name a few.
 
 As an example, Check24.de is able to compare a wide variety of different objects like several insurances, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type, Check24 shows a ranking of different providers. The user can choose different properties to re-rank the list.
-For instance, to compare different DSL providers, the user has to enter her address (figure  \ref{img:check24_1}), how fast the internet should be and if she wants telephone and television as well. She can then sort the results by price, speed, and grade (figure \ref{img:check24_2}).
+For instance, to compare different DSL providers, the user has to enter her address (Figure \ref{img:check24_1}), how fast the internet should be and if she wants telephone and television as well. She can then sort the results by price, speed, and grade (Figure \ref{img:check24_2}).
 \begin{figure}[tbp]
  \centering
 	\includegraphics[width=0.9\textwidth]{images/ds-sys/check24_1}
@@ -250,7 +250,7 @@ Bag-of-words an mean word embeddings lose sequence information. However, the seq
 Sentence embeddings aim to learn embeddings for pieces of text instead of single words. In this way, sequence information is taken into account. Several methods have been proposed to create sentence embeddings (e.g. FastSent \cite{hill2016learning} and SkipTought \cite{NIPS2015_5950}). In this thesis, \emph{InferSent} as presented in \cite{Conneau:2017aa} is used.
 
 
-InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570.000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in table \ref{tbl:snli}. The authors assumed that the \enquote{semantic nature} %zitat
+InferSent learns sentence embedding in a similar way as word embeddings are learned. A neural network is trained on the \emph{Stanford Natural Language Inference (SNLI)} data set (\cite{snli:emnlp2015}). SNLI contains 570.000 English sentence pairs. Each pair is labelled as \emph{entailment}, \emph{contradiction} or \emph{neutral}. Some examples are presented in Table \ref{tbl:snli}. The authors assumed that the \enquote{semantic nature} %zitat
 makes the data set suitable for learning universal sentence embeddings.
 
 \begin{table}[ht]
@@ -275,7 +275,7 @@ A smiling costumed woman is holding an umbrella. & A happy woman in a fairy cost
 \end{figure}
 
 
-The architecture of the neural network is presented in figure \ref{fig:infersent}. Two separate encoders are used to encode the text and the hypothesis. The embeddings \emph{u} and \emph{v} are combined into a feature vector which contains the concatenation, the element-wise product and the element-wise difference of \emph{u} and \emph{v}. This vector, containing information from both sentences, is then fed into a fully connected layer and a softmax layer which outputs the probabilities of each label.
+The architecture of the neural network is presented in Figure \ref{fig:infersent}. Two separate encoders are used to encode the text and the hypothesis. The embeddings \emph{u} and \emph{v} are combined into a feature vector which contains the concatenation, the element-wise product and the element-wise difference of \emph{u} and \emph{v}. This vector, containing information from both sentences, is then fed into a fully connected layer and a softmax layer which outputs the probabilities of each label.
 
 The authors tested six architectures for the sentence encoder: LSTM (\cite{hochreiter1997long}), GRU (\cite{cho2014properties}), BiLSTM with mean/max pooling (\cite{collobert2008unified}), self-attentive networks (\cite{liu2016learning}, \cite{lin2017structured}) and hierarchical ConvNet (\cite{zhao2015self}). 
 
@@ -283,7 +283,7 @@ Twelve transfer tasks\footnote{For example: binary classification (sentiment ana
 
 The embeddings generated by the BiLSTM with max pooling and an embedding size of 4096 yielded the best accuracy for SNLI and the transfer tasks. Also, the embeddings were better than other state-of-the-art sentence embeddings like SkipThought.
 
-A pretrained model for InferSent is available on GitHub\footnote{\url{https://github.com/facebookresearch/InferSent} (checked: 13.05.2018)}. This model was used in section \ref{sec:features}.
+A pretrained model for InferSent is available on GitHub\footnote{\url{https://github.com/facebookresearch/InferSent} (checked: 13.05.2018)}. This model was used in Section \ref{sec:features}.
 
 \subsection{HypeNet and LexNet}
 \label{sec:lexnet}
@@ -291,7 +291,7 @@ HypeNet, presented in \cite{DBLP:conf/acl/ShwartzGD16}, is a method to detect hy
 
 The dependency paths add information about joint occurrences of the two words, while the distributional methods add information about the terms in separate contexts. Word Embeddings are used as distributional features.
 
-For each term pair, all dependency paths were extracted. Each edge was represented as \texttt{lemma/POS/dependency label/direction}. An example is given in figure \ref{fig:hypenet}. 
+For each term pair, all dependency paths were extracted. Each edge was represented as \texttt{lemma/POS/dependency label/direction}. An example is given in Figure \ref{fig:hypenet}. 
 
 \begin{figure}[h]
 \centering
