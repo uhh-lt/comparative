@@ -123,6 +123,8 @@ Adding information like comments and product reviews can enrich the comparison w
 \FloatBarrier
 
 \section{Machine Learning Methods}
+The goal of Chapter \ref{chp:class} is to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and was solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine} and \cite{friedman2001elements}. 
+
 \subsection{Recurrent Neural Networks and Long Short-term Memory}
 In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$t$}. In doing so, RNNs hold an internal state which is used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
 
@@ -137,7 +139,7 @@ Different types of recurrent units have been developed. A popular form are \emph
 
 
 \subsection{Decision Trees and Gradient Boosting}
-\emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing the tree until a leaf not is reached. An example tree is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
+\emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing the tree until a leaf node is reached. An example tree for the binary classification of a sentence (comparative or not) is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
 
 \begin{figure}[ht]
 \centering
