@@ -123,20 +123,57 @@ Adding information like comments and product reviews can enrich the comparison w
 \FloatBarrier
 
 \section{Machine Learning Methods}
-The goal of Chapter \ref{chp:class} is to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and was solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine} and \cite{friedman2001elements}. 
+The goal of Chapter \ref{chp:class} is to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and was solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine}, \cite{friedman2001elements} and \cite{Goodfellow-et-al-2016}.
 
-\subsection{Recurrent Neural Networks and Long Short-term Memory}
-In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequentially from the input layer through the hidden layers until they reach the output layer. In contrast, \emph{recurrent neural networks (RNN)} can contain loops. The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$t$}. In doing so, RNNs hold an internal state which is used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
+\subsection{Neural Networks}
+\emph{Neural networks} are a powerful, widely used machine learning method for classification and regression. The basic building block of neural networks is the \emph{neuron} (also called \emph{cell}). A neuron takes \emph{m} input values and produces \emph{n} output values:
+
+\[ \vec{y} = \phi \left( \sum^m_{i=0} w_ix_i \right) \]
+
+where $w_i$ is a weight, $\phi$ is the activation function and $\vec{y}$ is the a vector of size \emph{n}. The weights are the trainable parameters of a neuron. The \emph{perceptron} is seen as the first neuron. For the perceptron, $n=1$ and $\phi$ is defined the \emph{heaviside step function}, which returns one if the sum is greater zero and zero otherwise. Hence, a single perceptron is a linear, binary classifier.
+
+The \emph{multilayer perceptron} is a neural network build with multiple layers of neurons inspired by the perceptron. In contrast to the perceptron, a differentiable function is used as the activation function $\phi$ (for example \emph{sigmoid} or  \emph{rectiﬁed linear activation function}\footnote{(see page 170 of \cite{Goodfellow-et-al-2016})}). This is required because the backpropagation algorithm used for updating the weights makes use of derivatives. A detailed description of backpropagation is given in Section 4.5.2 of \cite{mitchell1997machine}.
+
+
+
+
 
 \begin{figure}[ht]
 \centering
-	\includegraphics[width=0.9\textwidth,scale=0.5]{images/rnn_schema}
+	\includegraphics[width=0.7\textwidth]{images/nn}
+	\caption{Multilayer perceptron with one hidden layer. The network takes two inputs and produces one output. Larger input and output layers as well as more and large hidden layers are possible as well.}
+		\label{fig:nn}
+\end{figure}   
+
+
+Figure \ref{fig:nn} shows an example with one hidden layer of size three. The neurons of the first layer (input layer) do not calculate anything, each neuron outputs the associated value. These values are fed into each neuron of the second (hidden) layer, which produces an output as described above. The output is then fed into the neuron in the last layer (the output layer). The interpretation of the output depends on the used activation function. For binary classification, the network in Figure \ref{fig:nn} would use \emph{sigmoid}. The output value is then interpreted as the probability of the input x to belong to the positive class. For multi-class classification, the output layer would have as many neurons as classes are present, which would use \emph{softmax} as the activation function. Neural networks as in Figure \ref{fig:nn} are called \emph{feed-forward (artificial) neural network (ANN)}. The data flows sequentially from the input layer through the hidden layers until they reach the output layer. 
+
+In contrast, neurons in a \emph{recurrent neural networks (RNN)} may contain loops. This means that the output of layer \emph{h} at time \emph{t} is part of the input of layer \emph{h} at time \emph{t+1}. Figure \ref{fig:rnnschema} shows this for three time steps.
+
+
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.7\textwidth]{images/rnn_schema}
 	\caption{Schematic view of an RNN. The right side shows the RNN unfolded for two time steps.}
 		\label{fig:rnnschema}
 \end{figure}
 
-Different types of recurrent units have been developed. A popular form are \emph{long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
+In this way, the network can take information from the past into account. This is useful if the input to the network are sentences. Each word in a sentence can be seen as a time step. Information about preceding words are often important to correctly understand a sentence. However, the simple RNN is not good at learning dependencies between words which are far away from each other in the sentence.
 
+A frequently used type of recurrent neurons are \emph{long short-term memory (LSTM)} blocks as presented in \cite{hochreiter1997long}. LSTMs have a state, which enables them to learn long distance dependencies (up to 1000 time steps). On each time step, gates decided based on the current input (time \emph{t}) and the previous input (time \emph{t-1}) if data should be read, written or deleted from the state. The gates work similar to neurons as each gate has a own set of weights and an activation function.
+
+%
+% The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$t$}. In doing so, RNNs hold an internal state which is used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
+%
+%\begin{figure}[ht]
+%\centering
+%	\includegraphics[width=0.9\textwidth,scale=0.5]{images/rnn_schema}
+%	\caption{Schematic view of an RNN. The right side shows the RNN unfolded for two time steps.}
+%		\label{fig:rnnschema}
+%\end{figure}
+%
+%Different types of recurrent units have been developed. A popular form are \emph{long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
+%
 
 \subsection{Decision Trees and Gradient Boosting}
 \emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing the tree until a leaf node is reached. An example tree for the binary classification of a sentence (comparative or not) is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
