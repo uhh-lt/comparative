@@ -136,8 +136,19 @@ In \emph{feed-forward (artificial) neural network (ANN)}, the data flows sequent
 Different types of recurrent units have been developed. A popular form are \emph{long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
 
 
-\subsection{Gradient Boosting}
-Boosting is a technique to combine a set of weak learners into one good learner. The predicitions of a weak learner are only slightly better than random guessing.
+\subsection{Decision Trees and Gradient Boosting}
+\emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing the tree until a leaf not is reached. An example tree is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
+
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.5\textwidth]{images/dectree}
+	\caption{Simple decision tree to check if a sentence is comparative or not.}
+		\label{fig:dectree}
+\end{figure}
+
+Several algorithms like \emph{ID3} (presentend in \cite{quinlan1986induction}) or \emph{CART} (presented in \cite{breiman2017classification}) can be used to create a decision tree. A general introduction to decision tree methods is given in Chapter 3 of \cite{mitchell1997machine}.
+
+Boosting is a technique to combine a set of weak learners into one good learner. The predictions of a weak learner are only slightly better than random guessing.
 
 The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
 
