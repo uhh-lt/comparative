@@ -125,6 +125,32 @@ Adding information like comments and product reviews can enrich the comparison w
 \section{Machine Learning Methods}
 The goal of Chapter \ref{chp:class} is to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and was solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine}, \cite{friedman2001elements} and \cite{Goodfellow-et-al-2016}.
 
+
+\subsection{Performance Measures}
+Several ways exits to evaluate classification models. A simple measure is \emph{accuracy}, which is defined as the fraction of correct predictions:
+
+\[ Acc = \frac{\text{\# correct predictions}}{\text{total \# of predictions}} \]
+
+Accuracy is only suitable where all classes have the same size. For instance, a data set with 950 positive examples and 50 negative examples will get an accuracy of 95\% if it always predicts the positive class.
+
+
+\emph{Precision}, \emph{recall} and \emph{f1 score} are measures to check the classification performance on data sets with imbalanced classes. The measures are calculated per class.
+
+The precision of a classifier with regards to class \emph{c} is defined as:
+\[ \text{P(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false positives}} \]
+Precision is the ratio between correctly predicted examples for class \emph{c} and all predicted examples of class \emph{c}.
+
+
+The recall of a classifier with regards to class \emph{c} is defined as:
+\[ \text{R(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false negatives}} \]
+
+
+If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} is one, while the recall is near zero. Likewise, if all  all examples are classified as \emph{c}, the recall is one, while the precision is zero. 
+
+The f1 balances precision and recall. It is defined as the harmonic mean:
+\[ f_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
+
+
 \subsection{Neural Networks}
 \emph{Neural networks} are a powerful, widely used machine learning method for classification and regression. The basic building block of neural networks is the \emph{neuron} (also called \emph{cell}). A neuron takes \emph{m} input values and produces \emph{n} output values:
 
@@ -187,7 +213,7 @@ A frequently used type of recurrent neurons are \emph{long short-term memory (LS
 
 Several algorithms like \emph{ID3} (presentend in \cite{quinlan1986induction}) or \emph{CART} (presented in \cite{breiman2017classification}) can be used to create a decision tree. A general introduction to decision tree methods is given in Chapter 3 of \cite{mitchell1997machine}.
 
-Boosting is a technique to combine a set of weak learners into one good learner. The predictions of a weak learner are only slightly better than random guessing.
+Boosting is a technique to combine a set of weak learners into one good learner. The predictions of a weak learner are only slightly better than random guessing. For instance, a weak classifier should get an accuracy slighty over 50\% for a data set with 100 positive and 100 negative examples.
 
 The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
 
@@ -200,22 +226,6 @@ Boosting can be used with various machine learning algorithms and is suitable fo
 A frequently used implementation of gradient boosted decision trees is \emph{XGBoost}\footnote{\url{https://github.com/dmlc/xgboost} (checked 14.05.2018)}, as presented in \cite{DBLP:journals/corr/ChenG16}.
 
 
-\section{Performance Measures}
-Precision, recall and f1 score are measures to check the classification performance. The measures are calculated per class.
-
-The precision of a classifier with regards to class \emph{c} is defined as:
-\[ \text{P(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false positives}} \]
-Precision is the ratio between correctly predicted examples for class \emph{c} and all predicted examples of class \emph{c}.
-
-
-The recall of a classifier with regards to class \emph{c} is defined as:
-\[ \text{R(c)} = \frac{\text{\# of true positives}}{\text{\# true positives + \# false negatives}} \]
-
-
-If only one out of 1000 examples was classified as \emph{c}, and the classification was correct, the precision for \emph{c} is one, while the recall is near zero. Likewise, if all  all examples are classified as \emph{c}, the recall is one, while the precision is zero. 
-
-The f1 balances precision and recall. It is defined as the harmonic mean:
-\[ f_{1}(c) = \frac{\text{2PR}}{\text{P+R}} \]
 
 \section{Vector Representations for Documents}
 % cosine similarity
