@@ -22,12 +22,13 @@ The third part uses this data set to train machine learning models on several fe
 \section{Related Work}
 \label{sec:argth}
 \label{sec:argmine}
+In the following, publications on argument mining are presentend. If appropriate, the f1 scores achieved in these publications are presentend as well. It must be noted that the f1 scores are not comparable with each other.
+
 A general introduction on the research topic \emph{Argument Mining} was given in \cite{Lippi2016Argumentation-M}.
 The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems were described. First, the input is divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step was described as a classification problem. Second, the boundaries of the argumentative units must be identified; this was understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
 
 
 %07 biomed
-
 
 A system which is capable of recognising comparative sentences and their components such as the compared entities, the property which is used to compare the entities and the direction of comparison was presented in \cite{fiszman2007interpreting}. The evaluation showed that the outcome has a high quality (f1 score of 0.81). However, the presented system was specific to the domain of studies on drug therapy. The system used patterns generated from hand-selected sentences, as well as domain knowledge. Therefore, the methods cannot be easily  transferred for the problem of this thesis.
 
@@ -188,18 +189,6 @@ In this way, the network can take information from the past into account. This i
 
 A frequently used type of recurrent neurons are \emph{long short-term memory (LSTM)} blocks as presented in \cite{hochreiter1997long}. LSTMs have a state, which enables them to learn long distance dependencies (up to 1000 time steps). On each time step, gates decided based on the current input (time \emph{t}) and the previous input (time \emph{t-1}) if data should be read, written or deleted from the state. The gates work similar to neurons as each gate has a own set of weights and an activation function.
 
-%
-% The output of layer \emph{h} at time \emph{$t-1$} is part of the input of layer \emph{h} at time \emph{$t$}. In doing so, RNNs hold an internal state which is used to process sequential input like text\footnote{If a sentence is feed word by word into a ANN, each word is seen as an independent data point. A RNN keeps the information about previous words.}. Figure \ref{fig:rnnschema} shows this idea.
-%
-%\begin{figure}[ht]
-%\centering
-%	\includegraphics[width=0.9\textwidth,scale=0.5]{images/rnn_schema}
-%	\caption{Schematic view of an RNN. The right side shows the RNN unfolded for two time steps.}
-%		\label{fig:rnnschema}
-%\end{figure}
-%
-%Different types of recurrent units have been developed. A popular form are \emph{long short-term memory (LSTM)} cells, as presented in \cite{hochreiter1997long}. LSTMs overcome the \emph{vanishing gradient problem}: gradients of early layers in deep networks tend to be small which makes the training difficult.
-%
 
 \subsection{Decision Trees and Gradient Boosting}
 \emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing the tree until a leaf node is reached. An example tree for the binary classification of a sentence (comparative or not) is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
@@ -229,17 +218,17 @@ A frequently used implementation of gradient boosted decision trees is \emph{XGB
 
 \section{Vector Representations for Documents}
 % cosine similarity
-Because many machine learning algorithms work with numeric values as input, text must be transformed into a numerical representation. Several methods are known to transform text into numeric feature vectors.
+Because many machine learning algorithms, especially neural ones, work with numeric values as input, text must be transformed into a numerical representation. Several methods are known to transform text into numeric feature vectors.
 \subsection{Bag-of-words and Bag-Of-Ngrams}
 The \emph{bag-of-words} model is a simple vector representation for documents. All words in the corpus are collected into a vocabulary $\mathcal{V}$. A document  \emph{j} is represented by a vector $\vec{d_j}$ of size $|\mathcal{V}|$, where $\vec{d}_{j,i}$ is the frequency of word $\mathcal{V}_i$ in the document \emph{j} (the \emph{term frequency} $\text{tf}(i,j)$).
 
-The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the significance of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a higher value than \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
+The model is fast to calculate but does not take any sequence or grammar information into account. It also ignores the frequency of words. For instance, \enquote{\emph{the}} appears in almost every English text, while \emph{\enquote{psychology}} is seldom. Yet, this is not reflected in $\vec{d_j}$, as \enquote{\emph{the}} is likely to get a higher value than \emph{\enquote{psychology}}. Another problem is that the vectors are as long as the vocabulary (typically thousands of words) and sparse, which adds more parameters to learn.
 
 The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams}) instead of words. The vocabulary $\mathcal{V}$ will contain all sequences of \emph{n} consecutive words appearing in the corpus instead of single words. In this way, some sequence information is kept. The second problem can be solved by removing very frequent words like \emph{\enquote{the}} or \emph{\enquote{can}} (often called stop words) and by using a weighting function for the remaining words. A commonly used weighting function is \emph{term frequency, inverse document-frequency (tf-idf)}. With tf-idf, $\vec{d_{j,i}}$ is calculated as:
 
 \[\vec{d_{j,i}} = \text{tf}_{i,j} \times \log{ \frac{N}{n_i} } \]
 
-where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) \emph{i} appears in.
+where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) \emph{i} appears in. Tf-idf takes the frequency of words into account. Frequent words which appear in many documents will get a low weight, while words which appear seldomly get a high score.
 
 The other problems, sparsity and length, remain. They are solved in other vector representations.
 

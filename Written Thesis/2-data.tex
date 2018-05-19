@@ -4,15 +4,15 @@
 \label{sec:prestudy}
 Due to the novelty of argument mining (and especially comparative argument mining), the supply of data sets is small. Thus, a new data set had to be created.
 
-The data set was designed to answer two questions. First, does a sentence compare two known objects? And, if it does, is the first-mentioned object better or worse than the second one?
+The data set was designed to answer two questions. First, does a sentence compare two known objects? And, if it does, is the first-mentioned object better or worse than the second-mentioned, according to the sentence context?
 
-The data set was created with data from CommonCrawl and labelled using the crowdsourcing platform CrowdFlower\footnote{\url{https://www.crowdflower.com} (checked: 23.02.2018), now called \emph{Figure Eight}}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
+The data set was created with data from CommonCrawl\footnote{\url{https://commoncrawl.org} (checked: 23.02.2018)}  and labelled using the crowdsourcing platform CrowdFlower\footnote{\url{https://www.crowdflower.com} (checked: 23.02.2018), now called \emph{Figure Eight}}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
 
 % zahlen 24.03
 The final data set has 7199 sentences, each containing one of 271 distinct object pairs. Each sentence was annotated by at least five annotators.
 
 \section{Common Crawl Text Corpus}
-The sentences for the crowdsourcing task were obtained from a CommonCrawl\footnote{\url{https://commoncrawl.org} (checked: 23.02.2018)} data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
+The sentences for the crowdsourcing task were obtained from a CommonCrawl data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
 
 The data used in this thesis was already preprocessed (see \cite{Panchenko:2017aa}). First, it contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were split into sentences.
 
