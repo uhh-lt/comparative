@@ -22,7 +22,7 @@ The third part uses this data set to train machine learning models on several fe
 \section{Related Work}
 \label{sec:argth}
 \label{sec:argmine}
-In the following, publications on argument mining are presentend. If appropriate, the f1 scores achieved in these publications are presentend as well. It must be noted that the f1 scores are not comparable with each other.
+In the following, publications on argument mining are presented. If appropriate, the f1 scores achieved in these publications are presented as well. It must be noted that the f1 scores are not comparable with each other.
 
 A general introduction on the research topic \emph{Argument Mining} was given in \cite{Lippi2016Argumentation-M}.
 The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems were described. First, the input is divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step was described as a classification problem. Second, the boundaries of the argumentative units must be identified; this was understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
@@ -33,7 +33,10 @@ The authors introduced five dimensions to describe argument mining problems: gra
 A system which is capable of recognising comparative sentences and their components such as the compared entities, the property which is used to compare the entities and the direction of comparison was presented in \cite{fiszman2007interpreting}. The evaluation showed that the outcome has a high quality (f1 score of 0.81). However, the presented system was specific to the domain of studies on drug therapy. The system used patterns generated from hand-selected sentences, as well as domain knowledge. Therefore, the methods cannot be easily  transferred for the problem of this thesis.
 
 %  12 sci
-In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem was formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features were tailored for medical publications. Features to capture the presence of specific words were used, many of them bound to the medical domain. The analysis of 274 sentences resulted in syntactic features. Similar to \cite{fiszman2007interpreting}, the features cannot be directly transferred to other domains.
+In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem was formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features were tailored for medical publications.
+
+The authors conducted a pilot study with 274 comparison sentences extracted from abstracts and 164 comparison sentences from full text articles. The sentences were analysed in order to extract 35 (six lexical features, 27 syntactic features and two miscellaneous features) features. For instance, a lexical feature capturing the appearance of \emph{\enquote{versus}} or \emph{\enquote{vs.}} was developed, while a miscellaneous feature checked if the subject of the comparison is in plural. 
+
 
 % 10 biomed
 A recent publication on \emph{Comparative Argument Mining} is \cite{gupta2017identifying}, were a set of rules for the identification of comparative sentences (and the compared entities) was derived from \emph{Syntactic Parse Trees}. With these rules, the authors achieved a f1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent.\newline
