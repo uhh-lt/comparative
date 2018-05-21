@@ -16,9 +16,9 @@ The sentences for the crowdsourcing task were obtained from a CommonCrawl data s
 
 The data used in this thesis was already preprocessed (see \cite{Panchenko:2017aa}). First, it contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were split into sentences.
 
-To make the data set manageable, an ElasticSearch index was created. The index contains 3,288,963,864 unique sentences.
+To make the data set manageable, an Elasticearch\footnote{Elasticsearch is a open-source search engine. \url{https://www.elastic.co/} (checked: 21.05.2018)} index was created. The index contains 3,288,963,864 unique sentences.
 
-To get an idea if there are enough comparative sentences in the index, it was queried for all sentences containing one of the words \enquote{\emph{better}} or \enquote{\emph{worse}},  as those words often indicate a comparison. This query returns 32,946,247 matching sentences. Querying for \enquote{\emph{is better than}} returns 428,932 sentences. Those numbers show that there are enough sentences in the index to create a data set for the given task.
+To get an idea if enough comparative sentences are in the index, it was queried for all sentences containing one of the words \enquote{\emph{better}} or \enquote{\emph{worse}},  as those words often indicate a comparison. This query returns 32,946,247 matching sentences. Querying for \enquote{\emph{is better than}} returns 428,932 sentences. Those numbers show that there are enough sentences in the index to create a data set for the given task.
 
 
 \section{Prestudies}
@@ -32,16 +32,16 @@ In preparation to the main crowdsourcing task, several questions had to be answe
 
 Two prestudies were conducted to answer those questions.
 
+\subsection{First Prestudy: Sentence Sampling and Guidelines }
+The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 sentences was conducted. 
 
+The sentences for the crowdsourcing task must have a high probability of being comparative so that enough positive examples for the machine learning part are present. To ensure this, a list of cue words which indicate comparison was compiled by hand. For the prestudies, these words were \enquote{\emph{better}}, \enquote{\emph{worse}}, \enquote{\emph{inferior}}, \enquote{\emph{superior}} and \enquote{\emph{because}}. 
 
-\subsection{Sentence Sampling Method}
-The sentences for the crowdsourcing task must have a high probability of being comparative so that enough positive examples for the machine learning part are present. To ensure this, a list of cue words which indicate comparison was compiled by hand. For the prestudy, those words were \enquote{\emph{better}}, \enquote{\emph{worse}}, \enquote{\emph{inferior}}, \enquote{\emph{superior}} and \enquote{\emph{because}}. 
-
-Comparable objects are needed as well. A list of object pairs was selected by hand (see table \ref{tbl:prestudy-objects}). The pairs were selected so that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this was that pets are compared differently than programming languages. In this way, there will be different comparison patterns in the data.
+Comparable objects were needed as well. A list of object pairs was selected by hand (see Table \ref{tbl:prestudy-objects}). The pairs were selected in a way that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this was that pets may be compared differently than programming languages. In this way, there will be different comparison patterns in the data.
 
 \begin{table}[h]
 \centering
-\caption{Objects pairs for the annotation prestudy. The index was queried for sentences which contained both objects and a cue word (\emph{better}, \emph{worse}, \emph{superior}, \emph{inferior} or \emph{because}) to generate sentences for the prestudy.}
+\caption{Objects pairs for the annotation prestudies. The index was queried for sentences, which contained both objects and a cue word (\emph{better}, \emph{worse}, \emph{superior}, \emph{inferior} or \emph{because}), to generate sentences for the prestudies.}
 \label{tbl:prestudy-objects}
 \begin{tabular}{@{}llrrr@{}}
 \toprule
@@ -65,7 +65,7 @@ Not all comparisons will contain one of the cue words mentioned above. Two diffe
 
 
 
-\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=The first query used to extract the sentences for the prestudy from the ElasticSearch index. OBJECT\_A and OBJECT\_B are placeholders for the first and second object.]
+\begin{lstlisting}[label=lst:es-query-a,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=The first query used to extract the sentences for the prestudies from the Elasticsearch index. OBJECT\_A and OBJECT\_B are placeholders for the first and second object.]
 {
   "query":{
     "bool":{
@@ -82,7 +82,7 @@ Not all comparisons will contain one of the cue words mentioned above. Two diffe
 }
 \end{lstlisting}
 
-\begin{lstlisting}[label=lst:es-query-b,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=The second query for the prestudy (shortened). This query does not search for the cue words.]
+\begin{lstlisting}[label=lst:es-query-b,breaklines=true,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},caption=The second query for the prestudies (shortened). This query does not search for the cue words.]
 [...]
           "query_string":{
             "default_field":"text",
@@ -112,16 +112,12 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 
 
-\subsection{First Prestudy: Sentence Sampling and Guidelines }
-The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 of the 1000 sentences was concucted. 
 
-
-
-For each sentence, the annotators were asked which of the classes describes the sentence best (see Figure \ref{img:1_question} and Table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of Chapter \ref{sec:prestudy}. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}, for instance, if both objects of interest appear in the sentence, but they are not compared against each other.
+For each sentence, the annotators were asked which of the classes describes the sentence best (see Figure \ref{img:1_question} and Table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of this chapter. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}. For instance, if both objects of interest appear in the sentence, but they are not compared against each other.
 
 \begin{figure}[h]
 \centering
-\caption{This question was presented to the annotators in the first prestudy.}
+\caption{An example for questions presented to the annotators in the first prestudy.}
 \label{img:1_question}
 \includegraphics[width=1\linewidth]{images/prestudy/1_question}
 
@@ -143,7 +139,7 @@ Class & Description \\ \midrule
 \end{tabularx}
 \end{table}
 
-In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B} (see table \ref{tbl:pre_1_res}). The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. Also, they should not be biased by personal preference. For example, in sentence two of table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C\#}} and \enquote{\emph{VB}}. 
+In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B} (see Table \ref{tbl:pre_1_res}). The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. Also, they should not be biased by personal preference. For example, in sentence two of Table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C\#}} and \enquote{\emph{VB}}. 
 
 Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz with eight test questions before the actual annotation process. One of the five sentences was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
 
@@ -178,7 +174,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 \end{figure}
 \FloatBarrier
 
-The confidence of the annotations was acceptable (see table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only 37 sentences got a clear result.
+The confidence of the annotations was acceptable (see Table \ref{fig:pre_a_agg}). Only for eight sentences, no class got the majority of votes. However, only 37 sentences got a clear result.
 
 \begin{table}[htbp]
 \caption{Annotation confidence for the \emph{first prestudy}. The confidence is calculated as \emph{judgments for majority class / total judgments}. Less than 51 percent confidence means no class got the majority of votes, while 100 percent means that all annotators voted for the same class.}
@@ -202,7 +198,7 @@ Confidence & Sentences & \% of data set \\
 
 
 
-Some uncertain sentences are shown in table \ref{tbl:pre_1_res} together with the number of decisions per class. As one can see in sentence two, annotators often were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true for the majority of cases were more than one classes was assigned.
+Some uncertain sentences are shown in Table \ref{tbl:pre_1_res} together with the number of decisions per class. As one can see in sentence two, annotators often were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true for the majority of cases were more than one classes was assigned.
 
 
 
@@ -211,14 +207,12 @@ Fourteen out of 55 participants took part in an exit survey to rate the task. Th
 
 \FloatBarrier
 \subsection{Second Prestudy: Sentence Preprocessing and Rephrasing of the Guidelines}
-Two-hundred sentences were annotated in the second prestudy. To address the shortcomings mentioned above, the task design was changed in several aspects.
+Two-hundred sentences were annotated in the second prestudy. Some aspects were identical to the first prestudy. As the sentence selection process worked fine, the same 1000 base sentences were used in the second prestudy.  Each sentence was annotated by three annotators. The annotators saw five sentences per page, one being a test question. They had to pass a quiz of eight test questions and had to keep an accuracy of 70\% on the test questions during the annotation procedure. The classes were the same as in the first prestudy (see Table \ref{tbl:prestudyclasses-a}).
 
-Some aspects were identical to the first study. As the sentence selection process worked fine, the same 1000 base sentences were used in the second prestudy.  Each sentence was annotated by three annotators. The annotators saw five sentences per page, one being a test question. They had to pass a quiz of eight test questions and had to keep an accuracy of 70\% on the test questions during the annotation procedure. The classes were the same as in the first prestudy (see table \ref{tbl:prestudyclasses-a}).
-
-As the pair \enquote{\emph{Ruby vs. Python}} requires knowledge in computer science, this need was expressed in the title of the task.
+ To address the shortcomings mentioned above, the task design was changed in several aspects. As the pair \enquote{\emph{Ruby vs. Python}} requires knowledge in computer science, the need was expressed in the title of the task.
 To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP}, the wording on this classes in the annotator's view was changed (see Figure \ref{img:2_question}). 
 
-\begin{figure}[htb]
+\begin{figure}[thb]
 \centering
 \includegraphics[width=1\textwidth]{images/prestudy/2_question}
 
@@ -234,10 +228,10 @@ The sentence preprocessing was adjusted. Instead of replacing the object, \mbox{
 
 
 
-The class distribution of the 200 sentences is presented in Figure \ref{fig:dist_pre_b}.  As in the first prestudy, a sufficient amount of the sentences are comparative. The confidence of the annotations (see table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
+The class distribution of the 200 sentences is presented in Figure \ref{fig:dist_pre_b}.  As in the first prestudy, a sufficient amount of the sentences are comparative. The confidence of the annotations (see Table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
 
-\begin{figure}[b]
+\begin{figure}[tb]
 % aktuelle zahlen 29.3; neue methode
 \centering
 \caption{The results of the second prestudy.}
@@ -246,7 +240,7 @@ The class distribution of the 200 sentences is presented in Figure \ref{fig:dist
 \end{figure}
 
 
-\begin{table}[tp]
+\begin{table}[bp]
 % aktuelle zahlen 29.3; neue methode
 \caption{Annotation confidence for the second prestudy. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:pre_b_agg}
@@ -307,7 +301,7 @@ The changes in the second prestudy were well received by the annotators. In the 
 
 The distinction between \texttt{UNCLEAR} and \texttt{NO\_COMP} was a problem. This illustrates that the choice of a class is subjective to some degree. 
 
-Due to an error in the creation of the crowdsourcing task, the sentences where not shuffled. This means that the first one-hundred sentences of the second prestudy were the same as the one-hundred sentences of the first prestudy. Another problem was the bias: all sentences contained only the pairs \emph{Ruby vs. Python} and \emph{Android vs. iPhone}. Because the goal of the prestudy was mainly to assess the sentence selection method and the guidelines, this does not invalidate the results. These problems were removed in the main study.
+Due to an error in the creation of the crowdsourcing task, the sentences where not shuffled. This means that the first 100 sentences of the second prestudy were the same as the 100 sentences of the first prestudy. Another problem was the bias: all sentences contained only the pairs \emph{Ruby vs. Python} and \emph{Android vs. iPhone}. Because the goal of the prestudy was mainly to assess the sentence selection method and the guidelines, this does not invalidate the results. These problems were removed in the main study.
 
 All in all, the prestudy was successful. There are only few cases where no agreement on the class could be achieved. The prestudy showed that the task at hand is not easy, but feasible.
 
@@ -315,9 +309,9 @@ All in all, the prestudy was successful. There are only few cases where no agree
 \section{Main Study}
 \label{sec:mainstudy}
 \label{sec:designchanges}
-The insights from the prestudy influenced the design of the main study.
+The insights from the prestudies influenced the design of the main study.
 
-The definition of classes changed (see table \ref{tbl:mainstudy-classes}). \texttt{UNCLEAR} was renamed to \texttt{OTHER}, \texttt{NO\_COMP} to \texttt{NONE}. Those names are a better description for the classes. Eventually, after the first 2250 sentences were finished the class \texttt{OTHER} was dropped completely (see Section \ref{sec:brands}). The change was reflected in the annotation guidelines as well. 
+The definition of classes changed (see Table \ref{tbl:mainstudy-classes}). \texttt{UNCLEAR} was renamed to \texttt{OTHER}, \texttt{NO\_COMP} to \texttt{NONE}. Those names are a better description for the classes. Eventually, after the first 2250 sentences were finished the class \texttt{OTHER} was dropped completely (see Section \ref{sec:brands}). The change was reflected in the annotation guidelines as well. 
 
 \begin{table}[h]
 \centering
@@ -337,11 +331,11 @@ Instead of one big task, several tasks per domain were created. All tasks used t
 
 
 \subsection{Sentence Sampling Method and Domain Selection}
-The sentence selection process was similar to the prestudy. The pairs and the cue words (see Figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText, a software package for distributional semantics. JoBimText\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (checked: 28.02.2018)} was queried for the nine words most similar to \emph{better} and \emph{worse}, so that more comparisons were captured by the selection process.
+The sentence selection process was similar to the prestudy. The pairs and the cue words (see Figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (checked: 28.02.2018)}, a software package for distributional semantics. JoBimText was queried for the words most similar to \emph{better} and \emph{worse}, so that more comparisons were captured by the selection process.
 
 \begin{figure}[hb]
 \centering
-\caption{It is expected that these cue words appear frequently in comparative sentences which make them suitable keywords for queries on the index.}
+\caption{It is expected that these cue words appear frequently in comparative sentences, which makes them suitable keywords for queries on the index.}
 \label{fig:cue_words}
 \begin{multicols}{4}
 better
@@ -390,11 +384,11 @@ mediocre
 
 Three domains were selected for the object pairs. The domains were chosen in a way that a majority of people can decide whether a sentence contains a comparison or not. Also, a wide range of comparison patterns should be included in the data.
 
-The most specific domain was \enquote{\emph{Computer Science Concepts}}. It contained objects like programming languages, database products and technology standards such as Bluetooth and Ethernet.  Many computer science concepts can be compared objectively. For instance, one can compare Bluetooth and Ethernet on their transmission speed. Some basic knowledge of computer science was needed to label sentences correctly: to compare Eclipse and NetBeans, the annotator must know what an Integrated Development Environment (IDE) is and that both objects are Java IDEs.  The need for this knowledge was communicated to the prospective annotators. The objects for this domain were manually extracted from \enquote{\emph{List of ...}} articles from Wikipedia.
+The most specific domain was \enquote{\emph{computer science concepts}}. It contained objects like programming languages, database products and technology standards such as Bluetooth and Ethernet.  Many computer science concepts can be compared objectively. For instance, one can compare Bluetooth and Ethernet on their transmission speed. Some basic knowledge of computer science was needed to label sentences correctly: to compare Eclipse and NetBeans, the annotator must know what an Integrated Development Environment (IDE) is and that both objects are Java IDEs.  The need for this knowledge was communicated to the prospective annotators. The objects for this domain were manually extracted from \enquote{\emph{List of ...}} articles from Wikipedia.
 
-The second, broader domain was \enquote{\emph{Brands}}. It contains objects of different types (for instance car brands, electronics brands, and food brands). As brands are present in everyday life of people, it is expected that anyone can label the majority of sentences containing well known brands such as \enquote{\emph{Coca-Cola}} or \enquote{\emph{Mercedes}}. As with computer science, the objects for this domain were extracted from \enquote{\emph{List of ...}} articles from Wikipedia.
+The second, broader domain was \enquote{\emph{brands}}. It contains objects of different types (for instance car brands, electronics brands, and food brands). As brands are present in everyday life of people, it is expected that anyone can label the majority of sentences containing well known brands such as \enquote{\emph{Coca-Cola}} or \enquote{\emph{Mercedes}}. As with computer science, the objects for this domain were extracted from \enquote{\emph{List of ...}} articles from Wikipedia.
 
-The last domain is not restricted to any topic. For each one of 24 randomly selected seed words, ten similar words were extracted using JoBimText. The seed words (see Figure \ref{fig:seed}) were created using \url{randomlists.com}\footnote{\url{https://randomlists.com}  (checked: 25.01.2018)}. Listing \ref{lst:jbtres} shows the result\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/similar/harvard\%23NP?numberOfEntries=10&format=json} (checked 25.01.2018); Some unimportant fields were removed for brevity} for the seed word \enquote{\emph{Yale}}. Duplicates or too broad terms (like \emph{university}) were removed manually.
+The last domain was not restricted to any topic. For each one of 24 randomly selected seed words, ten similar words were extracted using JoBimText. The seed words (see Figure \ref{fig:seed}) were created using \url{randomlists.com}\footnote{\url{https://randomlists.com}  (checked: 25.01.2018)}. Listing \ref{lst:jbtres} shows the result\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/ws/api/stanford/jo/similar/harvard\%23NP?numberOfEntries=10&format=json} (checked 25.01.2018); Some unimportant fields were removed for brevity} for the seed word \enquote{\emph{Yale}}. Duplicates or too broad terms (like \emph{university}) were removed manually.
 
 \begin{figure}[bthp]
 \centering
@@ -471,10 +465,10 @@ Yale%23NP
 \end{lstlisting}
 \end{minipage}
 
-In the following, this domain is called \emph{Random}. Some example pairs for all domains are shown in table \ref{tbl:exp_pairs}.
+In the following, this domain is called \emph{random}. Some example pairs for all domains are shown in Table \ref{tbl:exp_pairs}.
 \begin{table}[htbp]
 \centering
-\caption{Example object pairs for the main study. These pairs were used to extract sentences from the ElasticSearch index.}
+\caption{Example object pairs for the main study. These pairs were used to extract sentences from the Elasticsearch index.}
 \label{tbl:exp_pairs}
 
 \begin{tabularx}{\textwidth}{XXX}
@@ -496,11 +490,11 @@ Ford vs. Honda & Oracle vs. MysQL & Harvard vs. Princeton\\
 
 Especially for brands and computer science, the object lists were long (4493 brands and 1339 for computer science). The frequency of each object was checked using a frequency dictionary to reduce the number of possible pairs. All objects with a frequency of zero and ambiguous objects were removed from the list. For instance, the objects \enquote{\emph{RAID}} (a hardware concept) and \enquote{\emph{Unity}}  (a game engine) were removed from the computer science list as they are also regularly used nouns.
 
-The remaining objects were combined to pairs. For each object type, all possible combinations were created. For brands and computer science, the type was the URL of the Wikipedia page. For the random domain, the seed word was used. This procedure guarantees that only meaningful pairs are created.
+The remaining objects were combined to pairs. For each object type, all possible combinations were created. For brands and computer science, the type was the URL of the Wikipedia page. For the random domain, the seed word was used. This procedure guaranteed that only meaningful pairs were created.
 
 The index was queried for entries containing both objects of each pair. For 90\% of the queries, the cue words were added to the query. All pairs were the query yielded at least 100 sentences were kept.
 
-From all sentences of those pairs, 2500 for each category were randomly sampled as candidates for the crowdsourcing task. To check the sentence selection method once again, a small, random subset of the sentences was labelled by the author prior to the crowdsourcing task. These labels were discarded for the crowdsourcing task.
+From all sentences of those pairs, 2500 for each category were randomly sampled as examples for the crowdsourcing task. To check the sentence selection method once again, a small, random subset of the sentences was labelled by the author prior to the crowdsourcing task. These labels were discarded for the crowdsourcing task.
 The label distribution of the 742 sentences is presented in the Figure \ref{fig:sample}. As the numbers are similar to the prestudy, the procedure is still valid.
 
 
@@ -515,7 +509,7 @@ The label distribution of the 742 sentences is presented in the Figure \ref{fig:
 \label{sec:brands}
 
 % zahlen 23.3
-For the Brands domain, 2335 sentences were annotated. The sentences contained objects of 36 pairs. As shown in table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
+For the Brands domain, 2335 sentences were annotated. The sentences contained objects of 36 pairs. As shown in Table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
 
 
 % zahlen 29.3
@@ -563,7 +557,7 @@ For the first 750 sentences (with four classes), 47\% failed the initial quiz (3
 
 \subsection{Domain Subset: Computer Science}
 % zahlen 23.3
-For the Computer Science domain, 2425 sentences (containing one of 42 pairs) were annotated. The confidence of the annotations (table \ref{fig:compsci_agg}) is satisfactory. The class distribution (Figure \ref{fig:compsci_fin}) is better, as more sentences are comparative.
+For the Computer Science domain, 2425 sentences (containing one of 42 pairs) were annotated. The confidence of the annotations (Table \ref{fig:compsci_agg}) is satisfactory. The class distribution (Figure \ref{fig:compsci_fin}) is better, as more sentences are comparative.
 
 \begin{table}[htb]
 \caption{Annotation confidence for the domain \emph{Computer Science}. The confidence is calculated as \emph{judgments for majority class / total judgments}. }
@@ -595,9 +589,10 @@ Confidence & Sentences & \% of data set \\
 % zahlen neu
 As with Brands, 48\% failed the initial quiz for the task with four classes. 25\% dropped out during the annotation process. Again, the numbers improved after \texttt{OTHER} was removed. Only 15\% failed the quiz and 7\% were removed during the annotation process.
 
-One hundred and six annotators took the exit survey. The task was rated with 3.9. The instructions (the instructions were the same for all tasks) got 4.2, test question fairness 4.1, difficulty 3.9 and payment (all tasks had the same payment) 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
+One hundred and six annotators took the exit survey. The task was rated with 3.9. The instructions\footnote{The instructions were the same for all tasks.} got 4.2, test question fairness 4.1, difficulty 3.9 and payment\footnote{All tasks had the same payment.} 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
+
 \subsection{Domain Subset: Random}
-The random domain contains 2439 sentences with 167 pairs. The confidence values (table \ref{fig:random_agg}) and class distribution (Figure \ref{fig:random_fin}) are satisfactory.
+The Random domain contains 2439 sentences with 167 pairs. The confidence values (Table \ref{fig:random_agg}) and class distribution (Figure \ref{fig:random_fin}) are satisfactory.
    % zahlen 23.3 
 \begin{table}[h]
 \caption{Annotation confidence for the domain \emph{Random}. The confidence is calculated as \emph{judgments for majority class / total judgments}.}
@@ -682,8 +677,8 @@ The fourth sentence does not explicitly states that one is better than the other
 \end{table}
 
 
-The class distribution (Figure \ref{fig:all_fin}) is similar to the prestudy. As expected, the majority of sentences is not comparative. 
-The class \texttt{BETTER} is more than twice as big as the class \texttt{WORSE}, which will complicate the classification.
+The class distribution (Figure \ref{fig:all_fin}) is similar to the prestudies. As expected, the majority of sentences is not comparative. 
+The class \texttt{BETTER} is more than twice as big as the class \texttt{WORSE}, which is expected to complicate the classification.
 % zahlen 23.3
 
 
