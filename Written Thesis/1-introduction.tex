@@ -98,7 +98,7 @@ More interestingly are systems which can compare any objects on arbitrary proper
 
 Versus.com aggregates freely available data sources like Wikipedia or official statistic reports. For example, the comparison of  \emph{\enquote{Hamburg vs. Berlin}} uses Wikipedia for the number of universities, \url{worldstadiums.com} for the availability of sport facilities and the Economist for the Big Mac Index. Presumably, human processing is involved as the possible comparisons are limited. For instance, a comparison of Hamburg and Darmstadt is not possible as Darmstadt is not available on Versus.com\footnote{Checked on 14.05.2018}. Likewise, \emph{\enquote{Ruby vs. Python}} is not possible, Versus.com suggests to compare  \emph{\enquote{Rome vs. Pyongyang}} instead. Although Versus.com shows how many users liked the objects, it does not give a clear statement which one is better. For instance, it is not possible to check automatically whether Hamburg or Berlin is better for a short city trip. The user must manually search all valid properties like the number of museums, theaters, the price of public transport tickets and so on.
 
-Similar to Versus.com, Diffen.com aggregates different data sources (see figures \ref{img:diffen} and \ref{img:versus}). All in all, the aggregated information is similar to Versus.com. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen.com does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus.com as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are empty.
+Similar to Versus.com, Diffen.com aggregates different data sources (see Figure \ref{img:diffen} and Figure \ref{img:versus}). All in all, the aggregated information is similar to Versus.com. The comparison is also tabular. Besides the automatically aggregated data, users can add information on their own. Diffen.com does not enforce any restrictions on the objects of comparison, but it faces the same problem as Versus.com as objects are missing. A comparison between Darmstadt and Hamburg is likewise not possible: all cells for Darmstadt in the table are empty.
 
 \begin{figure}[htp]
  \centering
@@ -125,11 +125,11 @@ Adding information like comments and product reviews can enrich the comparison w
 \FloatBarrier
 
 \section{Machine Learning Methods}
-The goal of Chapter \ref{chp:class} is to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine}, \cite{friedman2001elements} and \cite{Goodfellow-et-al-2016}.
+The goal of Chapter \ref{chp:class} was to find the most appropriate category for each sentence of the data set created in Chapter \ref{chp:dataset}. This was understood as a classification problem and solved using several machine learning methods. The following sections describe these methods. The descriptions are based on \cite{mitchell1997machine}, \cite{friedman2001elements} and \cite{Goodfellow-et-al-2016}.
 
 
 \subsection{Performance Measures}
-Several ways exit to evaluate classification models. A simple measure is \emph{accuracy}, which is defined as the fraction of correct predictions:
+Several ways exist to evaluate classification models. A simple measure is \emph{accuracy}, which is defined as the fraction of correct predictions:
 
 \[ Acc = \frac{\text{\# correct predictions}}{\text{total \# of predictions}} \]
 
@@ -158,9 +158,9 @@ The f1 score balances precision and recall. It is defined as the harmonic mean:
 
 \[ \vec{y} = \phi \left( \sum^m_{i=0} w_ix_i \right) \]
 
-where $w_i$ is a weight, $\phi$ is the activation function and $\vec{y}$ is the a vector of size \emph{n}. The weights are the trainable parameters of a neuron. The \emph{perceptron}, presented in \cite{rosenblatt1958perceptron}, is the simplest form of a neuron. For the perceptron, $n=1$ and $\phi$ is defined the \emph{heaviside step function}, which returns one if the sum is greater zero and zero otherwise. Hence, a single perceptron is a linear, binary classifier.
+where $w_i$ is a weight, $\phi$ is the activation function and $\vec{y}$ is the a vector of size \emph{n}. The weights are the trainable parameters of a neuron. The \emph{perceptron}, presented in \cite{rosenblatt1958perceptron}, is the simplest form of a neuron. The perceptron $\phi$ is defined the \emph{heaviside step function}, which returns one if the sum is greater zero and zero otherwise. Hence, a single perceptron is a linear, binary classifier.
 
-The \emph{multilayer perceptron} is a neural network build with multiple layers of neurons inspired by the perceptron. In contrast to the perceptron, a differentiable function is used as the activation function $\phi$ (for example \emph{sigmoid} or  \emph{rectiﬁed linear activation function}\footnote{see page 170 of \cite{Goodfellow-et-al-2016}}). This is required because the backpropagation algorithm used for updating the weights makes use of derivatives. A detailed description of backpropagation is given in Section 4.5.2 of \cite{mitchell1997machine}.
+The \emph{multilayer perceptron} is a neural network build with multiple layers of neurons inspired by the perceptron. In contrast to the perceptron, a differentiable function is used as the activation function $\phi$ (for example \emph{sigmoid} or  \emph{rectiﬁed linear activation function}\footnote{see page 170 of \cite{Goodfellow-et-al-2016}}). This is required because the backpropagation algorithm used for updating the weights makes use of derivatives. A detailed description on backpropagation is given in Section 4.5.2 of \cite{mitchell1997machine}.
 
 
 
@@ -176,7 +176,7 @@ The \emph{multilayer perceptron} is a neural network build with multiple layers 
 
 Figure \ref{fig:nn} shows an example with one hidden layer of size three. The neurons of the first layer (input layer) do not calculate anything, each neuron outputs the associated input value. These values are fed into each neuron of the second (hidden) layer, which produces an output as described above. The output is then fed into the neuron in the last layer (the output layer). The interpretation of the output depends on the used activation function. For binary classification, the network in Figure \ref{fig:nn} would use the \emph{sigmoid} function. The output value is then interpreted as the probability of the input $\vec{x}$ to belong to the positive class. For multi-class classification, the output layer would have as many neurons as classes are present, and use the \emph{softmax} function as the activation function. Neural networks as in Figure \ref{fig:nn} are called \emph{feed-forward (artificial) neural networks (ANN)}. The data flows sequentially from the input layer through the hidden layers until they reach the output layer. 
 
-In contrast, neurons in a \emph{recurrent neural networks (RNN)} may contain loops. This means that the output of layer \emph{h} at time \emph{t} is part of the input of layer \emph{h} at time \emph{t+1}. Figure \ref{fig:rnnschema} shows this for three time steps.
+In contrast to this, \emph{recurrent neural networks (RNN)} may contain loops. This means that the output of layer \emph{h} at time \emph{t} is part of the input of layer \emph{h} at time \emph{t+1}. Figure \ref{fig:rnnschema} shows this for three time steps.
 
 
 \begin{figure}[ht]
@@ -186,13 +186,13 @@ In contrast, neurons in a \emph{recurrent neural networks (RNN)} may contain loo
 		\label{fig:rnnschema}
 \end{figure}
 
-In this way, the network can take information from the past into account. This is useful if the input to the network are sentences. Each word in a sentence can be seen as a time step. Information about preceding words is often important to understand a sentence correctly. However, the simple RNN is not good at learning dependencies between words which are far away from each other in the sentence.
+In this way, the network can take information from the past into account. This is useful if the inputs to the network are sentences. Each word in a sentence can be seen as a time step. Information about preceding words is often important to understand a sentence correctly. However, the simple RNN is not good at learning dependencies between words which are far away from each other in the sentence.
 
 A frequently used type of recurrent neurons are \emph{long short-term memory (LSTM)} blocks as presented in \cite{hochreiter1997long}. LSTMs have a state, which enables them to learn long distance dependencies (up to 1000 time steps). On each time step, gates decided based on the current input (time \emph{t}) and the previous input (time \emph{t-1}) if data should be read, written or deleted from the state. The gates work similar to neurons as each gate has a own set of weights and an activation function.
 
 
 \subsection{Decision Trees and Gradient Boosting}
-\emph{Decision trees} are machine learning methods which can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing a tree until a leaf node is reached. An example tree for the binary classification of a sentence (comparative or not) is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
+\emph{Decision trees} are machine learning methods that can be used to classify\footnote{Decision trees can also be used for regression} a data set by the repeated application of simple rules. Each rule splits the data into a subset, on which further rules are applied until no more rules are available. This is the same as traversing a tree until a leaf node is reached. An example tree for the binary classification of a sentence (comparative or not) is shown in Figure \ref{fig:dectree}. The rules and their order are learned from the data set. The first rule (the root of the tree) should split on the attribute which is most useful for classification, while the second level of the tree should use the second best attributes and so on.
 
 \begin{figure}[ht]
 \centering
@@ -203,7 +203,7 @@ A frequently used type of recurrent neurons are \emph{long short-term memory (LS
 
 Several algorithms like \emph{ID3} (presentend in \cite{quinlan1986induction}) or \emph{CART} (presented in \cite{breiman2017classification}) can be used to create a decision tree. A general introduction to decision tree methods is given in Chapter 3 of \cite{mitchell1997machine}.
 
-Boosting is a technique to combine a set of weak learners into one good learner. The predictions of a weak learner are only slightly better than random guessing. For instance, a weak classifier should get an accuracy slighty over 50\% for a data set with 100 positive and 100 negative examples.
+Boosting is a technique to combine a set of weak learners into one good learner. The predictions of a weak learner are only slightly better than random guessing. For instance, a weak classifier should get an accuracy slightly over 50\% for a data set with 100 positive and 100 negative examples.
 
 The main idea behind \emph{gradient boosting} is to fit the weak learner sequentially on modified versions of the data. In the end, the predictions of all weak learners \emph{$G_m$} are combined to produce the final prediction:
 
