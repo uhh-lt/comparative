@@ -4,7 +4,7 @@
 \label{sec:prestudy}
 Due to the novelty of argument mining (and especially comparative argument mining), the supply of data sets is small. Thus, a new data set had to be created.
 
-The data set was designed to answer two questions. First, does a sentence compare two known objects? And, if it does, is the first-mentioned object better or worse than the second-mentioned, according to the sentence context?
+The data set was designed to answer two questions. First, does a sentence compare two known objects? And secondly, if it does, is the first-mentioned object better or worse than the second-mentioned, according to the sentence context?
 
 The data set was created with data from CommonCrawl\footnote{\url{https://commoncrawl.org} (checked: 23.02.2018)}  and labelled using the crowdsourcing platform CrowdFlower\footnote{\url{https://www.crowdflower.com} (checked: 23.02.2018), now called \emph{Figure Eight}}. As described in detail in the following chapters, the annotators were asked to assign one of four (and later three) classes to a sentence in which the objects of interest were highlighted.
 
@@ -14,7 +14,7 @@ The final data set has 7199 sentences, each containing one of 271 distinct objec
 \section{Common Crawl Text Corpus}
 The sentences for the crowdsourcing task were obtained from a CommonCrawl data set. CommonCrawl is a non-profit organisation which crawls the web and releases the crawled data for free use.
 
-The data used in this thesis was already preprocessed (see \cite{Panchenko:2017aa}). First, it contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were split into sentences.
+The data used in this thesis was already preprocessed (see \cite{Panchenko:2017aa}). The data contains only English text. Duplicates and near-duplicates were removed, as well as all HTML tags. The texts were split into sentences.
 
 To make the data set manageable, an Elasticearch\footnote{Elasticsearch is a open-source search engine. \url{https://www.elastic.co/} (checked: 21.05.2018)} index was created. The index contains 3,288,963,864 unique sentences.
 
@@ -33,15 +33,15 @@ In preparation to the main crowdsourcing task, several questions had to be answe
 Two prestudies were conducted to answer those questions.
 
 \subsection{First Prestudy: Sentence Sampling and Guidelines }
-The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Second, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 sentences was conducted. 
+The first prestudy had two goals. First, it should assess if the sentence selection method returns enough comparative sentences. Secondly, the design of the study as described below had to be validated. On that account, a crowdsourcing task with 100 sentences was conducted. 
 
 The sentences for the crowdsourcing task must have a high probability of being comparative so that enough positive examples for the machine learning part are present. To ensure this, a list of cue words which indicate comparison was compiled by hand. For the prestudies, these words were \enquote{\emph{better}}, \enquote{\emph{worse}}, \enquote{\emph{inferior}}, \enquote{\emph{superior}} and \enquote{\emph{because}}. 
 
-Comparable objects were needed as well. A list of object pairs was selected by hand (see Table \ref{tbl:prestudy-objects}). The pairs were selected in a way that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this was that pets may be compared differently than programming languages. In this way, there will be different comparison patterns in the data.
+Comparable objects were needed as well. A list of object pairs was selected by hand (see Table \ref{tbl:prestudy-objects}). The pairs were selected in a way that they span a wide range of different domains, such as programming languages, countries and pets. The idea behind this is that pets may be compared differently than programming languages. In this way, there will be different comparison patterns in the data.
 
 \begin{table}[h]
 \centering
-\caption{Objects pairs for the annotation prestudies. The index was queried for sentences, which contained both objects and a cue word (\emph{better}, \emph{worse}, \emph{superior}, \emph{inferior} or \emph{because}), to generate sentences for the prestudies.}
+\caption{Object pairs for the annotation prestudies. The index was queried for sentences which contain both objects and a cue word (\emph{better}, \emph{worse}, \emph{superior}, \emph{inferior} or \emph{because}), to generate sentences for the prestudies.}
 \label{tbl:prestudy-objects}
 \begin{tabular}{@{}llrrr@{}}
 \toprule
@@ -115,7 +115,7 @@ Table \ref{tbl:example_sentences} shows some sentences obtained with this method
 
 For each sentence, the annotators were asked which of the classes describes the sentence best (see Figure \ref{img:1_question} and Table \ref{tbl:prestudyclasses-a}). The classes \texttt{BETTER}, \texttt{WORSE} and \texttt{NO\_COMP} directly refer to the questions stated at the beginning of this chapter. The class \texttt{UNCLEAR} was added to capture all sentences which are comparative but do not fit into the classes \texttt{BETTER} or \texttt{WORSE}. For instance, if both objects of interest appear in the sentence, but they are not compared against each other.
 
-\begin{figure}[h]
+\begin{figure}[thb]
 \centering
 \caption{An example for questions presented to the annotators in the first prestudy.}
 \label{img:1_question}
@@ -123,7 +123,7 @@ For each sentence, the annotators were asked which of the classes describes the 
 
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[thb]
 \centering
 \caption{The classes for the first and second prestudy. They correspond to the answers the annotator could select in Figure \ref{img:1_question}}
 \label{tbl:prestudyclasses-a}
@@ -141,9 +141,9 @@ Class & Description \\ \midrule
 
 In each sentence, the first object of interest was replaced with \texttt{OBJECT\_A}, while the second one was replaced with \texttt{OBJECT\_B} (see Table \ref{tbl:pre_1_res}). The idea behind this was to enable the annotators to quickly see which objects should be taken into account for assigning a class. Also, they should not be biased by personal preference. For example, in sentence two of Table \ref{tbl:pre_1_res}, the annotator might be confused which of the objects are of interest, yet the replacement makes it clear that he should ignore \enquote{\emph{C\#}} and \enquote{\emph{VB}}. 
 
-Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz with eight test questions before the actual annotation process. One of the five sentences was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
+Each annotator saw five sentences to annotate per page. He was also able to look into the annotation guidelines anytime he wanted. To filter out low-quality annotators, twelve sentences were selected as test questions. Each participant took a quiz with eight test questions before the actual annotation process. One out of five sentences was a test question as well. The annotator had to keep an accuracy of 70\% on the test questions, otherwise he was removed from the task.
 
-Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation results. As 45 sentences are comparative, the selection procedure worked satisfyingly.
+Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation results. As 45 sentences are comparative, the selection procedure worked satisfactory.
 
 
 \begin{table}[htbp]
@@ -168,7 +168,7 @@ Figure \ref{fig:dist_pre_a} shows the class distribution of the annotation resul
 
 \begin{figure}[htbp]
 \centering
-\caption{The results of the first prestudy. As 45  sentences are comparative, the selection procedure worked satisfyingly.}
+\caption{The results of the first prestudy. As 45  sentences are comparative, the selection procedure worked satisfactory.}
 \label{fig:dist_pre_a}
 \includegraphics[width=1\linewidth]{images/dataset/prea-dist}
 \end{figure}
@@ -198,7 +198,7 @@ Confidence & Sentences & \% of data set \\
 
 
 
-Some uncertain sentences are shown in Table \ref{tbl:pre_1_res} together with the number of decisions per class. As one can see in sentence two, annotators often were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true for the majority of cases were more than one classes was assigned.
+Some uncertain sentences are shown in Table \ref{tbl:pre_1_res} together with the number of decisions per class. As one can see in sentence two, annotators often were not able to distinguish between \texttt{NO\_COMP} and \texttt{UNCLEAR}. This is true for the majority of cases were more than one class was assigned.
 
 
 
@@ -210,7 +210,7 @@ Fourteen out of 55 participants took part in an exit survey to rate the task. Th
 Two-hundred sentences were annotated in the second prestudy. Some aspects were identical to the first prestudy. As the sentence selection process worked fine, the same 1000 base sentences were used in the second prestudy.  Each sentence was annotated by three annotators. The annotators saw five sentences per page, one being a test question. They had to pass a quiz of eight test questions and had to keep an accuracy of 70\% on the test questions during the annotation procedure. The classes were the same as in the first prestudy (see Table \ref{tbl:prestudyclasses-a}).
 
  To address the shortcomings mentioned above, the task design was changed in several aspects. As the pair \enquote{\emph{Ruby vs. Python}} requires knowledge in computer science, the need was expressed in the title of the task.
-To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP}, the wording on this classes in the annotator's view was changed (see Figure \ref{img:2_question}). 
+To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP}, the wording on this classes was changed (see Figure \ref{img:2_question}). 
 
 \begin{figure}[thb]
 \centering
@@ -220,7 +220,7 @@ To address the problem with the confusion between \texttt{UNCLEAR} and \texttt{N
 \label{img:2_question}
 \end{figure}
 
-Some annotators of the first prestudy complained that the test questions were not fair. In fact, they contained some special cases in a way that they did not represent the whole data set appropriately. In the second prestudy, more (51 instead of 12) test questions were used. The new test questions covered easy and hard cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
+Some annotators of the first prestudy complained that the test questions were not fair. In fact, they contained some special cases so that did not represent the whole data set appropriately. In the second prestudy, more (51 instead of 12) test questions were used. The new test questions covered easy and hard cases. Explanations for the harder test questions were added. The annotator saw those explanations after he failed the test question.
 
 
 
@@ -228,7 +228,7 @@ The sentence preprocessing was adjusted. Instead of replacing the object, \mbox{
 
 
 
-The class distribution of the 200 sentences is presented in Figure \ref{fig:dist_pre_b}.  As in the first prestudy, a sufficient amount of the sentences are comparative. The confidence of the annotations (see Table \ref{tbl:pre_b_agg}) was better than in the first prestudy. The confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
+The class distribution of the 200 sentences is presented in Figure \ref{fig:dist_pre_b}.  As in the first prestudy, a sufficient amount of the sentences are comparative. The confidence of the annotations (see Table \ref{tbl:pre_b_agg}) was better than in the first prestudy. However, the confusion between \texttt{UNCLEAR} and \texttt{NO\_COMP} is still the main problem. Compared to the first prestudy, the amount of sentences where all annotators agreed on one class increased from 37\% to 62\%. Table \ref{tbl:pre_2_res} shows some of the uncertain sentences.
 
 
 \begin{figure}[tb]
@@ -265,7 +265,7 @@ Confidence & Sentences & \% of data set \\
 \begin{table}[tp]
 % aktuelle zahlen 29.3; neue methode
 \centering
-\caption{Examples of uncertain sentences for the second prestudy. The annotators could not agree on one class for this sentences. }
+\caption{Examples of uncertain sentences for the second prestudy. The annotators could not agree on one class for these sentences. }
 \label{tbl:pre_2_res}
 \begin{tabularx}{\textwidth}{Xrrrr}
 \toprule
@@ -288,7 +288,7 @@ Google shouldn't have mandated an inferior map app on the \textbf{{\color[HTML]{
  \FloatBarrier
 Thirty-five out of 125 annotator candidates failed the initial quiz. Twelve annotators were removed during the annotation process as they answered too many test questions wrong.
 
-Twenty-two annotators took the exit survey. The overall satisfaction increased to 3.7 out of 5. The test question fairness was now rated with 3.7  instead of 2.9. The rating for the payment slightly increased to 3.9, yet the payment was not changed. The rating for the instructions decreased to 3.9 and for the difficulty to 3.5.
+Twenty-two annotators took the exit survey. The overall satisfaction increased to 3.7 out of 5. The test question fairness was now rated with 3.7  instead of 2.9. The rating for the payment slightly increased to 3.9, yet the payment was not changed. Furthermore, the rating for the instructions decreased to 3.9 and for the difficulty to 3.5.
 The change in numbers can be explained by the increased amount of sentences, which introduce new cases which are not directly reflected in the annotation guidelines.
 
 \subsection{Discussion}
@@ -299,9 +299,9 @@ Using two comparable objects and cue words to query the index returns a satisfyi
 The changes in the second prestudy were well received by the annotators. In the end, they improved the quality of results as there are more cases where all annotators agreed on one class.
 
 
-The distinction between \texttt{UNCLEAR} and \texttt{NO\_COMP} was a problem. This illustrates that the choice of a class is subjective to some degree. 
+The distinction between \texttt{UNCLEAR} and \texttt{NO\_COMP} was an issue. This illustrates that the choice of a class is subjective to some degree. 
 
-Due to an error in the creation of the crowdsourcing task, the sentences where not shuffled. This means that the first 100 sentences of the second prestudy were the same as the 100 sentences of the first prestudy. Another problem was the bias: all sentences contained only the pairs \emph{Ruby vs. Python} and \emph{Android vs. iPhone}. Because the goal of the prestudy was mainly to assess the sentence selection method and the guidelines, this does not invalidate the results. These problems were removed in the main study.
+Due to an error in the creation of the crowdsourcing task, the sentences were not shuffled. This means that the first 100 sentences of the second prestudy were the same as the 100 sentences of the first prestudy. Another problem was the bias: all sentences contained only the pairs \emph{Ruby vs. Python} and \emph{Android vs. iPhone}. Because the goal of the prestudy was mainly to assess the sentence selection method and the guidelines, this does not invalidate the results. These problems were removed in the main study.
 
 All in all, the prestudy was successful. There are only few cases where no agreement on the class could be achieved. The prestudy showed that the task at hand is not easy, but feasible.
 
@@ -331,7 +331,7 @@ Instead of one big task, several tasks per domain were created. All tasks used t
 
 
 \subsection{Sentence Sampling Method and Domain Selection}
-The sentence selection process was similar to the prestudy. The pairs and the cue words (see Figure \ref{fig:cue_words}) changed. The cue words were generated using JoBimText\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (checked: 28.02.2018)}, a software package for distributional semantics. JoBimText was queried for the words most similar to \emph{better} and \emph{worse}, so that more comparisons were captured by the selection process.
+The sentence selection process was similar to the prestudy. The pairs and the cue words (see Figure \ref{fig:cue_words}) changed. The cue words were generated using \emph{JoBimText}\footnote{\url{http://ltmaggie.informatik.uni-hamburg.de/jobimviz/} (checked: 28.02.2018)}, a software package for distributional semantics. JoBimText was queried for the words most similar to \emph{better} and \emph{worse}, so that more comparisons were captured by the selection process.
 
 \begin{figure}[hb]
 \centering
@@ -382,7 +382,7 @@ mediocre
 \end{multicols}
 \end{figure}
 
-Three domains were selected for the object pairs. The domains were chosen in a way that a majority of people can decide whether a sentence contains a comparison or not. Also, a wide range of comparison patterns should be included in the data.
+Three domains were selected for the object pairs. The domains were chosen in a way that a majority of people might be able to decide whether a sentence contain a comparison or not. Also, a wide range of comparison patterns should be included in the data.
 
 The most specific domain was \enquote{\emph{computer science concepts}}. It contained objects like programming languages, database products and technology standards such as Bluetooth and Ethernet.  Many computer science concepts can be compared objectively. For instance, one can compare Bluetooth and Ethernet on their transmission speed. Some basic knowledge of computer science was needed to label sentences correctly: to compare Eclipse and NetBeans, the annotator must know what an Integrated Development Environment (IDE) is and that both objects are Java IDEs.  The need for this knowledge was communicated to the prospective annotators. The objects for this domain were manually extracted from \enquote{\emph{List of ...}} articles from Wikipedia.
 
@@ -488,7 +488,7 @@ Ford vs. Honda & Oracle vs. MysQL & Harvard vs. Princeton\\
 
 \end{table}
 
-Especially for brands and computer science, the object lists were long (4493 brands and 1339 for computer science). The frequency of each object was checked using a frequency dictionary to reduce the number of possible pairs. All objects with a frequency of zero and ambiguous objects were removed from the list. For instance, the objects \enquote{\emph{RAID}} (a hardware concept) and \enquote{\emph{Unity}}  (a game engine) were removed from the computer science list as they are also regularly used nouns.
+Especially for the domains brands and computer science, the object lists were long (4493 brands and 1339 for computer science). The frequency of each object was checked using a frequency dictionary to reduce the number of possible pairs. All objects with a frequency of zero and ambiguous objects were removed from the list. For instance, the objects \enquote{\emph{RAID}} (a hardware concept) and \enquote{\emph{Unity}}  (a game engine) were removed from the computer science list as they are also regularly used nouns.
 
 The remaining objects were combined to pairs. For each object type, all possible combinations were created. For brands and computer science, the type was the URL of the Wikipedia page. For the random domain, the seed word was used. This procedure guaranteed that only meaningful pairs were created.
 
@@ -500,7 +500,7 @@ The label distribution of the 742 sentences is presented in the Figure \ref{fig:
 
 \begin{figure}[h]
 \centering
-\caption{Result of 742 manually labelled sentences. The labelling was done to see what result can be expected from the crowdsourcing task and if the sentence sampling method still works.}
+\caption{Result of 742 manually labelled sentences. The labelling was done to see what result could be expected from the crowdsourcing task and if the sentence sampling method still works.}
 \label{fig:sample}
 \includegraphics[width=1\linewidth]{images/dataset/pre-dist}
 \end{figure}
@@ -509,7 +509,7 @@ The label distribution of the 742 sentences is presented in the Figure \ref{fig:
 \label{sec:brands}
 
 % zahlen 23.3
-For the Brands domain, 2335 sentences were annotated. The sentences contained objects of 36 pairs. As shown in Table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of sentences.
+For the Brands domain, 2335 sentences were annotated. The sentences contained objects of 36 pairs. As shown in Table \ref{fig:brand_agg}, the annotators could agree on one class for the majority of the sentences.
 
 
 % zahlen 29.3
@@ -548,11 +548,11 @@ The class distribution is presented in Figure \ref{fig:brands_fin}. The amount o
 
 
 % zahlen alt
-Even with the renaming of \texttt{UNCLEAR} to \texttt{OTHER} and the rephrasing of the description, the class was too confusing for the annotators. The class was not different enough from \texttt{NONE} (\texttt{NO\_COMP}). Eventually, all sentences labelled as \texttt{OTHER} were merged into \texttt{NONE}. This decision was made after 750 sentences were labelled for each domain. First machine learning experiments also showed that \texttt{OTHER} is not distinguishable from \texttt{NONE} for all tested features and algorithms.
+Even with the renaming of \texttt{UNCLEAR} to \texttt{OTHER} and the rephrasing of the description, the class was too confusing for the annotators. The class was too similar to \texttt{NONE} (\texttt{NO\_COMP}). Eventually, all sentences labelled as \texttt{OTHER} were merged into \texttt{NONE}. This decision was made after 750 sentences were labelled for each domain. First machine learning experiments also showed that \texttt{OTHER} is not distinguishable from \texttt{NONE} for all tested features and algorithms.
 
 For the first 750 sentences (with four classes), 47\% failed the initial quiz (357 out of 755). During the annotation process, 13\% answered to many test questions wrong. The numbers improved after the class \texttt{OTHER} was removed: only 25\% failed the initial quiz and 8\% were removed during the annotation process.
 
-150 annotators took the exit survey to rate the task on a scale from one to five. Overall, the task was rated with 3.7. The instructions got 4.0, the fairness of test questions 3.5, the difficulty 3.6 and the payment 3.7.\footnote{The numbers are the average of the survey results for each task created on CrowdFlower, weighted by the number of participants.} Broken down, the four-class task (67 participants) got a rating of 3.5, the three-class task (83 participants) 3.8.
+150 annotators took the exit survey to rate the task on a scale from one to five. Overall, the task was rated with 3.7. The instructions got a rating of 4.0, the fairness of test questions 3.5, the difficulty 3.6 and the payment 3.7.\footnote{The numbers are the average of the survey results for each task created on CrowdFlower, weighted by the number of participants.} Broken down, the four-class task (67 participants) got a rating of 3.5, the three-class task (83 participants) 3.8.
 
 
 \subsection{Domain Subset: Computer Science}
@@ -587,9 +587,9 @@ Confidence & Sentences & \% of data set \\
 \end{figure}
 
 % zahlen neu
-As with Brands, 48\% failed the initial quiz for the task with four classes. 25\% dropped out during the annotation process. Again, the numbers improved after \texttt{OTHER} was removed. Only 15\% failed the quiz and 7\% were removed during the annotation process.
+As with the domain Brands, 48\% failed the initial quiz for the task with four classes. 25\% dropped out during the annotation process. Again, the numbers improved after \texttt{OTHER} was removed. Only 15\% failed the quiz and 7\% were removed during the annotation process.
 
-One hundred and six annotators took the exit survey. The task was rated with 3.9. The instructions\footnote{The instructions were the same for all tasks.} got 4.2, test question fairness 4.1, difficulty 3.9 and payment\footnote{All tasks had the same payment.} 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
+One hundred and six annotators took the exit survey. The task was rated with 3.9. The instructions\footnote{The instructions were the same for all tasks.} got a rating of 4.2, test question fairness 4.1, difficulty 3.9 and payment\footnote{All tasks had the same payment.} 3.9 as well. The four-class task (27 participants) got a rating of 3.5, the three-class task (79 participants) 3.9.
 
 \subsection{Domain Subset: Random}
 The Random domain contains 2439 sentences with 167 pairs. The confidence values (Table \ref{fig:random_agg}) and class distribution (Figure \ref{fig:random_fin}) are satisfactory.
@@ -624,12 +624,12 @@ Confidence & Sentences & \% of data set \\
 
 As with the other domains, the first 750 sentences (with \texttt{OTHER}) performed worse than the rest: 44\% dropped out during the quiz, 16\% were removed during the annotation process. For the three-class scenario, the numbers improved to 14\% (quiz) and 7\% (annotation task).
 
-Ninety-seven participants rated the task with 3.6 (four classes: 3.1, 29 participants; three classes: 3.9, 68 participants). The instructions got 4.0, test question fairness 3.8, difficulty of the task 3.8 and payment 3.5.
+Ninety-seven participants rated the task with 3.6 (four classes: 3.1, 29 participants; three classes: 3.9, 68 participants). The instructions got a rating of 4.0, test question fairness 3.8, difficulty of the task 3.8 and payment 3.5.
 
 
 \subsection{Discussion}
 % zahlen 23.3
-Table \ref{fig:all_agg} summarises the confidence of the annotations on all three domains. The annotators could agree on one class for the majority of the sentences. Only for 169 sentences (2.35\%), no class got the majority of votes. 
+Table \ref{fig:all_agg} summarises the confidence of the annotations on all three domains. The annotators could agree on one class for the majority of the sentences. Just for 169 sentences (2.35\%), no class got the majority of votes. 
 
 \begin{table}[hp]
 \caption{Annotation confidence for all domains. The confidence is calculated as \emph{judgments for majority class / total judgments}.}

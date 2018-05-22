@@ -72,7 +72,7 @@ The addition of more layers or neurons did not increase the performance of the n
 
 
 
-Different setups for the string path creation were tested. In the original implementation, the paths were restricted to a length of four. The directionality of edges was restricted as well. The first object must be reachable from the lowest common head of the two objects by following left edges only, the second one by following right edges. In the following, this setup is called \emph{original}. However, only 1519 sentences from the training set got a path with this restrictions. 
+Different setups for the string path creation were tested. In the original implementation, the paths were restricted to a length of four. The directionality of edges was restricted as well. The first object must be reachable from the lowest common head of the two objects by following left edges only, the second one by following right edges. In the following, this setup is called \emph{original}. However, only 1519 sentences from the training set got a path with these restrictions. 
 
 To overcome this problem, the restrictions were relaxed. The second LexNet setup (called \emph{customised}) limits the paths to a size of sixteen and abolishes the directionality restriction. With this setup, only 399 sentences did not get a path.\footnote{All sentence without a generated path got the artificial path \emph{NOPATH}. The customised version of LexNet is available at \url{https://github.com/ablx/LexNET}}
 
@@ -196,7 +196,7 @@ Despite the fact that only 1519 sentences got a path embedding for \emph{LexNet 
 % === binary 
 Figures \ref{fig:2_f1} (f1 score), \ref{fig:2_precision} (precision) and \ref{fig:2_recall} (recall) show the results for the binary classification.
 
-As with the three-class scenario, InferSent (f1 score 0.886) and the bag-of-words (f1 score 0.882) performed best and got almost equal results. They are closely followed by mean word embeddings. In summary, all vector representations worked good and got similar f1 scores. The feature \emph{LexNet (original)} was again the worst, yet the score was ten points above the baseline.% 15.5
+As with the three-class scenario, InferSent (f1 score 0.886) and the bag-of-words (f1 score 0.882) performed best and achieved almost equal results. They are closely followed by mean word embeddings. In summary, all vector representations worked well and got similar f1 scores. The feature \emph{LexNet (original)} was again the worst, yet the score was ten points above the baseline.% 15.5
 \begin{figure}[htb]
       \caption{\textbf{F1 score} for the binary scenario using XGBoost. The grey bar shows the weighted average. The feature names (see Section \ref{sec:features}) are presented on the x-axis, the f1 score on the y-axis. The black bar displays the shows derivation.} 
  
@@ -280,12 +280,12 @@ In total, 1311 sentences were incorrectly classified in the three-class scenario
 \end{tabularx}
 \end{table}
 % 15.5
-The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but it has no clear winner of the comparison. The guidelines formulated that only sentences with clear winners should be labelled with \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence six has three negative words in it. Sentence seven is hard to classify, as it does not contain any cue word.
+The first two sentences look comparative, but they are questions. As stated in the guidelines, all questions should be labelled as \texttt{NONE}, but InferSent frequently classified questions as comparative. Sentences three and four are comparative, but have no clear winner of the comparison. However, only sentences with clear winners should be labelled as \texttt{BETTER} or \texttt{WORSE}. InferSent was not able to learn this restriction. Sentence six contains three negative words. Sentence seven is hard to classify, as it does not contain any cue word.
 % 15.5
 
-Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusively made by the LexNet feature. As described in Section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only 36 of the wrongly classified sentences did not had a path.
+Table \ref{tbl:3_mistakes_lexnet} shows examples for errors exclusively made by the LexNet feature. As described in Section \ref{sec:lexnet_feat_desc}, 399 of the sentences did not get a dependency path. However, only 36 of the wrongly classified sentences did not have a path.
 
-It is salient that the LexNet feature made errors an fairly simple sentences like the first one in Table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsely grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will likely yield good results.
+It is salient that the LexNet feature made errors on fairly simple sentences like the first one in Table \ref{tbl:3_mistakes_lexnet}. While InferSent's errors can be coarsely grouped, the errors made by LexNet seem more random. It is assumed that the amount of training data for the neural network encoder is not big enough to create expressive embeddings. However, the overall result of LexNet indicates that a encoder trained on more data will likely yield good results.
 
 % 15.5
 Sentences that were wrongly classified by both features are presented in Table \ref{tbl:3_mistakes_both}. Both features predicted the same class for 477 of the 607 shared errors.
@@ -315,7 +315,7 @@ computations. & \texttt{NONE} & \texttt{BETTER} & 1.0\\ % 15.5
 \end{table}
 
 \begin{table}[htbp]
-\caption{Example errors made by InferSent and LexNet in the three-label scenario. The objects of interest are printed \textbf{bold}. \emph{Pred. IF} shows the predicted class of the InferSent feature, \emph{Pred. LexNet} the prediction of the LexNet feature. Confidence shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
+\caption{Example errors made by InferSent and LexNet in the three-label scenario. The objects of interest are printed \textbf{bold}. \emph{Pred. IF} shows the predicted class of the InferSent feature, \emph{Pred. LexNet} the prediction of the LexNet feature. \emph{Conf.} shows the confidence of the annotators and is calculated as \emph{judgments for majority class / total judgments}.}
 \label{tbl:3_mistakes_both}
 \begin{tabularx}{\linewidth}{lXrrrr}
 \toprule
@@ -425,13 +425,13 @@ As in Section \ref{sec:3_results}, bag-of-words and InferSent got almost equal r
 
 All features except LexNet benefited from the increased size of the training data, yet the increase of the f1 score is not larger than one or two points.\newline
 
-LexNet did not generalise at all. The original setup predictsed \texttt{NONE} to all examples in the three-class scenario, thus it got the same f1 score as the baseline. It was able to predicts a small portion to \texttt{ARG} in the binary scenario, so that the f1 score was one point above the baseline. The customised version predicted all classes, yet the results were 27 points below the baseline for the three-class scenario and 38 points below in the binary scenario.
+LexNet did not generalise at all. The original setup predicted \texttt{NONE} to all examples in the three-class scenario, thus it got the same f1 score as the baseline. It was able to predicts a small portion to \texttt{ARG} in the binary scenario, so that the f1 score was one point above the baseline. The customised version predicted all classes, yet the results were 27 points below the baseline for the three-class scenario and 38 points below in the binary scenario.
 
-The problem was the size of the data set. LexNet created 2344 unique paths for the 5759 examples in the training data and 593 unique paths for the 1441 examples in the held-out data. As a result, one path represented only few sentences. Training and held-out had only 81 paths in common. The same is true for the customised setup, were even more paths were created (4339 for the training data and 1263 for the held-out data). Training and held-out only shared 228 paths. So, from LexNets point of view, training and held-out data are highly dissimilar.
+The problem was the size of the data set. LexNet created 2344 unique paths for the 5759 examples in the training data and 593 unique paths for the 1441 examples in the held-out data. As a result, one path represented only a few sentences. Training and held-out had only 81 paths in common. The same is true for the customised setup, were even more paths were created (4339 for the training data and 1263 for the held-out data). Training and held-out only shared 228 paths. So, from LexNets point of view, training and held-out data are highly dissimilar.
 
 This problem can be reduced with a larger data set. The Wikipedia corpus used in \cite{DBLP:conf/acl/ShwartzGD16} is magnitudes larger: it contains 4,682,000 articles.\footnote{Wikipedia Dump from 2015, \url{https://en.wikipedia.org/wiki/Wikipedia:Size_of_Wikipedia} (checked 15.5.2018)} The ratio between paths and sentences are much smaller in a corpus of this size.
 
-The results with the training data alone (Section \ref{sec:3_results}) can be explained by the fact that the paths of all training examples were learned simultaneously. In contrast, the held-out embeddings were learned without information from the training set. The performance of the LexNet feature increases if the path embeddings are learned on the whole data (training and held-out; see Figure \ref{fig:jl_3_f1} and Figure \ref{fig:jl_2_f1}).
+The results with the training data alone (Section \ref{sec:3_results}) can be explained by the fact that the paths of all training examples were learned simultaneously. In contrast to this, the held-out embeddings were learned without information from the training set. The performance of the LexNet feature increases if the path embeddings are learned on the whole data (training and held-out; see Figure \ref{fig:jl_3_f1} and Figure \ref{fig:jl_2_f1}).
 
 
 \begin{figure}[htbp]

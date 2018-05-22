@@ -5,16 +5,16 @@
 % -----------------------------------------------------------------------
 % -----------------------------------------------------------------------
 % -----------------------------------------------------------------------
-\chapter{Introduction: An Open-Domain Comparative Argumentative Machine (CAM)}
+\chapter{Introduction: An Open-Domain Comparative Argumentative Machine}
 This thesis discusses the topic of \emph{comparative argument mining}. Comparative argument mining is a subfield of \emph{argument mining}, a recent research topic in natural language processing.
 
 The goal is to develop a system which is able to decide if a given sentence compares two known objects and, if it does, which object wins the comparison. For instance, given the sentence \emph{\enquote{In my mind, Python is better than Java!}}, the system should answer that the sentence is comparative and that Python won the comparison.
 
-Such a system can be useful in several ways. First, it enables machines to understand the statements of such sentences. Second, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in Section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This stands in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information rarely found in databases.\newline
+Such a system can be useful in several ways. First, it enables machines to understand statements of such sentences. Secondly, this knowledge can be used in (commercial) applications, like opinion mining or online comparison portals. As presented in Section \ref{sec:domainspec}, these portals usually rely on information from databases. The system presented in this thesis could be used to generate new knowledge automatically from forum posts, comments, tweets and the like. Furthermore, this new knowledge would include the thoughts and opinions of their authors. This stands in contrast to the pure factual information from databases. For instance, the system could find out that many people complain about the telephone support of insurance company X, while they praise the support of company Y - an information rarely found on comparison portals.\newline
 
 The thesis is structured into three main parts. The first part discusses recent publications in argument mining and explains the needed concepts from natural language processing and machine learning.
 
-Because comparative argument mining is a novel field, no suitable data set for this task currently exists. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containing comparisons of 271 object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects whether the sentence is comparative and whether the first mentioned object in the sentence won the comparison.
+Because comparative argument mining is a novel field, no suitable data set for this task currently exists. The second part describes the creation of a data set with data crawled from the web and crowdsourcing methods to label the data. The result is a data set with 7199 sentences, containing comparisons of 271 distinct object pairs. Each sentence is annotated with one of three classes (\texttt{BETTER}, \texttt{WORSE}, \texttt{NONE}) which reflects whether the sentence is comparative and whether the first mentioned object in the sentence won the comparison.
 
 The third part uses this data set to train machine learning models on several feature representations in order to predict the correct class. As the final evaluation, all features are tested on held-out data.
 
@@ -25,7 +25,7 @@ The third part uses this data set to train machine learning models on several fe
 In the following, publications on argument mining are presented. If appropriate, the f1 scores achieved in these publications are presented as well. It must be noted that the f1 scores are not comparable with each other.
 
 A general introduction on the research topic argument mining was given in \cite{Lippi2016Argumentation-M}.
-The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems were described. First, the input is divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step was described as a classification problem. Second, the boundaries of the argumentative units must be identified; this was understood as a segmentation problem. Third, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
+The authors introduced five dimensions to describe argument mining problems: granularity of input, the genre of input, argument model, the granularity of target and goal of analysis.  Furthermore, the typical steps of argument mining systems were described. First, the input is divided into argumentative (e.g. claim and premise) and non-argumentative parts. This step was described as a classification problem. Secondly, the boundaries of the argumentative units must be identified; this was understood as a segmentation problem. Thirdly, the relations between argumentative units must be identified. For instance, claims and premises might be connected with a \emph{support} or a \emph{attack} relation.
 
 
 %07 biomed
@@ -33,17 +33,15 @@ The authors introduced five dimensions to describe argument mining problems: gra
 A system, which is capable of recognising comparative sentences and their components such as the compared entities, the property which is used to compare the entities and the direction of comparison, was presented in \cite{fiszman2007interpreting}. The evaluation showed that the outcome has a high quality (f1 score of 0.81). However, the presented system was specific to the domain of studies on drug therapy. The system used patterns generated from hand-selected sentences, as well as domain knowledge. Therefore, the methods cannot be transferred easily to the problem of this thesis.
 
 %  12 sci
-In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem was formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features were tailored for medical publications.
-
-The authors conducted a pilot study with 274 comparison sentences extracted from abstracts and 164 comparison sentences from full text articles. The sentences were analysed in order to extract 35 features (six lexical features, 27 syntactic features and two miscellaneous features). For instance, a lexical feature capturing the appearance of \emph{\enquote{versus}} or \emph{\enquote{vs.}} was developed, while a miscellaneous feature checked if the subject of the comparison is in plural. 
+In \cite{park2012identifying}, the authors presented another domain-specific approach on argumentative sentence detection. The problem was formulated as a binary classification task. As in \cite{fiszman2007interpreting}, the features were tailored for medical publications. The authors conducted a pilot study with 274 comparison sentences extracted from abstracts and 164 comparison sentences from full text articles. The sentences were analysed in order to extract 35 features (six lexical features, 27 syntactic features and two miscellaneous features). For instance, a lexical feature capturing the appearance of \emph{\enquote{versus}} or \emph{\enquote{vs.}} was developed, while a miscellaneous feature checked if the subject of the comparison is in plural. 
 
 
 % 10 biomed
-A recent publication on comparative argument mining is \cite{gupta2017identifying}, were a set of rules for the identification of comparative sentences (and the compared entities) was derived from syntactic parse trees. With these rules, the authors achieved a f1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent.\newline
+A recent publication on comparative argument mining is \cite{gupta2017identifying}, in which a set of rules for the identification of comparative sentences (and the compared entities) was derived from syntactic parse trees. With this set of rules, the authors achieved a f1 score of 0.87 for the identification of comparative sentences. The rules were obtained from 50 abstracts of biomedical papers. Such being the case, they are domain dependent.\newline
 
-The challenges occurring while processing texts from social media were described in \cite{Snajder2017Social-Media-Ar}. Besides the noisiness of text, missing argument structures and poorly formulated claims were mentioned. It is expected that the text used in this thesis will have the same shortcomings. Additionally, \cite{Snajder2017Social-Media-Ar} emphasized that analyzing social media texts can delivery reasons behind opinions.
+The challenges occurring while processing texts from social media were described in \cite{Snajder2017Social-Media-Ar}. In addition to the noisiness of text, missing argument structures and poorly formulated claims were mentioned. It is expected that the text used in this thesis will have the same shortcomings. Additionally, \cite{Snajder2017Social-Media-Ar} emphasized that analyzing social media texts can provide reasons behind opinions.
 
-In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also pointed to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{\emph{Brexit}} and \enquote{\emph{Grexit}} either as argumentative or as non-argumentative. Beside features used in other publications mentioned in this section, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using logistic regression) for the classification. It must to be mentioned that the data set is small (1887 tweets) and the domain is rather specific.\newline
+In addition to the challenges mentioned above, \cite{Dusmanu2017Argument-Mining} also pointed to the specialized jargon in user-generated content like hashtags and emoticons. With this in mind, \cite{Dusmanu2017Argument-Mining} classified tweets about the \enquote{\emph{Brexit}} and \enquote{\emph{Grexit}} either as argumentative or as non-argumentative. In addition to the features that were used in publications mentioned in this section, new features covering hashtags and sentiment were added. They achieved a f1 score of 0.78 (using logistic regression) for the classification. It must to be mentioned that the data set is small (1887 tweets) and the domain is rather specific.\newline
 
 Publications dealing with the identification of argument structures are of relevance for this thesis, as they provide valuable insights on the suitability of features and algorithms.
 
@@ -56,7 +54,7 @@ A two-step procedure to identify components of arguments (such as claim and prem
 How different datasets represent the argumentative unit of a claim was analysed in \cite{Daxenberger2017What-is-the-Ess}. After an analysis of the data sets and their annotation scheme, the authors conducted two experiments.
 In the first one, each learner was trained and evaluated (10-fold cross-validation) on each dataset one after another. On average, the macro f1 score for the identification of claims was 0.67 (all results ranging from 0.60 to 0.80). No significant difference between the results of logistic regression and the neural networks was found. In isolation, lexical features, syntactical features and word embeddings were most helpful. Structural features turned out to be the weakest.
 The second experiment was conducted in a cross-domain fashion. For each pair of data sets, one was used as the training set and the other one as the test set. The average macro f1 score was 0.54. In this scenario, the best feature combination outperformed all neural models. The authors assumed that there might not be enough training data for the neural models.
-As the last point, the authors noted that all claims share at least some lexical clues.
+As a last point, the authors noted that all claims share at least some lexical clues.
 
 
 The role of discourse markers in the identification of claims and premises were discussed in \cite{Eckle-Kohler2015On-the-Role-of-}. A discourse marker is a word or a phrase which connects discourse units. For instance, the word \enquote{as} can show a relation between claim and premise: \enquote{As the students get frustrated, their performance generally does not improve}.  A similar function is expected for words like better, worse or because in this thesis. The authors showed that discourse markers are good at discriminating claim and premises. If claim and premise are merged into one class \enquote{argumentative}, this can be used to identify argumentative sentences. The f1 score is not presented, but the accuracy is between 64.53 and 72.79 percent.
@@ -66,20 +64,20 @@ The role of discourse markers in the identification of claims and premises were 
 \section{Domain-Specific Comparative Systems}
 \label{sec:domainspec}
 
-Comparison portals are a possible application for comparative argument mining. Many comparison portals can be found on the internet. It is not unusual to see a television commercial of those comparison portals, which suggests that they are used frequently every day.
+Comparison portals are a possible application for comparative argument mining. Many comparison portals can be found on the internet. It is not unusual to see a television commercial of these comparison portals, which suggests that they are used frequently every day.
 
 Most portals are specific to a few domains and a subset of properties, for example, car insurances and their price. Comparisons are only possible between objects of the domains and predefined properties. Source of the data is usually databases. Humans are involved in gathering, entering and processing the data.
 
-Comparison portals only compare and deliver facts. Because of that, they can only hint to choose X over Y based on the facts collected.  However, an insurance company X might be the best in the comparison (e.g. best price), while the internet is full of complaints about its lousy service.
+Comparison portals only compare and deliver facts. Because of that, they can only hint to choose \emph{X} over \emph{Y} based on the facts collected.  However, an insurance company \emph{X} might be the best in the comparison (for instance, best price), while the internet is full of complaints about its poor service.
 
 Examples of comparative portals are \emph{Check24.de\footnote{\url{https://check24.de} (checked: 13.04.2018)}, Verivox.de\footnote{\url{https://verivox.de} (checked: 13.04.2018)}, Idealo.de\footnote{\url{https://idealo.de} (checked: 13.04.2018)}, GoCompare.com\footnote{\url{https://gocompare.com} (checked: 13.04.2018)},} and \emph{Compare.com}\footnote{\url{https://compare.com} (checked: 13.04.2018)} just to name a few.
 
-As an example, Check24.de is able to compare a wide variety of different objects like several insurances, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type), Check24.de shows a ranking of different providers. The user can choose different properties to re-rank the list.
-For instance, to compare different DSL providers, the user has to enter her address (Figure \ref{img:check24_1}), how fast the internet should be and if she wants telephone and television as well. She can then sort the results by price, speed, and grade (Figure \ref{img:check24_2}).
+As an example, Check24.de is able to compare a wide variety of different objects like several insurance companies, credit cards, energy providers, internet providers, flights, hotels and car tires. After the user entered some details (based on the object type), Check24.de shows a ranking of different providers. The user can choose different properties to re-rank the list.
+For instance, to compare different DSL providers, the user has to enter the address , how fast the internet should be and if telephone and television are wanted as well (see Figure \ref{img:check24_1}). The user can then sort the results by price, speed, and grade (Figure \ref{img:check24_2}).
 \begin{figure}[tbp]
  \centering
 	\includegraphics[width=0.9\textwidth]{images/ds-sys/check24_1}
-	\caption{Check24.de asks for some data before the comparison of DSL contracts}
+	\caption{Check24.de asks for some data before comparing different DSL contracts}
 		\label{img:check24_1}
 \end{figure}
 
@@ -231,7 +229,7 @@ The first problem can be reduced by using n-grams (hence, \emph{bag-of-ngrams})
 
 \[\vec{d_{j,i}} = \text{tf}_{i,j} \times \log{ \frac{N}{n_i} } \]
 
-where \emph{N} is the total number of documents and $n_i$ is the number of documents the word (or n-gram) \emph{i} appears in. Tf-idf takes the frequency of words into account. Frequent words which appear in many documents will get a low weight, while words which appear seldomly get a high weight.
+where \emph{N} is the total number of documents and $n_i$ is the number of documents in which the word (or n-gram) \emph{i} appears. Tf-idf takes the frequency of words into account. Frequent words which appear in many documents will get a low weight, while words which appear seldomly get a high weight.
 
 The other problems, sparsity and length, remain. They are solved in other vector representations.
 
@@ -243,12 +241,12 @@ The matrix is initialized with random values. After the network was trained, eac
 
 A method to learn word embeddings with feed-forward neural networks was presented in \cite{bengio2003neural}. The network was trained to predict the most likely next word given a number of preceding context words. This exploits the \emph{distributational hypothesis} (\cite{harris1954distributional}) which states that words which appear in similar contexts have a similar meaning. For instance, the network will see that the context \enquote{\emph{feed the}} is often followed by words like \enquote{\emph{cat}} or \enquote{\emph{dog}}, but never by \enquote{\emph{chair}}. In the end, the similarity between the learned vectors of related words (like cat and dog) is much higher than the similarity between unrelated words (like cat and chair).
 
-Two popular methods to learn word embeddings (extending the basic idea) are \emph{word2vec} (presented in \cite{NIPS2013_5021}) and \emph{GloVe} (presented in \cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors of size 300 were used.
+Two popular methods to create word embeddings (extending the basic idea) are \emph{word2vec} (presented in \cite{NIPS2013_5021}) and \emph{GloVe} (presented in \cite{pennington2014glove}). In this thesis, \emph{GloVe} vectors of size 300 were used.
 
 The word embeddings can be used to create a dense, low-dimension vector representation of a document. This is done by taking the average of all word vectors in the document. In doing so, each sentence is represented by a \enquote{centroid word}. The efficiency of this method for several tasks has been demonstrated in \cite{Wieting:2015aa}.
 
 \subsection{Sentence Embeddings and InferSent}
-Bag-of-words an mean word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but both sentences will get the same bag-of-words and mean word embedding vector.
+Bag-of-words and mean word embeddings lose sequence information. However, the sequence of words in a sentence is important for the meaning. For example, the sentence \enquote{\emph{I like cats, not dogs}} has a different meaning than \enquote{\emph{I like dogs, not cats}}, but both sentences will get the same bag-of-words and mean word embedding vector.
 
 Sentence embeddings aim to learn embeddings for pieces of text instead of single words. In this way, sequence information is taken into account. Several methods have been proposed to create sentence embeddings (for instance, FastSent \cite{hill2016learning} and SkipTought \cite{NIPS2015_5950}). In this thesis, \emph{InferSent} as presented in \cite{Conneau:2017aa} is used.
 
@@ -306,7 +304,7 @@ For each term pair, all dependency paths were extracted. Each edge was represent
 
 The paths were encoded using an LSTM. The average of all encoded paths was used as the path information for the word pair. The combination of distributional and path information outperformed state-of-the-art techniques.\newline
 
-The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are used as well. Fruit is an hypernym for apple, but not for the company Apple.} with respect to hypernyms is unambiguous. Bird is a hypernym for parrot in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
+The task at hand is different from the detection of semantic relations. The relation of two nouns\footnote{The situation might be different if proper nouns are used as well. \emph{Fruit} is an hypernym for \emph{apple}, but not for the company \emph{Apple}.} with respect to hypernyms is unambiguous. \emph{Bird} is a hypernym for \emph{parrot} in all cases. Yet the task is not to search for hypernyms or any other semantic relation. It is not possible to assign the correct class by only looking at the objects. For example, there might be sentences saying that \emph{Python} is better than \emph{Ruby}, while others say it is not.
 
 However, it is expected that the dependency path between the objects of interest adds valuable information. In this thesis, the idea on how to extract and encode paths between two words is reused.
 
