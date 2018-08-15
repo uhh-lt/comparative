@@ -14,7 +14,7 @@ CUE_WORDS_BETTER = ["better", "easier", "faster", "nicer", "wiser", "cooler", "d
 
 def load_data(file_name, min_ratio=0.0, binary=False, source=None):
     print('### Minimum Percentage {}'.format(min_ratio))
-    frame = df.from_csv(path='data/' + file_name)
+    frame = df.from_csv(path= file_name)
     frame = frame[frame['most_frequent_percentage'] >= min_ratio]
     if binary:
         frame['most_frequent_label'] = frame.apply(lambda row: row['most_frequent_label'] if row['most_frequent_label'] == 'NONE' else 'ARG', axis=1)

@@ -94,7 +94,7 @@ class BLSTMEncoder(nn.Module):
                'warning : you need to set_glove_path(glove_path)'
         # create word_vec with glove vectors
         word_vec = {}
-        with open(self.glove_path) as f:
+        with open(self.glove_path, 'r',  encoding="utf-8") as f:
             for line in f:
                 word, vec = line.split(' ', 1)
                 if word in word_dict:

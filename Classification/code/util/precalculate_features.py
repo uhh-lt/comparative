@@ -1,5 +1,4 @@
 """Adds the prepared sentence for the path embeddings and the sentence embeddings (InferSent) to the data"""
-
 from infersent.infersent_feature import InfersentFeature, initialize_infersent
 from transformers.data_extraction import ExtractMiddlePart, ExtractRawSentence
 

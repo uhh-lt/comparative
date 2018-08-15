@@ -32,8 +32,8 @@ nlp = spacy.load('en_core_web_lg')
 logger = get_logger('final_version_no_dups')
 
 LABEL = 'most_frequent_label'
-#data = precalculate_embedding(load_data('data.csv'))
-data_bin = precalculate_embedding(load_data('data.csv', binary=True))
+data = load_data('data.csv')
+#data_bin = precalculate_embedding(load_data('data.csv', binary=False))
 
 # infersent_model = initialize_infersent(data.sentence.values)
 
@@ -47,13 +47,13 @@ def perform_classificiation(data, labels):
 
     feature_unions = [
 
-        FeatureUnion([('full_paths_original_4_aip', make_pipeline(PathEmbeddingFeature('./data/full_paths_original_4.csv')))]),
-        FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(PathEmbeddingFeature('./data/middle_paths_unrestricted_16.csv')))]),
+     #   FeatureUnion([('full_paths_original_4_aip', make_pipeline(PathEmbeddingFeature('./data/full_paths_original_4.csv')))]),
+     #   FeatureUnion([('middle_paths_unrestricted_16', make_pipeline(PathEmbeddingFeature('./data/middle_paths_unrestricted_16.csv')))]),
         FeatureUnion([('Bag-Of-Words', make_pipeline(ExtractMiddlePart(), CountVectorizer()))]),
-        FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part')))]),
-        FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
-        FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
-        FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
+     #   FeatureUnion([('InferSent', make_pipeline(SelectDataFrameColumn('embedding_middle_part')))]),
+    #    FeatureUnion([('Word Embedding', make_pipeline(ExtractMiddlePart(), MeanWordEmbedding()))]),
+     #   FeatureUnion([('POS n-grams', make_pipeline(ExtractMiddlePart(), POSTransformer(), TfidfVectorizer(max_features=500, ngram_range=(2, 4)))), ]),
+     #   FeatureUnion([('Contains JJR', make_pipeline(ExtractMiddlePart(), ContainsPos('JJR')))]),
     ]
     miss = pd.DataFrame(columns=['id', 'caption', 'sentence', 'object_a', 'object_b', 'predicted', 'gold'])
     binary = labels == ['ARG', 'NONE']
@@ -67,7 +67,7 @@ def perform_classificiation(data, labels):
         folds_results = []
         try:
             for train, test in k_folds(5, data, random_state=42):
-                pipeline = make_pipeline(f, XGBClassifier(n_jobs=8, n_estimators=1000))
+                pipeline = make_pipeline(f, XGBClassifier(n_jobs=8, n_estimators=1))
                 fitted = pipeline.fit(train, train[LABEL].values)
                 predicted = fitted.predict(test)
                 folds_results.append((test[LABEL].values, predicted))
@@ -110,5 +110,5 @@ def perform_classificiation(data, labels):
     plot(result_frame)
 
 
-#perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
-perform_classificiation(data_bin, ['ARG', 'NONE'])
+perform_classificiation(data, ['BETTER', 'WORSE', 'NONE'])
+#perform_classificiation(data_bin, ['ARG', 'NONE'])

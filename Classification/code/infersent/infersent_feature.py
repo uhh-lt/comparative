@@ -20,6 +20,8 @@ class InfersentFeature(BaseFeature):
         encode = self.model.encode(sentences, tokenize=True)
         return encode
 
-    def get_feature_names(self):
-        return ['infersent_{}'.format(w) for w in range(0,4096)]
+    def fit(self, X, y):
+        return self
 
+    def get_feature_names(self):
+        return ['infersent_{}'.format(w) for w in range(0, 4096)]
