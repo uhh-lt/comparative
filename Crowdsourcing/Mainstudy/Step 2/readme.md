@@ -1,1 +1,0 @@
-As result of the first part, the OTHER class is removed. The original data of the first part (all crowdflower reports) are saved in the folder 'data_before_removal_of_other'. To further use this data, OTHER will be merged with NONE
